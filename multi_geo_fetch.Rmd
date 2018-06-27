@@ -1,0 +1,164 @@
+---
+title: "Multi_geo_fetch"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = TRUE,
+	message = FALSE,
+	warning = FALSE
+)
+```
+
+```{r}
+library(tidyverse)
+library(tidycensus)
+library(camiller)
+```
+
+```{r}
+year <- 2016
+table_nums <- list(
+  total_pop = "B01003",
+  sex_by_age = "B01001",
+  race = "B03002"
+)
+
+```
+
+```{r}
+multi_geo_acs <- function(num, year = 2016, neighborhoods = NULL, towns = "all", regions = NULL, counties = "all", state = "09", us = NULL) {
+  if (is.null(state)) stop("Must supply a state name or FIPS code")
+  
+  fetch <- list()
+  
+  if (!is.null(neighborhoods)) {
+    fetch$neighborhoods <- acs_neighborhoods(num, year, neighborhoods, state)
+  }
+  if (!is.null(towns)) {
+    fetch$towns <- acs_towns(num, year, towns, counties, state)
+  }
+  if (!is.null(regions)) {
+    fetch$regions <- acs_regions(num, year, regions, state)
+  }
+  if (!is.null(counties)) {
+    fetch$counties <- acs_counties(num, year, counties, state)
+  }
+  
+  fetch$state <- acs_state(num, year, state)
+  
+  if (!is.null(us)) {
+    fetch$us <- tidycensus::get_acs(geography = "us", table = num, year = year)
+  }
+  
+  fetch %>%
+    rev() %>%
+    list(., names(.), 1:length(.)) %>%
+    purrr::pmap_dfr(function(df, lvl, i) {
+      df %>% dplyr::mutate(level = paste(i, lvl, sep = "_"))
+    })
+}
+
+nhoods <- list(
+  hill = c("140200", "140300", "140400", "140500", "140600"),
+  west_river = "140800",
+  westville = c("141000", "141100")
+) %>%
+  map(~paste0("09009", .))
+
+multi_geo_acs("B25003", 
+              towns = c("New Haven", "Hamden", "West Haven"), 
+              neighborhoods = nhoods, 
+              counties = "New Haven County", 
+              regions = list(inner_ring = c("Hamden", "East Haven", "West Haven"), cities = c("New Haven", "Hartford", "Bridgeport", "Waterbury", "Stamford")))
+```
+
+```{r}
+acs_towns <- function(num, year, towns, counties, state) {
+  if (!is.null(counties) & ((length(counties) > 1) || (length(counties) == 1 & counties != "all"))) {
+    fetch <- counties %>%
+      purrr::map_dfr(function(county) {
+        tidycensus::get_acs(geography = "county subdivision", table = num, year = year, state = state, county = county) %>%
+          dplyr::mutate(county = county)
+      }) %>%
+      camiller::town_names(NAME)
+  } else {
+    fetch <- tidycensus::get_acs(geography = "county subdivision", table = num, year = year, state = state) %>%
+    dplyr::mutate(state = state) %>%
+    camiller::town_names(NAME)
+  }
+  
+  if ((length(towns) > 1) || (length(towns) == 1 & towns != "all")) {
+    fetch <- fetch %>% dplyr::filter(NAME %in% towns)
+  }
+  fetch
+}
+```
+
+```{r}
+acs_counties <- function(num, year, counties, state) {
+  fetch <- tidycensus::get_acs(geography = "county", table = num, year = year, state = state) %>%
+    dplyr::mutate(NAME = stringr::str_extract(NAME, "^.+County(?=, )"))
+  if ((length(counties) > 1) || (length(counties) == 1 & counties != "all")) {
+    fetch <- fetch %>% dplyr::filter(NAME %in% counties | GEOID %in% counties)
+  }
+  fetch
+}
+```
+
+```{r}
+acs_state <- function(num, year, state) {
+  fetch <- tidycensus::get_acs(geography = "state", table = num, year = year) %>%
+    dplyr::filter(NAME == state | GEOID == state)
+  fetch
+}
+```
+
+```{r}
+acs_regions <- function(num, year, regions, state) {
+  fetch_towns <- tidycensus::get_acs(geography = "county subdivision", table = num, year = year, state = state) %>%
+    camiller::town_names(NAME)
+  
+  regions %>%
+    purrr::imap_dfr(function(region, region_name) {
+      fetch_towns %>%
+        dplyr::filter(NAME %in% region) %>%
+        dplyr::group_by(NAME = region_name, variable) %>%
+        dplyr::summarise(estimate = sum(estimate), moe = tidycensus::moe_sum(moe, estimate) %>% round())
+    })
+}
+```
+
+```{r}
+acs_neighborhoods <- function(num, year, neighborhoods, state) {
+  fetch_tracts <- tidycensus::get_acs(geography = "tract", table = num, year = year, state = state)
+  
+  neighborhoods %>%
+    purrr::imap_dfr(function(neighborhood, neighborhood_name) {
+      fetch_tracts %>%
+        dplyr::filter(GEOID %in% neighborhood) %>%
+        dplyr::group_by(NAME = neighborhood_name, variable) %>%
+        dplyr::summarise(estimate = sum(estimate), moe = tidycensus::moe_sum(moe, estimate) %>% round())
+    })
+}
+```
+
+```{r}
+nhoods <- list(
+  hill = c("140200", "140300", "140400", "140500", "140600"),
+  west_river = "140800",
+  westville = c("141000", "141100")
+) %>%
+  map(~paste0("09009", .))
+f <- get_acs(geography = "tract", table = "B25003", year = 2016, state = "09")
+
+nhoods %>%
+  imap_dfr(function(hood, hood_name) {
+    f %>%
+      filter(GEOID %in% hood) %>%
+      group_by(NAME = hood_name, variable) %>%
+      summarise(estimate = sum(estimate), moe = tidycensus::moe_sum(moe, estimate) %>% round())
+  })
+```
+
