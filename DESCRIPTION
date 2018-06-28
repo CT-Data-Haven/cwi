@@ -13,6 +13,14 @@ Imports:
     tidycensus,
     tidyr,
     camiller,
-    rlang (>= 0.1.2)
-Roxygen: list(markdown = TRUE)
+    rlang (>= 0.1.2),
+    purrr,
+    readr,
+    stringr,
+    forcats
+Roxygen: list(markdown = TRUE, wrap = TRUE)
 RoxygenNote: 6.0.1
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

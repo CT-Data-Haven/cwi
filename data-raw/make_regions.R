@@ -1,5 +1,6 @@
 regions <- readr::read_csv("./files/town_region_lookup.csv") %>%
   dplyr::filter(!is.na(region)) %>%
-  split(.$region)
+  split(.$region) %>%
+  purrr::map(dplyr::pull, town)
 
-use_data(regions, overwrite = T)
+usethis::use_data(regions, overwrite = T)
