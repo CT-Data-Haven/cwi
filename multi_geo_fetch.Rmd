@@ -28,8 +28,12 @@ table_nums <- list(
 ```
 
 ```{r}
-multi_geo_acs <- function(num, year = 2016, neighborhoods = NULL, towns = "all", regions = NULL, counties = "all", state = "09", us = NULL) {
+multi_geo_acs <- function(num, year = 2016, neighborhoods = NULL, towns = "all", regions = NULL, counties = "all", state = "09", us = FALSE) {
   if (is.null(state)) stop("Must supply a state name or FIPS code")
+  
+  if (!is.null(counties)) {
+    counties <- purrr::map_chr(counties, ~stringr::str_replace(., "(?<! County)\\b$", " County"))
+  }
   
   fetch <- list()
   
@@ -48,7 +52,7 @@ multi_geo_acs <- function(num, year = 2016, neighborhoods = NULL, towns = "all",
   
   fetch$state <- acs_state(num, year, state)
   
-  if (!is.null(us)) {
+  if (us) {
     fetch$us <- tidycensus::get_acs(geography = "us", table = num, year = year)
   }
   
@@ -72,6 +76,8 @@ multi_geo_acs("B25003",
               neighborhoods = nhoods, 
               counties = "New Haven County", 
               regions = list(inner_ring = c("Hamden", "East Haven", "West Haven"), cities = c("New Haven", "Hartford", "Bridgeport", "Waterbury", "Stamford")))
+
+multi_geo_acs("B01003", state = "Connecticut", counties = c("New Haven", "Fairfield County"))
 ```
 
 ```{r}

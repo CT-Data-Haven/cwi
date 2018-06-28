@@ -1,0 +1,93 @@
+---
+title: "Basic workflow"
+author: "Vignette Author"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Basic workflow}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+	message = FALSE,
+	warning = FALSE,
+	collapse = TRUE,
+	comment = "#>"
+)
+```
+
+```{r}
+library(dplyr)
+library(tidyr)
+library(purrr)
+library(camiller)
+library(cwi)
+```
+
+The tables I'm working with are `B01003`, total population; `B03002`, race and Latino ethnicity; and `B25003`, housing tenure. It's easiest to save these in a named list, then map over the list calling `multi_geo_acs` for each table number.
+
+```{r}
+year <- 2016
+table_nums <- list(
+  total_pop = "B01003", 
+  race = "B03002",
+  tenure = "B25003"
+)
+```
+
+I'm pulling out the entries in the `cwi` dataset `regions` (a list) to only include the Greater New Haven-area ones. Then I fetch the ACS tables, and filter them to only have geographic levels other than town, or to only be towns in Greater New Haven.
+
+```{r}
+gnh_regions <- regions[c("Greater New Haven", "New Haven Inner Ring", "New Haven Outer Ring")]
+
+gnh_data <- table_nums %>%
+  map(~multi_geo_acs(table = ., 
+                     year = year, 
+                     towns = "all", 
+                     regions = gnh_regions, 
+                     counties = "New Haven", 
+                     state = "09")) %>%
+  map(~filter(., NAME %in% gnh_regions$`Greater New Haven` | level != "4_towns"))
+```
+
+
+```{r}
+gnh_data$total_pop
+```
+
+The total population data is very straightforward, as it only has one variable, `B01003_001`. The tibble returned has the GEOID, except for custom geographies like regions; the name of each geography, including the names of each region; the variable codes; estimates; margins of error at the default 90\% confidence level; the geographic level, numbered in order of decreasing size; and the counties of the towns.
+
+The race and ethnicity table will require some calculations, using the brilliantly-titled `camiller` package. Join the `race` tibble with the `acs_vars` dataset to get variable labels. Oftentimes, these labels need to be separated by their `"!!"` delimeter. Group by the geographic level, county, and name, then call `camiller::add_grps` with a list of racial groups and their labels' positions in the `label` column. This gives estimates and, optionally, margins of error for aggregates; `camiller::calc_shares` then gives shares of each group's estimate over the `"total"` denominator.
+
+```{r}
+gnh_data$race %>%
+  label_acs() %>% 
+  group_by(level, county, NAME) %>%
+  add_grps(list(total = 1, white = 3, black = 4, latino = 12, other = 5:9), group = label) %>%
+  calc_shares(group = label, denom = "total")
+```
+
+
+
+
+```{r}
+homeownership <- gnh_data$tenure %>%
+  label_acs() %>%
+  separate(label, into = c("total", "tenure"), sep = "!!", fill = "left") %>%
+  select(level, name = NAME, tenure, estimate) %>%
+  filter(tenure != "Renter occupied") %>%
+  group_by(level, name) %>%
+  calc_shares(group = tenure)
+
+homeownership
+```
+
+```{r}
+ownership_rate <- homeownership %>% filter(!is.na(share))
+
+ownership_rate %>% geo_level_plot(value = share, hilite = "darkslateblue", type = "point")
+```
+
+
