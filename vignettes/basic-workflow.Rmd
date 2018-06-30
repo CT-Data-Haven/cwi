@@ -69,8 +69,7 @@ gnh_data$race %>%
   calc_shares(group = label, denom = "total")
 ```
 
-
-
+With the tenure table, it's easiest to separate the labels by `"!!"`. Here the table can be wrangled into shares of households that are owner-occupied.
 
 ```{r}
 homeownership <- gnh_data$tenure %>%
@@ -79,15 +78,23 @@ homeownership <- gnh_data$tenure %>%
   select(level, name = NAME, tenure, estimate) %>%
   filter(tenure != "Renter occupied") %>%
   group_by(level, name) %>%
-  calc_shares(group = tenure)
+  calc_shares(group = tenure) %>%
+  filter(!is.na(share))
 
 homeownership
 ```
 
-```{r}
-ownership_rate <- homeownership %>% filter(!is.na(share))
+`geo_level_plot` gives a quick visual overview of the homeownership rates, highlighting town-level values.
 
-ownership_rate %>% geo_level_plot(value = share, hilite = "darkslateblue", type = "point")
+```{r}
+homeownership %>% 
+  geo_level_plot(value = share, hilite = "darkslateblue", type = "point")
 ```
 
+`acs_quick_map` gives a quick map sketch of the rates.
+
+```{r}
+homeownership %>% 
+  acs_quick_map(value = share, n = 6, color = "black", size = 0.4, title = "Homeownership, Greater New Haven")
+```
 
