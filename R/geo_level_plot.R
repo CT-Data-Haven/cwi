@@ -8,8 +8,8 @@
 #' @param type String: one of `"col"` (bar chart), `"point"` (dot plot), or `"hist"` (histogram); defaults `"col"`.
 #' @param hilite String giving the highlight color, used for the lowest geography present.
 #' @param min_gray String giving the named gray color for the highest geography; defaults `"gray20"`.
-#' @param max_gray String giving the named gray color for the second lowest geography; defaults `"gray60"`
-#' @param ... Any additional parameters to pass to the underlying geom function
+#' @param max_gray String giving the named gray color for the second lowest geography; defaults `"gray60"`.
+#' @param ... Any additional parameters to pass to the underlying geom function.
 #' @return A ggplot
 #' @export
 geo_level_plot <- function(data, name = name, value = value, level = level, type = "col", hilite = "dodgerblue", min_gray = "gray20", max_gray = "gray60", ...) {
@@ -27,7 +27,7 @@ geo_level_plot <- function(data, name = name, value = value, level = level, type
   g1 <- stringr::str_extract(min_gray, "\\d+$") %>% as.numeric()
   g2 <- stringr::str_extract(max_gray, "\\d+$") %>% as.numeric()
   pal <- seq(g1, g2, length.out = length(geos) - 1) %>%
-    floor() %>%
+    round() %>%
     paste0("gray", .) %>%
     c(., hilite)
 

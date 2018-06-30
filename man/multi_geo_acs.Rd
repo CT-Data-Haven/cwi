@@ -34,9 +34,14 @@ Fetch a data table from the ACS via \code{tidycensus} with your choice of geogra
 This function essentially calls \code{tidycensus::get_acs} multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying \code{tidycensus::get_acs} requires a Census API key. As is the case with other \code{tidycensus} functions, \code{multi_geo_acs} assumes this key is stored as \code{CENSUS_API_KEY} in your \code{.Renviron}. See \code{\link[tidycensus:census_api_key]{tidycensus::census_api_key()}} for installation.
 }
 \examples{
-\dontrun(multi_geo_acs("B01003", 2016, towns = "all",
+\dontrun{
+multi_geo_acs("B01003", 2016,
+  neighborhoods = list(downtown = c("09009140100", "09009361401", "09009361402"),
+    dixwell = "090091416"),
+  towns = "all",
   regions = list(inner_ring = c("Hamden", "East Haven", "West Haven")),
-  counties = "New Haven County"))
+  counties = "New Haven County")
+}
 }
 \seealso{
 \code{\link[tidycensus:census_api_key]{tidycensus::census_api_key()}}, \code{\link[tidycensus:get_acs]{tidycensus::get_acs()}}
