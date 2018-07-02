@@ -5,8 +5,8 @@
 \title{Quickly make a \code{ggplot} to view data by geographic level}
 \usage{
 geo_level_plot(data, name = name, value = value, level = level,
-  type = "col", hilite = "dodgerblue", min_gray = "gray20",
-  max_gray = "gray60", ...)
+  type = "col", hilite = "dodgerblue", title = NULL,
+  dark_gray = "gray20", light_gray = "gray60", ...)
 }
 \arguments{
 \item{data}{A data frame to use for plotting.}
@@ -21,9 +21,11 @@ geo_level_plot(data, name = name, value = value, level = level,
 
 \item{hilite}{String giving the highlight color, used for the lowest geography present.}
 
-\item{min_gray}{String giving the named gray color for the highest geography; defaults \code{"gray20"}.}
+\item{title}{String giving the title, if desired, for the plot.}
 
-\item{max_gray}{String giving the named gray color for the second lowest geography; defaults \code{"gray60"}.}
+\item{dark_gray}{String giving the named gray color for the highest geography; defaults \code{"gray20"}.}
+
+\item{light_gray}{String giving the named gray color for the second lowest geography; defaults \code{"gray60"}.}
 
 \item{...}{Any additional parameters to pass to the underlying geom function.}
 }

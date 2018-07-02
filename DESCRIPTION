@@ -25,7 +25,8 @@ Roxygen: list(markdown = TRUE, wrap = TRUE)
 RoxygenNote: 6.0.1
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    sf
 VignetteBuilder: knitr
 Remotes: 
     tidyverse/ggplot2,
