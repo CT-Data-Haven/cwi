@@ -1,0 +1,87 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+# cwi
+
+The goal of cwi is to get data, primarily the Census ACS, fetched, aggregated, and analyzed for DataHaven's 2019 Community Index reports. This includes functions to speed up and standardize analysis for multiple staff people, preview trends and patterns we'll need to write about, and get data in more layperson-friendly formats.
+
+It depends on many functions from Camille's brilliantly-named [`camiller`](https://github.com/camille-s/camiller) package.
+
+## Installation
+
+You can install the development version from [GitHub](https://github.com/CT-Data-Haven/cwi) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("CT-Data-Haven/cwi")
+```
+
+## Dependencies
+
+In addition to `camiller`, this package relies heavily on:
+
+* The [`tidyverse`](http://tidyverse.org/) packages, namely `magrittr`, `dplyr`, `tidyr`, `purrr`, `readr`, `stringr`, and `forcats` (so basically *all* the tidyverse)
+* The map-previewing function `acs_quick_map()` requires `ggplot2` version 2.2.3—as of 7/2/2018, this is still the dev version on [GitHub](https://github.com/tidyverse/ggplot2), but is slated for release on CRAN (as 3.0.0) by the end of the month
+* `rlang` and `tidyselect` for non-standard evaluation in many functions
+* `tidycensus` for actually getting all the Census data
+* `sf` isn't required but it's encouraged
+
+## Data
+
+`cwi` ships with several datasets and shapefiles. These include:
+
+* Shapes (as `sf` objects) of towns, tracts, and city neighborhoods for New Haven, Hartford, Bridgeport, and Stamford
+* Common ACS table numbers—hopefully decreases time spent prowling around FactFinder
+* Definitions of neighborhoods by tract or block group, and of regions by town
+
+## Example
+
+Here's an example of getting a big table to calculate homeownership rates across many geographies at once:
+
+```{r example, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(cwi)
+```
+
+```{r fetch, message=FALSE, warning=FALSE}
+tenure <- multi_geo_acs(
+  table = basic_table_nums$tenure,
+  year = 2016,
+  regions = regions[c("Greater New Haven", "New Haven Inner Ring", "New Haven Outer Ring")],
+  counties = "New Haven",
+  us = T
+)
+
+tenure
+```
+
+```{r}
+homeownership <- tenure %>%
+  label_acs() %>%
+  select(name = NAME, level, label, estimate) %>%
+  filter((!str_detect(level, "towns")) | name %in% regions$`Greater New Haven`) %>%
+  mutate(label = str_remove(label, "Total!!")) %>%
+  group_by(level, name) %>%
+  camiller::calc_shares(group = label) %>%
+  filter(label == "Owner occupied")
+
+homeownership
+```
+
+```{r}
+geo_level_plot(homeownership, value = share, hilite = "#EA7FA2", 
+               title = "Homeownership in Greater New Haven, 2016")
+```
+
+See more detail in the vignette: `vignette("Basic workflow", "cwi")`.
