@@ -4,3 +4,4 @@
 ^data-raw$
 ^\.httr-oauth$
 ^README\.Rmd$
+^vignettes
