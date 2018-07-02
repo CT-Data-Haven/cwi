@@ -6,7 +6,7 @@
 \alias{cwi-package}
 \title{cwi: Prep for DataHaven's Community Wellbeing Index}
 \description{
-This is a collection of functions for collecting and analyzing Census data and other sources to write the 2019 Community Wellbeing Index reports
+This is a collection of functions for collecting and analyzing Census data and other sources to write the 2019 Community Wellbeing Index reports. It also contains reference tables for local geographies—neighborhoods, regions, etc—and commonly used ACS table numbers.
 }
 \author{
 \strong{Maintainer}: Camille Seaberry \email{camille@ctdatahaven.org}

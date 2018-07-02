@@ -5,7 +5,8 @@
 \title{Fetch an ACS table with multiple geography levels}
 \usage{
 multi_geo_acs(table, year = 2016, neighborhoods = NULL, towns = "all",
-  regions = NULL, counties = "all", state = "09", us = FALSE)
+  regions = NULL, counties = "all", state = "09", msa = FALSE,
+  us = FALSE)
 }
 \arguments{
 \item{table}{A string giving the ACS table number.}
@@ -21,6 +22,8 @@ multi_geo_acs(table, year = 2016, neighborhoods = NULL, towns = "all",
 \item{counties}{A character vector of counties to include; \code{"all"} (default) for all counties in the state; or \code{NULL} to not fetch county-level table.}
 
 \item{state}{A string: either name or two-digit FIPS code of a US state. Required; defaults \code{"09"} (Connecticut).}
+
+\item{msa}{Logical: whether to fetch New England states' metropolitan statistical areas. Defaults \code{FALSE}.}
 
 \item{us}{Logical: whether to fetch US-level table. Defaults \code{FALSE}.}
 }

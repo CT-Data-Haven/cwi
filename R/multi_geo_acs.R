@@ -61,9 +61,8 @@ multi_geo_acs <- function(table, year = 2016, neighborhoods = NULL, towns = "all
 
   # take the names of non-null items in fetch, reverse the order (i.e. largest geo to smallest),
   # then make level labels and bind all rows
-  fetch %>%
-    rev() %>%
-    list(., names(.), 1:length(.)) %>%
+  lvls <- fetch %>% rev()
+  list(lvls, names(lvls), 1:length(lvls)) %>%
     purrr::pmap_dfr(function(df, lvl, i) {
       df %>% dplyr::mutate(level = paste(i, lvl, sep = "_"))
     })

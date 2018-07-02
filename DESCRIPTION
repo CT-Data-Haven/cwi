@@ -2,13 +2,14 @@ Package: cwi
 Title: Prep for DataHaven's Community Wellbeing Index
 Version: 0.0.0.9000
 Authors@R: person("Camille", "Seaberry", email = "camille@ctdatahaven.org", role = c("aut", "cre"))
-Description: This is a collection of functions for collecting and analyzing Census data and other sources to write the 2019 Community Wellbeing Index reports
+Description: This is a collection of functions for collecting and analyzing Census data and other sources to write the 2019 Community Wellbeing Index reports. It also contains reference tables for local geographies—neighborhoods, regions, etc—and commonly used ACS table numbers.
 Depends: R (>= 3.5.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: 
     magrittr,
+    dplyr,
     tidycensus,
     tidyr,
     rlang (>= 0.1.2),
@@ -18,13 +19,14 @@ Imports:
     forcats,
     classInt,
     ggplot2,
-    camiller
+    camiller,
+    stats
 Roxygen: list(markdown = TRUE, wrap = TRUE)
 RoxygenNote: 6.0.1
 Suggests: 
     knitr,
     rmarkdown
 VignetteBuilder: knitr
-Remotes:  
+Remotes: 
     tidyverse/ggplot2,
     camille-s/camiller

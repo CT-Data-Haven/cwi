@@ -10,5 +10,5 @@ label_acs <- function(df, variable = variable) {
   variable_var <- rlang::enquo(variable)
   variable_name <- rlang::quo_name(variable_var)
   df %>%
-    dplyr::left_join(acs_vars %>% dplyr::select(-concept), by = setNames("name", variable_name))
+    dplyr::left_join(acs_vars %>% dplyr::select(-concept), by = stats::setNames("name", variable_name))
 }

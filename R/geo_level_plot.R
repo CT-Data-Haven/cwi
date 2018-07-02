@@ -26,10 +26,8 @@ geo_level_plot <- function(data, name = name, value = value, level = level, type
 
   g1 <- stringr::str_extract(min_gray, "\\d+$") %>% as.numeric()
   g2 <- stringr::str_extract(max_gray, "\\d+$") %>% as.numeric()
-  pal <- seq(g1, g2, length.out = length(geos) - 1) %>%
-    round() %>%
-    paste0("gray", .) %>%
-    c(., hilite)
+  pal1 <- round(seq(g1, g2, length.out = length(geos) - 1))
+  pal <- c(paste0("gray", pal1), hilite)
 
   p <- data %>%
     dplyr::ungroup() %>%

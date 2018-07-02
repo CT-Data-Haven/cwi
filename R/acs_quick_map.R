@@ -38,9 +38,9 @@ acs_quick_map <- function(data, name = name, value = value, level = "town", city
 
   p <- shape %>%
     dplyr::inner_join(data, by = rlang::quo_name(name_var)) %>%
-    dplyr::mutate(brk = classInt::classIntervals(!!value_var, n = n, style = "jenks")$brk %>%
-                    unique() %>%
-                    cut(!!value_var, breaks = ., include.lowest = T)) %>%
+    dplyr::mutate(brk = cut(!!value_var,
+                          breaks = classInt::classIntervals(!!value_var, n = n, style = "jenks")$brk %>% unique(),
+                          include.lowest = T)) %>%
     ggplot2::ggplot() +
     ggplot2::geom_sf(ggplot2::aes(fill = brk), ...) +
     ggplot2::scale_fill_brewer(palette = palette, drop = F) +
