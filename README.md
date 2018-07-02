@@ -55,8 +55,15 @@ tenure <- multi_geo_acs(
   counties = "New Haven",
   us = T
 )
-#> New Haven County
+#> Geographies included:
+#> Towns: all
+#> Regions: Greater New Haven, New Haven Inner Ring, New Haven Outer Ring
+#> Counties: New Haven County
+#> State: 09
+#> US: Yes
+```
 
+``` r
 tenure
 #> # A tibble: 99 x 8
 #>    GEOID NAME              variable    estimate    moe level  state county
@@ -115,6 +122,6 @@ geo_level_plot(homeownership, value = share, hilite = "#EA7FA2",
                title = "Homeownership in Greater New Haven, 2016")
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
 
 See more detail in the vignette: `vignette("Basic workflow", "cwi")`.

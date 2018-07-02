@@ -13,6 +13,7 @@
 #' @param state A string: either name or two-digit FIPS code of a US state. Required; defaults `"09"` (Connecticut).
 #' @param msa Logical: whether to fetch New England states' metropolitan statistical areas. Defaults `FALSE`.
 #' @param us Logical: whether to fetch US-level table. Defaults `FALSE`.
+#' @param verbose Logical: whether to print summary of geographies included. Defaults `TRUE`.
 #' @return A tibble with GEOID, name, variable code, estimate, moe, geography level, and county, as applicable, for the chosen ACS table.
 #' @seealso [tidycensus::census_api_key()], [tidycensus::get_acs()]
 #' @examples
@@ -25,7 +26,7 @@
 #'   counties = "New Haven County")
 #' }
 #' @export
-multi_geo_acs <- function(table, year = 2016, neighborhoods = NULL, towns = "all", regions = NULL, counties = "all", state = "09", msa = FALSE, us = FALSE) {
+multi_geo_acs <- function(table, year = 2016, neighborhoods = NULL, towns = "all", regions = NULL, counties = "all", state = "09", msa = FALSE, us = FALSE, verbose = TRUE) {
   if (is.null(state)) stop("Must supply a state name or FIPS code")
 
   # if counties don't already end in County, paste it on
@@ -34,8 +35,10 @@ multi_geo_acs <- function(table, year = 2016, neighborhoods = NULL, towns = "all
   }
 
   # make message printing out current geographies
-  msg <- geo_printout(neighborhoods, towns, regions, counties, state, msa, us)
-  message("Geographies included:\n", msg)
+  if (verbose) {
+    msg <- geo_printout(neighborhoods, towns, regions, counties, state, msa, us)
+    message("Geographies included:\n", msg)
+  }
 
   fetch <- list()
 
@@ -59,7 +62,7 @@ multi_geo_acs <- function(table, year = 2016, neighborhoods = NULL, towns = "all
   }
 
   if (us) {
-    fetch$us <- tidycensus::get_acs(geography = "us", table = table, year = year)
+    fetch$us <- suppressMessages(tidycensus::get_acs(geography = "us", table = table, year = year))
   }
 
   # take the names of non-null items in fetch, reverse the order (i.e. largest geo to smallest),

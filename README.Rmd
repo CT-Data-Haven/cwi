@@ -54,7 +54,7 @@ library(tidyverse)
 library(cwi)
 ```
 
-```{r fetch, message=FALSE, warning=FALSE}
+```{r fetch, message=TRUE, warning=FALSE}
 tenure <- multi_geo_acs(
   table = basic_table_nums$tenure,
   year = 2016,
@@ -62,9 +62,12 @@ tenure <- multi_geo_acs(
   counties = "New Haven",
   us = T
 )
+```
 
+```{r}
 tenure
 ```
+
 
 ```{r}
 homeownership <- tenure %>%
