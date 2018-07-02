@@ -32,7 +32,10 @@ multi_geo_acs <- function(table, year = 2016, neighborhoods = NULL, towns = "all
   if (!is.null(counties) & !identical(counties, "all")) {
     counties <- stringr::str_replace(counties, "(?<! County)$", " County")
   }
-  cat(counties)
+
+  # make message printing out current geographies
+  msg <- geo_printout(neighborhoods, towns, regions, counties, state, msa, us)
+  message("Geographies included:\n", msg)
 
   fetch <- list()
 
