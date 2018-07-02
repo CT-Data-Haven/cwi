@@ -1,5 +1,5 @@
 acs_towns <- function(table, year, towns, counties, state) {
-  if (!is.null(counties) & ((length(counties) > 1) || (length(counties) == 1 & counties != "all"))) {
+  if (!is.null(counties) & !identical(counties, "all")) {
     fetch <- counties %>%
       purrr::map_dfr(function(county) {
         tidycensus::get_acs(geography = "county subdivision", table = table, year = year, state = state, county = county) %>%
@@ -12,16 +12,19 @@ acs_towns <- function(table, year, towns, counties, state) {
       camiller::town_names(NAME)
   }
 
-  if ((length(towns) > 1) || (length(towns) == 1 & towns != "all")) {
+  if (!identical(towns, "all")) {
     fetch <- fetch %>% dplyr::filter(NAME %in% towns)
   }
-  fetch
+  fetch %>%
+    dplyr::mutate(state = state)
 }
 
 acs_counties <- function(table, year, counties, state) {
   fetch <- tidycensus::get_acs(geography = "county", table = table, year = year, state = state) %>%
-    dplyr::mutate(NAME = stringr::str_extract(NAME, "^.+County(?=, )"))
-  if ((length(counties) > 1) || (length(counties) == 1 & counties != "all")) {
+    dplyr::mutate(NAME = stringr::str_extract(NAME, "^.+County(?=, )")) %>%
+    dplyr::mutate(state = state)
+
+  if (!identical(counties, "all")) {
     fetch <- fetch %>% dplyr::filter(NAME %in% counties | GEOID %in% counties)
   }
   fetch
@@ -58,3 +61,9 @@ acs_neighborhoods <- function(table, year, neighborhoods, state) {
     })
 }
 
+acs_msa <- function(table, year) {
+  fetch <- tidycensus::get_acs(geography = "metropolitan statistical area/micropolitan statistical area", table = table, year = year) %>%
+    dplyr::filter(GEOID %in% msa$GEOID)
+
+  fetch
+}
