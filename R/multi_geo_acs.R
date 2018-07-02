@@ -11,6 +11,7 @@
 #' @param regions A named list of regions with their town names (defaults `NULL`).
 #' @param counties A character vector of counties to include; `"all"` (default) for all counties in the state; or `NULL` to not fetch county-level table.
 #' @param state A string: either name or two-digit FIPS code of a US state. Required; defaults `"09"` (Connecticut).
+#' @param msa Logical: whether to fetch New England states' metropolitan statistical areas. Defaults `FALSE`.
 #' @param us Logical: whether to fetch US-level table. Defaults `FALSE`.
 #' @return A tibble with GEOID, name, variable code, estimate, moe, geography level, and county, as applicable, for the chosen ACS table.
 #' @seealso [tidycensus::census_api_key()], [tidycensus::get_acs()]
@@ -24,14 +25,14 @@
 #'   counties = "New Haven County")
 #' }
 #' @export
-multi_geo_acs <- function(table, year = 2016, neighborhoods = NULL, towns = "all", regions = NULL, counties = "all", state = "09", us = FALSE) {
+multi_geo_acs <- function(table, year = 2016, neighborhoods = NULL, towns = "all", regions = NULL, counties = "all", state = "09", msa = FALSE, us = FALSE) {
   if (is.null(state)) stop("Must supply a state name or FIPS code")
 
   # if counties don't already end in County, paste it on
-  if (!is.null(counties)) {
-    # counties <- purrr::map_chr(counties, ~stringr::str_replace(., "(?<! County)\\b$", " County"))
+  if (!is.null(counties) & !identical(counties, "all")) {
     counties <- stringr::str_replace(counties, "(?<! County)$", " County")
   }
+  cat(counties)
 
   fetch <- list()
 
@@ -49,6 +50,10 @@ multi_geo_acs <- function(table, year = 2016, neighborhoods = NULL, towns = "all
   }
 
   fetch$state <- acs_state(table, year, state)
+
+  if (msa) {
+    fetch$msa <- acs_msa(table, year)
+  }
 
   if (us) {
     fetch$us <- tidycensus::get_acs(geography = "us", table = table, year = year)
