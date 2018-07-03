@@ -6,7 +6,7 @@
 \usage{
 multi_geo_acs(table, year = 2016, neighborhoods = NULL, towns = "all",
   regions = NULL, counties = "all", state = "09", msa = FALSE,
-  us = FALSE)
+  us = FALSE, verbose = TRUE)
 }
 \arguments{
 \item{table}{A string giving the ACS table number.}
@@ -26,6 +26,8 @@ multi_geo_acs(table, year = 2016, neighborhoods = NULL, towns = "all",
 \item{msa}{Logical: whether to fetch New England states' metropolitan statistical areas. Defaults \code{FALSE}.}
 
 \item{us}{Logical: whether to fetch US-level table. Defaults \code{FALSE}.}
+
+\item{verbose}{Logical: whether to print summary of geographies included. Defaults \code{TRUE}.}
 }
 \value{
 A tibble with GEOID, name, variable code, estimate, moe, geography level, and county, as applicable, for the chosen ACS table.
