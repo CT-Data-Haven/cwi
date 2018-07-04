@@ -5,7 +5,7 @@
 \title{Write a list of data frames to CSV and keep it movin'}
 \usage{
 batch_csv_dump(data, split_by = NULL, path = ".", base_name = NULL,
-  bind = FALSE)
+  bind = FALSE, verbose = TRUE)
 }
 \arguments{
 \item{data}{A data frame or a list of data frames}
@@ -17,6 +17,8 @@ batch_csv_dump(data, split_by = NULL, path = ".", base_name = NULL,
 \item{base_name}{Optional string to be prepended to all file names.}
 
 \item{bind}{Logical: whether to row-bind list of data frames into a single data frame. Defaults \code{FALSE}, in which case a list of data frames is returned.}
+
+\item{verbose}{Logical: whether to print files' paths and names as they're written. Defaults \code{TRUE}.}
 }
 \value{
 Either a list of data frames (in case of \code{bind = FALSE}) or a single data frame (in case of \code{bind = TRUE}).

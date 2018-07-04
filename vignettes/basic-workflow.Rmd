@@ -24,6 +24,7 @@ knitr::opts_chunk$set(
 library(dplyr)
 library(tidyr)
 library(purrr)
+library(ggplot2)
 library(camiller)
 library(cwi)
 ```
@@ -38,6 +39,8 @@ table_nums <- list(
   tenure = "B25003"
 )
 ```
+
+# Fetching data from ACS
 
 I'm pulling out the entries in the `cwi` dataset `regions` (a list) to only include the Greater New Haven-area ones. Then I fetch the ACS tables, and filter them to only have geographic levels other than town, or to only be towns in Greater New Haven.
 
@@ -59,9 +62,16 @@ gnh_data <- table_nums %>%
 gnh_data$total_pop
 ```
 
+# Aggregating and analyzing data
+
 The total population data is very straightforward, as it only has one variable, `B01003_001`. The tibble returned has the GEOID, except for custom geographies like regions; the name of each geography, including the names of each region; the variable codes; estimates; margins of error at the default 90\% confidence level; the geographic level, numbered in order of decreasing size; and the counties of the towns.
 
-The race and ethnicity table will require some calculations, using the brilliantly-titled `camiller` package. Join the `race` tibble with the `acs_vars` dataset to get variable labels. Oftentimes, these labels need to be separated by their `"!!"` delimeter. Group by the geographic level, county, and name, then call `camiller::add_grps` with a list of racial groups and their labels' positions in the `label` column. This gives estimates and, optionally, margins of error for aggregates; `camiller::calc_shares` then gives shares of each group's estimate over the `"total"` denominator.
+The race and ethnicity table will require some calculations, using the brilliantly-titled [`camiller` package](https://github.com/camille-s/camiller): 
+
+* Using `label_acs()`, join the `race` tibble with the `acs_vars` dataset to get variable labels. Oftentimes, these labels need to be separated by their `"!!"` delimeter. 
+* Group by the geographic level, county, and name.
+* Call `camiller::add_grps` with a list of racial groups and their labels' positions in the `label` column. This gives estimates and, optionally, margins of error for aggregates
+* `camiller::calc_shares` then gives shares of each group's estimate over the `"total"` denominator.
 
 ```{r}
 gnh_data$race %>%
@@ -86,6 +96,8 @@ homeownership <- gnh_data$tenure %>%
 homeownership
 ```
 
+# Visual sketches
+
 `geo_level_plot` gives a quick visual overview of the homeownership rates, highlighting town-level values.
 
 ```{r}
@@ -93,10 +105,51 @@ homeownership %>%
   geo_level_plot(value = share, hilite = "darkslateblue", type = "point")
 ```
 
-`acs_quick_map` gives a quick map sketch of the rates.
+`acs_quick_map` gives a quick map sketch of the rates. This function uses the Jenks algorithm for making breaks with `classInt::classIntervals`. This algorithm is well suited for visually displaying larger inequalities, but the number of breaks you give it won't necessarily be the number of breaks returned. Here I supply `n = 6`, but the algorithm found instead that `n = 5` was the nearest `n` that could be used. This function lets us see whether there's a geographic distribution of this data with minimal work. 
 
 ```{r}
-homeownership %>% 
-  acs_quick_map(value = share, n = 6, color = "black", size = 0.4, title = "Homeownership, Greater New Haven")
+tenure_map <- homeownership %>% 
+  acs_quick_map(value = share, n = 6, color = "black", size = 0.4, 
+                title = "Homeownership, Greater New Haven", palette = "BuPu")
+
+tenure_map
+```
+
+Since this returns a `ggplot` object with `sf` data, we can add additional `ggplot` functions, such as labeling, themes, or additional scales or geoms.
+
+```{r}
+tenure_map +
+  labs(subtitle = "By town, 2016") +
+  geom_sf(data = . %>% filter(name == "New Haven"), fill = NA, color = "black", size = 1.5) +
+  coord_sf(ndiscr = F)
+```
+
+# Batch output
+
+Say as part of a pipeline, you need to do some calculations, write different sections of a data frame to CSV files to pass along to a colleague or refer to later, and then continue on to some more calculations. `batch_csv_dump` takes either a list of data frames or a data frame plus a column to split by, and writes out a set of CSV files, then lets you move along to the next step in your pipeline.
+
+For example, I need to pull a table of populations by age group for several regions of Connecticut. I don't need to split populations by gender, so I'll add up male and female populations for each age group. I don't actually need to more detailed age groups now, but I need to stash them in files for later, so I'll  aggregate, write a bunch of files, and then aggregate into broader age groups that I need for my current work.
+
+```{r eval=FALSE, message=TRUE, warning=TRUE}
+new_haven_regions <- regions[c("Greater New Haven", "New Haven Inner Ring", 
+                             "New Haven Outer Ring", "Lower Naugatuck Valley", "Greater Waterbury")]
+
+acs <- multi_geo_acs(table = "B01001", year = 2016, towns = NULL, regions = new_haven_regions, 
+              counties = c("New Haven County", "Fairfield County")) %>%
+  label_acs() %>%
+  separate(label, into = c("total", "sex", "age"), sep = "!!") %>%
+  filter(!is.na(age)) %>%
+  mutate(age = as.factor(age) %>% forcats::fct_inorder()) %>%
+  group_by(NAME, level, age) %>%
+  summarise(estimate = sum(estimate), moe = tidycensus::moe_sum(moe, estimate) %>% round()) %>%
+  ungroup()
+
+
+acs %>%
+  split(.$NAME) %>%
+  batch_csv_dump(base_name = "pop_by_age", bind = TRUE, verbose = TRUE) %>%
+  group_by(level, NAME) %>%
+  camiller::add_grps(list(ages0_4 = 1, ages5_17 = 2:4, ages0_17 = 1:4, ages18_24 = 5:8, ages0_24 = 1:8), group = age, estimate = estimate, moe = moe) %>%
+  arrange(level, NAME, age)
 ```
 
