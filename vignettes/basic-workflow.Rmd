@@ -1,6 +1,6 @@
 ---
 title: "Basic workflow"
-author: "Vignette Author"
+author: "Camille Seaberry"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >

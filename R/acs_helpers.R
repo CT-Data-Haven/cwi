@@ -50,7 +50,7 @@ acs_regions <- function(table, year, regions, state) {
 }
 
 acs_neighborhoods <- function(table, year, neighborhoods, state) {
-  fetch_tracts <- supressMessages(tidycensus::get_acs(geography = "tract", table = table, year = year, state = state))
+  fetch_tracts <- suppressMessages(tidycensus::get_acs(geography = "tract", table = table, year = year, state = state))
 
   neighborhoods %>%
     purrr::imap_dfr(function(neighborhood, neighborhood_name) {

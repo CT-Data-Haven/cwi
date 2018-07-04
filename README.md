@@ -10,7 +10,7 @@ It depends on many functions from Camille's brilliantly-named [`camiller`](https
 Installation
 ------------
 
-You can install the development version from [GitHub](https://github.com/CT-Data-Haven/cwi) with:
+You can install this package from [GitHub](https://github.com/CT-Data-Haven/cwi) with:
 
 ``` r
 # install.packages("devtools")
@@ -22,8 +22,7 @@ Dependencies
 
 In addition to `camiller`, this package relies heavily on:
 
--   The [`tidyverse`](http://tidyverse.org/) packages, namely `magrittr`, `dplyr`, `tidyr`, `purrr`, `readr`, `stringr`, and `forcats` (so basically *all* the tidyverse)
--   The map-previewing function `acs_quick_map()` requires `ggplot2` version 2.2.3—as of 7/2/2018, this is still the dev version on [GitHub](https://github.com/tidyverse/ggplot2), but is slated for release on CRAN (as 3.0.0) by the end of the month
+-   The [`tidyverse`](http://tidyverse.org/) packages, namely `magrittr`, `dplyr`, `tidyr`, `purrr`, `readr`, `stringr`, `forcats`, and `ggplot2` (version &gt;= 3.0.0) (so basically *all* the tidyverse)
 -   `rlang` and `tidyselect` for non-standard evaluation in many functions
 -   `tidycensus` for actually getting all the Census data
 -   `sf` isn't required but it's encouraged
