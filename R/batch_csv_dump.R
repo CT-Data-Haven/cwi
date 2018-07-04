@@ -22,7 +22,7 @@ batch_csv_dump <- function(data, split_by = NULL, path = ".", base_name = NULL, 
       stop("Please supply either a list of data frames, or a column to split data by.")
     } else {
       split_var <- rlang::enquo(split_by)
-      data_list <- split(data, data %>% select(!!split_var))
+      data_list <- split(data, data %>% dplyr::select(!!split_var))
     }
   } else {
     data_list <- data

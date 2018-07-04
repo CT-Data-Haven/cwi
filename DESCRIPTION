@@ -18,7 +18,7 @@ Imports:
     stringr,
     forcats,
     classInt,
-    ggplot2,
+    ggplot2 (>= 3.0.0),
     camiller,
     stats
 Roxygen: list(markdown = TRUE, wrap = TRUE)
@@ -29,5 +29,4 @@ Suggests:
     sf
 VignetteBuilder: knitr
 Remotes: 
-    tidyverse/ggplot2,
     camille-s/camiller
