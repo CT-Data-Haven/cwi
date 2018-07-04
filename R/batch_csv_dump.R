@@ -6,6 +6,7 @@
 #' @param path String giving a path at which to save files; defaults to current working directory.
 #' @param base_name Optional string to be prepended to all file names.
 #' @param bind Logical: whether to row-bind list of data frames into a single data frame. Defaults `FALSE`, in which case a list of data frames is returned.
+#' @param verbose Logical: whether to print files' paths and names as they're written. Defaults `TRUE`.
 #' @return Either a list of data frames (in case of `bind = FALSE`) or a single data frame (in case of `bind = TRUE`).
 #' @examples
 #' \dontrun{
@@ -15,7 +16,7 @@
 #'     dplyr::filter(variable != "total")
 #' }
 #' @export
-batch_csv_dump <- function(data, split_by = NULL, path = ".", base_name = NULL, bind = FALSE) {
+batch_csv_dump <- function(data, split_by = NULL, path = ".", base_name = NULL, bind = FALSE, verbose = TRUE) {
   # if data is a data frame, split it. Otherwise treat as list
   if (is.data.frame(data)) {
     if (is.null(split_by)) {
@@ -29,7 +30,7 @@ batch_csv_dump <- function(data, split_by = NULL, path = ".", base_name = NULL, 
   }
 
   if (!file.exists(path)) {
-    warning("Path", path, "does not exist. Defaulting to current working directory.")
+    warning("Path ", path, " does not exist. Defaulting to current working directory.")
     path <- "."
   }
 
@@ -39,6 +40,8 @@ batch_csv_dump <- function(data, split_by = NULL, path = ".", base_name = NULL, 
         stringr::str_replace_all("\\s+", "_")
       filename <- paste0(filename, ".csv")
       readr::write_csv(df, path = paste(path, filename, sep = "/"))
+
+      if (verbose) message("Writing ", paste(path, filename, sep = "/"))
     })
   if (bind) {
     out <- dplyr::bind_rows(out)
