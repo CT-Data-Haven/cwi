@@ -43,33 +43,35 @@
 "msa"
 
 
-#' New Haven neighborhoods by block group
+#' City neighborhoods by tract or block group
 #'
-#' A dataset of New Haven neighborhoods delineated by Census tract and block group. Some block groups cross between more than one neighborhood; use `weight` column for aggregating values such as populations.
+#' Datasets of neighborhoods for New Haven (both Census tract and block group available), Hartford/West Hartford, Stamford, and Bridgeport. Some tracts cross between more than one neighborhood; use `weight` column for aggregating values such as populations.
 #'
-#' @format A data frame with 110 rows and 5 variables:
+#' @format A data frame
 #' \describe{
-#'   \item{neighborhood}{Neighborhood name}
+#'   \item{town}{For `hartford_tracts`, the name of the town, because both Hartford and West Hartford neighborhoods are included; otherwise, no `town` variable is needed}
+#'   \item{name}{Neighborhood name}
+#'   \item{geoid}{FIPS code of smallest geography. For all but `nhv_bgrps`, this is the 11-digit FIPS code of the Census tract; for `nhv_bgrps`, this is the 12-digit FIPS code of the block group.}
 #'   \item{tract}{6-digit FIPS code of the tract}
-#'   \item{block_group}{Single digit number of the block group}
-#'   \item{weight}{Share of block group population in that neighborhood}
-#'   \item{geoid}{12-digit FIPS code of the block group}
+#'   \item{block_group}{Single digit number of the block group, if applicable (`nhv_bgrps`)}
+#'   \item{weight}{Share of tract/block group households in that neighborhood}
 #' }
+#' @rdname tracts
+"nhv_tracts"
+
+#' @rdname tracts
 "nhv_bgrps"
 
+#' @rdname tracts
+"bridgeport_tracts"
 
-#' New Haven neighborhoods by tract
-#'
-#' A dataset of New Haven neighborhoods delineated by Census tract. Some tracts cross between more than one neighborhood; use `weight` column for aggregating values such as populations.
-#'
-#' @format A data frame with 34 rows and 4 variables:
-#' \describe{
-#'   \item{neighborhood}{Neighborhood name}
-#'   \item{tract}{6-digit FIPS code of the tract}
-#'   \item{weight}{Share of block group population in that neighborhood}
-#'   \item{geoid}{Full 11-digit FIPS code of the tract}
-#' }
-"nhv_tracts"
+#' @rdname tracts
+"stamford_tracts"
+
+#' @rdname tracts
+"hartford_tracts"
+
+
 
 
 #' Regions of Connecticut
