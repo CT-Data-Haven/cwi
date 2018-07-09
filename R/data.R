@@ -99,3 +99,17 @@
 #' }
 #' @source Cleaned-up version of the Census [2010 ZCTA to county subdivision relationship file](https://www.census.gov/geo/maps-data/data/zcta_rel_download.html)
 "zip2town"
+
+
+#' NAICS industry codes
+#'
+#' A dataset of industry names with their NAICS codes. These are only the main sectors, not detailed industry codes.
+#'
+#' @format A data frame with 21 rows and 3 variables:
+#' \describe{
+#'   \item{industry}{NAICS code}
+#'   \item{label}{Industry name}
+#'   \item{ind_level}{Sector level: either "A" for all industries, or "2" for sectors}
+#' }
+#' @source This is just a filtered version of file downloaded from [LEHD](https://lehd.ces.census.gov/data/)
+"naics_codes"
