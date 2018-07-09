@@ -20,7 +20,9 @@ Imports:
     classInt,
     ggplot2 (>= 3.0.0),
     camiller,
-    stats
+    stats,
+    httr,
+    jsonlite
 Roxygen: list(markdown = TRUE, wrap = TRUE)
 RoxygenNote: 6.0.1
 Suggests: 
