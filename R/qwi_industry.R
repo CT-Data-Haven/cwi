@@ -20,9 +20,9 @@ qwi_industry <- function(years, industries = naics_codes$industry, counties, sta
   ind_list <- as.list(industries)
   names(ind_list) <- rep("industry", length(ind_list))
   year_str <- paste(years, collapse = ",")
-  county_str <- stringr::str_pad(counties, width = 3, side = "left", pad = "0") %>%
-    paste(collapse = ",") %>%
-    sprintf("county:%s", .)
+  county_join <- stringr::str_pad(counties, width = 3, side = "left", pad = "0") %>%
+    paste(collapse = ",")
+  county_str <- sprintf("county:%s", county_join)
   state_str <- paste0("state:", stringr::str_pad(state, width = 2, side = "left", pad = "0"))
   quarter_str <- paste(1:4, collapse = ",")
   params <- list(
