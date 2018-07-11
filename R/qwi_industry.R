@@ -1,6 +1,8 @@
 #' Get employees counts and total payroll over time
 #'
-#' This gets data from the Quarterly Workforce Indicators (QWI) via the Census API. It's an alternative to `censusapi::getCensus` that fetches a set of variables (employees and payroll) but makes a somewhat more dynamic API call.
+#' This gets data from the Quarterly Workforce Indicators (QWI) via the Census API. It's an alternative to `censusapi::getCensus` that fetches a set of variables (employees and payroll) but makes a somewhat more dynamic API call. The API returns a maximum of 10 years of data; calling this function with more than 10 years will require multiple API calls, which takes a little longer.
+#'
+#' Note that when looking at data quarterly, the payroll reported will be for that quarter, not the yearly payroll that you may be more accustomed to.
 #' @param years A numeric vector of one or more years for which to get data
 #' @param industries A character vector of NAICS industry codes; default is the 20 sectors plus "All industries" from the dataset `naics_codes`.
 #' @param counties A character vector of county FIPS codes.
@@ -13,41 +15,58 @@
 #' qwi_industry(2012:2017, industries = c("23", "62"), counties = "009")
 #' }
 #' @export
-qwi_industry <- function(years, industries = naics_codes$industry, counties, state = "09", annual = TRUE, key = Sys.getenv("CENSUS_API_KEY")) {
+qwi_industry <- function(years, industries = naics_codes$industry, counties = NULL, state = "09", annual = TRUE, key = Sys.getenv("CENSUS_API_KEY")) {
   if (any(years < 1996)) stop("Data for Connecticut is only available for 1996 and after")
+  if (length(years) > 10) {
+    message("The API can only get 10 years of data at once; making multiple calls, but this might take a while.")
+  }
+  years_split <- data.frame(years = years, brk = ggplot2::cut_interval(years, length = 10, labels = F)) %>%
+    split(.$brk) %>%
+    purrr::map(dplyr::pull, years)
   base_url <- "https://api.census.gov/data/timeseries/qwi/se"
   get <- "Emp,Payroll"
   ind_list <- as.list(industries)
   names(ind_list) <- rep("industry", length(ind_list))
-  year_str <- paste(years, collapse = ",")
-  county_join <- stringr::str_pad(counties, width = 3, side = "left", pad = "0") %>%
-    paste(collapse = ",")
-  county_str <- sprintf("county:%s", county_join)
   state_str <- paste0("state:", stringr::str_pad(state, width = 2, side = "left", pad = "0"))
   quarter_str <- paste(1:4, collapse = ",")
-  params <- list(
-    key = key,
-    get = get,
-    "for" = county_str,
-    "in" = state_str,
-    year = year_str,
-    quarter = quarter_str
-  )
-  params <- c(params, ind_list)
-  request <- httr::GET(base_url, query = params)
-  data <- jsonlite::fromJSON(httr::content(request, as = "text"))
-  colnames(data) <- data[1, ]
 
-  out <- tibble::as_tibble(data[-1, ]) %>%
-    dplyr::select(year:county, tidyselect::everything()) %>%
-    dplyr::mutate_at(dplyr::vars(year, Emp, Payroll), as.numeric)
+  out <- purrr::map_dfr(years_split, function(yrs) {
+    year_str <- paste(yrs, collapse = ",")
+    params <- list(
+      key = key,
+      get = get,
+      year = year_str,
+      quarter = quarter_str
+    )
+
+    if (!is.null(counties)) {
+      county_join <- stringr::str_pad(counties, width = 3, side = "left", pad = "0") %>%
+        paste(collapse = ",")
+      county_str <- sprintf("county:%s", county_join)
+      params$`for` <- county_str
+      params$`in` <- state_str
+    } else {
+      params$`for` <- state_str
+    }
+
+    params <- c(params, ind_list)
+    request <- httr::GET(base_url, query = params)
+    data <- jsonlite::fromJSON(httr::content(request, as = "text"))
+    colnames(data) <- data[1, ]
+
+    tibble::as_tibble(data[-1, ]) %>%
+      dplyr::mutate_at(dplyr::vars(quarter, Emp, Payroll), as.numeric)
+  })
+
 
   if (annual) {
     out %>%
-      dplyr::group_by(year, industry, state, county) %>%
-      dplyr::summarise(Emp = mean(Emp), Payroll = sum(Payroll)) %>%
-      dplyr::ungroup()
+      dplyr::group_by_if(is.character) %>%
+      dplyr::summarise(Emp = round(mean(Emp)), Payroll = sum(Payroll)) %>%
+      dplyr::ungroup() %>%
+      dplyr::mutate(year = as.numeric(year))
   } else {
-    out
+    out %>%
+      dplyr::mutate(year = as.numeric(year))
   }
 }
