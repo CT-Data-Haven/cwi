@@ -113,3 +113,17 @@
 #' }
 #' @source This is just a filtered version of file downloaded from [LEHD](https://lehd.ces.census.gov/data/)
 "naics_codes"
+
+
+#' LAUS area codes
+#'
+#' A dataset of area types and codes for Connecticut, as used for the Local Area Unemployment Statistics. These are needed to put together series names, like those used to make API calls in `qwi_industry`.
+#'
+#' @format A data frame with 178 rows and 3 variables:
+#' \describe{
+#'   \item{type}{Area type code}
+#'   \item{area}{Area name}
+#'   \item{code}{Area code}
+#' }
+#' @source This is a filtered and cleaned version of a file downloaded from [BLS](https://download.bls.gov/pub/time.series/la/la.area).
+"laus_codes"

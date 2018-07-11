@@ -20,8 +20,8 @@ qwi_industry <- function(years, industries = naics_codes$industry, counties = NU
   if (length(years) > 10) {
     message("The API can only get 10 years of data at once; making multiple calls, but this might take a while.")
   }
-  years_split <- data.frame(years = years, brk = ggplot2::cut_interval(years, length = 10, labels = F)) %>%
-    split(.$brk) %>%
+  year_df <- data.frame(years = years, brk = ggplot2::cut_interval(years, length = 10, labels = F))
+  years_split <- split(year_df, year_df$brk) %>%
     purrr::map(dplyr::pull, years)
   base_url <- "https://api.census.gov/data/timeseries/qwi/se"
   get <- "Emp,Payroll"
@@ -54,7 +54,7 @@ qwi_industry <- function(years, industries = naics_codes$industry, counties = NU
     data <- jsonlite::fromJSON(httr::content(request, as = "text"))
     colnames(data) <- data[1, ]
 
-    tibble::as_tibble(data[-1, ]) %>%
+    dplyr::as_data_frame(data[-1, ]) %>%
       dplyr::mutate_at(dplyr::vars(quarter, Emp, Payroll), as.numeric)
   })
 
