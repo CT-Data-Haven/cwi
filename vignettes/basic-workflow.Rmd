@@ -11,8 +11,8 @@ vignette: >
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
-	message = FALSE,
-	warning = FALSE,
+	message = TRUE,
+	warning = TRUE,
 	collapse = TRUE,
 	comment = "#>",
 	fig.width = 7,
@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 library(dplyr)
 library(tidyr)
 library(purrr)
@@ -152,4 +152,44 @@ acs %>%
   camiller::add_grps(list(ages0_4 = 1, ages5_17 = 2:4, ages0_17 = 1:4, ages18_24 = 5:8, ages0_24 = 1:8), group = age, estimate = estimate, moe = moe) %>%
   arrange(level, NAME, age)
 ```
+
+# Employment trends
+
+I'm also interested in learning about employment by industry over the past several years. `qwi_industry` fetches county-level data by industry over time, either quarterly or annually. Here I'll look at annual averages of all industries for New Haven County and Connecticut over the past 16 years. I'm filtering out the industry code "00", which is the counts for all industries.
+
+```{r}
+nhc_employment <- qwi_industry(2002:2017, counties = "009", annual = T) %>%
+  mutate(location = "New Haven County")
+ct_employment <- qwi_industry(2002:2017, annual = T) %>%
+  mutate(location = "Connecticut")
+employment <- bind_rows(nhc_employment, ct_employment) %>%
+  filter(industry != "00") %>%
+  inner_join(naics_codes %>% select(-ind_level), by = "industry")
+
+employment
+```
+
+Next, say I want to look at the industries that were largest in New Haven county in 2017, and see how those have changed both for the county and statewide over this time period. I'll filter `employment`, get the industries with the largest numbers of employees, then filter `employment` for just those industries and plot it.
+
+```{r}
+top2017 <- employment %>%
+  filter(year == 2017, county == "009") %>%
+  top_n(8, Emp) %>%
+  pull(industry)
+top2017
+
+employment %>%
+  filter(industry %in% top2017) %>%
+  mutate(label = stringr::str_sub(label, 1, 25)) %>%
+  mutate(Emp = Emp / 1000) %>%
+  ggplot(aes(x = year, y = Emp, color = label)) +
+    geom_line() +
+    labs(x = "Year", y = "Employees (thousands)", title = "Employment by industry", 
+         subtitle = "Connecticut and New Haven County, 2002-2017", color = "Industry") +
+    theme_minimal() +
+    facet_wrap(~ location, scales = "free_y")
+```
+
+
+
 
