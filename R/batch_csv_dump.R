@@ -10,8 +10,7 @@
 #' @return Either a list of data frames (in case of `bind = FALSE`) or a single data frame (in case of `bind = TRUE`).
 #' @examples
 #' \dontrun{
-#'   race_pops %>%
-#'     split(.$region) %>%
+#'   split(race_pops, race_pops$region) %>%
 #'     batch_csv_dump(base_name = "race_pops", bind = TRUE) %>%
 #'     dplyr::filter(variable != "total")
 #' }
