@@ -16,11 +16,19 @@
 #' }
 #' @export
 qwi_industry <- function(years, industries = naics_codes$industry, counties = NULL, state = "09", annual = TRUE, key = Sys.getenv("CENSUS_API_KEY")) {
-  if (any(years < 1996)) stop("Data for Connecticut is only available for 1996 and after")
+  assertthat::assert_that(!is.null(key), nchar(key) > 0, msg = "A Census API key is required. Please see tidycensus::census_api_key for installation")
+
+  if (all(years < 1996)) stop("Data for Connecticut is only available for 1996 and after.")
+
+  if (any(years < 1996)) {
+    years <- years[years >= 1996]
+    warning("Data for Connecticut is only available for 1996 and after. Any earlier years are being removed.")
+  }
+
   if (length(years) > 10) {
     message("The API can only get 10 years of data at once; making multiple calls, but this might take a while.")
   }
-  year_df <- data.frame(years = years, brk = ggplot2::cut_interval(years, length = 10, labels = F))
+  year_df <- data.frame(years = years, brk = floor(years / 10))
   years_split <- split(year_df, year_df$brk) %>%
     purrr::map(dplyr::pull, years)
   base_url <- "https://api.census.gov/data/timeseries/qwi/se"

@@ -30,7 +30,8 @@ RoxygenNote: 6.0.1
 Suggests: 
     knitr,
     rmarkdown,
-    sf
+    sf,
+    testthat
 VignetteBuilder: knitr
 Remotes: 
     camille-s/camiller

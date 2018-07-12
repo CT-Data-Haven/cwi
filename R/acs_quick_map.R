@@ -1,6 +1,6 @@
 #' Quickly create a choropleth sketch
 #'
-#' This is a quick way to create a choropleth sketch of town-, neighborhood-, or tract-level data. Uses a corresponding `sf` object tht comes with this package, or you can supply an `sf` object directly. As of June 2018, this `sf` object must be one that ships with this package, or otherwise be globally available.
+#' This is a quick way to create a choropleth sketch of town-, neighborhood-, or tract-level data. Uses a corresponding `sf` object; as of June 2018, this `sf` object must be one that ships with this package, or otherwise be globally available and have a column `name`.
 #'
 #' @param data A data frame containing data by geography.
 #' @param name Bare column name of location names to join; defaults `name`.
@@ -15,9 +15,10 @@
 #' @export
 acs_quick_map <- function(data, name = name, value = value, level = "town", city = NULL, n = 5, palette = "GnBu", title = NULL, ...) {
   # supply city if it's neighborhoods
-  if (!level %in% c("town", "neighborhood", "tract")) stop("Valid geography levels are town, neighborhood, or tract.")
+  assertthat::assert_that(level %in% c("town", "neighborhood", "tract"), msg = "Valid geography levels are town, neighborhood, or tract.")
 
   if (level == "neighborhood" & is.null(city)) stop("If using neighborhoods, please supply a city name.")
+
   name_var <- rlang::enquo(name)
   value_var <- rlang::enquo(value)
   value_name <- rlang::quo_name(value_var)
@@ -25,19 +26,39 @@ acs_quick_map <- function(data, name = name, value = value, level = "town", city
   locations <- data %>% dplyr::pull(!!name_var) %>% unique()
 
   if (level == "neighborhood") {
-    shape_name <- city %>% stringr::str_to_lower() %>% stringr::str_replace_all(" ", "_") %>% paste0("_sf")
-    if (!exists(shape_name)) stop(sprintf("Please check the name of your city: does %s exist?", shape_name))
+    shape_name <- city %>%
+      stringr::str_to_lower() %>%
+      stringr::str_replace_all(" ", "_") %>%
+      paste0("_sf")
+    assertthat::assert_that(exists(shape_name), msg = sprintf("Please check the name of your city: does %s exist?", shape_name))
     shape <- get(shape_name)
+    shape <- shape %>% dplyr::filter(name %in% locations)
   } else if (level == "tract") {
     shape <- tract_sf %>% dplyr::filter(name %in% locations)
   } else {
     shape <- town_sf %>% dplyr::filter(name %in% locations)
   }
 
-  if (nrow(shape) == 0) stop("This sf object is empty. Is level set properly?")
+  assertthat::assert_that(nrow(shape) > 0, msg = "This sf object is empty. Are city and level set properly?")
+  assertthat::assert_that(nrow(shape) > 2, msg = "This sf object is nearly empty. Are city and level set properly?")
+
+  if (length(intersect(locations, shape$name)) < length(locations)) {
+    extra_locs <- paste(locations[!locations %in% shape$name], collapse = ", ")
+    warning(sprintf("Some locations in your data weren't found in the shape %s: %s", shape_name, extra_locs))
+  }
+
+  if (length(locations) < n) {
+    n <- ceiling(sqrt(length(locations)))
+    warning(sprintf("n is too large; setting to %s instead", n))
+  }
+
+  # make shape$name, data$name_var characters if not already
+  if (is.factor(shape$name)) shape$name <- as.character(shape$name)
+  data_fct <- data %>%
+    dplyr::mutate(!!rlang::quo_name(name_var) := ifelse(is.factor(!!name_var), as.character(!!name_var), !!name_var))
 
   p <- shape %>%
-    dplyr::inner_join(data, by = rlang::quo_name(name_var)) %>%
+    dplyr::inner_join(data_fct, by = rlang::quo_name(name_var)) %>%
     dplyr::mutate(brk = cut(!!value_var,
                           breaks = classInt::classIntervals(!!value_var, n = n, style = "jenks")$brk %>% unique(),
                           include.lowest = T)) %>%

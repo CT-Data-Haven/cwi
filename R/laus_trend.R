@@ -14,6 +14,7 @@
 #' }
 #' @export
 laus_trend <- function(towns, startyear, endyear, measures = "all", annual = FALSE, key = Sys.getenv("BLS_KEY")) {
+  assertthat::assert_that(!is.null(key), nchar(key) > 0, msg = "A BLS API key is required. Please see blscrapeR::set_bls_key for installation")
   if (identical(measures, "all")) {
     measure_lookup <- laus_measures
   } else {

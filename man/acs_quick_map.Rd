@@ -30,5 +30,5 @@ acs_quick_map(data, name = name, value = value, level = "town",
 A ggplot
 }
 \description{
-This is a quick way to create a choropleth sketch of town-, neighborhood-, or tract-level data. Uses a corresponding \code{sf} object tht comes with this package, or you can supply an \code{sf} object directly. As of June 2018, this \code{sf} object must be one that ships with this package, or otherwise be globally available.
+This is a quick way to create a choropleth sketch of town-, neighborhood-, or tract-level data. Uses a corresponding \code{sf} object; as of June 2018, this \code{sf} object must be one that ships with this package, or otherwise be globally available and have a column \code{name}.
 }
