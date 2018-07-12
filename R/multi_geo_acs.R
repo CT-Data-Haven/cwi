@@ -27,35 +27,62 @@
 #' }
 #' @export
 multi_geo_acs <- function(table, year = 2016, neighborhoods = NULL, towns = "all", regions = NULL, counties = "all", state = "09", msa = FALSE, us = FALSE, verbose = TRUE) {
-  if (is.null(state)) stop("Must supply a state name or FIPS code")
+  st <- state
+  # state must not be null
+  if (is.null(st)) stop("Must supply a state name or FIPS code")
+
+  # state should be string; if it's numeric, make sure it's padded as FIPS code
+  if (is.numeric(st)) {
+    padded <- stringr::str_pad(st, width = 2, side = "left", pad = "0")
+    message(sprintf("Converting state %s to %s", st, padded))
+    st <- padded
+  }
+
+  # state must be in tidycensus::fips_codes somewhere
+  state_lookup <- tidycensus::fips_codes %>%
+    dplyr::filter(state_code == st | state_name == st)
+  assertthat::assert_that(nrow(state_lookup) > 0, msg = sprintf("%s is not a valid state name or FIPS code", st))
 
   # if counties don't already end in County, paste it on
+  # drop counties that aren't in state lookup with a warning, only if counties != all
   if (!is.null(counties) & !identical(counties, "all")) {
     counties <- stringr::str_replace(counties, "(?<! County)$", " County")
+
+    possible_counties <- state_lookup %>%
+      dplyr::pull(county)
+    if (length(setdiff(counties, possible_counties))) {
+      purrr::walk(setdiff(counties, possible_counties), function(county) {
+        warning(sprintf("%s is not a valid county name and is being dropped", county))
+      })
+    }
+    counties <- intersect(counties, possible_counties)
   }
+
+
 
   # make message printing out current geographies
   if (verbose) {
-    msg <- geo_printout(neighborhoods, towns, regions, counties, state, msa, us)
+    msg <- geo_printout(neighborhoods, towns, regions, counties, st, msa, us)
     message("Geographies included:\n", msg)
   }
 
+  # fetch everything using functions from acs_helpers
   fetch <- list()
 
   if (!is.null(neighborhoods)) {
-    fetch$neighborhoods <- acs_neighborhoods(table, year, neighborhoods, state)
+    fetch$neighborhoods <- acs_neighborhoods(table, year, neighborhoods, st)
   }
   if (!is.null(towns)) {
-    fetch$towns <- acs_towns(table, year, towns, counties, state)
+    fetch$towns <- acs_towns(table, year, towns, counties, st)
   }
   if (!is.null(regions)) {
-    fetch$regions <- acs_regions(table, year, regions, state)
+    fetch$regions <- acs_regions(table, year, regions, st)
   }
   if (!is.null(counties)) {
-    fetch$counties <- acs_counties(table, year, counties, state)
+    fetch$counties <- acs_counties(table, year, counties, st)
   }
 
-  fetch$state <- acs_state(table, year, state)
+  fetch$state <- acs_state(table, year, st)
 
   if (msa) {
     fetch$msa <- acs_msa(table, year)
