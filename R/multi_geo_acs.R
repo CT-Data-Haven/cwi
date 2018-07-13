@@ -13,6 +13,7 @@
 #' @param state A string: either name or two-digit FIPS code of a US state. Required; defaults `"09"` (Connecticut).
 #' @param msa Logical: whether to fetch New England states' metropolitan statistical areas. Defaults `FALSE`.
 #' @param us Logical: whether to fetch US-level table. Defaults `FALSE`.
+#' @param new_england Logical: if `TRUE` (the default), limits metro areas to just New England states.
 #' @param verbose Logical: whether to print summary of geographies included. Defaults `TRUE`.
 #' @return A tibble with GEOID, name, variable code, estimate, moe, geography level, and county, as applicable, for the chosen ACS table.
 #' @seealso [tidycensus::census_api_key()], [tidycensus::get_acs()]
@@ -26,7 +27,7 @@
 #'   counties = "New Haven County")
 #' }
 #' @export
-multi_geo_acs <- function(table, year = 2016, neighborhoods = NULL, towns = "all", regions = NULL, counties = "all", state = "09", msa = FALSE, us = FALSE, verbose = TRUE) {
+multi_geo_acs <- function(table, year = 2016, neighborhoods = NULL, towns = "all", regions = NULL, counties = "all", state = "09", msa = FALSE, us = FALSE, new_england = TRUE, verbose = TRUE) {
   st <- state
   # state must not be null
   if (is.null(st)) stop("Must supply a state name or FIPS code")
@@ -85,7 +86,7 @@ multi_geo_acs <- function(table, year = 2016, neighborhoods = NULL, towns = "all
   fetch$state <- acs_state(table, year, st)
 
   if (msa) {
-    fetch$msa <- acs_msa(table, year)
+    fetch$msa <- acs_msa(table, year, new_england)
   }
 
   if (us) {

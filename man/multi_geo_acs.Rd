@@ -6,7 +6,7 @@
 \usage{
 multi_geo_acs(table, year = 2016, neighborhoods = NULL, towns = "all",
   regions = NULL, counties = "all", state = "09", msa = FALSE,
-  us = FALSE, verbose = TRUE)
+  us = FALSE, new_england = TRUE, verbose = TRUE)
 }
 \arguments{
 \item{table}{A string giving the ACS table number.}
@@ -26,6 +26,8 @@ multi_geo_acs(table, year = 2016, neighborhoods = NULL, towns = "all",
 \item{msa}{Logical: whether to fetch New England states' metropolitan statistical areas. Defaults \code{FALSE}.}
 
 \item{us}{Logical: whether to fetch US-level table. Defaults \code{FALSE}.}
+
+\item{new_england}{Logical: if \code{TRUE} (the default), limits metro areas to just New England states.}
 
 \item{verbose}{Logical: whether to print summary of geographies included. Defaults \code{TRUE}.}
 }
