@@ -26,7 +26,7 @@ qwi_industry <- function(years, industries = naics_codes$industry, counties = NU
   }
 
   if (length(years) > 10) {
-    message("The API can only get 10 years of data at once; making multiple calls, but this might take a while.")
+    message("The API can only get 10 years of data at once; making multiple calls, but this might take a little longer.")
   }
   year_df <- data.frame(years = years, brk = floor(years / 10))
   years_split <- split(year_df, year_df$brk) %>%
