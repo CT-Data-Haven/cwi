@@ -61,9 +61,15 @@ acs_neighborhoods <- function(table, year, neighborhoods, state) {
     })
 }
 
-acs_msa <- function(table, year) {
-  fetch <- suppressMessages(tidycensus::get_acs(geography = "metropolitan statistical area/micropolitan statistical area", table = table, year = year)) %>%
-    dplyr::filter(GEOID %in% msa$GEOID)
+acs_msa <- function(table, year, new_england) {
+  fetch <- suppressMessages(tidycensus::get_acs(geography = "metropolitan statistical area/micropolitan statistical area", table = table, year = year))
+  if (new_england) {
+    ne_geoid <- msa %>%
+      dplyr::filter(region == "New England") %>%
+      dplyr::pull(GEOID)
+    fetch <- fetch %>%
+      dplyr::filter(GEOID %in% ne_geoid)
+  }
 
   fetch
 }
