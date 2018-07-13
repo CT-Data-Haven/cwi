@@ -1,4 +1,4 @@
-context("test-laus_trend.R")
+context("Error handling for laus_trend")
 library(tidyverse)
 library(cwi)
 library(testthat)
@@ -19,3 +19,7 @@ test_that("catches invalid area names", {
   expect_error(laus_trend(c("New Haven", "South Haven"), 2016, 2016), "Limit towns")
 })
 
+test_that("handles more than 20 years okay", {
+  expect_message(laus_trend("New Haven", 1990, 2016, measures = "employment"), "multiple calls")
+  expect_equal(nrow(laus_trend("New Haven", 1990, 2016, measures = "employment")), 27 * 12)
+})
