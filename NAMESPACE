@@ -2,6 +2,7 @@
 
 export("%>%")
 export(acs_quick_map)
+export(adj_inflation)
 export(batch_csv_dump)
 export(enexpr)
 export(enquo)

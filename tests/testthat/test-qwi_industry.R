@@ -1,4 +1,4 @@
-context("test-qwi_industry.R")
+context("Error handling for qwi_industry")
 library(tidyverse)
 library(cwi)
 library(testthat)
