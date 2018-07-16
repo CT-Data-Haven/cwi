@@ -12,6 +12,20 @@
 "acs_vars"
 
 
+#' Variable labels from the Decennial Census
+#'
+#' Dataset set Decennial Census variable labels, loaded from `tidycensus::load_variables()` and cleaned up slightly.
+#'
+#' @format A data frame with 8912 rows and 3 variables:
+#' \describe{
+#'   \item{name}{Variable code, where first 1 to 3 letters and 3 to 4 digits are the table number, and remaining characters are the variable number}
+#'   \item{label}{Readable label of each variable}
+#'   \item{concept}{Table name, including readable table number}
+#' }
+#' @source US Census Bureau via `tidycensus`
+"decennial_vars"
+
+
 #' Basic ACS table numbers
 #'
 #' List of ACS table numbers commonly used by DataHaven for making short profiles of towns, neighborhoods, and regions.
