@@ -35,8 +35,10 @@ acs_quick_map <- function(data, name = name, value = value, level = "town", city
     shape <- shape %>% dplyr::filter(name %in% locations)
   } else if (level == "tract") {
     shape <- tract_sf %>% dplyr::filter(name %in% locations)
+    shape_name <- "tract_sf"
   } else {
     shape <- town_sf %>% dplyr::filter(name %in% locations)
+    shape_name <- "town_sf"
   }
 
   assertthat::assert_that(nrow(shape) > 0, msg = "This sf object is empty. Are city and level set properly?")
@@ -45,6 +47,7 @@ acs_quick_map <- function(data, name = name, value = value, level = "town", city
   if (length(intersect(locations, shape$name)) < length(locations)) {
     extra_locs <- paste(locations[!locations %in% shape$name], collapse = ", ")
     warning(sprintf("Some locations in your data weren't found in the shape %s: %s", shape_name, extra_locs))
+    locations <- locations[locations %in% shape$name]
   }
 
   if (length(locations) < n) {
@@ -55,7 +58,9 @@ acs_quick_map <- function(data, name = name, value = value, level = "town", city
   # make shape$name, data$name_var characters if not already
   if (is.factor(shape$name)) shape$name <- as.character(shape$name)
   data_fct <- data %>%
-    dplyr::mutate(!!rlang::quo_name(name_var) := ifelse(is.factor(!!name_var), as.character(!!name_var), !!name_var))
+    dplyr::ungroup()
+  if (is.factor(data_fct$name)) data_fct$name <- as.character(data_fct$name)
+
 
   p <- shape %>%
     dplyr::inner_join(data_fct, by = rlang::quo_name(name_var)) %>%
