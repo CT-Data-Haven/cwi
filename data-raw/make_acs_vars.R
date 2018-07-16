@@ -11,7 +11,7 @@ decennial_vars <- tidycensus::load_variables(year = 2010, "sf1", cache = T) %>%
 decennial_nums <- decennial_vars %>%
   dplyr::filter(!stringr::str_detect(name, "^H0001")) %>%
   dplyr::pull(name) %>%
-  stringr::str_extract("^(H|P|HCT|PCT|PCO)\\d{3}") %>%
+  stringr::str_extract("^(H|P|HCT|PCT|PCO)\\d{3}[A-Z]?") %>%
   unique()
 
 usethis::use_data(decennial_vars, overwrite = T)
