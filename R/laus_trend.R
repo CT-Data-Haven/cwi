@@ -1,7 +1,7 @@
 #' Fetch local area unemployment statistics (LAUS) data over time
 #'
-#' Fetch monthly LAUS data for a list of towns over a given time period. Requires a BLS API key; see [blscrapeR::set_bls_key()].
-#' @param towns A character vector of place names to look up: as of now, this is limited to Connecticut, and its counties and towns.
+#' Fetch monthly LAUS data for a list of locations over a given time period. Requires a BLS API key; see [blscrapeR::set_bls_key()].
+#' @param names A character vector of place names to look up: as of now, this is limited to Connecticut, and its counties and towns.
 #' @param startyear Numeric; first year of range
 #' @param endyear Numeric; last year of range
 #' @param measures A character vector of measures, containing any combination of `"unemployment rate"`, `"unemployment"`, `"employment"`, or `"labor force"`, or `"all"` (the default) as shorthand for all of the above.
@@ -13,7 +13,7 @@
 #' laus_trend(c("New Haven", "Hamden"), 2014, 2017, annual = TRUE)
 #' }
 #' @export
-laus_trend <- function(towns, startyear, endyear, measures = "all", annual = FALSE, key = Sys.getenv("BLS_KEY")) {
+laus_trend <- function(names, startyear, endyear, measures = "all", annual = FALSE, key = Sys.getenv("BLS_KEY")) {
   # make sure there's an API key
   assertthat::assert_that(!is.null(key), nchar(key) > 0, msg = "A BLS API key is required. Please see blscrapeR::set_bls_key for installation")
   # BLS API maxes at 20 years--split into groups of 20
@@ -35,9 +35,9 @@ laus_trend <- function(towns, startyear, endyear, measures = "all", annual = FAL
       dplyr::inner_join(laus_measures, by = "measure_text")
   }
   # laus area lookup table
-  assertthat::assert_that(all(towns %in% laus_codes$area), msg = "Limit towns to valid Connecticut town and county names")
+  assertthat::assert_that(all(names %in% laus_codes$area), msg = "Limit names to valid Connecticut town and county names")
   areas <- laus_codes %>%
-    dplyr::filter(area %in% towns)
+    dplyr::filter(area %in% names)
 
   # to make series IDs, get all combinations of measure codes and area codes
   series_df <- tidyr::crossing(measure_lookup, areas) %>%

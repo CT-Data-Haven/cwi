@@ -4,11 +4,11 @@
 \alias{laus_trend}
 \title{Fetch local area unemployment statistics (LAUS) data over time}
 \usage{
-laus_trend(towns, startyear, endyear, measures = "all", annual = FALSE,
+laus_trend(names, startyear, endyear, measures = "all", annual = FALSE,
   key = Sys.getenv("BLS_KEY"))
 }
 \arguments{
-\item{towns}{A character vector of place names to look up: as of now, this is limited to Connecticut, and its counties and towns.}
+\item{names}{A character vector of place names to look up: as of now, this is limited to Connecticut, and its counties and towns.}
 
 \item{startyear}{Numeric; first year of range}
 
@@ -24,7 +24,7 @@ laus_trend(towns, startyear, endyear, measures = "all", annual = FALSE,
 A data frame / tibble with columns for the measure, area, year, month number and name, value, series ID, and footnotes returned from the API.
 }
 \description{
-Fetch monthly LAUS data for a list of towns over a given time period. Requires a BLS API key; see \code{\link[blscrapeR:set_bls_key]{blscrapeR::set_bls_key()}}.
+Fetch monthly LAUS data for a list of locations over a given time period. Requires a BLS API key; see \code{\link[blscrapeR:set_bls_key]{blscrapeR::set_bls_key()}}.
 }
 \examples{
 \dontrun{
