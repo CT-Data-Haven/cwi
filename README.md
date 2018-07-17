@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-cwi
-===
+cwi <img src="man/figures/logo.png" align="right" />
+====================================================
 
 The goal of cwi is to get data, primarily the Census ACS, fetched, aggregated, and analyzed for DataHaven's 2019 Community Index reports. This includes functions to speed up and standardize analysis for multiple staff people, preview trends and patterns we'll need to write about, and get data in more layperson-friendly formats.
 
@@ -54,6 +54,7 @@ tenure <- multi_geo_acs(
   counties = "New Haven",
   us = T
 )
+#> Table: TENURE
 #> Geographies included:
 #> Towns: all
 #> Regions: Greater New Haven, New Haven Inner Ring, New Haven Outer Ring
@@ -65,18 +66,18 @@ tenure <- multi_geo_acs(
 ``` r
 tenure
 #> # A tibble: 99 x 8
-#>    GEOID NAME              variable    estimate    moe level  state county
-#>    <chr> <chr>             <chr>          <dbl>  <dbl> <chr>  <chr> <chr> 
-#>  1 1     United States     B25003_001 117716237 222078 1_us   <NA>  <NA>  
-#>  2 1     United States     B25003_002  74881068 360470 1_us   <NA>  <NA>  
-#>  3 1     United States     B25003_003  42835169 142056 1_us   <NA>  <NA>  
-#>  4 09    Connecticut       B25003_001   1354713   3509 2_sta… <NA>  <NA>  
-#>  5 09    Connecticut       B25003_002    900223   5427 2_sta… <NA>  <NA>  
-#>  6 09    Connecticut       B25003_003    454490   3843 2_sta… <NA>  <NA>  
-#>  7 09009 New Haven County  B25003_001    326487   1531 3_cou… 09    <NA>  
-#>  8 09009 New Haven County  B25003_002    203568   1887 3_cou… 09    <NA>  
-#>  9 09009 New Haven County  B25003_003    122919   1716 3_cou… 09    <NA>  
-#> 10 <NA>  Greater New Haven B25003_001    177415   1434 4_reg… <NA>  <NA>  
+#>    GEOID NAME            variable   estimate    moe level     state county
+#>    <chr> <chr>           <chr>         <dbl>  <dbl> <chr>     <chr> <chr> 
+#>  1 1     United States   B25003_001   1.18e8 222078 1_us      <NA>  <NA>  
+#>  2 1     United States   B25003_002   7.49e7 360470 1_us      <NA>  <NA>  
+#>  3 1     United States   B25003_003   4.28e7 142056 1_us      <NA>  <NA>  
+#>  4 09    Connecticut     B25003_001   1.35e6   3509 2_state   <NA>  <NA>  
+#>  5 09    Connecticut     B25003_002   9.00e5   5427 2_state   <NA>  <NA>  
+#>  6 09    Connecticut     B25003_003   4.54e5   3843 2_state   <NA>  <NA>  
+#>  7 09009 New Haven Coun… B25003_001   3.26e5   1531 3_counti… 09    <NA>  
+#>  8 09009 New Haven Coun… B25003_002   2.04e5   1887 3_counti… 09    <NA>  
+#>  9 09009 New Haven Coun… B25003_003   1.23e5   1716 3_counti… 09    <NA>  
+#> 10 <NA>  Greater New Ha… B25003_001   1.77e5   1434 4_regions <NA>  <NA>  
 #> # ... with 89 more rows
 ```
 
