@@ -16,7 +16,7 @@ test_that("checks possible measures & accepts keyword 'all'", {
 })
 
 test_that("catches invalid area names", {
-  expect_error(laus_trend(c("New Haven", "South Haven"), 2016, 2016), "Limit towns")
+  expect_error(laus_trend(c("New Haven", "South Haven"), 2016, 2016), "Limit names")
 })
 
 test_that("handles more than 20 years okay", {

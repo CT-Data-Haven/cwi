@@ -1,27 +1,29 @@
 decennial_towns <- function(table, year, towns, counties, state, sumfile) {
+  st <- state
   if (!is.null(counties) & !identical(counties, "all")) {
-    fetch <- counties %>%
-      purrr::map_dfr(function(county) {
-        suppressMessages(tidycensus::get_decennial(geography = "county subdivision", table = table, year = year, state = state, county = county, sumfile = sumfile)) %>%
-          dplyr::mutate(county = county)
-      }) %>%
-      camiller::town_names(NAME)
+    counties_to_fetch <- counties
   } else {
-    fetch <- suppressMessages(tidycensus::get_decennial(geography = "county subdivision", table = table, year = year, state = state, sumfile = sumfile)) %>%
-      dplyr::mutate(state = state) %>%
-      camiller::town_names(NAME)
+    counties_to_fetch <- tidycensus::fips_codes %>%
+      dplyr::filter(state_code == st | state_name == st) %>%
+      dplyr::pull(county)
   }
+  fetch <- counties_to_fetch %>%
+    purrr::map_dfr(function(county) {
+      suppressMessages(tidycensus::get_decennial(geography = "county subdivision", table = table, year = year, state = st, county = county, sumfile = sumfile)) %>%
+        dplyr::mutate(county = county)
+    }) %>%
+    camiller::town_names(NAME)
 
   if (!identical(towns, "all")) {
     fetch <- fetch %>% dplyr::filter(NAME %in% towns)
   }
   fetch %>%
-    dplyr::mutate(state = state)
+    dplyr::mutate(state = st)
 }
 
 decennial_counties <- function(table, year, counties, state, sumfile) {
   fetch <- suppressMessages(tidycensus::get_decennial(geography = "county", table = table, year = year, state = state, sumfile = sumfile)) %>%
-    dplyr::mutate(NAME = stringr::str_extract(NAME, "^.+County(?=, )")) %>%
+    dplyr::mutate(NAME = stringr::str_extract(NAME, "^.+County")) %>%
     dplyr::mutate(state = state)
 
   if (!identical(counties, "all")) {
@@ -45,7 +47,7 @@ decennial_regions <- function(table, year, regions, state, sumfile) {
       fetch_towns %>%
         dplyr::filter(NAME %in% region) %>%
         dplyr::group_by(NAME = region_name, variable) %>%
-        dplyr::summarise(estimate = sum(estimate), moe = tidycensus::moe_sum(moe, estimate) %>% round())
+        dplyr::summarise(value = sum(value))
     })
 }
 
@@ -57,6 +59,6 @@ decennial_neighborhoods <- function(table, year, neighborhoods, state, sumfile) 
       fetch_tracts %>%
         dplyr::filter(GEOID %in% neighborhood) %>%
         dplyr::group_by(NAME = neighborhood_name, variable) %>%
-        dplyr::summarise(estimate = sum(estimate), moe = tidycensus::moe_sum(moe, estimate) %>% round())
+        dplyr::summarise(value = sum(value))
     })
 }

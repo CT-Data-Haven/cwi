@@ -1,4 +1,31 @@
-multi_geo_decennial <- function(table, year = 2010, neighborhoods = NULL, towns = "all", regions = NULL, counties = "all", state = "09", us = FALSE, sumfile = "sf1", verbose = TRUE) {
+#' Fetch a decennial census table with multiple geography levels
+#'
+#' Fetch a data table from the decennial census via `tidycensus` with your choice of geographies at multiple levels. For geographies made of aggregates, i.e. neighborhoods made of tracts or regions made of towns, the returned table will have estimates summed and margins of error calculated for the whole area.
+#'
+#' This function essentially calls `tidycensus::get_decennial` multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying `tidycensus::get_decennial` requires a Census API key. As is the case with other `tidycensus` functions, `multi_geo_decennial` assumes this key is stored as `CENSUS_API_KEY` in your `.Renviron`. See [tidycensus::census_api_key()] for installation.
+#'
+#' @param table A string giving the decennial census table number.
+#' @param year The year of the census table; currently defaults 2010 (most recent decennial census).
+#' @param neighborhoods A named list of neighborhoods with their 11-digit tract GEOIDs (defaults `NULL`).
+#' @param towns A character vector of towns to include; `"all"` (default) for all towns optionally filtered by county; or `NULL` to not fetch town-level table.
+#' @param regions A named list of regions with their town names (defaults `NULL`).
+#' @param counties A character vector of counties to include; `"all"` (default) for all counties in the state; or `NULL` to not fetch county-level table.
+#' @param state A string: either name or two-digit FIPS code of a US state. Required; defaults `"09"` (Connecticut).
+#' @param sumfile A string giving the summary file to pull from. Defaults `"sf1"`; in some rare cases, `"sf3"` may be appropriate.
+#' @param verbose Logical: whether to print summary of geographies included. Defaults `TRUE`.
+#' @return A tibble with GEOID, name, variable code, estimate, moe, geography level, and county, as applicable, for the chosen table.
+#' @seealso [tidycensus::census_api_key()], [tidycensus::get_decennial()]
+#' @examples
+#' \dontrun{
+#' multi_geo_decennial("P001", 2016,
+#'   neighborhoods = list(downtown = c("09009140100", "09009361401", "09009361402"),
+#'     dixwell = "090091416"),
+#'   towns = "all",
+#'   regions = list(inner_ring = c("Hamden", "East Haven", "West Haven")),
+#'   counties = "New Haven County")
+#' }
+#' @export
+multi_geo_decennial <- function(table, year = 2010, neighborhoods = NULL, towns = "all", regions = NULL, counties = "all", state = "09", sumfile = "sf1", verbose = TRUE) {
   st <- state
   # state must not be null
   assertthat::assert_that(!is.null(st), msg = "Must supply a state name or FIPS code")
@@ -52,7 +79,7 @@ multi_geo_decennial <- function(table, year = 2010, neighborhoods = NULL, towns 
       dplyr::pull(concept) %>%
       `[`(1)
     message("Table: ", concept)
-    msg <- geo_printout(neighborhoods, towns, regions, counties, st, msa = F, us = us, new_england = F)
+    msg <- geo_printout(neighborhoods, towns, regions, counties, st, msa = F, new_england = F)
     message("Geographies included:\n", msg)
   }
 
@@ -73,10 +100,6 @@ multi_geo_decennial <- function(table, year = 2010, neighborhoods = NULL, towns 
   }
 
   fetch$state <- decennial_state(table, year, st, sumfile)
-
-  if (us) {
-    fetch$us <- suppressMessages(tidycensus::get_decennial(geography = "us", table = table, year = year, sumfile = sumfile))
-  }
 
   # take names of all items in fetch, reverse order, make level labels & bind all
   lvls <- fetch %>% rev()
