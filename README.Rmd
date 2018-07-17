@@ -4,6 +4,8 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+# cwi <img src="man/figures/logo.png" align="right" />
+
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -12,7 +14,6 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
-# cwi
 
 The goal of cwi is to get data, primarily the Census ACS, fetched, aggregated, and analyzed for DataHaven's 2019 Community Index reports. This includes functions to speed up and standardize analysis for multiple staff people, preview trends and patterns we'll need to write about, and get data in more layperson-friendly formats.
 
