@@ -2,8 +2,8 @@
 title: "Basic workflow"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Basic workflow}
   %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Basic workflow}
   %\usepackage[utf8]{inputenc}
 ---
 
