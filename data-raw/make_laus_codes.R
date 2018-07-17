@@ -7,4 +7,3 @@ laus_codes <- readr::read_tsv("https://download.bls.gov/pub/time.series/la/la.ar
 usethis::use_data(laus_codes, overwrite = T)
 
 laus_measures <- readr::read_tsv("https://download.bls.gov/pub/time.series/la/la.measure")
-usethis::use_data(laus_measures, internal = TRUE, overwrite = TRUE)

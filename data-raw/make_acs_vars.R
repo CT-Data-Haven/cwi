@@ -15,4 +15,4 @@ decennial_nums <- decennial_vars %>%
   unique()
 
 usethis::use_data(decennial_vars, overwrite = T)
-usethis::use_data(decennial_nums, overwrite = T, internal = T)
+
