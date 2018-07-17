@@ -8,7 +8,7 @@ acs_towns <- function(table, year, towns, counties, state) {
       camiller::town_names(NAME)
   } else {
     fetch <- suppressMessages(tidycensus::get_acs(geography = "county subdivision", table = table, year = year, state = state)) %>%
-      dplyr::mutate(state = state) %>%
+      # dplyr::mutate(state = state) %>%
       camiller::town_names(NAME)
   }
 

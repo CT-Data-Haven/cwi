@@ -30,7 +30,8 @@ laus_trend <- function(names, startyear, endyear, measures = "all", annual = FAL
   if (identical(measures, "all")) {
     measure_lookup <- laus_measures
   } else {
-    assertthat::assert_that(all(measures %in% laus_measures$measure_text), msg = sprintf("Possible measures are %s, or all", paste(laus_measures$measure_text, collapse = ", ")))
+    # assertthat::assert_that(all(measures %in% laus_measures$measure_text), msg = sprintf("Possible measures are %s, or all", paste(laus_measures$measure_text, collapse = ", ")))
+    if (!all(measures %in% laus_measures$measure_text)) stop(sprintf("Possible measures are %s, or all", paste(laus_measures$measure_text, collapse = ", ")))
     measure_lookup <- dplyr::data_frame(measure_text = measures) %>%
       dplyr::inner_join(laus_measures, by = "measure_text")
   }

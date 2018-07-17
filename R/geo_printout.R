@@ -1,5 +1,5 @@
 # make geography printout--not exported
-geo_printout <- function(neighborhoods, towns, regions, counties, state, msa, us, new_england) {
+geo_printout <- function(neighborhoods, towns, regions, counties, state, msa = FALSE, us = FALSE, new_england = FALSE) {
 
   out <- list(names(neighborhoods), towns, names(regions), counties, state) %>%
     purrr::map2(c("Neighborhoods", "Towns", "Regions", "Counties", "State"), function(geo, geo_head) {
