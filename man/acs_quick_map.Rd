@@ -20,15 +20,22 @@ acs_quick_map(data, name = name, value = value, level = "town",
 
 \item{n}{Number of breaks into which to bin values; defaults (approximately) 5.}
 
-\item{palette}{String of a ColorBrewer palette; see \code{[RColorBrewer::RColorBrewer()]} for possible values. Defaults \code{"GnBu"}.}
+\item{palette}{String of a ColorBrewer palette; see \code{\link[RColorBrewer:RColorBrewer]{RColorBrewer::RColorBrewer()}} for possible values. Defaults \code{"GnBu"}.}
 
 \item{title}{String giving the title, if desired, for the plot.}
 
-\item{...}{Any other parameters to pass along to \code{geom_sf}, such as \code{color} or \code{size}.}
+\item{...}{Any other parameters to pass along to \code{geom_sf()}, such as \code{color} or \code{size}.}
 }
 \value{
 A ggplot
 }
 \description{
 This is a quick way to create a choropleth sketch of town-, neighborhood-, or tract-level data. Uses a corresponding \code{sf} object; as of June 2018, this \code{sf} object must be one that ships with this package, or otherwise be globally available and have a column \code{name}.
+}
+\examples{
+tidycensus::get_acs(geography = "county subdivision",
+variables = c(median_age = "B01002_001"), state = "09", county = "09") \%>\%
+  camiller::town_names(NAME) \%>\%
+  dplyr::filter(NAME \%in\% regions$`Greater New Haven`) \%>\%
+  acs_quick_map(name = NAME, value = estimate, title = "Median age by town, 2016", n = 6)
 }

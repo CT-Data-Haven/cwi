@@ -8,10 +8,16 @@
 #' @param level String giving the desired geographic level; must be one of `"town"`, `"neighborhood"`, or `"tract"`. Defaults `"town"`.
 #' @param city If geographic level is neighborhood, string of the corresponding city name to match to a spatial object.
 #' @param n Number of breaks into which to bin values; defaults (approximately) 5.
-#' @param palette String of a ColorBrewer palette; see `[RColorBrewer::RColorBrewer()]` for possible values. Defaults `"GnBu"`.
+#' @param palette String of a ColorBrewer palette; see [RColorBrewer::RColorBrewer()] for possible values. Defaults `"GnBu"`.
 #' @param title String giving the title, if desired, for the plot.
-#' @param ... Any other parameters to pass along to `geom_sf`, such as `color` or `size`.
+#' @param ... Any other parameters to pass along to `geom_sf()`, such as `color` or `size`.
 #' @return A ggplot
+#' @examples
+#' tidycensus::get_acs(geography = "county subdivision",
+#' variables = c(median_age = "B01002_001"), state = "09", county = "09") %>%
+#'   camiller::town_names(NAME) %>%
+#'   dplyr::filter(NAME %in% regions$`Greater New Haven`) %>%
+#'   acs_quick_map(name = NAME, value = estimate, title = "Median age by town, 2016", n = 6)
 #' @export
 acs_quick_map <- function(data, name = name, value = value, level = "town", city = NULL, n = 5, palette = "GnBu", title = NULL, ...) {
   # supply city if it's neighborhoods
@@ -63,7 +69,8 @@ acs_quick_map <- function(data, name = name, value = value, level = "town", city
 
 
   p <- shape %>%
-    dplyr::inner_join(data_fct, by = rlang::quo_name(name_var)) %>%
+    # dplyr::inner_join(data_fct, by = rlang::quo_name(name_var)) %>%
+    dplyr::inner_join(data_fct, by = suppressWarnings(stats::setNames(rlang::quo_name(name_var), "name"))) %>%
     dplyr::mutate(brk = cut(!!value_var,
                           breaks = classInt::classIntervals(!!value_var, n = n, style = "jenks")$brk %>% unique(),
                           include.lowest = T)) %>%
@@ -76,3 +83,4 @@ acs_quick_map <- function(data, name = name, value = value, level = "town", city
   if (!is.null(title)) p <- p + ggplot2::ggtitle(title)
   p
 }
+

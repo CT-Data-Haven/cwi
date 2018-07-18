@@ -37,16 +37,16 @@ library(cwi)
 
 # `sf`
 
-`sf` objects are easy to plot either out of the box with `plot.sf`, or with `ggplot` as of `ggplot2` version 3.0.0. Use with `ggplot` means a `geom_sf` can be overlayed on a basemap from `ggmap`, as is done in the neighborhood examples.
+`sf` objects are easy to plot either out of the box with `sf::plot.sf()`, or with `ggplot2::ggplot()` as of `ggplot2` version 3.0.0. Use with `ggplot()` means a `geom_sf()` can be overlayed on a basemap from `ggmap`, as is done in the neighborhood examples.
 
-`sf` is well-documented, and uses `dplyr`-type functions to allow for mutating, filtering, summarizing, joining, and most other data wrangling functions. See [the `sf` vignettes](https://cran.r-project.org/web/packages/sf/) for help getting started.
+`sf` is well-documented, and uses `dplyr`-type functions to allow for mutating, filtering, summarizing, joining, and most other data wrangling functions. See the `sf` vignettes for help getting started: `vignette(package = "sf")`.
 
 `sf` data frames look and act like other data frames, but with shape information attached.
 
 
 # Statewide
 
-A basic plot of `town_sf`, with some `ggplot` aesthetics set, graticule lines turned off with `coord_sf(ndiscr = F)`, and a blank theme.
+A basic plot of `cwi::town_sf`, with some `ggplot` aesthetics set, graticule lines turned off with `coord_sf(ndiscr = F)`, and a blank theme.
 
 ```{r towns}
 ggplot(town_sf) +
@@ -56,7 +56,7 @@ ggplot(town_sf) +
   ggtitle("Connecticut towns")
 ```
 
-With some `dplyr` operations. For example, `group_by` followed by `summarise()` conducts a union on each group's geometries, using `sf::st_union()` in its back-end.
+With some `dplyr` operations. For example, `group_by()` followed by `summarise()` conducts a union on each group's geometries, using `sf::st_union()` in its back-end.
 
 ```{r town_regional}
 town_sf %>%
@@ -72,7 +72,7 @@ town_sf %>%
     ggtitle("Filtering and unioning shapes")
 ```
 
-`tract_sf`, a fairly large shape containing all tracts in the state.
+`cwi::tract_sf`, a fairly large shape containing all tracts in the state.
 
 ```{r tracts}
 ggplot(tract_sf) +
@@ -84,7 +84,7 @@ ggplot(tract_sf) +
 
 # Neighborhoods
 
-Neighborhood shapes were made at DataHaven by splitting or grouping census tracts into neighborhood areas as defined by each city's government. In some cases, boundaries were slightly adjusted to fit tracts. Small neighborhoods may be grouped together for analysis.
+Neighborhood shapes were made at DataHaven by splitting or grouping census tracts into neighborhood areas as defined by each city's government. In some cases, boundaries were slightly adjusted to fit tracts. Small neighborhoods may be grouped together for analysis. See documentation of these at `cwi::neighborhood_shapes` and crosswalk of tracts to neighborhoods at `cwi::neighborhood_tracts`.
 
 ```{r prep_function}
 neighborhood_map <- function(shp, city_name) {

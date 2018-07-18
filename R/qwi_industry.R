@@ -1,6 +1,6 @@
 #' Get employees counts and total payroll over time
 #'
-#' This gets data from the Quarterly Workforce Indicators (QWI) via the Census API. It's an alternative to `censusapi::getCensus` that fetches a set of variables (employees and payroll) but makes a somewhat more dynamic API call. The API returns a maximum of 10 years of data; calling this function with more than 10 years will require multiple API calls, which takes a little longer.
+#' This gets data from the Quarterly Workforce Indicators (QWI) via the Census API. It's an alternative to `censusapi::getCensus()` that fetches a set of variables (employees and payroll) but makes a somewhat more dynamic API call. The API returns a maximum of 10 years of data; calling this function with more than 10 years will require multiple API calls, which takes a little longer.
 #'
 #' Note that when looking at data quarterly, the payroll reported will be for that quarter, not the yearly payroll that you may be more accustomed to.
 #' @param years A numeric vector of one or more years for which to get data
@@ -8,8 +8,9 @@
 #' @param counties A character vector of county FIPS codes.
 #' @param state A string of a state FIPS code; defaults to `"09"` for Connecticut
 #' @param annual Logical, whether to return annual averages (default) or quarterly data.
-#' @param key A Census API key. Defaults to the value at `"CENSUS_API_KEY"` in your `.Renviron` file, as set by `tidycensus::census_api_key`.
+#' @param key A Census API key. Defaults to the value at `"CENSUS_API_KEY"` in your `.Renviron` file, as set by `tidycensus::census_api_key()`.
 #' @return A data frame / tibble
+#' @seealso [censusapi::getCensus()]
 #' @examples
 #' \dontrun{
 #' qwi_industry(2012:2017, industries = c("23", "62"), counties = "009")

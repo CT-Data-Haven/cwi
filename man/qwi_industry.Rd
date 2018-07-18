@@ -18,13 +18,13 @@ qwi_industry(years, industries = naics_codes$industry, counties = NULL,
 
 \item{annual}{Logical, whether to return annual averages (default) or quarterly data.}
 
-\item{key}{A Census API key. Defaults to the value at \code{"CENSUS_API_KEY"} in your \code{.Renviron} file, as set by \code{tidycensus::census_api_key}.}
+\item{key}{A Census API key. Defaults to the value at \code{"CENSUS_API_KEY"} in your \code{.Renviron} file, as set by \code{tidycensus::census_api_key()}.}
 }
 \value{
 A data frame / tibble
 }
 \description{
-This gets data from the Quarterly Workforce Indicators (QWI) via the Census API. It's an alternative to \code{censusapi::getCensus} that fetches a set of variables (employees and payroll) but makes a somewhat more dynamic API call. The API returns a maximum of 10 years of data; calling this function with more than 10 years will require multiple API calls, which takes a little longer.
+This gets data from the Quarterly Workforce Indicators (QWI) via the Census API. It's an alternative to \code{censusapi::getCensus()} that fetches a set of variables (employees and payroll) but makes a somewhat more dynamic API call. The API returns a maximum of 10 years of data; calling this function with more than 10 years will require multiple API calls, which takes a little longer.
 }
 \details{
 Note that when looking at data quarterly, the payroll reported will be for that quarter, not the yearly payroll that you may be more accustomed to.
@@ -33,4 +33,7 @@ Note that when looking at data quarterly, the payroll reported will be for that 
 \dontrun{
 qwi_industry(2012:2017, industries = c("23", "62"), counties = "009")
 }
+}
+\seealso{
+\code{\link[censusapi:getCensus]{censusapi::getCensus()}}
 }

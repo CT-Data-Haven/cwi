@@ -34,7 +34,7 @@
 
 <meta property="og:description" content="This is a wrapper around blscrapeR::bls_api() modeled after blscrapeR::inflation_adjust() that joins a data frame with an inflation adjustment table, then calculates adjusted values. It returns the original data frame with two additional columns for adjustment factors and adjustment values." />
 
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://CT-Data-Haven.github.io/cwi/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -87,6 +87,9 @@
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/basic-workflow.html">Basic workflow</a>
+    </li>
+    <li>
+      <a href="../articles/shapefiles.html">Shapefiles</a>
     </li>
   </ul>
 </li>
@@ -160,18 +163,13 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>  <span class='no'>wages</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+  <span class='no'>wages</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(
     <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2010</span>:<span class='fl'>2016</span>,
     <span class='kw'>wage</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>50000</span>, <span class='fl'>51000</span>, <span class='fl'>52000</span>, <span class='fl'>53000</span>, <span class='fl'>54000</span>, <span class='fl'>55000</span>, <span class='fl'>54000</span>)
   )
-  <span class='fu'>adj_inflation</span>(<span class='no'>wages</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='no'>wage</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='no'>year</span>, <span class='kw'>base_year</span> <span class='kw'>=</span> <span class='fl'>2016</span>)</div><div class='output co'>#&gt; <span class='message'>REQUEST_SUCCEEDED</span></div><div class='output co'>#&gt;   year  wage adj_factor adj_wage
-#&gt; 1 2010 50000      0.909 55005.50
-#&gt; 2 2011 51000      0.937 54429.03
-#&gt; 3 2012 52000      0.957 54336.47
-#&gt; 4 2013 53000      0.971 54582.90
-#&gt; 5 2014 54000      0.986 54766.73
-#&gt; 6 2015 55000      0.987 55724.42
-#&gt; 7 2016 54000      1.000 54000.00</div></pre>
+  <span class='fu'>adj_inflation</span>(<span class='no'>wages</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='no'>wage</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='no'>year</span>, <span class='kw'>base_year</span> <span class='kw'>=</span> <span class='fl'>2016</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

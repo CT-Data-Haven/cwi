@@ -34,7 +34,7 @@
 
 <meta property="og:description" content="Fetch a data table from the decennial census via tidycensus with your choice of geographies at multiple levels. For geographies made of aggregates, i.e. neighborhoods made of tracts or regions made of towns, the returned table will have estimates summed and margins of error calculated for the whole area." />
 
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://CT-Data-Haven.github.io/cwi/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -87,6 +87,9 @@
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/basic-workflow.html">Basic workflow</a>
+    </li>
+    <li>
+      <a href="../articles/shapefiles.html">Shapefiles</a>
     </li>
   </ul>
 </li>
@@ -173,7 +176,7 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function essentially calls <code><a href='http://www.rdocumentation.org/packages/tidycensus/topics/get_decennial'>tidycensus::get_decennial</a></code> multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying <code><a href='http://www.rdocumentation.org/packages/tidycensus/topics/get_decennial'>tidycensus::get_decennial</a></code> requires a Census API key. As is the case with other <code>tidycensus</code> functions, <code>multi_geo_decennial</code> assumes this key is stored as <code>CENSUS_API_KEY</code> in your <code>.Renviron</code>. See <code><a href='http://www.rdocumentation.org/packages/tidycensus/topics/census_api_key'>tidycensus::census_api_key()</a></code> for installation.</p>
+    <p>This function essentially calls <code><a href='http://www.rdocumentation.org/packages/tidycensus/topics/get_decennial'>tidycensus::get_decennial()</a></code> multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying <code><a href='http://www.rdocumentation.org/packages/tidycensus/topics/get_decennial'>tidycensus::get_decennial()</a></code> requires a Census API key. As is the case with other <code>tidycensus</code> functions, <code>multi_geo_decennial</code> assumes this key is stored as <code>CENSUS_API_KEY</code> in your <code>.Renviron</code>. See <code><a href='http://www.rdocumentation.org/packages/tidycensus/topics/census_api_key'>tidycensus::census_api_key()</a></code> for installation.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -181,17 +184,14 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>multi_geo_decennial</span>(<span class='st'>"P001"</span>, <span class='fl'>2016</span>,
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'>multi_geo_decennial</span>(<span class='st'>"P001"</span>, <span class='fl'>2016</span>,
   <span class='kw'>neighborhoods</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>downtown</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"09009140100"</span>, <span class='st'>"09009361401"</span>, <span class='st'>"09009361402"</span>),
     <span class='kw'>dixwell</span> <span class='kw'>=</span> <span class='st'>"090091416"</span>),
   <span class='kw'>towns</span> <span class='kw'>=</span> <span class='st'>"all"</span>,
   <span class='kw'>regions</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>inner_ring</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"Hamden"</span>, <span class='st'>"East Haven"</span>, <span class='st'>"West Haven"</span>)),
-  <span class='kw'>counties</span> <span class='kw'>=</span> <span class='st'>"New Haven County"</span>)</div><div class='output co'>#&gt; <span class='message'>Table: P1. Total Population [1]</span></div><div class='output co'>#&gt; <span class='message'>Geographies included:</span>
-#&gt; <span class='message'>Neighborhoods: downtown, dixwell</span>
-#&gt; <span class='message'>Towns: all</span>
-#&gt; <span class='message'>Regions: inner_ring</span>
-#&gt; <span class='message'>Counties: New Haven County</span>
-#&gt; <span class='message'>State: 09</span></div><div class='output co'>#&gt; <span class='error'>Error in open.connection(x, "rb"): HTTP error 404.</span></div></pre>
+  <span class='kw'>counties</span> <span class='kw'>=</span> <span class='st'>"New Haven County"</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

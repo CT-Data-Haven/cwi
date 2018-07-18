@@ -2,7 +2,7 @@
 #'
 #' Fetch a data table from the decennial census via `tidycensus` with your choice of geographies at multiple levels. For geographies made of aggregates, i.e. neighborhoods made of tracts or regions made of towns, the returned table will have estimates summed and margins of error calculated for the whole area.
 #'
-#' This function essentially calls `tidycensus::get_decennial` multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying `tidycensus::get_decennial` requires a Census API key. As is the case with other `tidycensus` functions, `multi_geo_decennial` assumes this key is stored as `CENSUS_API_KEY` in your `.Renviron`. See [tidycensus::census_api_key()] for installation.
+#' This function essentially calls `tidycensus::get_decennial()` multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying `tidycensus::get_decennial()` requires a Census API key. As is the case with other `tidycensus` functions, `multi_geo_decennial` assumes this key is stored as `CENSUS_API_KEY` in your `.Renviron`. See [tidycensus::census_api_key()] for installation.
 #'
 #' @param table A string giving the decennial census table number.
 #' @param year The year of the census table; currently defaults 2010 (most recent decennial census).

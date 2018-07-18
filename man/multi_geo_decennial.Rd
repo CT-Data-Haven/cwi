@@ -34,7 +34,7 @@ A tibble with GEOID, name, variable code, estimate, moe, geography level, and co
 Fetch a data table from the decennial census via \code{tidycensus} with your choice of geographies at multiple levels. For geographies made of aggregates, i.e. neighborhoods made of tracts or regions made of towns, the returned table will have estimates summed and margins of error calculated for the whole area.
 }
 \details{
-This function essentially calls \code{tidycensus::get_decennial} multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying \code{tidycensus::get_decennial} requires a Census API key. As is the case with other \code{tidycensus} functions, \code{multi_geo_decennial} assumes this key is stored as \code{CENSUS_API_KEY} in your \code{.Renviron}. See \code{\link[tidycensus:census_api_key]{tidycensus::census_api_key()}} for installation.
+This function essentially calls \code{tidycensus::get_decennial()} multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying \code{tidycensus::get_decennial()} requires a Census API key. As is the case with other \code{tidycensus} functions, \code{multi_geo_decennial} assumes this key is stored as \code{CENSUS_API_KEY} in your \code{.Renviron}. See \code{\link[tidycensus:census_api_key]{tidycensus::census_api_key()}} for installation.
 }
 \examples{
 \dontrun{
