@@ -32,7 +32,9 @@ Suggests:
     knitr,
     rmarkdown,
     sf,
-    testthat
+    testthat,
+    ggmap,
+    ggrepel
 VignetteBuilder: knitr
 Remotes: 
     camille-s/camiller
