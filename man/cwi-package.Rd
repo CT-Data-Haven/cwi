@@ -8,6 +8,14 @@
 \description{
 This is a collection of functions for collecting and analyzing Census data and other sources to write the 2019 Community Wellbeing Index reports. It also contains reference tables for local geographies—neighborhoods, regions, etc—and commonly used ACS table numbers.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/CT-Data-Haven/cwi}
+  \item Report bugs at \url{https://github.com/CT-Data-Haven/cwi/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Camille Seaberry \email{camille@ctdatahaven.org}
 

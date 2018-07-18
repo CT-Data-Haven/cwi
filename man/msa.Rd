@@ -4,18 +4,19 @@
 \name{msa}
 \alias{msa}
 \title{Names and GEOIDs of regional MSAs}
-\format{A data frame with 15 rows and 2 variables:
+\format{A data frame with 389 rows and 3 variables:
 \describe{
 \item{GEOID}{GEOID/FIPS code}
 \item{name}{Name of MSA}
+\item{region}{String: whether MSA is inside or outside of New England}
 }}
 \source{
-US Census Bureau via \code{tidycensus}
+US Census Bureau via \code{tidycensus}. Note that these are 2015 MSA definitions.
 }
 \usage{
 msa
 }
 \description{
-A reference dataset of all the metropolitan statistical areas (MSAs) in New England.
+A reference dataset of all the metropolitan statistical areas (MSAs) in the US, marked with whether they're in a New England state.
 }
 \keyword{datasets}
