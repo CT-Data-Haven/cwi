@@ -3,7 +3,7 @@
 cwi <img src="man/figures/logo.png" align="right" />
 ====================================================
 
-The goal of cwi is to get data, primarily the Census ACS, fetched, aggregated, and analyzed for DataHaven's 2019 Community Index reports. This includes functions to speed up and standardize analysis for multiple staff people, preview trends and patterns we'll need to write about, and get data in more layperson-friendly formats.
+The goal of cwi is to get data, primarily the Census ACS, fetched, aggregated, and analyzed for [DataHaven's 2019 Community Index reports](http://ctdatahaven.org/reports/greater-new-haven-community-index). This includes functions to speed up and standardize analysis for multiple staff people, preview trends and patterns we'll need to write about, and get data in more layperson-friendly formats.
 
 It depends on many functions from Camille's brilliantly-named [`camiller`](https://github.com/camille-s/camiller) package.
 
@@ -33,8 +33,20 @@ Data
 `cwi` ships with several datasets and shapefiles. These include:
 
 -   Shapes (as `sf` objects) of towns, tracts, and city neighborhoods for New Haven, Hartford, Bridgeport, and Stamford
--   Common ACS table numbers—hopefully decreases time spent prowling around FactFinder
+-   Common ACS table numbers—hopefully decreases time spent prowling around [FactFinder](https://factfinder.census.gov)
 -   Definitions of neighborhoods by tract or block group, and of regions by town
+
+Sources
+-------
+
+This package contains functions to make it easier and more reproducible to fetch and analyze data from:
+
+-   [American Community Survey](https://www.census.gov/programs-surveys/acs/) (US Census Bureau)
+-   [Decennial Census](https://www.census.gov/programs-surveys/decennial-census.html) (US Census Bureau)
+-   [Quarterly Workforce Indicators](https://lehd.ces.census.gov/) (US Census Bureau Center for Economic Studies)
+-   [Local Area Unemployment Statistics](https://www.bls.gov/lau/) (Bureau of Labor Statistics)
+
+More to come (as of 7/17/2018) may include simplifications of working with [LEHD Origin-Destination Employment Statistics](https://lehd.ces.census.gov/data/) (LODES) and ACS public use microdata samples (PUMS) via [IPUMS](https://usa.ipums.org/usa/).
 
 Example
 -------
@@ -61,9 +73,6 @@ tenure <- multi_geo_acs(
 #> Counties: New Haven County
 #> State: 09
 #> US: Yes
-```
-
-``` r
 tenure
 #> # A tibble: 99 x 8
 #>    GEOID NAME            variable   estimate    moe level     state county
@@ -122,6 +131,6 @@ geo_level_plot(homeownership, value = share, hilite = "#EA7FA2",
                title = "Homeownership in Greater New Haven, 2016")
 ```
 
-<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+<img src="man/figures/README-geo_plot-1.png" width="100%" />
 
 See more detail in the vignette: `vignette("Basic workflow", "cwi")`.
