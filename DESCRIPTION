@@ -36,3 +36,5 @@ Suggests:
 VignetteBuilder: knitr
 Remotes: 
     camille-s/camiller
+URL: https://github.com/CT-Data-Haven/cwi
+BugReports: https://github.com/CT-Data-Haven/cwi/issues

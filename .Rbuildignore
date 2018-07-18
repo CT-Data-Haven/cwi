@@ -4,3 +4,5 @@
 ^data-raw$
 ^README\.Rmd$
 ^\.httr-oauth$
+^_pkgdown\.yml$
+^docs$
