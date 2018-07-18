@@ -46,14 +46,15 @@
 
 #' Names and GEOIDs of regional MSAs
 #'
-#' A reference dataset of all the metropolitan statistical areas (MSAs) in New England.
+#' A reference dataset of all the metropolitan statistical areas (MSAs) in the US, marked with whether they're in a New England state.
 #'
-#' @format A data frame with 15 rows and 2 variables:
+#' @format A data frame with 389 rows and 3 variables:
 #' \describe{
 #'   \item{GEOID}{GEOID/FIPS code}
 #'   \item{name}{Name of MSA}
+#'   \item{region}{String: whether MSA is inside or outside of New England}
 #' }
-#' @source US Census Bureau via `tidycensus`
+#' @source US Census Bureau via `tidycensus`. Note that these are 2015 MSA definitions.
 "msa"
 
 
@@ -70,19 +71,22 @@
 #'   \item{block_group}{Single digit number of the block group, if applicable (`nhv_bgrps`)}
 #'   \item{weight}{Share of tract/block group households in that neighborhood}
 #' }
-#' @rdname tracts
+#' @name neighborhood_tracts
+NULL
+
+#' @rdname neighborhood_tracts
 "nhv_tracts"
 
-#' @rdname tracts
+#' @rdname neighborhood_tracts
 "nhv_bgrps"
 
-#' @rdname tracts
+#' @rdname neighborhood_tracts
 "bridgeport_tracts"
 
-#' @rdname tracts
+#' @rdname neighborhood_tracts
 "stamford_tracts"
 
-#' @rdname tracts
+#' @rdname neighborhood_tracts
 "hartford_tracts"
 
 
