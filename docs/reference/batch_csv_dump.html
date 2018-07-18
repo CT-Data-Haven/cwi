@@ -34,7 +34,7 @@
 
 <meta property="og:description" content="This function takes either a list of data frames, or a data frame and a column to split by, and writes them all to CSV files. It then returns the list of data frames, optionally row-binded back together. It fits neatly in the middle of a longer piped workflow." />
 
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://CT-Data-Haven.github.io/cwi/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -87,6 +87,9 @@
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/basic-workflow.html">Basic workflow</a>
+    </li>
+    <li>
+      <a href="../articles/shapefiles.html">Shapefiles</a>
     </li>
   </ul>
 </li>
@@ -160,9 +163,11 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>  <span class='fu'>split</span>(<span class='no'>race_pops</span>, <span class='no'>race_pops</span>$<span class='no'>region</span>) <span class='kw'>%&gt;%</span>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+  <span class='fu'>split</span>(<span class='no'>race_pops</span>, <span class='no'>race_pops</span>$<span class='no'>region</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'>batch_csv_dump</span>(<span class='kw'>base_name</span> <span class='kw'>=</span> <span class='st'>"race_pops"</span>, <span class='kw'>bind</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
-    <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>variable</span> <span class='kw'>!=</span> <span class='st'>"total"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in split(race_pops, race_pops$region): object 'race_pops' not found</span></div></pre>
+    <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>variable</span> <span class='kw'>!=</span> <span class='st'>"total"</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

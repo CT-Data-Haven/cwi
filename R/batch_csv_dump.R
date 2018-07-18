@@ -8,12 +8,7 @@
 #' @param bind Logical: whether to row-bind list of data frames into a single data frame. Defaults `FALSE`, in which case a list of data frames is returned.
 #' @param verbose Logical: whether to print files' paths and names as they're written. Defaults `TRUE`.
 #' @return Either a list of data frames (in case of `bind = FALSE`) or a single data frame (in case of `bind = TRUE`).
-#' @examples
-#' \dontrun{
-#'   split(race_pops, race_pops$region) %>%
-#'     batch_csv_dump(base_name = "race_pops", bind = TRUE) %>%
-#'     dplyr::filter(variable != "total")
-#' }
+#'
 #' @export
 batch_csv_dump <- function(data, split_by, path = ".", base_name = NULL, bind = FALSE, verbose = TRUE) {
   # if data is a data frame, split it. Otherwise treat as list

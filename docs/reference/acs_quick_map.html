@@ -34,7 +34,7 @@
 
 <meta property="og:description" content="This is a quick way to create a choropleth sketch of town-, neighborhood-, or tract-level data. Uses a corresponding sf object; as of June 2018, this sf object must be one that ships with this package, or otherwise be globally available and have a column name." />
 
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://CT-Data-Haven.github.io/cwi/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -87,6 +87,9 @@
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/basic-workflow.html">Basic workflow</a>
+    </li>
+    <li>
+      <a href="../articles/shapefiles.html">Shapefiles</a>
     </li>
   </ul>
 </li>
@@ -154,7 +157,7 @@
     </tr>
     <tr>
       <th>palette</th>
-      <td><p>String of a ColorBrewer palette; see <code>[RColorBrewer::RColorBrewer()]</code> for possible values. Defaults <code>"GnBu"</code>.</p></td>
+      <td><p>String of a ColorBrewer palette; see <code><a href='http://www.rdocumentation.org/packages/RColorBrewer/topics/ColorBrewer'>RColorBrewer::RColorBrewer()</a></code> for possible values. Defaults <code>"GnBu"</code>.</p></td>
     </tr>
     <tr>
       <th>title</th>
@@ -162,7 +165,7 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Any other parameters to pass along to <code>geom_sf</code>, such as <code>color</code> or <code>size</code>.</p></td>
+      <td><p>Any other parameters to pass along to <code>geom_sf()</code>, such as <code>color</code> or <code>size</code>.</p></td>
     </tr>
     </table>
     

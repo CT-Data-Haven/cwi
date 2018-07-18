@@ -133,4 +133,4 @@ geo_level_plot(homeownership, value = share, hilite = "#EA7FA2",
 
 <img src="man/figures/README-geo_plot-1.png" width="100%" />
 
-See more detail in the vignette: `vignette("Basic workflow", "cwi")`.
+See more detail in the vignette: `vignette("basic-workflow")`.
