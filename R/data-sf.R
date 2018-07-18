@@ -3,6 +3,8 @@
 #' Data frames of neighborhoods of Connecticut cities with `sf` geometries. Includes Bridgeport, Hartford/West Hartford, New Haven, and Stamford.
 #'
 #' @format Data frames (classes `data.frame` and `sf`). In each, `name` is the name of each neighborhood, and `geometry` is the shape of each neighborhood as either a `sfc_POLYGON` or `sfc_MULTIPOLYGON` object. `hartford_sf` contains an additional variable, `town`, which marks the neighborhoods as being in Hartford or West Hartford.
+#' @name neighborhoods
+NULL
 
 #' @rdname neighborhoods
 "bridgeport_sf"
