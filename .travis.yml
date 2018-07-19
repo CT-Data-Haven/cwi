@@ -22,6 +22,7 @@ addons:
     packages:
       - libgdal-dev
       - libproj-dev
+      - libgit2
 
 warnings_are_errors: false
 latex: false
