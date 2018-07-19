@@ -2,6 +2,8 @@
 
 language: r
 cache: packages
+sudo: required
+dist: trusty
 
 after_success:
   - Rscript -e 'pkgdown::build_site()'
@@ -14,3 +16,13 @@ deploy:
   local-dir: docs
   on:
     branch: master
+
+addons:
+  apt:
+    packages:
+      - libgdal-dev
+      - libproj-dev
+
+warnings_are_errors: false
+latex: false
+
