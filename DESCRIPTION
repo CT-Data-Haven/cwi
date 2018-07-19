@@ -38,7 +38,7 @@ Suggests:
     pkgdown (>= 1.1.0)
 VignetteBuilder: knitr
 Remotes: 
-    camille-s/camiller
+    camille-s/camiller,
     dkahle/ggmap
 URL: https://github.com/CT-Data-Haven/cwi, https://CT-Data-Haven.github.io/cwi
 BugReports: https://github.com/CT-Data-Haven/cwi/issues
