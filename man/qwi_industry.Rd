@@ -24,7 +24,7 @@ qwi_industry(years, industries = naics_codes$industry, counties = NULL,
 A data frame / tibble
 }
 \description{
-This gets data from the Quarterly Workforce Indicators (QWI) via the Census API. It's an alternative to \code{censusapi::getCensus()} that fetches a set of variables (employees and payroll) but makes a somewhat more dynamic API call. The API returns a maximum of 10 years of data; calling this function with more than 10 years will require multiple API calls, which takes a little longer.
+This gets data from the Quarterly Workforce Indicators (QWI) via the Census API. It's an alternative to \code{censusapi::getCensus} that fetches a set of variables (employees and payroll) but makes a somewhat more dynamic API call. The API returns a maximum of 10 years of data; calling this function with more than 10 years will require multiple API calls, which takes a little longer.
 }
 \details{
 Note that when looking at data quarterly, the payroll reported will be for that quarter, not the yearly payroll that you may be more accustomed to.
