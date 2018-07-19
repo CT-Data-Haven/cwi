@@ -10,7 +10,7 @@ brewpackages: libgit2
 
 r_packages:
   - devtools
-
+r_build_args: --no-vignettes
 deploy:
   provider: pages
   skip-cleanup: true
