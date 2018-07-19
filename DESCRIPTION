@@ -34,7 +34,8 @@ Suggests:
     sf,
     testthat,
     ggmap,
-    ggrepel
+    ggrepel,
+    pkgdown
 VignetteBuilder: knitr
 Remotes: 
     camille-s/camiller
