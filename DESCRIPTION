@@ -35,7 +35,9 @@ Suggests:
     testthat (>= 2.0.0),
     ggmap (>= 2.7.900),
     ggrepel (>= 0.8.0),
-    pkgdown (>= 1.1.0)
+    pkgdown (>= 1.1.0),
+    lubridate,
+    scales
 VignetteBuilder: knitr
 Remotes: 
     camille-s/camiller,
