@@ -12,6 +12,7 @@ This is a collection of functions for collecting and analyzing Census data and o
 Useful links:
 \itemize{
   \item \url{https://github.com/CT-Data-Haven/cwi}
+  \item \url{https://CT-Data-Haven.github.io/cwi}
   \item Report bugs at \url{https://github.com/CT-Data-Haven/cwi/issues}
 }
 
