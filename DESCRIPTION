@@ -37,7 +37,8 @@ Suggests:
     ggrepel (>= 0.8.0),
     pkgdown (>= 1.1.0),
     lubridate,
-    scales
+    scales,
+    censusapi
 VignetteBuilder: knitr
 Remotes: 
     camille-s/camiller,
