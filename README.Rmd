@@ -6,6 +6,8 @@ output: github_document
 
 # cwi <img src="man/figures/logo.png" align="right" />
 
+[![Build Status](https://travis-ci.org/CT-Data-Haven/cwi.svg?branch=master)](https://travis-ci.org/CT-Data-Haven/cwi)
+
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,

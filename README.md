@@ -3,6 +3,8 @@
 cwi <img src="man/figures/logo.png" align="right" />
 ====================================================
 
+[![Build Status](https://travis-ci.org/CT-Data-Haven/cwi.svg?branch=master)](https://travis-ci.org/CT-Data-Haven/cwi)
+
 The goal of `cwi` is to get data, primarily the Census ACS, fetched, aggregated, and analyzed for [DataHaven's 2019 Community Index reports](http://ctdatahaven.org/reports/greater-new-haven-community-index). This includes functions to speed up and standardize analysis for multiple staff people, preview trends and patterns we'll need to write about, and get data in more layperson-friendly formats.
 
 It depends on many functions from Camille's brilliantly-named [`camiller`](https://github.com/camille-s/camiller) package.
