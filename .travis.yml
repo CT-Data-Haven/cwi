@@ -20,6 +20,7 @@ addons:
     packages:
     - libgdal-dev
     - libproj-dev
+    - libmagick++-dev
 warnings_are_errors: false
 latex: false
 env:

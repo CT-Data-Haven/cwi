@@ -6,11 +6,11 @@ fips <- dplyr::data_frame(
 ne_search <- sprintf("(%s)", paste(fips$state, collapse = "|"))
 
 msa <- tidycensus::get_acs(geography = "metropolitan statistical area/micropolitan statistical area", table = "B01003", year = 2016) %>%
-  dplyr::select(GEOID, name = NAME) %>%
-  dplyr::filter(stringr::str_detect(name, "Metro Area")) %>%
-  dplyr::mutate(GEOID = stringr::str_sub(GEOID, 3, -1)) %>%
-  dplyr::mutate(name = stringr::str_remove(name, " Metro Area.+$")) %>%
+  dplyr::select(GEOID, NAME) %>%
+  dplyr::filter(stringr::str_detect(NAME, "Metro Area")) %>%
+  # dplyr::mutate(GEOID = stringr::str_sub(GEOID, 3, -1)) %>%
+  dplyr::mutate(NAME = stringr::str_remove(NAME, " Metro Area.+$")) %>%
   unique() %>%
-  dplyr::mutate(region = ifelse(stringr::str_detect(name, ne_search), "New England", "Outside New England"))
+  dplyr::mutate(region = ifelse(stringr::str_detect(NAME, ne_search), "New England", "Outside New England"))
 
 usethis::use_data(msa, overwrite = T)
