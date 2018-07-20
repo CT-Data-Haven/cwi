@@ -39,3 +39,4 @@ deploy:
     branch: master
   local_dir: docs
   repo: CT-Data-Haven/cwi
+  keep_history: true
