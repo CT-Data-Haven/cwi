@@ -22,6 +22,8 @@ test_that("output is same as input", {
     region = sample(LETTERS[1:5], 20, replace = T),
     value = rnorm(20)
   )
+  df <- df[order(df$region, df$name), ]
+  rownames(df) <- NULL
   split_df <- split(df, df$region)
 
   expect_equal(batch_csv_dump(df, split_by = region, path = tempdir(), bind = TRUE), df)
