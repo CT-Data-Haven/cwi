@@ -61,7 +61,8 @@ More to come (as of 7/17/2018) may include simplifications of working with [LEHD
 Here's an example of getting a big table to calculate homeownership rates across many geographies at once:
 
 ```{r example, message=FALSE, warning=FALSE}
-library(tidyverse)
+library(dplyr)
+library(stringr)
 library(cwi)
 ```
 
