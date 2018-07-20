@@ -1,5 +1,4 @@
 context("Error handling for adj_inflation")
-library(dplyr)
 library(cwi)
 library(testthat)
 
@@ -13,22 +12,22 @@ test_that("checks for required columns", {
 })
 
 test_that("adjusted amounts are calculated correctly", {
-  # hundred_2000 <- adj_inflation(data_frame(year = 2000, amount = 100), value = amount, year = year, base_year = 2016) %>%
-  #   pull(adj_amount) %>%
-  #   floor()
-  # # looked up on BLS calculator
-  # expect_equal(hundred_2000, 139)
+  skip_on_travis()
+  df2000 <- adj_inflation(data.frame(year = 2000, amount = 100), value = amount, year = year, base_year = 2016)
+  hundred_2000 <- floor(df2000$adj_amount)
+  expect_equal(hundred_2000, 139)
 })
 
 test_that("handles more than 20 years okay", {
+  skip_on_travis()
   wages <- data.frame(year = 1990:2016, wage = 100)
-
-  # expect_message(adj_inflation(wages, value = wage, year = year, base_year = 2016))
-  # expect_equal(nrow(adj_inflation(wages, value = wage, year = year, base_year = 2016)), 27)
+  expect_message(adj_inflation(wages, value = wage, year = year, base_year = 2016))
+  expect_equal(nrow(adj_inflation(wages, value = wage, year = year, base_year = 2016)), 27)
 })
 
 test_that("handles base_year outside year range", {
+  skip_on_travis()
   wages <- data.frame(year = 1990:1999, wage = 100)
 
-  # expect_equal(nrow(adj_inflation(wages, value = wage, year = year, base_year = 2016)), 10)
+  expect_equal(nrow(adj_inflation(wages, value = wage, year = year, base_year = 2016)), 10)
 })
