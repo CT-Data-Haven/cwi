@@ -12,6 +12,7 @@ brewpackages: libgit2
 r_packages:
   - devtools
   - pkgdown
+  - CT-Data-Haven/cwi
 r_build_args: '--no-build-vignettes'
 r_check_args: '--ignore-vignettes --no-examples'
 
@@ -28,7 +29,7 @@ env:
   - secure: mEeNIHYPaP13xIq14ga/dtFvW/58FGs6oc1XpggzEIdJu4TdU+6W+i6GimDwvRBOLOiOc1debRjUAzRj5rmvOXHenltTFNTozfjev9gFZSJkFu7PCpd0LDDyg2tIPFuHALhV5Ii1j4jnxGC0blqocaiPqtoNUbzse0+LDdSKAM42mr3DSVBydJ3GtnUBdwgSEYFTNYxQkoOkkaEEu3eGL6usoy2iiS4FIEpdDyaa+pzGVCB0P4fhke888h6YfIBgexvSUCCrOvlPemTAm8/8ZHbptzYKjL6r7ald5OzNyo9gM/ibMaJJlD4T26sZLWiivzLzKK3KW4b7vOa/5obudY7KRUJ8iFFh+OtezU4kWFFUf373qt9kXO31qrgS4CLJQ/T0A+7IigU5LEr2hdwkClXwKlnwhZOzv7AnIPxFJ/ZHFwdgFmqXQddLNtwNjWOuoXDORuTyOb87OAr2iyO1BCcha712RNVy0JTJzEaZDn1bZjjNq6464BDgXqZy1Nb6afDSCtGC/orJU5fXIT8tGrznKQKxDKBrA/m40Qd7bUpi43WVi1SvI/23vDCrBpSlmgi8yNPWuFS8WXhyJlYihdWbhOrsoWH8eY9jm7HghB3SsWa2Kbj9/j+iqJi6EyOdzlnhzw9XYDsB+FpjD3vBOpocapaw9Wdh9qFY2SWXaZ0=
   - secure: AyzxK+cFXyXGFwJkH6KquhaBScBRgTIgypqodiQN0fiRoZpU70fXS3qMe7xXOsFTyTTYu+h2KNnVy/eyBx1NK/EpsVuPttBNVim4Uh37z8C3p5bN9l112r6Lxo/UAAA6QJ0h8PgVFWe1fQgh1UZ4KVqO5KzaTdhHwKUfgQPVxUjpNqcHd5qdgTn5U9Jsdg6UJpxKRoICXfCLI7pbc8kskZYUj5Nr6Why9Qb/2zJGiGj0+1y4MF5yZWhed4eHsC/7THvv5XIRAw1Alv7V3gDHDvKZ/XbPwKaGBQCb3FaowTyv+N0DiCtLyMTIGGz/OVONWRUry8OOlHRf8DfjzVcyUY1ZPO/tDR2cLWK+m3oaZhfVHfG07a2Zm35M94Hp2UFBHE7dEwO6YmeVI5G2464iOHZTWzHmhrEatROQlsY4HWwtZG/agfa3Iw6TU2uBCH0J3ZMcsJWM0IhlcF6J7+uOZkBmxcj6Nef1YjDO7Oqq9wlWtcZq39EBW22hKHjeZF7Yu1J2wcUe9LGjQRCfjA8OQ7r07xE3LXLpls1OcQYe1pWPLFX9qCGoaZIJSBM373Bv+yV77xAx5e971oDFBx5oBf3kOTNAHPrEn5k61Ebb0PT5EIBGETZ+cvrZbEg3Qf56qI/BEo+B4vRPGbtAd+p3EvlF6B4+xu13M6SIvB7xcO0=
 
-script:
+after_success:
   - "Rscript -e 'pkgdown::build_site()'"
 
 deploy:
@@ -38,5 +39,4 @@ deploy:
   on:
     branch: master
   local_dir: docs
-  repo: CT-Data-Haven/cwi
   keep_history: true
