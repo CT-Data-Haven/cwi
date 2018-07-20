@@ -1,5 +1,5 @@
 context("Error handling for adj_inflation")
-library(tidyverse)
+library(dplyr)
 library(cwi)
 library(testthat)
 

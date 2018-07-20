@@ -1,7 +1,6 @@
 context("Geographies and messaging in multi_geo_decennial")
 library(cwi)
 library(testthat)
-library(dplyr)
 
 test_that("state names and FIPS codes are validated", {
   # expect_error(multi_geo_decennial(table = "P035", state = NULL), "Must supply")
