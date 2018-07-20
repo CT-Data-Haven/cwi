@@ -30,7 +30,7 @@ env:
 
 after_success:
   - Rscript -e "devtools::install_github('CT-Data-Haven/cwi')"
-  - "Rscript -e 'pkgdown::build_site()'"
+  - "Rscript -e 'pkgdown::build_site(run_dont_run = TRUE)'"
 
 deploy:
   provider: pages
