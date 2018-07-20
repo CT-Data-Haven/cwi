@@ -54,7 +54,8 @@ Example
 Here's an example of getting a big table to calculate homeownership rates across many geographies at once:
 
 ``` r
-library(tidyverse)
+library(dplyr)
+library(stringr)
 library(cwi)
 ```
 
