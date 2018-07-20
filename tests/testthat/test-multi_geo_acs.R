@@ -1,7 +1,6 @@
 context("Geographies and messaging in multi_geo_acs")
 library(cwi)
 library(testthat)
-library(dplyr)
 
 test_that("state names and FIPS codes are validated", {
   expect_error(multi_geo_acs(table = "B01003", state = NULL), "Must supply")

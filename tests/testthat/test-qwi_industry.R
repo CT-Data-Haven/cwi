@@ -1,5 +1,4 @@
 context("Error handling for qwi_industry")
-library(tidyverse)
 library(cwi)
 library(testthat)
 

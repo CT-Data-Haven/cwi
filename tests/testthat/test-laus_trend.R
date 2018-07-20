@@ -1,5 +1,4 @@
 context("Error handling for laus_trend")
-library(tidyverse)
 library(cwi)
 library(testthat)
 
