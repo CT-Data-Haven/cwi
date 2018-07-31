@@ -32,7 +32,7 @@
 
 <meta property="og:title" content="Get employees counts and total payroll over time — qwi_industry" />
 
-<meta property="og:description" content="This gets data from the Quarterly Workforce Indicators (QWI) via the Census API. It's an alternative to censusapi::getCensus that fetches a set of variables (employees and payroll) but makes a somewhat more dynamic API call. The API returns a maximum of 10 years of data; calling this function with more than 10 years will require multiple API calls, which takes a little longer." />
+<meta property="og:description" content="This gets data from the Quarterly Workforce Indicators (QWI) via the Census API. It's an alternative to censusapi that fetches a set of variables (employees and payroll) but makes a somewhat more dynamic API call. The API returns a maximum of 10 years of data; calling this function with more than 10 years will require multiple API calls, which takes a little longer." />
 
 <meta property="og:image" content="https://CT-Data-Haven.github.io/cwi/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -121,7 +121,7 @@
 
     <div class="ref-description">
     
-    <p>This gets data from the Quarterly Workforce Indicators (QWI) via the Census API. It's an alternative to <code><a href='http://www.rdocumentation.org/packages/censusapi/topics/getCensus'>censusapi::getCensus</a></code> that fetches a set of variables (employees and payroll) but makes a somewhat more dynamic API call. The API returns a maximum of 10 years of data; calling this function with more than 10 years will require multiple API calls, which takes a little longer.</p>
+    <p>This gets data from the Quarterly Workforce Indicators (QWI) via the Census API. It's an alternative to <code>censusapi</code> that fetches a set of variables (employees and payroll) but makes a somewhat more dynamic API call. The API returns a maximum of 10 years of data; calling this function with more than 10 years will require multiple API calls, which takes a little longer.</p>
     
     </div>
 
@@ -165,10 +165,6 @@
 
     <p>Note that when looking at data quarterly, the payroll reported will be for that quarter, not the yearly payroll that you may be more accustomed to.</p>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/censusapi/topics/getCensus'>censusapi::getCensus()</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>qwi_industry</span>(<span class='fl'>2012</span>:<span class='fl'>2017</span>, <span class='kw'>industries</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"23"</span>, <span class='st'>"62"</span>), <span class='kw'>counties</span> <span class='kw'>=</span> <span class='st'>"009"</span>)</div><div class='output co'>#&gt; # A tibble: 12 x 6
@@ -195,8 +191,6 @@
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
-
-      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
