@@ -145,3 +145,19 @@ NULL
 #' }
 #' @source This is a filtered and cleaned version of a file downloaded from [BLS](https://download.bls.gov/pub/time.series/la/la.area).
 "laus_codes"
+
+
+#' CT crosswalk
+#'
+#' A shortened version of the CT crosswalk file from the LEHD/LODES files, to translate between Connecticut blocks, block groups, tracts, and towns.
+#'
+#' @format A data frame with 67485 rows and 5 variables:
+#' \describe{
+#'   \item{block}{Block FIPS code}
+#'   \item{block_grp}{Block group FIPS code}
+#'   \item{tract}{Tract FIPS code}
+#'   \item{town}{Town name}
+#'   \item{town_fips}{Town FIPS code}
+#' }
+#' @source This is a filtered, cleaned, and pared down version of a file downloaded from [LEHD](https://lehd.ces.census.gov/data/lodes/LODES7/ct/).
+"xwalk"
