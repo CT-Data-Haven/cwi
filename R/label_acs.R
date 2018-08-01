@@ -3,6 +3,7 @@ clean_acs_vars <- function(year) {
   tidycensus::load_variables(year = year, "acs5", cache = T) %>%
     dplyr::filter(stringr::str_detect(name, "_\\d{3}E$")) %>%
     dplyr::mutate(label = stringr::str_remove(label, "Estimate!!")) %>%
+    dplyr::mutate(label = stringr::str_remove_all(label, ":")) %>%
     dplyr::mutate(name = stringr::str_remove(name, "E$"))
 }
 
