@@ -6,7 +6,8 @@
 \usage{
 multi_geo_acs(table, year = 2016, neighborhoods = NULL,
   towns = "all", regions = NULL, counties = "all", state = "09",
-  msa = FALSE, us = FALSE, new_england = TRUE, verbose = TRUE)
+  msa = FALSE, us = FALSE, new_england = TRUE, survey = "acs5",
+  verbose = TRUE)
 }
 \arguments{
 \item{table}{A string giving the ACS table number.}
@@ -28,6 +29,8 @@ multi_geo_acs(table, year = 2016, neighborhoods = NULL,
 \item{us}{Logical: whether to fetch US-level table. Defaults \code{FALSE}.}
 
 \item{new_england}{Logical: if \code{TRUE} (the default), limits metro areas to just New England states.}
+
+\item{survey}{A string: which ACS estimate to use. Defaults to 5-year (\code{"acs5"}), but can also be 1-year (\code{"acs1"}) or 3-year (\code{"acs3"}), though both 1-year and 3-year have limited availability.}
 
 \item{verbose}{Logical: whether to print summary of geographies included. Defaults \code{TRUE}.}
 }
