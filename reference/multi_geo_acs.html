@@ -127,7 +127,8 @@
 
     <pre class="usage"><span class='fu'>multi_geo_acs</span>(<span class='no'>table</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2016</span>, <span class='kw'>neighborhoods</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>towns</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>regions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>counties</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>state</span> <span class='kw'>=</span> <span class='st'>"09"</span>,
-  <span class='kw'>msa</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>us</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>new_england</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>msa</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>us</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>new_england</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>survey</span> <span class='kw'>=</span> <span class='st'>"acs5"</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -171,6 +172,10 @@
     <tr>
       <th>new_england</th>
       <td><p>Logical: if <code>TRUE</code> (the default), limits metro areas to just New England states.</p></td>
+    </tr>
+    <tr>
+      <th>survey</th>
+      <td><p>A string: which ACS estimate to use. Defaults to 5-year (<code>"acs5"</code>), but can also be 1-year (<code>"acs1"</code>) or 3-year (<code>"acs3"</code>), though both 1-year and 3-year have limited availability.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
