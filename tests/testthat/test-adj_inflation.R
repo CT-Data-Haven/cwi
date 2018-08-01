@@ -3,12 +3,13 @@ library(cwi)
 library(testthat)
 
 test_that("checks for required columns", {
+  skip_on_travis()
   wages <- data.frame(
       year = 2010:2016,
       wage = c(50000, 51000, 52000, 53000, 54000, 55000, 54000)
   )
-  # expect_error(adj_inflation(wages, year = year), "are required")
-  # expect_error(adj_inflation(wages, value = wage), "are required")
+  expect_error(adj_inflation(wages, year = year), "are required")
+  expect_error(adj_inflation(wages, value = wage), "are required")
 })
 
 test_that("adjusted amounts are calculated correctly", {
