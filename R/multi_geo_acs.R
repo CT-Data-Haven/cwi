@@ -14,6 +14,7 @@
 #' @param msa Logical: whether to fetch New England states' metropolitan statistical areas. Defaults `FALSE`.
 #' @param us Logical: whether to fetch US-level table. Defaults `FALSE`.
 #' @param new_england Logical: if `TRUE` (the default), limits metro areas to just New England states.
+#' @param survey A string: which ACS estimate to use. Defaults to 5-year (`"acs5"`), but can also be 1-year (`"acs1"`) or 3-year (`"acs3"`), though both 1-year and 3-year have limited availability.
 #' @param verbose Logical: whether to print summary of geographies included. Defaults `TRUE`.
 #' @return A tibble with GEOID, name, variable code, estimate, moe, geography level, and county, as applicable, for the chosen ACS table.
 #' @seealso [tidycensus::census_api_key()], [tidycensus::get_acs()]
@@ -27,7 +28,7 @@
 #'   counties = "New Haven County")
 #' }
 #' @export
-multi_geo_acs <- function(table, year = 2016, neighborhoods = NULL, towns = "all", regions = NULL, counties = "all", state = "09", msa = FALSE, us = FALSE, new_england = TRUE, verbose = TRUE) {
+multi_geo_acs <- function(table, year = 2016, neighborhoods = NULL, towns = "all", regions = NULL, counties = "all", state = "09", msa = FALSE, us = FALSE, new_england = TRUE, survey = "acs5",  verbose = TRUE) {
   st <- state
   # state must not be null
   if (is.null(st)) stop("Must supply a state name or FIPS code")
@@ -77,26 +78,27 @@ multi_geo_acs <- function(table, year = 2016, neighborhoods = NULL, towns = "all
   fetch <- list()
 
   if (!is.null(neighborhoods)) {
-    fetch$neighborhoods <- acs_neighborhoods(table, year, neighborhoods, st)
+    fetch$neighborhoods <- acs_neighborhoods(table, year, neighborhoods, st, survey)
   }
   if (!is.null(towns)) {
-    fetch$towns <- acs_towns(table, year, towns, counties, st)
+    fetch$towns <- acs_towns(table, year, towns, counties, st, survey)
   }
   if (!is.null(regions)) {
-    fetch$regions <- acs_regions(table, year, regions, st)
+    fetch$regions <- acs_regions(table, year, regions, st, survey)
   }
   if (!is.null(counties)) {
-    fetch$counties <- acs_counties(table, year, counties, st)
+    fetch$counties <- acs_counties(table, year, counties, st, survey)
   }
 
-  fetch$state <- acs_state(table, year, st)
+  fetch$state <- acs_state(table, year, st, survey)
 
   if (msa) {
-    fetch$msa <- acs_msa(table, year, new_england)
+    if (year < 2015) warning("Heads up: OMB changed MSA boundaries around 2015. These might not match the ones you're expecting.")
+    fetch$msa <- acs_msa(table, year, new_england, survey)
   }
 
   if (us) {
-    fetch$us <- suppressMessages(tidycensus::get_acs(geography = "us", table = table, year = year))
+    fetch$us <- suppressMessages(tidycensus::get_acs(geography = "us", table = table, year = year, survey = survey))
   }
 
   # take the names of non-null items in fetch, reverse the order (i.e. largest geo to smallest),
