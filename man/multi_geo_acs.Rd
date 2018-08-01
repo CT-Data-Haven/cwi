@@ -4,9 +4,9 @@
 \alias{multi_geo_acs}
 \title{Fetch an ACS table with multiple geography levels}
 \usage{
-multi_geo_acs(table, year = 2016, neighborhoods = NULL, towns = "all",
-  regions = NULL, counties = "all", state = "09", msa = FALSE,
-  us = FALSE, new_england = TRUE, verbose = TRUE)
+multi_geo_acs(table, year = 2016, neighborhoods = NULL,
+  towns = "all", regions = NULL, counties = "all", state = "09",
+  msa = FALSE, us = FALSE, new_england = TRUE, verbose = TRUE)
 }
 \arguments{
 \item{table}{A string giving the ACS table number.}

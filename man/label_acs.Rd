@@ -4,12 +4,14 @@
 \alias{label_acs}
 \title{Quickly add the labels of ACS variables}
 \usage{
-label_acs(df, variable = variable)
+label_acs(df, year = 2016, variable = variable)
 }
 \arguments{
 \item{df}{A data frame/tibble.}
 
-\item{variable}{The bare column name of variable codes; defaults to \code{variable}, as returned by \code{get_acs}.}
+\item{year}{The endyear of ACS data; defaults 2016.}
+
+\item{variable}{The bare column name of variable codes; defaults to \code{variable}, as returned by \code{tidycensus::get_acs}.}
 }
 \value{
 A tibble
