@@ -74,6 +74,7 @@ multi_geo_decennial <- function(table, year = 2010, neighborhoods = NULL, towns 
 
   # printout geos
   if (verbose) {
+    decennial_vars <- clean_decennial_vars(year = year)
     concept <- decennial_vars %>%
       dplyr::filter(stringr::str_detect(name, paste0("^", table))) %>%
       dplyr::pull(concept) %>%

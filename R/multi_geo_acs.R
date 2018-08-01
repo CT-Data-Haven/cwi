@@ -63,6 +63,7 @@ multi_geo_acs <- function(table, year = 2016, neighborhoods = NULL, towns = "all
 
   # make message printing out current geographies
   if (verbose) {
+    acs_vars <- clean_acs_vars(year = year)
     concept <- acs_vars %>%
       dplyr::filter(stringr::str_detect(name, paste0("^", table))) %>%
       dplyr::pull(concept) %>%
