@@ -60,16 +60,19 @@ multi_geo_acs <- function(table, year = 2016, neighborhoods = NULL, towns = "all
     counties <- intersect(counties, possible_counties)
   }
 
-
+  # handle situations where table doesn't exist that year/survey
+  # avail has table number and concept also
+  avail <- acs_available(table, year, survey)
+  assertthat::assert_that(avail$is_avail, msg = stringr::str_glue("Table {table} for {year} {survey} is not available in the API."))
 
   # make message printing out current geographies
   if (verbose) {
-    acs_vars <- clean_acs_vars(year = year)
+    acs_vars <- clean_acs_vars(year = year, survey = survey)
     concept <- acs_vars %>%
       dplyr::filter(stringr::str_detect(name, paste0("^", table))) %>%
       dplyr::pull(concept) %>%
       `[`(1)
-    message("Table: ", concept)
+    message(stringr::str_glue("Table {table}: {concept}"))
     msg <- geo_printout(neighborhoods, towns, regions, counties, st, msa, us, new_england)
     message("Geographies included:\n", msg)
   }

@@ -72,6 +72,11 @@ multi_geo_decennial <- function(table, year = 2010, neighborhoods = NULL, towns 
     counties <- intersect(counties, possible_counties)
   }
 
+  # handle situations where table doesn't exist that year/survey
+  # avail has table number and concept also
+  avail <- decennial_available(table, year, sumfile)
+  assertthat::assert_that(avail$is_avail, msg = stringr::str_glue("Table {table} for {year} {sumfile} is not available in the API."))
+
   # printout geos
   if (verbose) {
     decennial_vars <- clean_decennial_vars(year = year)
@@ -79,7 +84,7 @@ multi_geo_decennial <- function(table, year = 2010, neighborhoods = NULL, towns 
       dplyr::filter(stringr::str_detect(name, paste0("^", table))) %>%
       dplyr::pull(concept) %>%
       `[`(1)
-    message("Table: ", concept)
+    message(stringr::str_glue("Table {table}: {concept}"))
     msg <- geo_printout(neighborhoods, towns, regions, counties, st, msa = F, new_england = F)
     message("Geographies included:\n", msg)
   }

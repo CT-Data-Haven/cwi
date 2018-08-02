@@ -1,8 +1,8 @@
-acs_vars16 <- clean_acs_vars(year = 2016)
+acs_vars16 <- clean_acs_vars(year = 2016, survey = "acs5")
 
 usethis::use_data(acs_vars16, overwrite = T)
 
-decennial_vars10 <- clean_decennial_vars(year = 2010)
+decennial_vars10 <- clean_decennial_vars(year = 2010, sumfile = "sf1")
 
 decennial_nums <- decennial_vars10 %>%
   dplyr::filter(!stringr::str_detect(name, "^H0001")) %>%
