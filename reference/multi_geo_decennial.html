@@ -134,7 +134,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>table</th>
-      <td><p>A string giving the decennial census table number.</p></td>
+      <td><p>A string giving the decennial census table number. These are generally formatted as one or more letters, 3 numbers, and optionally a letter.</p></td>
     </tr>
     <tr>
       <th>year</th>
@@ -177,6 +177,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function essentially calls <code><a href='http://www.rdocumentation.org/packages/tidycensus/topics/get_decennial'>tidycensus::get_decennial()</a></code> multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying <code><a href='http://www.rdocumentation.org/packages/tidycensus/topics/get_decennial'>tidycensus::get_decennial()</a></code> requires a Census API key. As is the case with other <code>tidycensus</code> functions, <code>multi_geo_decennial</code> assumes this key is stored as <code>CENSUS_API_KEY</code> in your <code>.Renviron</code>. See <code><a href='http://www.rdocumentation.org/packages/tidycensus/topics/census_api_key'>tidycensus::census_api_key()</a></code> for installation.</p>
+<p>Be advised that decennial table numbers may change from year to year, so if you're looking at trends, check FactFinder or another source to make sure the tables have the same meaning. Setting <code>verbose = TRUE</code> is helpful for this as well.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

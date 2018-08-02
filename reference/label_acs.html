@@ -125,7 +125,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>label_acs</span>(<span class='no'>df</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2016</span>, <span class='kw'>variable</span> <span class='kw'>=</span> <span class='no'>variable</span>)</pre>
+    <pre class="usage"><span class='fu'>label_acs</span>(<span class='no'>df</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2016</span>, <span class='kw'>survey</span> <span class='kw'>=</span> <span class='st'>"acs5"</span>, <span class='kw'>variable</span> <span class='kw'>=</span> <span class='no'>variable</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -139,6 +139,10 @@
       <td><p>The endyear of ACS data; defaults 2016.</p></td>
     </tr>
     <tr>
+      <th>survey</th>
+      <td><p>A string: which ACS estimate to use. Defaults to 5-year (<code>"acs5"</code>), but can also be 1-year (<code>"acs1"</code>) or 3-year (<code>"acs3"</code>), though both 1-year and 3-year have limited availability.</p></td>
+    </tr>
+    <tr>
       <th>variable</th>
       <td><p>The bare column name of variable codes; defaults to <code>variable</code>, as returned by <code><a href='http://www.rdocumentation.org/packages/tidycensus/topics/get_acs'>tidycensus::get_acs</a></code>.</p></td>
     </tr>
@@ -150,7 +154,7 @@
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>acs_vars</p></div>
+    <div class='dont-index'><p><a href='acs_vars16.html'>acs_vars16</a></p></div>
     
 
   </div>
