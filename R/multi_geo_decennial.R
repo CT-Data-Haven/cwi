@@ -4,7 +4,9 @@
 #'
 #' This function essentially calls `tidycensus::get_decennial()` multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying `tidycensus::get_decennial()` requires a Census API key. As is the case with other `tidycensus` functions, `multi_geo_decennial` assumes this key is stored as `CENSUS_API_KEY` in your `.Renviron`. See [tidycensus::census_api_key()] for installation.
 #'
-#' @param table A string giving the decennial census table number.
+#' Be advised that decennial table numbers may change from year to year, so if you're looking at trends, check FactFinder or another source to make sure the tables have the same meaning. Setting `verbose = TRUE` is helpful for this as well.
+#'
+#' @param table A string giving the decennial census table number. These are generally formatted as one or more letters, 3 numbers, and optionally a letter.
 #' @param year The year of the census table; currently defaults 2010 (most recent decennial census).
 #' @param neighborhoods A named list of neighborhoods with their 11-digit tract GEOIDs (defaults `NULL`).
 #' @param towns A character vector of towns to include; `"all"` (default) for all towns optionally filtered by county; or `NULL` to not fetch town-level table.
@@ -32,17 +34,26 @@ multi_geo_decennial <- function(table, year = 2010, neighborhoods = NULL, towns 
 
   # decennial table numbers are a pain
   # compare table to decennial_nums
-  if (table != "H0001" & !table %in% decennial_nums) {
-    matches <- stringr::str_match(table, "^(HCT|H|PCT|PCO|P)(\\d{1,3}[A-Z]?)")
-    type <- matches[, 2]
-    nmbrs <- stringr::str_extract(matches[, 3], "\\d+") %>%
-      stringr::str_pad(side = "left", width = 3, pad = "0")
-    grp <- stringr::str_extract(matches[, 3], "\\D?$")
-
-    stop(sprintf("Table %s doesn't seem valid. Did you mean %s?", table, paste0(type, nmbrs, grp)))
-    # cat(sprintf("table %s is %s", table, paste0(type, nmbrs, grp)))
-
-  }
+  # if (table != "H0001" & !table %in% decennial_nums) {
+  #   matches <- stringr::str_match(table, "^(HCT|H|PCT|PCO|P)(\\d{1,3}[A-Z]?)")
+  #   type <- matches[, 2]
+  #   nmbrs <- stringr::str_extract(matches[, 3], "\\d+") %>%
+  #     stringr::str_pad(side = "left", width = 3, pad = "0")
+  #   grp <- stringr::str_extract(matches[, 3], "\\D?$")
+  #
+  #   stop(sprintf("Table %s doesn't seem valid. Did you mean %s?", table, paste0(type, nmbrs, grp)))
+  #   # cat(sprintf("table %s is %s", table, paste0(type, nmbrs, grp)))
+  #
+  # }
+  # since there's error handling below now, just check formatting
+  # not sure why this doesn't work, just goes straight to error below
+  # if (table != "H0001") {
+  #   type <- stringr::str_extract(table, "^(HCT|H|PCT|PCO|P)")
+  #   nmbrs <- stringr::str_extract(table, "\\d+")
+  #   if (nchar(nmbrs) != 3) {
+  #     warning(stringr::str_glue("Table {table} doesn't seem valid, but let's try it..."))
+  #   }
+  # }
 
   # state should be string; if numeric, pad it as FIPS code
   if (is.numeric(st)) {
@@ -75,7 +86,21 @@ multi_geo_decennial <- function(table, year = 2010, neighborhoods = NULL, towns 
   # handle situations where table doesn't exist that year/survey
   # avail has table number and concept also
   avail <- decennial_available(table, year, sumfile)
-  assertthat::assert_that(avail$is_avail, msg = stringr::str_glue("Table {table} for {year} {sumfile} is not available in the API."))
+  type <- stringr::str_extract(table, "^(HCT|H|PCT|PCO|P)")
+  nmbrs <- stringr::str_extract(table, "\\d+")
+  grp <- stringr::str_extract(table, "\\D?$")
+  if (!avail$is_avail) {
+    if (is.na(type)) {
+      lttrs <- stringr::str_extract(table, "^[[:alpha:]]+")
+      msg <- stringr::str_glue("Table numbers should start with one of H, HCT, P, PCT, PCO. {lttrs} is invalid.")
+    } else if (nchar(nmbrs) != 3) {
+      valid_num <- paste0(type, stringr::str_pad(nmbrs, side = "left", width = 3, pad = "0"), grp)
+      msg <- stringr::str_glue("Table {table} looks like an invalid table number. Did you mean {valid_num}?")
+    } else {
+      msg <- stringr::str_glue("Table {table} for {year} {sumfile} is not available in the API.")
+    }
+    stop(msg)
+  }
 
   # printout geos
   if (verbose) {

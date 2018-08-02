@@ -9,7 +9,7 @@ multi_geo_decennial(table, year = 2010, neighborhoods = NULL,
   sumfile = "sf1", verbose = TRUE)
 }
 \arguments{
-\item{table}{A string giving the decennial census table number.}
+\item{table}{A string giving the decennial census table number. These are generally formatted as one or more letters, 3 numbers, and optionally a letter.}
 
 \item{year}{The year of the census table; currently defaults 2010 (most recent decennial census).}
 
@@ -35,6 +35,8 @@ Fetch a data table from the decennial census via \code{tidycensus} with your cho
 }
 \details{
 This function essentially calls \code{tidycensus::get_decennial()} multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying \code{tidycensus::get_decennial()} requires a Census API key. As is the case with other \code{tidycensus} functions, \code{multi_geo_decennial} assumes this key is stored as \code{CENSUS_API_KEY} in your \code{.Renviron}. See \code{\link[tidycensus:census_api_key]{tidycensus::census_api_key()}} for installation.
+
+Be advised that decennial table numbers may change from year to year, so if you're looking at trends, check FactFinder or another source to make sure the tables have the same meaning. Setting \code{verbose = TRUE} is helpful for this as well.
 }
 \examples{
 \dontrun{

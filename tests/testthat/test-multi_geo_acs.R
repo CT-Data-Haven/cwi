@@ -24,8 +24,13 @@ test_that("messages from get_acs are suppressed if requested", {
 })
 
 test_that("handles 1-year and 3-year surveys", {
-  # should add warnings for when 1- and 3-year aren't available
   skip_on_travis()
-  expect_equal(nrow(multi_geo_acs(table = "B01003", state = "09", towns = NULL, survey = "acs1", year = 2016)), 9)
-  expect_equal(nrow(multi_geo_acs(table = "B01003", state = "09", towns = NULL, survey = "acs3", year = 2013)), 9)
+  expect_equal(nrow(multi_geo_acs(table = "B01003", towns = NULL, survey = "acs1", year = 2016)), 9)
+  expect_equal(nrow(multi_geo_acs(table = "B01003", towns = NULL, survey = "acs3", year = 2013)), 9)
+})
+
+test_that("handles tables that don't exist", {
+  skip_on_travis()
+  expect_silent(multi_geo_acs(table = "B27010", towns = NULL, counties = NULL, verbose = F, year = 2016))
+  expect_error(multi_geo_acs(table = "B27010", towns = NULL, counties = NULL, verbose = F, year = 2011), "not available")
 })

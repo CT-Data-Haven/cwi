@@ -21,7 +21,15 @@ test_that("messages from get_decennial are suppressed if requested", {
   expect_message(multi_geo_decennial(table = "P035", towns = NULL, counties = NULL, verbose = T))
 })
 
-test_that("invalid table numbers throw error with formatted number", {
+test_that("invalid table numbers give error", {
   # one quickie on travis
-  expect_error(multi_geo_decennial(table = "P35", towns = NULL, counties = NULL))
+  # sets padding
+  expect_error(multi_geo_decennial(table = "P35", towns = NULL, counties = NULL), "Did you mean P035")
+  expect_error(multi_geo_decennial(table = "R001", towns = NULL, counties = NULL), "R is invalid")
+})
+
+test_that("handles tables that don't exist", {
+  skip_on_travis()
+  expect_silent(multi_geo_decennial(table = "P050", towns = NULL, counties = NULL, verbose = F, year = 2010))
+  expect_error(multi_geo_decennial(table = "P052", towns = NULL, counties = NULL, verbose = F, year = 2010), "not available")
 })
