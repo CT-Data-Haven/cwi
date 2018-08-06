@@ -5,7 +5,7 @@ usethis::use_data(acs_vars16, overwrite = T)
 # there's an error in P012, sex by age, where female, all ages is labeled as female, 85 and up
 
 decennial_vars10 <- clean_decennial_vars(year = 2010, sumfile = "sf1") %>%
-  mutate(label = ifelse(str_detect(name, "^P012\\D?0026"), "Female:", label))
+  dplyr::mutate(label = ifelse(stringr::str_detect(name, "^P012[0\\D]026"), "Female:", label))
 
 decennial_nums <- decennial_vars10 %>%
   dplyr::filter(!stringr::str_detect(name, "^H0001")) %>%
