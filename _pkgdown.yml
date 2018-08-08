@@ -23,9 +23,9 @@ reference:
 - title: Datasets
   desc: Reference datasets and lookup tables
   contents:
-  - '`acs_vars`'
+  - '`acs_vars16`'
   - '`basic_table_nums`'
-  - '`decennial_vars`'
+  - '`decennial_vars10`'
   - '`ext_table_nums`'
   - '`laus_codes`'
   - '`msa`'
