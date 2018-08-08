@@ -26,7 +26,8 @@ test_that("messages from get_acs are suppressed if requested", {
 test_that("handles 1-year and 3-year surveys", {
   skip_on_travis()
   expect_equal(nrow(multi_geo_acs(table = "B01003", towns = NULL, survey = "acs1", year = 2016)), 9)
-  expect_equal(nrow(multi_geo_acs(table = "B01003", towns = NULL, survey = "acs3", year = 2013)), 9)
+  # API no longer has detail tables for 3-year
+  # expect_equal(nrow(multi_geo_acs(table = "B01003", towns = NULL, survey = "acs3", year = 2013)), 9)
 })
 
 test_that("handles tables that don't exist", {

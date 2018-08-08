@@ -2,7 +2,7 @@
 # get acs variables by year, cached
 clean_acs_vars <- function(year, survey = "acs5") {
   tidycensus::load_variables(year = year, survey, cache = T) %>%
-    dplyr::filter(stringr::str_detect(name, "_\\d{3}E$")) %>%
+    dplyr::filter(stringr::str_detect(name, "_\\d{3}E?$")) %>%
     dplyr::mutate(label = stringr::str_remove(label, "Estimate!!")) %>%
     dplyr::mutate(label = stringr::str_remove_all(label, ":")) %>%
     dplyr::mutate(name = stringr::str_remove(name, "E$"))
