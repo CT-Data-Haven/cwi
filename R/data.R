@@ -16,7 +16,7 @@
 #'
 #' Dataset set Decennial Census variable labels, loaded from `tidycensus::load_variables()` and cleaned up slightly.
 #'
-#' @format A data frame with 8912 rows and 3 variables:
+#' @format A data frame with 3346 rows and 3 variables:
 #' \describe{
 #'   \item{name}{Variable code, where first 1 to 3 letters and 3 to 4 digits are the table number, and remaining characters are the variable number}
 #'   \item{label}{Readable label of each variable}

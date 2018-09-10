@@ -4,7 +4,7 @@
 \name{decennial_vars10}
 \alias{decennial_vars10}
 \title{Variable labels from the 2010 Decennial Census}
-\format{A data frame with 8912 rows and 3 variables:
+\format{A data frame with 3346 rows and 3 variables:
 \describe{
 \item{name}{Variable code, where first 1 to 3 letters and 3 to 4 digits are the table number, and remaining characters are the variable number}
 \item{label}{Readable label of each variable}
