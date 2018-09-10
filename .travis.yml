@@ -48,5 +48,5 @@ deploy:
 
 language: ruby
 rvm:
-- 2.1
+- 2.5.1
 script: "bundle exec jekyll build"
