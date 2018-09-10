@@ -32,6 +32,7 @@ reference:
   - '`naics_codes`'
   - '`regions`'
   - '`neighborhood_tracts`'
+  - '`xwalk`'
   - '`zip2town`'
 - title: Shapefiles
   desc: ~

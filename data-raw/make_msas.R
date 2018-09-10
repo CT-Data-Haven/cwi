@@ -11,6 +11,7 @@ msa <- tidycensus::get_acs(geography = "metropolitan statistical area/micropolit
   # dplyr::mutate(GEOID = stringr::str_sub(GEOID, 3, -1)) %>%
   dplyr::mutate(NAME = stringr::str_remove(NAME, " Metro Area.+$")) %>%
   unique() %>%
-  dplyr::mutate(region = ifelse(stringr::str_detect(NAME, ne_search), "New England", "Outside New England"))
+  dplyr::mutate(region = ifelse(stringr::str_detect(NAME, ne_search), "New England", "Outside New England")) %>%
+  dplyr::rename(name = NAME)
 
 usethis::use_data(msa, overwrite = T)
