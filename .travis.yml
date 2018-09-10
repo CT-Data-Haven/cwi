@@ -34,7 +34,7 @@ env:
 
 after_success:
   - Rscript -e "devtools::install_github('CT-Data-Haven/cwi')"
-  - "Rscript -e 'pkgdown::build_site(run_dont_run = TRUE)'"
+  - Rscript -e "pkgdown::build_site(run_dont_run = TRUE)"
 
 deploy:
   provider: pages
@@ -44,9 +44,3 @@ deploy:
     branch: master
   local_dir: docs
   keep_history: true
-
-
-language: ruby
-rvm:
-- 2.5.1
-script: "bundle exec jekyll build"
