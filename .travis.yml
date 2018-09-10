@@ -44,3 +44,9 @@ deploy:
     branch: master
   local_dir: docs
   keep_history: true
+
+
+language: ruby
+rvm:
+- 2.1
+script: "bundle exec jekyll build"
