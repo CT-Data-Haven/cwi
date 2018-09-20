@@ -161,3 +161,16 @@ NULL
 #' }
 #' @source This is a filtered, cleaned, and pared down version of a file downloaded from [LEHD](https://lehd.ces.census.gov/data/lodes/LODES7/ct/).
 "xwalk"
+
+
+#' Tract to town crosswalk
+#'
+#' A version of `cwi::xwalk` that only contains tracts and town names, and is deduplicated for tracts that span multiple towns.
+#'
+#' @format A data frame with 830 rows and 2 variables:
+#' \describe{
+#'   \item{tract}{Tract FIPS code}
+#'   \item{town}{Town name}
+#' }
+#' @source This is a filtered, cleaned, and pared down version of a file downloaded from [LEHD](https://lehd.ces.census.gov/data/lodes/LODES7/ct/).
+"tract2town"
