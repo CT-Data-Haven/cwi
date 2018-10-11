@@ -30,10 +30,10 @@ Roxygen: list(markdown = TRUE, wrap = TRUE)
 RoxygenNote: 6.1.0
 Suggests: 
     knitr (>= 1.20),
-    rmarkdown (>= 1.10.13),
+    rmarkdown (>= 1.10),
     sf (>= 0.6.3),
     testthat (>= 2.0.0),
-    ggmap (>= 2.7.903),
+    ggmap,
     ggrepel (>= 0.8.0),
     pkgdown (>= 1.1.0),
     lubridate (>= 1.7.4),
