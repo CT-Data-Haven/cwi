@@ -1,13 +1,19 @@
-decennial_towns <- function(table, year, towns, counties, state, sumfile) {
-  st <- state
+# decennial API needs state-county-county sub hierarchy
+counties_to_fetch <- function(st, counties) {
   if (!is.null(counties) & !identical(counties, "all")) {
-    counties_to_fetch <- counties
+    out <- counties
   } else {
-    counties_to_fetch <- tidycensus::fips_codes %>%
+    out <- tidycensus::fips_codes %>%
       dplyr::filter(state_code == st | state_name == st) %>%
       dplyr::pull(county)
   }
-  fetch <- counties_to_fetch %>%
+  return(out)
+}
+
+decennial_towns <- function(table, year, towns, counties, state, sumfile) {
+  st <- state
+
+  fetch <- counties_to_fetch(st = st, counties = counties) %>%
     purrr::map_dfr(function(county) {
       suppressMessages(tidycensus::get_decennial(geography = "county subdivision", table = table, year = year, state = st, county = county, sumfile = sumfile)) %>%
         dplyr::mutate(county = county)
@@ -39,8 +45,7 @@ decennial_state <- function(table, year, state, sumfile) {
 }
 
 decennial_regions <- function(table, year, regions, state, sumfile) {
-  fetch_towns <- suppressMessages(tidycensus::get_decennial(geography = "county subdivision", table = table, year = year, state = state, sumfile = sumfile)) %>%
-    camiller::town_names(NAME)
+  fetch_towns <- decennial_towns(table, year, towns = "all", counties = "all", state, sumfile)
 
   regions %>%
     purrr::imap_dfr(function(region, region_name) {
