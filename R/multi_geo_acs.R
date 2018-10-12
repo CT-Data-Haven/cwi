@@ -16,7 +16,7 @@
 #' @param new_england Logical: if `TRUE` (the default), limits metro areas to just New England states.
 #' @param survey A string: which ACS estimate to use. Defaults to 5-year (`"acs5"`), but can also be 1-year (`"acs1"`) or 3-year (`"acs3"`), though both 1-year and 3-year have limited availability.
 #' @param verbose Logical: whether to print summary of geographies included. Defaults `TRUE`.
-#' @return A tibble with GEOID, name, variable code, estimate, moe, geography level, and county, as applicable, for the chosen ACS table.
+#' @return A tibble with GEOID, name, variable code, estimate, moe, geography level, state, and year, as applicable, for the chosen ACS table.
 #' @seealso [tidycensus::census_api_key()], [tidycensus::get_acs()]
 #' @examples
 #' \dontrun{
@@ -63,7 +63,7 @@ multi_geo_acs <- function(table, year = 2016, neighborhoods = NULL, towns = "all
   # handle situations where table doesn't exist that year/survey
   # avail has table number and concept also
   avail <- acs_available(table, year, survey)
-  assertthat::assert_that(avail$is_avail, msg = stringr::str_glue("Table {table} for {year} {survey} is not available in the API."))
+  assertthat::assert_that(avail[["is_avail"]], msg = stringr::str_glue("Table {table} for {year} {survey} is not available in the API."))
 
   # make message printing out current geographies
   if (verbose) {
@@ -110,5 +110,6 @@ multi_geo_acs <- function(table, year = 2016, neighborhoods = NULL, towns = "all
   list(lvls, names(lvls), 1:length(lvls)) %>%
     purrr::pmap_dfr(function(df, lvl, i) {
       df %>% dplyr::mutate(level = paste(i, lvl, sep = "_"))
-    })
+    }) %>%
+    dplyr::mutate(year = year)
 }

@@ -35,7 +35,7 @@ multi_geo_acs(table, year = 2016, neighborhoods = NULL,
 \item{verbose}{Logical: whether to print summary of geographies included. Defaults \code{TRUE}.}
 }
 \value{
-A tibble with GEOID, name, variable code, estimate, moe, geography level, and county, as applicable, for the chosen ACS table.
+A tibble with GEOID, name, variable code, estimate, moe, geography level, state, and year, as applicable, for the chosen ACS table.
 }
 \description{
 Fetch a data table from the ACS via \code{tidycensus} with your choice of geographies at multiple levels. For geographies made of aggregates, i.e. neighborhoods made of tracts or regions made of towns, the returned table will have estimates summed and margins of error calculated for the whole area.
