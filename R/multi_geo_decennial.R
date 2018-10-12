@@ -15,7 +15,7 @@
 #' @param state A string: either name or two-digit FIPS code of a US state. Required; defaults `"09"` (Connecticut).
 #' @param sumfile A string giving the summary file to pull from. Defaults `"sf1"`; in some rare cases, `"sf3"` may be appropriate.
 #' @param verbose Logical: whether to print summary of geographies included. Defaults `TRUE`.
-#' @return A tibble with GEOID, name, variable code, estimate, moe, geography level, and county, as applicable, for the chosen table.
+#' @return A tibble with GEOID, name, variable code, estimate, moe, geography level, state, and year, as applicable, for the chosen table.
 #' @seealso [tidycensus::census_api_key()], [tidycensus::get_decennial()]
 #' @examples
 #' \dontrun{
@@ -137,5 +137,6 @@ multi_geo_decennial <- function(table, year = 2010, neighborhoods = NULL, towns 
   list(lvls, names(lvls), 1:length(lvls)) %>%
     purrr::pmap_dfr(function(df, lvl, i) {
       df %>% dplyr::mutate(level = paste(i, lvl, sep = "_"))
-    })
+    }) %>%
+    dplyr::mutate(year = year)
 }
