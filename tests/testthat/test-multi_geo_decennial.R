@@ -15,6 +15,11 @@ test_that("counties are validated", {
   expect_warning(multi_geo_decennial(table = "P035", state = "09", counties = c("New Haven County", "Cook County")), "Cook")
 })
 
+test_that("regions work with decennial API", {
+  skip_on_travis()
+  expect_equal(nrow(multi_geo_decennial("P001", towns = NULL, counties = NULL, regions = cwi::regions[c("Greater New Haven", "Greater Bridgeport")])), 3)
+})
+
 test_that("messages from get_decennial are suppressed if requested", {
   skip_on_travis()
   expect_silent(multi_geo_decennial(table = "P035", towns = NULL, counties = NULL, verbose = F))
