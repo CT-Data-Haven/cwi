@@ -161,19 +161,19 @@
 <a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt; State: 09</span></a>
 <a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt; US: Yes</span></a>
 <a class="sourceLine" id="cb3-15" data-line-number="15">tenure</a>
-<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt; # A tibble: 99 x 8</span></a>
-<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">#&gt;    GEOID NAME            variable   estimate    moe level     state county</span></a>
-<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;           &lt;chr&gt;         &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; </span></a>
-<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co">#&gt;  1 1     United States   B25003_001   1.18e8 222078 1_us      &lt;NA&gt;  &lt;NA&gt;  </span></a>
-<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="co">#&gt;  2 1     United States   B25003_002   7.49e7 360470 1_us      &lt;NA&gt;  &lt;NA&gt;  </span></a>
-<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="co">#&gt;  3 1     United States   B25003_003   4.28e7 142056 1_us      &lt;NA&gt;  &lt;NA&gt;  </span></a>
-<a class="sourceLine" id="cb3-22" data-line-number="22"><span class="co">#&gt;  4 09    Connecticut     B25003_001   1.35e6   3509 2_state   &lt;NA&gt;  &lt;NA&gt;  </span></a>
-<a class="sourceLine" id="cb3-23" data-line-number="23"><span class="co">#&gt;  5 09    Connecticut     B25003_002   9.00e5   5427 2_state   &lt;NA&gt;  &lt;NA&gt;  </span></a>
-<a class="sourceLine" id="cb3-24" data-line-number="24"><span class="co">#&gt;  6 09    Connecticut     B25003_003   4.54e5   3843 2_state   &lt;NA&gt;  &lt;NA&gt;  </span></a>
-<a class="sourceLine" id="cb3-25" data-line-number="25"><span class="co">#&gt;  7 09009 New Haven Coun… B25003_001   3.26e5   1531 3_counti… 09    &lt;NA&gt;  </span></a>
-<a class="sourceLine" id="cb3-26" data-line-number="26"><span class="co">#&gt;  8 09009 New Haven Coun… B25003_002   2.04e5   1887 3_counti… 09    &lt;NA&gt;  </span></a>
-<a class="sourceLine" id="cb3-27" data-line-number="27"><span class="co">#&gt;  9 09009 New Haven Coun… B25003_003   1.23e5   1716 3_counti… 09    &lt;NA&gt;  </span></a>
-<a class="sourceLine" id="cb3-28" data-line-number="28"><span class="co">#&gt; 10 &lt;NA&gt;  Greater New Ha… B25003_001   1.77e5   1434 4_regions &lt;NA&gt;  &lt;NA&gt;  </span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt; # A tibble: 99 x 9</span></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">#&gt;    GEOID NAME        variable   estimate    moe level   state county  year</span></a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;         &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co">#&gt;  1 1     United Sta… B25003_0… 117716237 222078 1_us    &lt;NA&gt;  &lt;NA&gt;    2016</span></a>
+<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="co">#&gt;  2 1     United Sta… B25003_0…  74881068 360470 1_us    &lt;NA&gt;  &lt;NA&gt;    2016</span></a>
+<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="co">#&gt;  3 1     United Sta… B25003_0…  42835169 142056 1_us    &lt;NA&gt;  &lt;NA&gt;    2016</span></a>
+<a class="sourceLine" id="cb3-22" data-line-number="22"><span class="co">#&gt;  4 09    Connecticut B25003_0…   1354713   3509 2_state &lt;NA&gt;  &lt;NA&gt;    2016</span></a>
+<a class="sourceLine" id="cb3-23" data-line-number="23"><span class="co">#&gt;  5 09    Connecticut B25003_0…    900223   5427 2_state &lt;NA&gt;  &lt;NA&gt;    2016</span></a>
+<a class="sourceLine" id="cb3-24" data-line-number="24"><span class="co">#&gt;  6 09    Connecticut B25003_0…    454490   3843 2_state &lt;NA&gt;  &lt;NA&gt;    2016</span></a>
+<a class="sourceLine" id="cb3-25" data-line-number="25"><span class="co">#&gt;  7 09009 New Haven … B25003_0…    326487   1531 3_coun… 09    &lt;NA&gt;    2016</span></a>
+<a class="sourceLine" id="cb3-26" data-line-number="26"><span class="co">#&gt;  8 09009 New Haven … B25003_0…    203568   1887 3_coun… 09    &lt;NA&gt;    2016</span></a>
+<a class="sourceLine" id="cb3-27" data-line-number="27"><span class="co">#&gt;  9 09009 New Haven … B25003_0…    122919   1716 3_coun… 09    &lt;NA&gt;    2016</span></a>
+<a class="sourceLine" id="cb3-28" data-line-number="28"><span class="co">#&gt; 10 &lt;NA&gt;  Greater Ne… B25003_0…    177415   1434 4_regi… &lt;NA&gt;  &lt;NA&gt;    2016</span></a>
 <a class="sourceLine" id="cb3-29" data-line-number="29"><span class="co">#&gt; # ... with 89 more rows</span></a></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">homeownership &lt;-<span class="st"> </span>tenure <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="reference/label_acs.html">label_acs</a></span>() <span class="op">%&gt;%</span></a>

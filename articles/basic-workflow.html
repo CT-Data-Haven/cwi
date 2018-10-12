@@ -136,27 +136,27 @@
 <a class="sourceLine" id="cb3-27" data-line-number="27"><span class="co">#&gt; Counties: New Haven County</span></a>
 <a class="sourceLine" id="cb3-28" data-line-number="28"><span class="co">#&gt; State: 09</span></a></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">gnh_data<span class="op">$</span>total_pop</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; # A tibble: 18 x 8</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt;    GEOID    NAME         variable  estimate   moe level   state county    </span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;        &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;     </span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt;  1 09       Connecticut  B01003_0…  3588570    NA 1_state &lt;NA&gt;  &lt;NA&gt;      </span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt;  2 09009    New Haven C… B01003_0…   860874    NA 2_coun… 09    &lt;NA&gt;      </span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt;  3 &lt;NA&gt;     Greater New… B01003_0…   464596   132 3_regi… &lt;NA&gt;  &lt;NA&gt;      </span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt;  4 &lt;NA&gt;     New Haven I… B01003_0…   145463    57 3_regi… &lt;NA&gt;  &lt;NA&gt;      </span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt;  5 &lt;NA&gt;     New Haven O… B01003_0…   188728   103 3_regi… &lt;NA&gt;  &lt;NA&gt;      </span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt;  6 0900904… Bethany      B01003_0…     5521    24 4_towns 09    New Haven…</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt;  7 0900907… Branford     B01003_0…    28084    28 4_towns 09    New Haven…</span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt;  8 0900922… East Haven   B01003_0…    29015    24 4_towns 09    New Haven…</span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt;  9 0900934… Guilford     B01003_0…    22382    31 4_towns 09    New Haven…</span></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; 10 0900935… Hamden       B01003_0…    61476    31 4_towns 09    New Haven…</span></a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; 11 0900944… Madison      B01003_0…    18247    21 4_towns 09    New Haven…</span></a>
-<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt; 12 0900947… Milford      B01003_0…    53430    46 4_towns 09    New Haven…</span></a>
-<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt; 13 0900952… New Haven    B01003_0…   130405    60 4_towns 09    New Haven…</span></a>
-<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt; 14 0900953… North Branf… B01003_0…    14310    23 4_towns 09    New Haven…</span></a>
-<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">#&gt; 15 0900954… North Haven  B01003_0…    23888    59 4_towns 09    New Haven…</span></a>
-<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">#&gt; 16 0900957… Orange       B01003_0…    13941    24 4_towns 09    New Haven…</span></a>
-<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="co">#&gt; 17 0900982… West Haven   B01003_0…    54972    42 4_towns 09    New Haven…</span></a>
-<a class="sourceLine" id="cb4-22" data-line-number="22"><span class="co">#&gt; 18 0900987… Woodbridge   B01003_0…     8925    33 4_towns 09    New Haven…</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; # A tibble: 18 x 9</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt;    GEOID   NAME       variable  estimate   moe level  state county    year</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt;  1 09      Connectic… B01003_0…  3588570    NA 1_sta… &lt;NA&gt;  &lt;NA&gt;      2016</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt;  2 09009   New Haven… B01003_0…   860874    NA 2_cou… 09    &lt;NA&gt;      2016</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt;  3 &lt;NA&gt;    Greater N… B01003_0…   464596   132 3_reg… &lt;NA&gt;  &lt;NA&gt;      2016</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt;  4 &lt;NA&gt;    New Haven… B01003_0…   145463    57 3_reg… &lt;NA&gt;  &lt;NA&gt;      2016</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt;  5 &lt;NA&gt;    New Haven… B01003_0…   188728   103 3_reg… &lt;NA&gt;  &lt;NA&gt;      2016</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt;  6 090090… Bethany    B01003_0…     5521    24 4_tow… 09    New Hav…  2016</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt;  7 090090… Branford   B01003_0…    28084    28 4_tow… 09    New Hav…  2016</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt;  8 090092… East Haven B01003_0…    29015    24 4_tow… 09    New Hav…  2016</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt;  9 090093… Guilford   B01003_0…    22382    31 4_tow… 09    New Hav…  2016</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; 10 090093… Hamden     B01003_0…    61476    31 4_tow… 09    New Hav…  2016</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; 11 090094… Madison    B01003_0…    18247    21 4_tow… 09    New Hav…  2016</span></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt; 12 090094… Milford    B01003_0…    53430    46 4_tow… 09    New Hav…  2016</span></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt; 13 090095… New Haven  B01003_0…   130405    60 4_tow… 09    New Hav…  2016</span></a>
+<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt; 14 090095… North Bra… B01003_0…    14310    23 4_tow… 09    New Hav…  2016</span></a>
+<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">#&gt; 15 090095… North Hav… B01003_0…    23888    59 4_tow… 09    New Hav…  2016</span></a>
+<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">#&gt; 16 090095… Orange     B01003_0…    13941    24 4_tow… 09    New Hav…  2016</span></a>
+<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="co">#&gt; 17 090098… West Haven B01003_0…    54972    42 4_tow… 09    New Hav…  2016</span></a>
+<a class="sourceLine" id="cb4-22" data-line-number="22"><span class="co">#&gt; 18 090098… Woodbridge B01003_0…     8925    33 4_tow… 09    New Hav…  2016</span></a></code></pre></div>
 </div>
 <div id="aggregating-and-analyzing-data" class="section level1">
 <h1 class="hasAnchor">

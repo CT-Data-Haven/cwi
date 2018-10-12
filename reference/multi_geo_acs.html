@@ -185,7 +185,7 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A tibble with GEOID, name, variable code, estimate, moe, geography level, and county, as applicable, for the chosen ACS table.</p>
+    <p>A tibble with GEOID, name, variable code, estimate, moe, geography level, state, and year, as applicable, for the chosen ACS table.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -207,19 +207,19 @@
 #&gt; <span class='message'>Towns: all</span>
 #&gt; <span class='message'>Regions: inner_ring</span>
 #&gt; <span class='message'>Counties: New Haven County</span>
-#&gt; <span class='message'>State: 09</span></div><div class='output co'>#&gt; # A tibble: 31 x 8
-#&gt;    GEOID     NAME          variable  estimate   moe level    state county      
-#&gt;    &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;       
-#&gt;  1 09        Connecticut   B01003_0…  3588570    NA 1_state  &lt;NA&gt;  &lt;NA&gt;        
-#&gt;  2 09009     New Haven Co… B01003_0…   860874    NA 2_count… 09    &lt;NA&gt;        
-#&gt;  3 &lt;NA&gt;      inner_ring    B01003_0…   145463    57 3_regio… &lt;NA&gt;  &lt;NA&gt;        
-#&gt;  4 09009012… Ansonia       B01003_0…    18950    30 4_towns  09    New Haven C…
-#&gt;  5 09009032… Beacon Falls  B01003_0…     6075    20 4_towns  09    New Haven C…
-#&gt;  6 09009045… Bethany       B01003_0…     5521    24 4_towns  09    New Haven C…
-#&gt;  7 09009073… Branford      B01003_0…    28084    28 4_towns  09    New Haven C…
-#&gt;  8 09009141… Cheshire      B01003_0…    29254    40 4_towns  09    New Haven C…
-#&gt;  9 09009195… Derby         B01003_0…    12755    25 4_towns  09    New Haven C…
-#&gt; 10 09009229… East Haven    B01003_0…    29015    24 4_towns  09    New Haven C…
+#&gt; <span class='message'>State: 09</span></div><div class='output co'>#&gt; # A tibble: 31 x 9
+#&gt;    GEOID    NAME        variable  estimate   moe level   state county      year
+#&gt;    &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt;
+#&gt;  1 09       Connecticut B01003_0…  3588570    NA 1_state &lt;NA&gt;  &lt;NA&gt;        2016
+#&gt;  2 09009    New Haven … B01003_0…   860874    NA 2_coun… 09    &lt;NA&gt;        2016
+#&gt;  3 &lt;NA&gt;     inner_ring  B01003_0…   145463    57 3_regi… &lt;NA&gt;  &lt;NA&gt;        2016
+#&gt;  4 0900901… Ansonia     B01003_0…    18950    30 4_towns 09    New Haven…  2016
+#&gt;  5 0900903… Beacon Fal… B01003_0…     6075    20 4_towns 09    New Haven…  2016
+#&gt;  6 0900904… Bethany     B01003_0…     5521    24 4_towns 09    New Haven…  2016
+#&gt;  7 0900907… Branford    B01003_0…    28084    28 4_towns 09    New Haven…  2016
+#&gt;  8 0900914… Cheshire    B01003_0…    29254    40 4_towns 09    New Haven…  2016
+#&gt;  9 0900919… Derby       B01003_0…    12755    25 4_towns 09    New Haven…  2016
+#&gt; 10 0900922… East Haven  B01003_0…    29015    24 4_towns 09    New Haven…  2016
 #&gt; # ... with 21 more rows</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
