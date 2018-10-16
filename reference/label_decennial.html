@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Quickly add the labels of ACS variables — label_acs • cwi</title>
+<title>Quickly add the labels of decennial variables — label_decennial • cwi</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Quickly add the labels of ACS variables — label_acs" />
+<meta property="og:title" content="Quickly add the labels of decennial variables — label_decennial" />
 
-<meta property="og:description" content="tidycensus::get_acs returns an ACS table with its variable codes, which can be joined with cwi::acs_vars16 to get readable labels. This function is just a quick wrapper around the common task of joining these two data frames." />
+<meta property="og:description" content="tidycensus::get_decennial returns a decennial data table with its variable codes, which can be joined with cwi::decennial_vars10 to get readable labels. This function is just a quick wrapper around the common task of joining these two data frames." />
 
 <meta property="og:image" content="https://CT-Data-Haven.github.io/cwi/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -114,18 +114,19 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Quickly add the labels of ACS variables</h1>
-    <small class="dont-index">Source: <a href='https://github.com/CT-Data-Haven/cwi/blob/master/R/label_acs.R'><code>R/label_acs.R</code></a></small>
-    <div class="hidden name"><code>label_acs.Rd</code></div>
+    <h1>Quickly add the labels of decennial variables</h1>
+    <small class="dont-index">Source: <a href='https://github.com/CT-Data-Haven/cwi/blob/master/R/label_decennial.R'><code>R/label_decennial.R</code></a></small>
+    <div class="hidden name"><code>label_decennial.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code><a href='http://www.rdocumentation.org/packages/tidycensus/topics/get_acs'>tidycensus::get_acs</a></code> returns an ACS table with its variable codes, which can be joined with <code><a href='acs_vars16.html'>cwi::acs_vars16</a></code> to get readable labels. This function is just a quick wrapper around the common task of joining these two data frames.</p>
+    <p><code><a href='http://www.rdocumentation.org/packages/tidycensus/topics/get_decennial'>tidycensus::get_decennial</a></code> returns a decennial data table with its variable codes, which can be joined with <code><a href='decennial_vars10.html'>cwi::decennial_vars10</a></code> to get readable labels. This function is just a quick wrapper around the common task of joining these two data frames.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>label_acs</span>(<span class='no'>df</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2016</span>, <span class='kw'>survey</span> <span class='kw'>=</span> <span class='st'>"acs5"</span>, <span class='kw'>variable</span> <span class='kw'>=</span> <span class='no'>variable</span>)</pre>
+    <pre class="usage"><span class='fu'>label_decennial</span>(<span class='no'>df</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2010</span>, <span class='kw'>sumfile</span> <span class='kw'>=</span> <span class='st'>"sf1"</span>,
+  <span class='kw'>variable</span> <span class='kw'>=</span> <span class='no'>variable</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -136,15 +137,15 @@
     </tr>
     <tr>
       <th>year</th>
-      <td><p>The endyear of ACS data; defaults 2016.</p></td>
+      <td><p>The year of decennial census data; defaults 2010.</p></td>
     </tr>
     <tr>
-      <th>survey</th>
-      <td><p>A string: which ACS estimate to use. Defaults to 5-year (<code>"acs5"</code>), but can also be 1-year (<code>"acs1"</code>) or 3-year (<code>"acs3"</code>), though both 1-year and 3-year have limited availability.</p></td>
+      <th>sumfile</th>
+      <td><p>A string: which summary file to use. Defaults to the 100% summary file (<code>"sf1"</code>), but can also be (<code>"sf3"</code>).</p></td>
     </tr>
     <tr>
       <th>variable</th>
-      <td><p>The bare column name of variable codes; defaults to <code>variable</code>, as returned by <code><a href='http://www.rdocumentation.org/packages/tidycensus/topics/get_acs'>tidycensus::get_acs</a></code>.</p></td>
+      <td><p>The bare column name of variable codes; defaults to <code>variable</code>, as returned by <code><a href='http://www.rdocumentation.org/packages/tidycensus/topics/get_decennial'>tidycensus::get_decennial</a></code>.</p></td>
     </tr>
     </table>
     
@@ -154,7 +155,7 @@
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='acs_vars16.html'>acs_vars16</a></p></div>
+    <div class='dont-index'><p><a href='decennial_vars10.html'>decennial_vars10</a></p></div>
     
 
   </div>
