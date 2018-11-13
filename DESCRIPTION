@@ -27,7 +27,7 @@ Imports:
     curl (>= 3.2),
     blscrapeR
 Roxygen: list(markdown = TRUE, wrap = TRUE)
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Suggests: 
     knitr (>= 1.20),
     rmarkdown (>= 1.10),

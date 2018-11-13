@@ -1,16 +1,10 @@
 acs_towns <- function(table, year, towns, counties, state, survey) {
-  if (!is.null(counties) & !identical(counties, "all")) {
-    fetch <- counties %>%
-      purrr::map_dfr(function(county) {
-        suppressMessages(tidycensus::get_acs(geography = "county subdivision", table = table, year = year, state = state, county = county, survey = survey)) %>%
-          dplyr::mutate(county = county)
-      }) %>%
-      camiller::town_names(NAME)
-  } else {
-    fetch <- suppressMessages(tidycensus::get_acs(geography = "county subdivision", table = table, year = year, state = state, survey = survey)) %>%
-      # dplyr::mutate(state = state) %>%
-      camiller::town_names(NAME)
-  }
+  fetch <- counties_to_fetch(st = state, counties = counties) %>%
+    purrr::map_dfr(function(county) {
+      suppressMessages(tidycensus::get_acs(geography = "county subdivision", table = table, year = year, state = state, county = county, survey = survey)) %>%
+        dplyr::mutate(county = county)
+    }) %>%
+    camiller::town_names(NAME)
 
   if (!identical(towns, "all")) {
     fetch <- fetch %>% dplyr::filter(NAME %in% towns)
