@@ -31,8 +31,7 @@ acs_state <- function(table, year, state, survey) {
 }
 
 acs_regions <- function(table, year, regions, state, survey) {
-  fetch_towns <- suppressMessages(tidycensus::get_acs(geography = "county subdivision", table = table, year = year, state = state, survey = survey)) %>%
-    camiller::town_names(NAME)
+  fetch_towns <- acs_towns(table, year, "all", NULL, state, survey)
 
   regions %>%
     purrr::imap_dfr(function(region, region_name) {
