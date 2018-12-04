@@ -22,7 +22,7 @@
 #' \dontrun{
 #' multi_geo_acs("B01003", 2016,
 #'   neighborhoods = list(downtown = c("09009140100", "09009361401", "09009361402"),
-#'     dixwell = "090091416"),
+#'     dixwell = "09009141600"),
 #'   towns = "all",
 #'   regions = list(inner_ring = c("Hamden", "East Haven", "West Haven")),
 #'   counties = "New Haven County")
