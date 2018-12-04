@@ -129,7 +129,7 @@
 
     <pre class="usage"><span class='fu'>multi_geo_decennial</span>(<span class='no'>table</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2010</span>, <span class='kw'>neighborhoods</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>towns</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>regions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>counties</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>state</span> <span class='kw'>=</span> <span class='st'>"09"</span>,
-  <span class='kw'>sumfile</span> <span class='kw'>=</span> <span class='st'>"sf1"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>tracts</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sumfile</span> <span class='kw'>=</span> <span class='st'>"sf1"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -144,7 +144,7 @@
     </tr>
     <tr>
       <th>neighborhoods</th>
-      <td><p>A named list of neighborhoods with their 11-digit tract GEOIDs (defaults <code>NULL</code>).</p></td>
+      <td><p>Temporarily deprecated: A named list of neighborhoods with their 11-digit tract GEOIDs (defaults NULL).</p></td>
     </tr>
     <tr>
       <th>towns</th>
@@ -161,6 +161,10 @@
     <tr>
       <th>state</th>
       <td><p>A string: either name or two-digit FIPS code of a US state. Required; defaults <code>"09"</code> (Connecticut).</p></td>
+    </tr>
+    <tr>
+      <th>tracts</th>
+      <td><p>A character vector of 11-digit FIPS codes of tracts to include, or <code>"all"</code> for all tracts optionally filtered by county. Defaults <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>sumfile</th>

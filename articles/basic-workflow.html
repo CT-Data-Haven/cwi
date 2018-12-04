@@ -139,7 +139,7 @@
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">gnh_data<span class="op">$</span>total_pop</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; # A tibble: 18 x 9</span></a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt;    GEOID   NAME       variable  estimate   moe level  state county    year</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt;</span></a>
 <a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt;  1 09      Connectic… B01003_0…  3588570    NA 1_sta… &lt;NA&gt;  &lt;NA&gt;      2016</span></a>
 <a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt;  2 09009   New Haven… B01003_0…   860874    NA 2_cou… 09    &lt;NA&gt;      2016</span></a>
 <a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt;  3 &lt;NA&gt;    Greater N… B01003_0…   464596   132 3_reg… &lt;NA&gt;  &lt;NA&gt;      2016</span></a>
@@ -179,7 +179,7 @@
 <a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt; # A tibble: 90 x 6</span></a>
 <a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt; # Groups:   level, county, NAME [18]</span></a>
 <a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt;    level      county NAME             label  estimate  share</span></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;            &lt;fct&gt;     &lt;dbl&gt;  &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt;    &lt;fct&gt;      &lt;chr&gt;  &lt;chr&gt;            &lt;fct&gt;     &lt;dbl&gt;  &lt;dbl&gt;</span></a>
 <a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt;  1 1_state    &lt;NA&gt;   Connecticut      total   3588570 NA    </span></a>
 <a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt;  2 1_state    &lt;NA&gt;   Connecticut      white   2464450  0.687</span></a>
 <a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt;  3 1_state    &lt;NA&gt;   Connecticut      black    347674  0.097</span></a>
@@ -205,7 +205,7 @@
 <a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt; # A tibble: 18 x 5</span></a>
 <a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">#&gt; # Groups:   level, name [18]</span></a>
 <a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co">#&gt;    level      name                 tenure         estimate share</span></a>
-<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;                &lt;fct&gt;             &lt;dbl&gt; &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">#&gt;    &lt;fct&gt;      &lt;chr&gt;                &lt;fct&gt;             &lt;dbl&gt; &lt;dbl&gt;</span></a>
 <a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">#&gt;  1 1_state    Connecticut          Owner occupied   900223 0.665</span></a>
 <a class="sourceLine" id="cb6-16" data-line-number="16"><span class="co">#&gt;  2 2_counties New Haven County     Owner occupied   203568 0.624</span></a>
 <a class="sourceLine" id="cb6-17" data-line-number="17"><span class="co">#&gt;  3 3_regions  Greater New Haven    Owner occupied   106876 0.602</span></a>

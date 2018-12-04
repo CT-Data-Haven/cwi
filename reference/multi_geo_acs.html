@@ -129,8 +129,8 @@
 
     <pre class="usage"><span class='fu'>multi_geo_acs</span>(<span class='no'>table</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2016</span>, <span class='kw'>neighborhoods</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>towns</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>regions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>counties</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>state</span> <span class='kw'>=</span> <span class='st'>"09"</span>,
-  <span class='kw'>msa</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>us</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>new_england</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>survey</span> <span class='kw'>=</span> <span class='st'>"acs5"</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>tracts</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>blockgroups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>msa</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>us</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>new_england</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>survey</span> <span class='kw'>=</span> <span class='st'>"acs5"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,11 +145,11 @@
     </tr>
     <tr>
       <th>neighborhoods</th>
-      <td><p>A named list of neighborhoods with their 11-digit tract GEOIDs (defaults <code>NULL</code>).</p></td>
+      <td><p>Temporarily deprecated: A named list of neighborhoods with their 11-digit tract GEOIDs (defaults NULL).</p></td>
     </tr>
     <tr>
       <th>towns</th>
-      <td><p>A character vector of towns to include; <code>"all"</code> (default) for all towns optionally filtered by county; or <code>NULL</code> to not fetch town-level table.</p></td>
+      <td><p>A character vector of names of towns to include; <code>"all"</code> (default) for all towns optionally filtered by county; or <code>NULL</code> to not fetch town-level table.</p></td>
     </tr>
     <tr>
       <th>regions</th>
@@ -157,11 +157,19 @@
     </tr>
     <tr>
       <th>counties</th>
-      <td><p>A character vector of counties to include; <code>"all"</code> (default) for all counties in the state; or <code>NULL</code> to not fetch county-level table.</p></td>
+      <td><p>A character vector of names of counties to include; <code>"all"</code> (default) for all counties in the state; or <code>NULL</code> to not fetch county-level table.</p></td>
     </tr>
     <tr>
       <th>state</th>
       <td><p>A string: either name or two-digit FIPS code of a US state. Required; defaults <code>"09"</code> (Connecticut).</p></td>
+    </tr>
+    <tr>
+      <th>tracts</th>
+      <td><p>A character vector of 11-digit FIPS codes of tracts to include, or <code>"all"</code> for all tracts optionally filtered by county. Defaults <code>NULL</code>.</p></td>
+    </tr>
+    <tr>
+      <th>blockgroups</th>
+      <td><p>A character vector of 12-digit FIPS codes of block groups to include, or <code>"all"</code> for all block groups optionally filtered by county. Defaults <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>msa</th>
@@ -200,18 +208,16 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>multi_geo_acs</span>(<span class='st'>"B01003"</span>, <span class='fl'>2016</span>,
-  <span class='kw'>neighborhoods</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>downtown</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"09009140100"</span>, <span class='st'>"09009361401"</span>, <span class='st'>"09009361402"</span>),
-    <span class='kw'>dixwell</span> <span class='kw'>=</span> <span class='st'>"09009141600"</span>),
   <span class='kw'>towns</span> <span class='kw'>=</span> <span class='st'>"all"</span>,
   <span class='kw'>regions</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>inner_ring</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Hamden"</span>, <span class='st'>"East Haven"</span>, <span class='st'>"West Haven"</span>)),
-  <span class='kw'>counties</span> <span class='kw'>=</span> <span class='st'>"New Haven County"</span>)</div><div class='output co'>#&gt; <span class='message'>Table B01003: TOTAL POPULATION</span></div><div class='output co'>#&gt; <span class='message'>Geographies included:</span>
-#&gt; <span class='message'>Neighborhoods: downtown, dixwell</span>
+  <span class='kw'>counties</span> <span class='kw'>=</span> <span class='st'>"New Haven County"</span>,
+  <span class='kw'>tracts</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/unique'>unique</a></span>(<span class='no'>nhv_tracts</span>$<span class='no'>geoid</span>))</div><div class='output co'>#&gt; <span class='message'>Table B01003: TOTAL POPULATION</span></div><div class='output co'>#&gt; <span class='message'>Geographies included:</span>
 #&gt; <span class='message'>Towns: all</span>
 #&gt; <span class='message'>Regions: inner_ring</span>
 #&gt; <span class='message'>Counties: New Haven County</span>
-#&gt; <span class='message'>State: 09</span></div><div class='output co'>#&gt; # A tibble: 32 x 9
+#&gt; <span class='message'>State: 09</span></div><div class='output co'>#&gt; # A tibble: 61 x 9
 #&gt;    GEOID    NAME        variable  estimate   moe level   state county      year
-#&gt;    &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt;
+#&gt;    &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;   &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt;
 #&gt;  1 09       Connecticut B01003_0…  3588570    NA 1_state &lt;NA&gt;  &lt;NA&gt;        2016
 #&gt;  2 09009    New Haven … B01003_0…   860874    NA 2_coun… 09    &lt;NA&gt;        2016
 #&gt;  3 &lt;NA&gt;     inner_ring  B01003_0…   145463    57 3_regi… &lt;NA&gt;  &lt;NA&gt;        2016
@@ -222,7 +228,7 @@
 #&gt;  8 0900914… Cheshire    B01003_0…    29254    40 4_towns 09    New Haven…  2016
 #&gt;  9 0900919… Derby       B01003_0…    12755    25 4_towns 09    New Haven…  2016
 #&gt; 10 0900922… East Haven  B01003_0…    29015    24 4_towns 09    New Haven…  2016
-#&gt; # ... with 22 more rows</div></pre>
+#&gt; # ... with 51 more rows</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
