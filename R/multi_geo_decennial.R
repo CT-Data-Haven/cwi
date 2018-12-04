@@ -8,13 +8,14 @@
 #'
 #' @param table A string giving the decennial census table number. These are generally formatted as one or more letters, 3 numbers, and optionally a letter.
 #' @param year The year of the census table; currently defaults 2010 (most recent decennial census).
-#' @param neighborhoods A named list of neighborhoods with their 11-digit tract GEOIDs (defaults `NULL`).
 #' @param towns A character vector of towns to include; `"all"` (default) for all towns optionally filtered by county; or `NULL` to not fetch town-level table.
 #' @param regions A named list of regions with their town names (defaults `NULL`).
 #' @param counties A character vector of counties to include; `"all"` (default) for all counties in the state; or `NULL` to not fetch county-level table.
 #' @param state A string: either name or two-digit FIPS code of a US state. Required; defaults `"09"` (Connecticut).
+#' @param tracts A character vector of 11-digit FIPS codes of tracts to include, or `"all"` for all tracts optionally filtered by county. Defaults `NULL`.
 #' @param sumfile A string giving the summary file to pull from. Defaults `"sf1"`; in some rare cases, `"sf3"` may be appropriate.
 #' @param verbose Logical: whether to print summary of geographies included. Defaults `TRUE`.
+#' @param neighborhoods Temporarily deprecated: A named list of neighborhoods with their 11-digit tract GEOIDs (defaults NULL).
 #' @return A tibble with GEOID, name, variable code, estimate, moe, geography level, state, and year, as applicable, for the chosen table.
 #' @seealso [tidycensus::census_api_key()], [tidycensus::get_decennial()]
 #' @examples
@@ -27,33 +28,10 @@
 #'   counties = "New Haven County")
 #' }
 #' @export
-multi_geo_decennial <- function(table, year = 2010, neighborhoods = NULL, towns = "all", regions = NULL, counties = "all", state = "09", sumfile = "sf1", verbose = TRUE) {
+multi_geo_decennial <- function(table, year = 2010, neighborhoods = NULL, towns = "all", regions = NULL, counties = "all", state = "09", tracts = NULL, sumfile = "sf1", verbose = TRUE) {
   st <- state
   # state must not be null
   assertthat::assert_that(!is.null(st), msg = "Must supply a state name or FIPS code")
-
-  # decennial table numbers are a pain
-  # compare table to decennial_nums
-  # if (table != "H0001" & !table %in% decennial_nums) {
-  #   matches <- stringr::str_match(table, "^(HCT|H|PCT|PCO|P)(\\d{1,3}[A-Z]?)")
-  #   type <- matches[, 2]
-  #   nmbrs <- stringr::str_extract(matches[, 3], "\\d+") %>%
-  #     stringr::str_pad(side = "left", width = 3, pad = "0")
-  #   grp <- stringr::str_extract(matches[, 3], "\\D?$")
-  #
-  #   stop(sprintf("Table %s doesn't seem valid. Did you mean %s?", table, paste0(type, nmbrs, grp)))
-  #   # cat(sprintf("table %s is %s", table, paste0(type, nmbrs, grp)))
-  #
-  # }
-  # since there's error handling below now, just check formatting
-  # not sure why this doesn't work, just goes straight to error below
-  # if (table != "H0001") {
-  #   type <- stringr::str_extract(table, "^(HCT|H|PCT|PCO|P)")
-  #   nmbrs <- stringr::str_extract(table, "\\d+")
-  #   if (nchar(nmbrs) != 3) {
-  #     warning(stringr::str_glue("Table {table} doesn't seem valid, but let's try it..."))
-  #   }
-  # }
 
   # state should be string; if numeric, pad it as FIPS code
   if (is.numeric(st)) {
@@ -117,8 +95,15 @@ multi_geo_decennial <- function(table, year = 2010, neighborhoods = NULL, towns 
   # fetch everything
   fetch <- list()
 
-  if (!is.null(neighborhoods)) {
-    fetch$neighborhoods <- decennial_neighborhoods(table, year, neighborhoods, st, sumfile)
+  # if (!is.null(neighborhoods)) {
+  #   fetch$neighborhoods <- decennial_neighborhoods(table, year, neighborhoods, st, sumfile)
+  # }
+  if (!is.null(tracts)) {
+    fips_nchar <- nchar(tracts[1])
+    if (!identical(tracts, "all") & fips_nchar != 11) {
+      warning(stringr::str_glue("FIPS codes for tracts should have 11 digits, not {fips_nchar}. Tracts will likely be dropped."))
+    }
+    fetch$tracts <- decennial_tracts(table, year, tracts, counties, st, sumfile)
   }
   if (!is.null(towns)) {
     fetch$towns <- decennial_towns(table, year, towns, counties, st, sumfile)
@@ -138,5 +123,6 @@ multi_geo_decennial <- function(table, year = 2010, neighborhoods = NULL, towns 
     purrr::pmap_dfr(function(df, lvl, i) {
       df %>% dplyr::mutate(level = paste(i, lvl, sep = "_"))
     }) %>%
-    dplyr::mutate(year = year)
+    dplyr::mutate(year = year) %>%
+    dplyr::mutate(level = forcats::as_factor(level))
 }

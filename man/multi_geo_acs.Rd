@@ -6,23 +6,27 @@
 \usage{
 multi_geo_acs(table, year = 2016, neighborhoods = NULL,
   towns = "all", regions = NULL, counties = "all", state = "09",
-  msa = FALSE, us = FALSE, new_england = TRUE, survey = "acs5",
-  verbose = TRUE)
+  tracts = NULL, blockgroups = NULL, msa = FALSE, us = FALSE,
+  new_england = TRUE, survey = "acs5", verbose = TRUE)
 }
 \arguments{
 \item{table}{A string giving the ACS table number.}
 
 \item{year}{The year of the ACS table; currently defaults 2016 (most recent available).}
 
-\item{neighborhoods}{A named list of neighborhoods with their 11-digit tract GEOIDs (defaults \code{NULL}).}
+\item{neighborhoods}{Temporarily deprecated: A named list of neighborhoods with their 11-digit tract GEOIDs (defaults NULL).}
 
-\item{towns}{A character vector of towns to include; \code{"all"} (default) for all towns optionally filtered by county; or \code{NULL} to not fetch town-level table.}
+\item{towns}{A character vector of names of towns to include; \code{"all"} (default) for all towns optionally filtered by county; or \code{NULL} to not fetch town-level table.}
 
 \item{regions}{A named list of regions with their town names (defaults \code{NULL}).}
 
-\item{counties}{A character vector of counties to include; \code{"all"} (default) for all counties in the state; or \code{NULL} to not fetch county-level table.}
+\item{counties}{A character vector of names of counties to include; \code{"all"} (default) for all counties in the state; or \code{NULL} to not fetch county-level table.}
 
 \item{state}{A string: either name or two-digit FIPS code of a US state. Required; defaults \code{"09"} (Connecticut).}
+
+\item{tracts}{A character vector of 11-digit FIPS codes of tracts to include, or \code{"all"} for all tracts optionally filtered by county. Defaults \code{NULL}.}
+
+\item{blockgroups}{A character vector of 12-digit FIPS codes of block groups to include, or \code{"all"} for all block groups optionally filtered by county. Defaults \code{NULL}.}
 
 \item{msa}{Logical: whether to fetch New England states' metropolitan statistical areas. Defaults \code{FALSE}.}
 
@@ -46,11 +50,10 @@ This function essentially calls \code{tidycensus::get_acs()} multiple times, dep
 \examples{
 \dontrun{
 multi_geo_acs("B01003", 2016,
-  neighborhoods = list(downtown = c("09009140100", "09009361401", "09009361402"),
-    dixwell = "09009141600"),
   towns = "all",
   regions = list(inner_ring = c("Hamden", "East Haven", "West Haven")),
-  counties = "New Haven County")
+  counties = "New Haven County",
+  tracts = unique(nhv_tracts$geoid))
 }
 }
 \seealso{

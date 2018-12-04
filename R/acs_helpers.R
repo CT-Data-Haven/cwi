@@ -24,6 +24,34 @@ acs_counties <- function(table, year, counties, state, survey) {
   fetch
 }
 
+acs_tracts <- function(table, year, tracts, counties, state, survey) {
+  fetch <- counties_to_fetch(st = state, counties = counties) %>%
+    purrr::map_dfr(function(county) {
+      suppressMessages(tidycensus::get_acs(geography = "tract", table = table, year = year, state = state, county = county, survey = survey)) %>%
+        dplyr::mutate(county = county)
+    })
+
+  if (!identical(tracts, "all")) {
+    fetch <- fetch %>% dplyr::filter(GEOID %in% tracts)
+  }
+  fetch %>%
+    dplyr::mutate(state = state)
+}
+
+acs_blockgroups <- function(table, year, blockgroups, counties, state, survey) {
+  fetch <- counties_to_fetch(st = state, counties = counties) %>%
+    purrr::map_dfr(function(county) {
+      suppressMessages(tidycensus::get_acs(geography = "block group", table = table, year = year, state = state, county = county, survey = survey)) %>%
+        dplyr::mutate(county = county)
+    })
+
+  if (!identical(blockgroups, "all")) {
+    fetch <- fetch %>% dplyr::filter(GEOID %in% blockgroups)
+  }
+  fetch %>%
+    dplyr::mutate(state = state)
+}
+
 acs_state <- function(table, year, state, survey) {
   fetch <- suppressMessages(tidycensus::get_acs(geography = "state", table = table, year = year, survey = survey)) %>%
     dplyr::filter(NAME == state | GEOID == state)
@@ -42,12 +70,17 @@ acs_regions <- function(table, year, regions, state, survey) {
     })
 }
 
-acs_neighborhoods <- function(table, year, neighborhoods, state, survey) {
-  fetch_tracts <- suppressMessages(tidycensus::get_acs(geography = "tract", table = table, year = year, state = state, survey = survey))
+acs_neighborhoods <- function(table, year, neighborhoods, state, blockgroups, survey) {
+  if (blockgroups) {
+    fetch_nhoods <- suppressMessages(tidycensus::get_acs(geography = "block group", table = table, year = year, state = state, survey = survey))
+  } else {
+    fetch_nhoods <- suppressMessages(tidycensus::get_acs(geography = "tract", table = table, year = year, state = state, survey = survey))
+  }
 
+  # TODO: need to handle weighting
   neighborhoods %>%
     purrr::imap_dfr(function(neighborhood, neighborhood_name) {
-      fetch_tracts %>%
+      fetch_nhoods %>%
         dplyr::filter(GEOID %in% neighborhood) %>%
         dplyr::group_by(NAME = neighborhood_name, variable) %>%
         dplyr::summarise(estimate = sum(estimate), moe = tidycensus::moe_sum(moe, estimate) %>% round())

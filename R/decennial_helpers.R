@@ -38,6 +38,20 @@ decennial_counties <- function(table, year, counties, state, sumfile) {
   fetch
 }
 
+decennial_tracts <- function(table, year, tracts, counties, state, sumfile) {
+  fetch <- counties_to_fetch(st = state, counties = counties) %>%
+    purrr::map_dfr(function(county) {
+      suppressMessages(tidycensus::get_decennial(geography = "tract", table = table, year = year, state = state, county = county, sumfile = sumfile)) %>%
+        dplyr::mutate(county = county)
+    })
+
+  if (!identical(tracts, "all")) {
+    fetch <- fetch %>% dplyr::filter(GEOID %in% tracts)
+  }
+  fetch %>%
+    dplyr::mutate(state = state)
+}
+
 decennial_state <- function(table, year, state, sumfile) {
   fetch <- suppressMessages(tidycensus::get_decennial(geography = "state", table = table, year = year, sumfile = sumfile)) %>%
     dplyr::filter(NAME == state | GEOID == state)

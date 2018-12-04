@@ -6,14 +6,14 @@
 \usage{
 multi_geo_decennial(table, year = 2010, neighborhoods = NULL,
   towns = "all", regions = NULL, counties = "all", state = "09",
-  sumfile = "sf1", verbose = TRUE)
+  tracts = NULL, sumfile = "sf1", verbose = TRUE)
 }
 \arguments{
 \item{table}{A string giving the decennial census table number. These are generally formatted as one or more letters, 3 numbers, and optionally a letter.}
 
 \item{year}{The year of the census table; currently defaults 2010 (most recent decennial census).}
 
-\item{neighborhoods}{A named list of neighborhoods with their 11-digit tract GEOIDs (defaults \code{NULL}).}
+\item{neighborhoods}{Temporarily deprecated: A named list of neighborhoods with their 11-digit tract GEOIDs (defaults NULL).}
 
 \item{towns}{A character vector of towns to include; \code{"all"} (default) for all towns optionally filtered by county; or \code{NULL} to not fetch town-level table.}
 
@@ -22,6 +22,8 @@ multi_geo_decennial(table, year = 2010, neighborhoods = NULL,
 \item{counties}{A character vector of counties to include; \code{"all"} (default) for all counties in the state; or \code{NULL} to not fetch county-level table.}
 
 \item{state}{A string: either name or two-digit FIPS code of a US state. Required; defaults \code{"09"} (Connecticut).}
+
+\item{tracts}{A character vector of 11-digit FIPS codes of tracts to include, or \code{"all"} for all tracts optionally filtered by county. Defaults \code{NULL}.}
 
 \item{sumfile}{A string giving the summary file to pull from. Defaults \code{"sf1"}; in some rare cases, \code{"sf3"} may be appropriate.}
 
