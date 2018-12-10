@@ -20,7 +20,7 @@
 #' @seealso [tidycensus::census_api_key()], [tidycensus::get_decennial()]
 #' @examples
 #' \dontrun{
-#' multi_geo_decennial("P001", 2016,
+#' multi_geo_decennial("P001", 2010,
 #'   neighborhoods = list(downtown = c("09009140100", "09009361401", "09009361402"),
 #'     dixwell = "090091416"),
 #'   towns = "all",

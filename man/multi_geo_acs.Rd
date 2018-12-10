@@ -4,7 +4,7 @@
 \alias{multi_geo_acs}
 \title{Fetch an ACS table with multiple geography levels}
 \usage{
-multi_geo_acs(table, year = 2016, neighborhoods = NULL,
+multi_geo_acs(table, year = 2017, neighborhoods = NULL,
   towns = "all", regions = NULL, counties = "all", state = "09",
   tracts = NULL, blockgroups = NULL, msa = FALSE, us = FALSE,
   new_england = TRUE, survey = "acs5", verbose = TRUE)
@@ -12,7 +12,7 @@ multi_geo_acs(table, year = 2016, neighborhoods = NULL,
 \arguments{
 \item{table}{A string giving the ACS table number.}
 
-\item{year}{The year of the ACS table; currently defaults 2016 (most recent available).}
+\item{year}{The year of the ACS table; currently defaults 2017 (most recent available).}
 
 \item{neighborhoods}{Temporarily deprecated: A named list of neighborhoods with their 11-digit tract GEOIDs (defaults NULL).}
 
