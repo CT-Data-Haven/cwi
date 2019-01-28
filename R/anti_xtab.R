@@ -75,6 +75,12 @@ filter_until <- function(.data, col, pattern) {
     filter(cumsum(grepl(pattern, !!info_col)) == 0)
 }
 
+filter_after <- function(.data, col, pattern) {
+  info_col <- enquo(col)
+  .data %>%
+    filter(cumsum(grepl(pattern, !!info_col)) > 0)
+}
+
 xtab2df <- function(.data, col = x1, code_pattern = "^[A-Z\\d]{1,20}$") {
   info_col <- enquo(col)
 
@@ -151,25 +157,44 @@ read_xtabs <- function(path, col_names = F, name_prefix = "x", until = "Nature o
   }
 }
 
+read_weights <- function(path, marker = "Nature of the [Ss]ample") {
+  data <- readxl::read_excel(path, col_names = F) %>%
+    set_names(names(.) %>% str_replace("^\\.+", "x")) %>%
+    select(1, 2)
+  first_col <- rlang::sym(names(data)[1])
+
+  data %>%
+    filter_after(!!first_col, marker) %>%
+    janitor::remove_empty(which = c("rows", "cols")) %>%
+    set_names(c("group", "weight")) %>%
+    filter(!is.na(weight)) %>%
+    mutate(weight = as.numeric(weight) %>% round(digits = 3))
+}
+
 ##############################################################
 
-ct18 <- read_xtabs("DataHaven2018 Connecticut Statewide Crosstabs Pub.xlsx")
+# ct18 <- readxl::read_excel("~/_R/cwi_extras/Final_Crosstabs/DataHaven2018 Connecticut Statewide Crosstabs Pub.xlsx", col_names = F) %>%
+#   set_names(names(.) %>% str_replace("^\\.+", "x"))
+#
+# read_weights("~/_R/cwi_extras/Final_Crosstabs/DataHaven2018 Connecticut Statewide Crosstabs Pub.xlsx")
 
-ct18_long <- ct18 %>%
-  xtab2df()
-
-# default is a long format
-ct18_long %>%
-  filter(code == "Q6") %>%
-  sub_nonanswers(nons = c("Don't know", "Refused"))
-
-# output_tidy = F gives wide format
-ct18_long %>%
-  filter(code == "Q6") %>%
-  sub_nonanswers(nons = c("Don't know", "Refused"), output_tidy = F)
-
-# setting year = 2015 removes first 3 rows
-ct15 <- read_xtabs("DataHaven2015 Connecticut Crosstabs Pub.xlsx", year = 2015)
-
-ct15 %>%
-  xtab2df()
+# ct18 <- read_xtabs("DataHaven2018 Connecticut Statewide Crosstabs Pub.xlsx")
+#
+# ct18_long <- ct18 %>%
+#   xtab2df()
+#
+# # default is a long format
+# ct18_long %>%
+#   filter(code == "Q6") %>%
+#   sub_nonanswers(nons = c("Don't know", "Refused"))
+#
+# # output_tidy = F gives wide format
+# ct18_long %>%
+#   filter(code == "Q6") %>%
+#   sub_nonanswers(nons = c("Don't know", "Refused"), output_tidy = F)
+#
+# # setting year = 2015 removes first 3 rows
+# ct15 <- read_xtabs("DataHaven2015 Connecticut Crosstabs Pub.xlsx", year = 2015)
+#
+# ct15 %>%
+#   xtab2df()
