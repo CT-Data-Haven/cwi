@@ -1,6 +1,6 @@
-acs_vars16 <- clean_acs_vars(year = 2016, survey = "acs5")
+acs_vars17 <- clean_acs_vars(year = 2017, survey = "acs5")
 
-usethis::use_data(acs_vars16, overwrite = T)
+usethis::use_data(acs_vars17, overwrite = T)
 
 # P012 numbers have been changed to more standard in the API as of 8/2018; label for female, all ages has been fixed
 

@@ -30,13 +30,13 @@ acs_available <- function(tbl, year, survey) {
 #'
 #' `tidycensus::get_acs` returns an ACS table with its variable codes, which can be joined with `cwi::acs_vars16` to get readable labels. This function is just a quick wrapper around the common task of joining these two data frames.
 #' @param df A data frame/tibble.
-#' @param year The endyear of ACS data; defaults 2016.
+#' @param year The endyear of ACS data; defaults 2017.
 #' @param survey A string: which ACS estimate to use. Defaults to 5-year (`"acs5"`), but can also be 1-year (`"acs1"`) or 3-year (`"acs3"`), though both 1-year and 3-year have limited availability.
 #' @param variable The bare column name of variable codes; defaults to `variable`, as returned by `tidycensus::get_acs`.
 #' @return A tibble
-#' @seealso [acs_vars16]
+#' @seealso [acs_vars17]
 #' @export
-label_acs <- function(df, year = 2016, survey = "acs5", variable = variable) {
+label_acs <- function(df, year = 2017, survey = "acs5", variable = variable) {
   variable_var <- rlang::enquo(variable)
   variable_name <- rlang::quo_name(variable_var)
   acs_vars <- clean_acs_vars(year = year, survey = survey)

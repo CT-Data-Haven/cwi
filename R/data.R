@@ -1,4 +1,4 @@
-#' Variable labels from the 2016 ACS
+#' Variable labels from the 2017 ACS
 #'
 #' Dataset of ACS variable labels, loaded from `tidycensus::load_variables()` and cleaned up slightly.
 #'
@@ -9,7 +9,7 @@
 #'   \item{concept}{Table name}
 #' }
 #' @source US Census Bureau via `tidycensus`
-"acs_vars16"
+"acs_vars17"
 
 
 #' Variable labels from the 2010 Decennial Census
