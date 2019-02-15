@@ -19,7 +19,7 @@ count_valid_cols <- function(.data) {
     mutate(count_valid = rowSums(valids))
 }
 
-mark_questions <- function(.data, col = x1, pattern = "^[A-Z\\d]{1,20}$") {
+mark_questions <- function(.data, col = x1, pattern = "^[A-Z\\d_]{1,20}$") {
   info_col <- enquo(col)
   marked <- .data %>%
     count_valid_cols() %>%
@@ -81,7 +81,7 @@ filter_after <- function(.data, col, pattern) {
     filter(cumsum(grepl(pattern, !!info_col)) > 0)
 }
 
-xtab2df <- function(.data, col = x1, code_pattern = "^[A-Z\\d]{1,20}$") {
+xtab2df <- function(.data, col = x1, code_pattern = "^[A-Z\\d_]{1,20}$") {
   info_col <- enquo(col)
 
   marked <- .data %>%
@@ -107,7 +107,8 @@ xtab2df <- function(.data, col = x1, code_pattern = "^[A-Z\\d]{1,20}$") {
     gather(key, value, -code, -question, -!!info_col) %>%
     left_join(headings, by = c("code", "question", "key")) %>%
     select(code, question, category = h1, group = h2, response = !!info_col, value) %>%
-    mutate(value = as.numeric(value))
+    mutate(value = as.numeric(value)) %>%
+    filter(!is.na(value))
 }
 
 sub_nonanswers <- function(.data, response = response, value = value, nons = c("Don't know", "Refused"), output_tidy = T) {
@@ -159,8 +160,8 @@ read_xtabs <- function(path, col_names = F, name_prefix = "x", until = "Nature o
 
 read_weights <- function(path, marker = "Nature of the [Ss]ample") {
   data <- readxl::read_excel(path, col_names = F) %>%
-    set_names(names(.) %>% str_replace("^\\.+", "x")) %>%
-    select(1, 2)
+    set_names(names(.) %>% str_replace("^\\.+", "x")) # %>%
+    # select(1, 2)
   first_col <- rlang::sym(names(data)[1])
 
   data %>%
