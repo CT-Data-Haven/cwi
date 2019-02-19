@@ -133,7 +133,8 @@ sub_nonanswers <- function(.data, response = response, value = value, nons = c("
 
   if (output_tidy) {
     wide %>%
-      gather(key = !!response_col, value = !!value_col, !!!responses)
+      gather(key = !!response_col, value = !!value_col, !!!responses) %>%
+      mutate_at(vars(!!response_col), as_factor)
   } else {
     wide
   }
