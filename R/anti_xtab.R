@@ -83,6 +83,7 @@ filter_after <- function(.data, col, pattern) {
 
 xtab2df <- function(.data, col = x1, code_pattern = "^[A-Z\\d_]{1,20}$") {
   info_col <- enquo(col)
+  hier <- c("category", "group", "subgroup")
 
   marked <- .data %>%
     mark_questions(col = !!info_col, pattern = code_pattern)
@@ -94,19 +95,21 @@ xtab2df <- function(.data, col = x1, code_pattern = "^[A-Z\\d_]{1,20}$") {
     janitor::remove_empty("cols") %>%
     group_by(code, question) %>%
     mutate(h = paste0("h", row_number())) %>%
+    ungroup() %>%
     gather(key, value = heading, -code, -question, -h) %>%
     mutate(key = as_factor(key)) %>%
     spread(key = h, value = heading) %>%
+    mutate_if(is.factor, as.character) %>%
     fill(matches("h\\d+"), .direction = "down") %>%
-    mutate(h1 = coalesce(h1, h2)) %>%
-    ungroup() %>%
-    mutate_if(is.factor, as.character)
+    # mutate(h1 = coalesce(h1, h2)) %>%
+    mutate(h1 = coalesce(!!!select(., matches("^h\\d+"))))
 
   marked %>%
     filter(!is.na(!!info_col)) %>%
     gather(key, value, -code, -question, -!!info_col) %>%
     left_join(headings, by = c("code", "question", "key")) %>%
-    select(code, question, category = h1, group = h2, response = !!info_col, value) %>%
+    select(code, question, matches("^h\\d+"), response = !!info_col, value) %>%
+    rename_at(vars(matches("^h\\d+")), ~hier[seq_along(.)]) %>%
     mutate(value = as.numeric(value)) %>%
     filter(!is.na(value))
 }
@@ -122,6 +125,7 @@ sub_nonanswers <- function(.data, response = response, value = value, nons = c("
     setdiff(nons) %>%
     rlang::syms()
   wide <- .data %>%
+    ungroup() %>%
     mutate_if(is.character, as_factor) %>%
     spread(key = !!response_col, value = !!value_col) %>%
     rowwise() %>%
@@ -142,8 +146,8 @@ sub_nonanswers <- function(.data, response = response, value = value, nons = c("
 
 
 read_xtabs <- function(path, col_names = F, name_prefix = "x", until = "Nature of the [Ss]ample", year = 2018) {
-  data <- readxl::read_excel(path, col_names = col_names) %>%
-    set_names(names(.) %>% str_replace("^\\.+", name_prefix)) %>%
+  data <- readxl::read_excel(path, col_names = col_names, .name_repair = "minimal") %>%
+    set_names(paste0(name_prefix, 1:ncol(.))) %>%
     janitor::remove_empty(which = "rows")
   first_col <- rlang::sym(names(data)[1])
   if (year == 2015) {
@@ -160,9 +164,8 @@ read_xtabs <- function(path, col_names = F, name_prefix = "x", until = "Nature o
 }
 
 read_weights <- function(path, marker = "Nature of the [Ss]ample") {
-  data <- readxl::read_excel(path, col_names = F) %>%
-    set_names(names(.) %>% str_replace("^\\.+", "x")) # %>%
-    # select(1, 2)
+  data <- readxl::read_excel(path, col_names = F, .name_repair = "minimal") %>%
+    set_names(paste0("x", 1:ncol(.)))
   first_col <- rlang::sym(names(data)[1])
 
   data %>%
@@ -180,7 +183,7 @@ read_weights <- function(path, marker = "Nature of the [Ss]ample") {
 #
 # read_weights("~/_R/cwi_extras/Final_Crosstabs/DataHaven2018 Connecticut Statewide Crosstabs Pub.xlsx")
 
-# ct18 <- read_xtabs("DataHaven2018 Connecticut Statewide Crosstabs Pub.xlsx")
+# ct18 <- read_xtabs("xtabs_to_plot/2018/DataHaven2018 Connecticut Statewide Crosstabs Pub.xlsx")
 #
 # ct18_long <- ct18 %>%
 #   xtab2df()
