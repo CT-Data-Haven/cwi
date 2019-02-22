@@ -87,16 +87,19 @@ xtab2df <- function(.data, col = x1, code_pattern = "^[A-Z\\d_]{1,20}$") {
 
   marked <- .data %>%
     mark_questions(col = !!info_col, pattern = code_pattern)
-  marked
 
   headings <- marked %>%
     mutate(code = as_factor(code)) %>%
     filter(is.na(!!info_col)) %>%
     janitor::remove_empty("cols") %>%
+    slice(1:2) %>%
     group_by(code, question) %>%
     mutate(h = paste0("h", row_number())) %>%
     ungroup() %>%
-    gather(key, value = heading, -code, -question, -h) %>%
+    # new
+    select(-code, -question) %>%
+    # gather(key, value = heading, -code, -question, -h) %>%
+    gather(key, value = heading, -h) %>%
     mutate(key = as_factor(key)) %>%
     spread(key = h, value = heading) %>%
     mutate_if(is.factor, as.character) %>%
@@ -107,7 +110,7 @@ xtab2df <- function(.data, col = x1, code_pattern = "^[A-Z\\d_]{1,20}$") {
   marked %>%
     filter(!is.na(!!info_col)) %>%
     gather(key, value, -code, -question, -!!info_col) %>%
-    left_join(headings, by = c("code", "question", "key")) %>%
+    left_join(headings, by = c("key")) %>%
     select(code, question, matches("^h\\d+"), response = !!info_col, value) %>%
     rename_at(vars(matches("^h\\d+")), ~hier[seq_along(.)]) %>%
     mutate(value = as.numeric(value)) %>%
