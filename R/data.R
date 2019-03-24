@@ -119,6 +119,21 @@ NULL
 "zip2town"
 
 
+#' Village to town lookup
+#'
+#' A crosswalk of Connecticut's Census-designated places (CDP) to the towns (county subdivisions) containing them.
+#'
+#' @format A data frame with 89 rows and 4 variables:
+#' \describe{
+#'   \item{cdp_geoid}{7-digits CDP FIPS code}
+#'   \item{place}{CDP name}
+#'   \item{town_geoid}{10-digit town FIPS code}
+#'   \item{town}{Town name}
+#' }
+#' @source Spatial overlay of TIGER shapefiles
+"village2town"
+
+
 #' NAICS industry codes
 #'
 #' A dataset of industry names with their NAICS codes. These are only the main sectors, not detailed industry codes.
