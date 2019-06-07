@@ -1,5 +1,3 @@
-library(tidyverse)
-
 # logic:
 # * Questions are divided from one another by a row of all NA
 # * For 2018, question labels are a string value in x1 followed by a row of all NA, but so is Q1 label. And some rows have a code other than Q1, such as MOVEYEAR, so these are detected with regex as being only 1-20 capital letters and/or numbers
@@ -13,30 +11,30 @@ library(tidyverse)
 ########### don't export
 count_valid_cols <- function(.data) {
   valids <- .data %>%
-    mutate_all(funs(!is.na(.)))
+    dplyr::mutate_all(dplyr::funs(!is.na(.)))
 
   .data %>%
-    mutate(count_valid = rowSums(valids))
+    dplyr::mutate(count_valid = rowSums(valids))
 }
 
 mark_questions <- function(.data, col = x1, pattern = "^[A-Z\\d_]{1,20}$") {
-  info_col <- enquo(col)
+  info_col <- rlang::enquo(col)
   marked <- .data %>%
     count_valid_cols() %>%
-    mutate(is_question = !is.na(!!info_col) & !str_detect(!!info_col, pattern) & count_valid == 1,
-           is_code = !is.na(!!info_col) & str_detect(!!info_col, pattern) & count_valid == 1) %>%
-    mutate(q_number = cumsum(is_question)) %>%
-    mutate(q = ifelse(is_question, !!info_col, NA_character_))  %>%
-    fill(q, .direction = "down")
+    dplyr::mutate(is_question = !is.na(!!info_col) & !stringr::str_detect(!!info_col, pattern) & count_valid == 1,
+           is_code = !is.na(!!info_col) & stringr::str_detect(!!info_col, pattern) & count_valid == 1) %>%
+    dplyr::mutate(q_number = cumsum(is_question)) %>%
+    dplyr::mutate(q = ifelse(is_question, !!info_col, NA_character_))  %>%
+    tidyr::fill(q, .direction = "down")
 
   codes <- suppressWarnings(question_codes(marked, col = info_col, pattern = pattern))
 
   # dropping q after the fact to handle joining with the 2015 tables
   marked %>%
-    filter(!is_question, !is_code) %>%
-    select(-q) %>%
-    left_join(codes, by = c("q_number")) %>%
-    select(code, question = q, everything(), -count_valid, -is_question, -is_code, -q_number)
+    dplyr::filter(!is_question, !is_code) %>%
+    dplyr::select(-q) %>%
+    dplyr::left_join(codes, by = c("q_number")) %>%
+    dplyr::select(code, question = q, dplyr::everything(), -count_valid, -is_question, -is_code, -q_number)
 }
 
 question_codes <- function(.data, col, pattern) {
@@ -45,103 +43,103 @@ question_codes <- function(.data, col, pattern) {
   if (!any(.data[["is_code"]])) {
     # no standalone codes --> separate codes and questions using pattern
     anti_pattern <- pattern %>%
-      str_remove("\\$") %>%
+      stringr::str_remove("\\$") %>%
       sprintf("(?<=%s)\\b", .)
     .data %>%
-      mutate(q = str_remove_all(q, "\\.")) %>%
-      separate(q, into = c("code", "q"), sep = anti_pattern, fill = "left") %>%
-      mutate(q = str_trim(q)) %>%
-      filter(!is.na(code)) %>%
-      select(q_number, code, q) %>%
-      distinct()
+      dplyr::mutate(q = str_remove_all(q, "\\.")) %>%
+      tidyr::separate(q, into = c("code", "q"), sep = anti_pattern, fill = "left") %>%
+      dplyr::mutate(q = str_trim(q)) %>%
+      dplyr::filter(!is.na(code)) %>%
+      dplyr::select(q_number, code, q) %>%
+      dplyr::distinct()
   } else {
     # standalone codes --> reshape into 2 columns
     .data %>%
-      filter(is_question | is_code) %>%
-      select(q_number, !!col, is_question, is_code) %>%
-      gather(key, value, is_question, is_code) %>%
-      filter(value) %>%
-      spread(key = key, value = !!col) %>%
-      filter(!is.na(is_code)) %>%
-      select(q_number, code = is_code, q = is_question)
+      dplyr::filter(is_question | is_code) %>%
+      dplyr::select(q_number, !!col, is_question, is_code) %>%
+      tidyr::gather(key, value, is_question, is_code) %>%
+      dplyr::filter(value) %>%
+      tidyr::spread(key = key, value = !!col) %>%
+      dplyr::filter(!is.na(is_code)) %>%
+      dplyr::select(q_number, code = is_code, q = is_question)
   }
 }
 
 ######## functions to export
 
 filter_until <- function(.data, col, pattern) {
-  info_col <- enquo(col)
+  info_col <- rlang::enquo(col)
   .data %>%
-    filter(cumsum(grepl(pattern, !!info_col)) == 0)
+    dplyr::filter(cumsum(grepl(pattern, !!info_col)) == 0)
 }
 
 filter_after <- function(.data, col, pattern) {
-  info_col <- enquo(col)
+  info_col <- rlang::enquo(col)
   .data %>%
-    filter(cumsum(grepl(pattern, !!info_col)) > 0)
+    dplyr::filter(cumsum(grepl(pattern, !!info_col)) > 0)
 }
 
 xtab2df <- function(.data, col = x1, code_pattern = "^[A-Z\\d_]{1,20}$") {
-  info_col <- enquo(col)
+  info_col <- rlang::enquo(col)
   hier <- c("category", "group", "subgroup")
 
   marked <- .data %>%
     mark_questions(col = !!info_col, pattern = code_pattern)
 
   headings <- marked %>%
-    mutate(code = as_factor(code)) %>%
-    filter(is.na(!!info_col)) %>%
+    dplyr::mutate(code = forcats::as_factor(code)) %>%
+    dplyr::filter(is.na(!!info_col)) %>%
     janitor::remove_empty("cols") %>%
-    slice(1:2) %>%
-    group_by(code, question) %>%
-    mutate(h = paste0("h", row_number())) %>%
-    ungroup() %>%
+    dplyr::slice(1:2) %>%
+    dplyr::group_by(code, question) %>%
+    dplyr::mutate(h = paste0("h", dplyr::row_number())) %>%
+    dplyr::ungroup() %>%
     # new
-    select(-code, -question) %>%
+    dplyr::select(-code, -question) %>%
     # gather(key, value = heading, -code, -question, -h) %>%
-    gather(key, value = heading, -h) %>%
-    mutate(key = as_factor(key)) %>%
-    spread(key = h, value = heading) %>%
-    mutate_if(is.factor, as.character) %>%
-    fill(matches("h\\d+"), .direction = "down") %>%
+    tidyr::gather(key, value = heading, -h) %>%
+    dplyr::mutate(key = forcats::as_factor(key)) %>%
+    tidyr::spread(key = h, value = heading) %>%
+    dplyr::mutate_if(is.factor, as.character) %>%
+    tidyr::fill(dplyr::matches("h\\d+"), .direction = "down") %>%
     # mutate(h1 = coalesce(h1, h2)) %>%
-    mutate(h1 = coalesce(!!!select(., matches("^h\\d+"))))
+    dplyr::mutate(h1 = dplyr::coalesce(!!!dplyr::select(., dplyr::matches("^h\\d+"))))
 
   marked %>%
-    filter(!is.na(!!info_col)) %>%
-    gather(key, value, -code, -question, -!!info_col) %>%
-    left_join(headings, by = c("key")) %>%
-    select(code, question, matches("^h\\d+"), response = !!info_col, value) %>%
-    rename_at(vars(matches("^h\\d+")), ~hier[seq_along(.)]) %>%
-    mutate(value = as.numeric(value)) %>%
-    filter(!is.na(value))
+    dplyr::filter(!is.na(!!info_col)) %>%
+    tidyr::gather(key, value, -code, -question, -!!info_col) %>%
+    dplyr::left_join(headings, by = c("key")) %>%
+    dplyr::select(code, question, dplyr::matches("^h\\d+"), response = !!info_col, value) %>%
+    dplyr::rename_at(dplyr::vars(dplyr::matches("^h\\d+")), ~hier[seq_along(.)]) %>%
+    dplyr::mutate(value = as.numeric(value)) %>%
+    dplyr::filter(!is.na(value))
 }
 
 sub_nonanswers <- function(.data, response = response, value = value, nons = c("Don't know", "Refused"), output_tidy = T) {
-  response_col <- enquo(response)
-  value_col <- enquo(value)
+  response_col <- rlang::enquo(response)
+  value_col <- rlang::enquo(value)
   non_cols <- rlang::syms(nons)
 
   responses <- .data %>%
-    pull(!!response_col) %>%
+    dplyr::pull(!!response_col) %>%
     unique() %>%
     setdiff(nons) %>%
     rlang::syms()
   wide <- .data %>%
-    ungroup() %>%
-    mutate_if(is.character, as_factor) %>%
-    spread(key = !!response_col, value = !!value_col) %>%
-    rowwise() %>%
-    mutate(non_sum = sum(!!!non_cols)) %>%
-    ungroup() %>%
-    select(-one_of(nons)) %>%
-    mutate_at(vars(!!!responses), funs(round(. / (1 - non_sum), digits = 3))) %>%
-    select(-non_sum)
+    dplyr::ungroup() %>%
+    dplyr::mutate_if(is.character, forcats::as_factor) %>%
+    tidyr::spread(key = !!response_col, value = !!value_col) %>%
+    dplyr::rowwise() %>%
+    dplyr::mutate(non_sum = sum(!!!non_cols)) %>%
+    dplyr::ungroup() %>%
+    dplyr::select(-dplyr::one_of(nons)) %>%
+    dplyr::mutate_at(dplyr::vars(!!!responses), dplyr::funs(round(. / (1 - non_sum), digits = 3))) %>%
+    dplyr::select(-non_sum)
 
   if (output_tidy) {
     wide %>%
-      gather(key = !!response_col, value = !!value_col, !!!responses) %>%
-      mutate_at(vars(!!response_col), as_factor)
+      tidyr::gather(key = !!response_col, value = !!value_col, !!!responses) %>%
+      dplyr::mutate_at(dplyr::vars(!!response_col), forcats::as_factor)
   } else {
     wide
   }
@@ -150,14 +148,14 @@ sub_nonanswers <- function(.data, response = response, value = value, nons = c("
 
 read_xtabs <- function(path, col_names = F, name_prefix = "x", until = "Nature of the [Ss]ample", year = 2018) {
   data <- readxl::read_excel(path, col_names = col_names, .name_repair = "minimal") %>%
-    set_names(paste0(name_prefix, 1:ncol(.))) %>%
+    rlang::set_names(paste0(name_prefix, 1:ncol(.))) %>%
     janitor::remove_empty(which = "rows")
   first_col <- rlang::sym(names(data)[1])
   if (year == 2015) {
-    data <- data %>% slice(-1:-3)
+    data <- data %>% dplyr::slice(-1:-3)
   }
   data <- data %>%
-    filter(!str_detect(!!first_col, "Weighted [Tt]otal") | is.na(!!first_col))
+    dplyr::filter(!stringr::str_detect(!!first_col, "Weighted [Tt]otal") | is.na(!!first_col))
   if (!is.null(until)) {
     data %>%
       filter_until(!!first_col, until)
@@ -168,41 +166,13 @@ read_xtabs <- function(path, col_names = F, name_prefix = "x", until = "Nature o
 
 read_weights <- function(path, marker = "Nature of the [Ss]ample") {
   data <- readxl::read_excel(path, col_names = F, .name_repair = "minimal") %>%
-    set_names(paste0("x", 1:ncol(.)))
+    rlang::set_names(paste0("x", 1:ncol(.)))
   first_col <- rlang::sym(names(data)[1])
 
   data %>%
     filter_after(!!first_col, marker) %>%
     janitor::remove_empty(which = c("rows", "cols")) %>%
-    set_names(c("group", "weight")) %>%
-    filter(!is.na(weight)) %>%
-    mutate(weight = as.numeric(weight) %>% round(digits = 3))
+    rlang::set_names(c("group", "weight")) %>%
+    dplyr::filter(!is.na(weight)) %>%
+    dplyr::mutate(weight = as.numeric(weight) %>% round(digits = 3))
 }
-
-##############################################################
-
-# ct18 <- readxl::read_excel("~/_R/cwi_extras/Final_Crosstabs/DataHaven2018 Connecticut Statewide Crosstabs Pub.xlsx", col_names = F) %>%
-#   set_names(names(.) %>% str_replace("^\\.+", "x"))
-#
-# read_weights("~/_R/cwi_extras/Final_Crosstabs/DataHaven2018 Connecticut Statewide Crosstabs Pub.xlsx")
-
-# ct18 <- read_xtabs("xtabs_to_plot/2018/DataHaven2018 Connecticut Statewide Crosstabs Pub.xlsx")
-#
-# ct18_long <- ct18 %>%
-#   xtab2df()
-#
-# # default is a long format
-# ct18_long %>%
-#   filter(code == "Q6") %>%
-#   sub_nonanswers(nons = c("Don't know", "Refused"))
-#
-# # output_tidy = F gives wide format
-# ct18_long %>%
-#   filter(code == "Q6") %>%
-#   sub_nonanswers(nons = c("Don't know", "Refused"), output_tidy = F)
-#
-# # setting year = 2015 removes first 3 rows
-# ct15 <- read_xtabs("DataHaven2015 Connecticut Crosstabs Pub.xlsx", year = 2015)
-#
-# ct15 %>%
-#   xtab2df()
