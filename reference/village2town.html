@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Quickly add the labels of ACS variables — label_acs • cwi</title>
+<title>Village to town lookup — village2town • cwi</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Quickly add the labels of ACS variables — label_acs" />
+<meta property="og:title" content="Village to town lookup — village2town" />
 
-<meta property="og:description" content="tidycensus::get_acs returns an ACS table with its variable codes, which can be joined with cwi::acs_vars16 to get readable labels. This function is just a quick wrapper around the common task of joining these two data frames." />
+<meta property="og:description" content="A crosswalk of Connecticut's Census-designated places (CDP) to the towns (county subdivisions) containing them." />
 
 <meta property="og:image" content="https://CT-Data-Haven.github.io/cwi/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -116,58 +116,41 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Quickly add the labels of ACS variables</h1>
-    <small class="dont-index">Source: <a href='https://github.com/CT-Data-Haven/cwi/blob/master/R/label_acs.R'><code>R/label_acs.R</code></a></small>
-    <div class="hidden name"><code>label_acs.Rd</code></div>
+    <h1>Village to town lookup</h1>
+    <small class="dont-index">Source: <a href='https://github.com/CT-Data-Haven/cwi/blob/master/R/data.R'><code>R/data.R</code></a></small>
+    <div class="hidden name"><code>village2town.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code><a href='https://www.rdocumentation.org/packages/tidycensus/topics/get_acs'>tidycensus::get_acs</a></code> returns an ACS table with its variable codes, which can be joined with <code>cwi::acs_vars16</code> to get readable labels. This function is just a quick wrapper around the common task of joining these two data frames.</p>
+    <p>A crosswalk of Connecticut's Census-designated places (CDP) to the towns (county subdivisions) containing them.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>label_acs</span>(<span class='no'>df</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2017</span>, <span class='kw'>survey</span> <span class='kw'>=</span> <span class='st'>"acs5"</span>, <span class='kw'>variable</span> <span class='kw'>=</span> <span class='no'>variable</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>df</th>
-      <td><p>A data frame/tibble.</p></td>
-    </tr>
-    <tr>
-      <th>year</th>
-      <td><p>The endyear of ACS data; defaults 2017.</p></td>
-    </tr>
-    <tr>
-      <th>survey</th>
-      <td><p>A string: which ACS estimate to use. Defaults to 5-year (<code>"acs5"</code>), but can also be 1-year (<code>"acs1"</code>) or 3-year (<code>"acs3"</code>), though both 1-year and 3-year have limited availability.</p></td>
-    </tr>
-    <tr>
-      <th>variable</th>
-      <td><p>The bare column name of variable codes; defaults to <code>variable</code>, as returned by <code><a href='https://www.rdocumentation.org/packages/tidycensus/topics/get_acs'>tidycensus::get_acs</a></code>.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <pre class="usage"><span class='no'>village2town</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A tibble</p>
+    <p>A data frame with 89 rows and 4 variables:</p><dl class='dl-horizontal'>
+<dt>cdp_geoid</dt><dd><p>7-digits CDP FIPS code</p></dd>
+<dt>place</dt><dd><p>CDP name</p></dd>
+<dt>town_geoid</dt><dd><p>10-digit town FIPS code</p></dd>
+<dt>town</dt><dd><p>Town name</p></dd>
+</dl>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <div class='dont-index'><p><a href='acs_vars17.html'>acs_vars17</a></p></div>
+    <p>Spatial overlay of TIGER shapefiles</p>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
+      <li><a href="#format">Format</a></li>
 
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#source">Source</a></li>
           </ul>
 
   </div>
