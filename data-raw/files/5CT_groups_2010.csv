@@ -1,0 +1,172 @@
+Town,Median Household Income,Poverty Rate,Population Density,Cluster
+Andover,102364,0.04,213.8,Rural
+Ansonia,67306,0.19,3198.1,Urban periphery
+Ashford,95156,0.06,111.4,Rural
+Avon,151375,0.04,781.6,Suburban
+Barkhamsted,114313,0.01,104.8,Suburban
+Beacon Falls,100588,0.03,625.7,Rural
+Berlin,105084,0.05,754.7,Suburban
+Bethany,119737,0.03,263.3,Suburban
+Bethel,100500,0.04,1100.4,Suburban
+Bethlehem,96146,0.05,186.2,Rural
+Bloomfield,83333,0.07,785.3,Urban periphery
+Bolton,113929,0.02,345.7,Suburban
+Bozrah,88500,0.06,131.6,Rural
+Branford,88421,0.07,1283.6,Urban periphery
+Bridgeport,47258,0.23,9029,Urban core
+Bridgewater,118125,0.02,105.3,Suburban
+Bristol,69862,0.11,2289.8,Urban periphery
+Brookfield,125947,0.03,832,Suburban
+Brooklyn,78102,0.11,282.2,Rural
+Burlington,114577,0.04,312.7,Suburban
+Canaan,91667,0.07,37.5,Rural
+Canterbury,87756,0.03,128.5,Rural
+Canton,105913,0.04,418.6,Suburban
+Chaplin,82813,0.05,118.6,Rural
+Cheshire,128000,0.03,884.8,Suburban
+Chester,102563,0.05,248.8,Suburban
+Clinton,84914,0.08,818.2,Suburban
+Colchester,109691,0.03,328,Suburban
+Colebrook,85313,0.04,47.1,Rural
+Columbia,110129,0.04,256.6,Suburban
+Cornwall,87109,0.12,30.8,Rural
+Coventry,96186,0.03,331,Rural
+Cromwell,98388,0.04,1124.6,Suburban
+Danbury,75121,0.11,1931,Urban periphery
+Darien,250000,0.07,1638.2,Wealthy
+Deep River,95694,0.03,342.5,Rural
+Derby,63951,0.13,2552.1,Urban periphery
+Durham,135037,0.01,312.3,Suburban
+East Granby,95139,0.04,293.1,Suburban
+East Haddam,97423,0.06,168.2,Rural
+East Hampton,111019,0.04,363.5,Suburban
+East Hartford,83861,0.06,2847.9,Urban periphery
+East Haven,70349,0.1,2377.7,Urban periphery
+East Lyme,96314,0.03,563.6,Rural
+East Windsor,83861,0.06,425.2,Rural
+Eastford,100647,0.03,60.5,Rural
+Easton,171250,0.02,273.2,Wealthy
+Ellington,100047,0.02,458.1,Suburban
+Enfield,80188,0.07,1342.2,Urban periphery
+Essex,108542,0.05,642.4,Suburban
+Fairfield,146288,0.05,1986.6,Suburban
+Farmington,115072,0.05,904.5,Suburban
+Franklin,99154,0.04,98.6,Rural
+Glastonbury,125030,0.03,671.5,Suburban
+Goshen,91806,0.12,68.2,Rural
+Granby,122011,0.02,277.3,Suburban
+Greenwich,171418,0.04,1284.5,Wealthy
+Griswold,71939,0.08,344.3,Rural
+Groton,73521,0.09,1292.7,Urban periphery
+Guilford,119552,0.04,474.9,Suburban
+Haddam,108528,0.04,190,Suburban
+Hamden,88948,0.08,1867.3,Urban periphery
+Hampton,84167,0.06,74.2,Rural
+Hartford,33756,0.34,7178.9,Urban core
+Hartland,94875,0.05,63.9,Rural
+Harwinton,92417,0.04,183.2,Rural
+Hebron,118821,0.01,262.2,Suburban
+Kent,96250,0.09,61.4,Rural
+Killingly,72238,0.11,359.6,Rural
+Killingworth,127121,0,184.7,Suburban
+Lebanon,99297,0.05,135.1,Rural
+Ledyard,97595,0.04,393.8,Rural
+Lisbon,94453,0.03,266.3,Rural
+Litchfield,104167,0.07,150.9,Rural
+Lyme,107125,0.04,75.6,Suburban
+Madison,141708,0.03,505.4,Suburban
+Manchester,75766,0.11,2125.4,Urban periphery
+Mansfield,92121,0.18,595.1,Rural
+Marlborough,114375,0.01,274.2,Suburban
+Meriden,60580,0.14,2558.2,Urban periphery
+Middlebury,108230,0.04,426.7,Suburban
+Middlefield,112214,0.03,349.8,Suburban
+Middletown,81619,0.12,1161.6,Urban periphery
+Milford,100680,0.05,2379.2,Urban periphery
+Monroe,121023,0.05,747.1,Suburban
+Montville,82391,0.05,466.5,Rural
+Morris,97625,0.06,137.7,Rural
+Naugatuck,76214,0.1,1953.8,Urban periphery
+New Britain,47625,0.22,5466,Urban core
+New Canaan,210605,0.02,889.3,Wealthy
+New Fairfield,115909,0.02,679,Suburban
+New Hartford,102563,0.02,188.2,Suburban
+New Haven,46365,0.27,6948,Urban core
+New London,48481,0.25,4918.7,Urban core
+New Milford,93959,0.06,457.1,Rural
+Newington,90979,0.04,2325.7,Urban periphery
+Newtown,125285,0.05,478,Suburban
+Norfolk,90170,0.07,37.7,Rural
+North Branford,99004,0.03,581.9,Suburban
+North Canaan,64719,0.09,170.3,Rural
+North Haven,101124,0.04,1156.1,Suburban
+North Stonington,85130,0.06,97.6,Rural
+Norwalk,95377,0.1,3744.7,Urban periphery
+Norwich,58885,0.15,1443,Urban periphery
+Old Lyme,103421,0.03,330.3,Suburban
+Old Saybrook,98939,0.05,680.8,Suburban
+Orange,125087,0.02,812.3,Suburban
+Oxford,109235,0.04,387.4,Suburban
+Plainfield,71971,0.1,363.7,Rural
+Plainville,81219,0.07,1824.4,Urban periphery
+Plymouth,82095,0.07,559.2,Rural
+Pomfret,105880,0.03,105.3,Rural
+Portland,101124,0.04,407.2,Rural
+Preston,82380,0.1,153.4,Rural
+Prospect,109375,0.04,661.1,Suburban
+Putnam,56835,0.11,472,Rural
+Redding,147907,0.04,290.7,Suburban
+Ridgefield,171685,0.03,713.8,Wealthy
+Rocky Hill,101446,0.08,1464.9,Urban periphery
+Roxbury,113523,0.03,86,Suburban
+Salem,113558,0.03,143.5,Suburban
+Salisbury,97656,0.05,65.4,Rural
+Scotland,79934,0.02,92.6,Rural
+Seymour,94331,0.07,1139.3,Rural
+Sharon,81944,0.06,47.3,Rural
+Shelton,105580,0.05,1291.7,Suburban
+Sherman,135000,0.02,163.6,Suburban
+Simsbury,142367,0.02,693.1,Suburban
+Somers,106063,0.04,403.4,Suburban
+South Windsor,106069,0.05,916.1,Suburban
+Southbury,103750,0.06,510.5,Suburban
+Southington,100430,0.04,1199.3,Suburban
+Sprague,77565,0.09,225.2,Rural
+Stafford,78596,0.1,208.3,Rural
+Stamford,87865,0.11,3258.4,Urban periphery
+Sterling,72206,0.12,140.7,Rural
+Stonington,101399,0.05,479.7,Rural
+Stratford,85751,0.06,2939.4,Urban periphery
+Suffield,106495,0.04,372.3,Suburban
+Thomaston,85965,0.03,659,Rural
+Thompson,81218,0.08,201.7,Rural
+Tolland,112261,0.02,379.8,Suburban
+Torrington,67442,0.11,915.2,Urban periphery
+Trumbull,126967,0.02,1544.3,Suburban
+Union,88125,0.01,29.7,Rural
+Vernon,80139,0.09,1648.6,Urban periphery
+Voluntown,80085,0.02,66.8,Rural
+Wallingford,92373,0.06,1156.1,Suburban
+Warren,105809,0.07,55.5,Rural
+Washington,94063,0.06,94,Rural
+Waterbury,47646,0.23,3869.9,Urban core
+Waterford,93933,0.05,595.6,Rural
+Watertown,110823,0.03,776.2,Suburban
+West Hartford,106634,0.07,2897.3,Urban periphery
+West Haven,65449,0.12,5170.3,Urban periphery
+Westbrook,85353,0.05,439.6,Suburban
+Weston,233958,0.02,514.1,Wealthy
+Westport,188581,0.04,1322.3,Wealthy
+Wethersfield,100722,0.06,2166.3,Urban periphery
+Willington,101964,0.12,181.4,Rural
+Wilton,201136,0.04,673.8,Wealthy
+Winchester,67827,0.07,345.8,Rural
+Windham,48848,0.25,936.8,Urban periphery
+Windsor,93688,0.05,984.4,Suburban
+Windsor Locks,83388,0.08,1385,Urban periphery
+Wolcott,94659,0.03,816.3,Suburban
+Woodbridge,155000,0.03,477.9,Wealthy
+Woodbury,104529,0.06,274,Suburban
+Woodstock,106010,0.03,131.3,Rural
+,,,,
+"Five Connecticuts 2010: Please cite: Levy, Don: Five Connecticuts 2010 Update. (2015). Produced for Siena College Research Institute and DataHaven based on original 1990 and 2000 designations from ""Levy, Don, Orlando Rodriguez, and Wayne Villemez. 2004. The Changing Demographics of Connecticut - 1990 to 2000. Part 2: The Five Connecticuts. Storrs, Connecticut: University of Connecticut, The Connecticut State Data Center, Series, no. OP 2004-01.""",,,,

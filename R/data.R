@@ -189,3 +189,17 @@ NULL
 #' }
 #' @source This is a filtered, cleaned, and pared down version of a file downloaded from [LEHD](https://lehd.ces.census.gov/data/lodes/LODES7/ct/).
 "tract2town"
+
+
+#' Five Connecticuts clusters
+#'
+#' Cluster assignments for towns into "5 Connecticuts"--urban core, urban periphery, suburban, rural, and wealthy--based on median family income, poverty rate, and population density.
+#'
+#' @format A data frame with 169 rows and 2 variables:
+#' \describe{
+#'   \item{town}{Town name}
+#'   \item{cluster}{Cluster label}
+#' }
+#'
+#' @source Levy, Don: Five Connecticuts 2010 Update. (2015). Produced for Siena College Research Institute and DataHaven based on original 1990 and 2000 designations from "Levy, Don, Orlando Rodriguez, and Wayne Villemez. 2004. The Changing Demographics of Connecticut - 1990 to 2000. Part 2: The Five Connecticuts. Storrs, Connecticut: University of Connecticut, The Connecticut State Data Center, Series, no. OP 2004-01."
+"ct5_clusters"
