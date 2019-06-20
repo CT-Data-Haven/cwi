@@ -133,7 +133,7 @@ sub_nonanswers <- function(.data, response = response, value = value, nons = c("
     dplyr::mutate(non_sum = sum(!!!non_cols)) %>%
     dplyr::ungroup() %>%
     dplyr::select(-dplyr::one_of(nons)) %>%
-    dplyr::mutate_at(dplyr::vars(!!!responses), dplyr::funs(round(. / (1 - non_sum), digits = 3))) %>%
+    dplyr::mutate_at(dplyr::vars(!!!responses), .funs = list(. / (1 - non_sum))) %>%
     dplyr::select(-non_sum)
 
   if (output_tidy) {
