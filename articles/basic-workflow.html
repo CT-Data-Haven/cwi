@@ -6,9 +6,16 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Basic workflow • cwi</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Basic workflow">
 <meta property="og:description" content="">
 <meta property="og:image" content="https://CT-Data-Haven.github.io/cwi/logo.png">
@@ -39,7 +46,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -65,7 +72,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/CT-Data-Haven/cwi">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -78,6 +85,7 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
@@ -91,15 +99,15 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyr)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(purrr)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(camiller)</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(cwi)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyr)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(purrr)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(camiller)</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(cwi)</a></code></pre></div>
 <p>The tables I’m working with are <code>B01003</code>, total population; <code>B03002</code>, race and Latino ethnicity; and <code>B25003</code>, housing tenure. It’s easiest to save these in a named list, then map over the list calling <code><a href="../reference/multi_geo_acs.html">multi_geo_acs()</a></code> for each table number.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">year &lt;-<span class="st"> </span><span class="dv">2016</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">table_nums &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">table_nums &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="dt">total_pop =</span> <span class="st">"B01003"</span>, </a>
 <a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="dt">race =</span> <span class="st">"B03002"</span>,</a>
 <a class="sourceLine" id="cb2-5" data-line-number="5">  <span class="dt">tenure =</span> <span class="st">"B25003"</span></a>
@@ -108,7 +116,7 @@
 <h1 class="hasAnchor">
 <a href="#fetching-data-from-acs" class="anchor"></a>Fetching data from ACS</h1>
 <p>I’m pulling out the entries in the <code>cwi</code> dataset <code><a href="../reference/regions.html">cwi::regions</a></code> (a list) to only include the Greater New Haven-area ones. Then I fetch the ACS tables, and filter them to only have geographic levels other than town, or to only be towns in Greater New Haven.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">gnh_regions &lt;-<span class="st"> </span>regions[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Greater New Haven"</span>, <span class="st">"New Haven Inner Ring"</span>, <span class="st">"New Haven Outer Ring"</span>)]</a>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">gnh_regions &lt;-<span class="st"> </span>regions[<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Greater New Haven"</span>, <span class="st">"New Haven Inner Ring"</span>, <span class="st">"New Haven Outer Ring"</span>)]</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">gnh_data &lt;-<span class="st"> </span>table_nums <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb3-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(<span class="op">~</span><span class="kw"><a href="../reference/multi_geo_acs.html">multi_geo_acs</a></span>(<span class="dt">table =</span> ., </a>
@@ -138,26 +146,26 @@
 <a class="sourceLine" id="cb3-28" data-line-number="28"><span class="co">#&gt; State: 09</span></a></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">gnh_data<span class="op">$</span>total_pop</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; # A tibble: 18 x 9</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt;    GEOID   NAME       variable  estimate   moe level  state county     year</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;  &lt;chr&gt; &lt;chr&gt;     &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt;  1 09      Connectic… B01003_0…  3588570    NA 1_sta… &lt;NA&gt;  &lt;NA&gt;       2016</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt;  2 09009   New Haven… B01003_0…   860874    NA 2_cou… 09    &lt;NA&gt;       2016</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt;  3 &lt;NA&gt;    Greater N… B01003_0…   464596   132 3_reg… &lt;NA&gt;  &lt;NA&gt;       2016</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt;  4 &lt;NA&gt;    New Haven… B01003_0…   145463    57 3_reg… &lt;NA&gt;  &lt;NA&gt;       2016</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt;  5 &lt;NA&gt;    New Haven… B01003_0…   188728   103 3_reg… &lt;NA&gt;  &lt;NA&gt;       2016</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt;  6 090090… Bethany    B01003_0…     5521    24 4_tow… 09    New Have…  2016</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt;  7 090090… Branford   B01003_0…    28084    28 4_tow… 09    New Have…  2016</span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt;  8 090092… East Haven B01003_0…    29015    24 4_tow… 09    New Have…  2016</span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt;  9 090093… Guilford   B01003_0…    22382    31 4_tow… 09    New Have…  2016</span></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; 10 090093… Hamden     B01003_0…    61476    31 4_tow… 09    New Have…  2016</span></a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; 11 090094… Madison    B01003_0…    18247    21 4_tow… 09    New Have…  2016</span></a>
-<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt; 12 090094… Milford    B01003_0…    53430    46 4_tow… 09    New Have…  2016</span></a>
-<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt; 13 090095… New Haven  B01003_0…   130405    60 4_tow… 09    New Have…  2016</span></a>
-<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt; 14 090095… North Bra… B01003_0…    14310    23 4_tow… 09    New Have…  2016</span></a>
-<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">#&gt; 15 090095… North Hav… B01003_0…    23888    59 4_tow… 09    New Have…  2016</span></a>
-<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">#&gt; 16 090095… Orange     B01003_0…    13941    24 4_tow… 09    New Have…  2016</span></a>
-<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="co">#&gt; 17 090098… West Haven B01003_0…    54972    42 4_tow… 09    New Have…  2016</span></a>
-<a class="sourceLine" id="cb4-22" data-line-number="22"><span class="co">#&gt; 18 090098… Woodbridge B01003_0…     8925    33 4_tow… 09    New Have…  2016</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt;    GEOID    NAME         variable  estimate   moe level   state county      year</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;        &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;   &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt;  1 09       Connecticut  B01003_0…  3588570    NA 1_state &lt;NA&gt;  &lt;NA&gt;        2016</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt;  2 09009    New Haven C… B01003_0…   860874    NA 2_coun… 09    &lt;NA&gt;        2016</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt;  3 &lt;NA&gt;     Greater New… B01003_0…   464596   132 3_regi… &lt;NA&gt;  &lt;NA&gt;        2016</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt;  4 &lt;NA&gt;     New Haven I… B01003_0…   145463    57 3_regi… &lt;NA&gt;  &lt;NA&gt;        2016</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt;  5 &lt;NA&gt;     New Haven O… B01003_0…   188728   103 3_regi… &lt;NA&gt;  &lt;NA&gt;        2016</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt;  6 0900904… Bethany      B01003_0…     5521    24 4_towns 09    New Haven…  2016</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt;  7 0900907… Branford     B01003_0…    28084    28 4_towns 09    New Haven…  2016</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt;  8 0900922… East Haven   B01003_0…    29015    24 4_towns 09    New Haven…  2016</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt;  9 0900934… Guilford     B01003_0…    22382    31 4_towns 09    New Haven…  2016</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; 10 0900935… Hamden       B01003_0…    61476    31 4_towns 09    New Haven…  2016</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; 11 0900944… Madison      B01003_0…    18247    21 4_towns 09    New Haven…  2016</span></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt; 12 0900947… Milford      B01003_0…    53430    46 4_towns 09    New Haven…  2016</span></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt; 13 0900952… New Haven    B01003_0…   130405    60 4_towns 09    New Haven…  2016</span></a>
+<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt; 14 0900953… North Branf… B01003_0…    14310    23 4_towns 09    New Haven…  2016</span></a>
+<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">#&gt; 15 0900954… North Haven  B01003_0…    23888    59 4_towns 09    New Haven…  2016</span></a>
+<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">#&gt; 16 0900957… Orange       B01003_0…    13941    24 4_towns 09    New Haven…  2016</span></a>
+<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="co">#&gt; 17 0900982… West Haven   B01003_0…    54972    42 4_towns 09    New Haven…  2016</span></a>
+<a class="sourceLine" id="cb4-22" data-line-number="22"><span class="co">#&gt; 18 0900987… Woodbridge   B01003_0…     8925    33 4_towns 09    New Haven…  2016</span></a></code></pre></div>
 </div>
 <div id="aggregating-and-analyzing-data" class="section level1">
 <h1 class="hasAnchor">
@@ -174,7 +182,7 @@
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">gnh_data<span class="op">$</span>race <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/label_acs.html">label_acs</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(level, county, NAME) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://camille-s.github.io/camiller/reference/add_grps.html">add_grps</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">total =</span> <span class="dv">1</span>, <span class="dt">white =</span> <span class="dv">3</span>, <span class="dt">black =</span> <span class="dv">4</span>, <span class="dt">latino =</span> <span class="dv">12</span>, <span class="dt">other =</span> <span class="dv">5</span><span class="op">:</span><span class="dv">9</span>), <span class="dt">group =</span> label) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://camille-s.github.io/camiller/reference/add_grps.html">add_grps</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">total =</span> <span class="dv">1</span>, <span class="dt">white =</span> <span class="dv">3</span>, <span class="dt">black =</span> <span class="dv">4</span>, <span class="dt">latino =</span> <span class="dv">12</span>, <span class="dt">other =</span> <span class="dv">5</span><span class="op">:</span><span class="dv">9</span>), <span class="dt">group =</span> label) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb5-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://camille-s.github.io/camiller/reference/calc_shares.html">calc_shares</a></span>(<span class="dt">group =</span> label, <span class="dt">denom =</span> <span class="st">"total"</span>)</a>
 <a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt; # A tibble: 90 x 6</span></a>
 <a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt; # Groups:   level, county, NAME [18]</span></a>
@@ -194,12 +202,12 @@
 <p>With the tenure table, it’s easiest to separate the labels by <code>"!!"</code>. Here the table can be wrangled into shares of households that are owner-occupied.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">homeownership &lt;-<span class="st"> </span>gnh_data<span class="op">$</span>tenure <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/label_acs.html">label_acs</a></span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span>(label, <span class="dt">into =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"total"</span>, <span class="st">"tenure"</span>), <span class="dt">sep =</span> <span class="st">"!!"</span>, <span class="dt">fill =</span> <span class="st">"left"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span>(label, <span class="dt">into =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"total"</span>, <span class="st">"tenure"</span>), <span class="dt">sep =</span> <span class="st">"!!"</span>, <span class="dt">fill =</span> <span class="st">"left"</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(level, <span class="dt">name =</span> NAME, tenure, estimate) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb6-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(tenure <span class="op">!=</span><span class="st"> "Renter occupied"</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb6-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(level, name) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb6-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://camille-s.github.io/camiller/reference/calc_shares.html">calc_shares</a></span>(<span class="dt">group =</span> tenure, <span class="dt">denom =</span> <span class="st">"Total"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(share))</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(share))</a>
 <a class="sourceLine" id="cb6-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb6-10" data-line-number="10">homeownership</a>
 <a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt; # A tibble: 18 x 5</span></a>
@@ -232,7 +240,7 @@
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">homeownership <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/geo_level_plot.html">geo_level_plot</a></span>(<span class="dt">value =</span> share, <span class="dt">hilite =</span> <span class="st">"darkslateblue"</span>, <span class="dt">type =</span> <span class="st">"point"</span>)</a></code></pre></div>
 <p><img src="basic-workflow_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
-<p><code><a href="../reference/acs_quick_map.html">acs_quick_map()</a></code> gives a quick map sketch of the rates. This function uses the Jenks algorithm for making breaks with <code><a href="https://www.rdocumentation.org/packages/classInt/topics/classIntervals">classInt::classIntervals</a></code>. This algorithm is well suited for visually displaying larger inequalities, but the number of breaks you give it won’t necessarily be the number of breaks returned. Here I supply <code>n = 6</code>, but the algorithm found instead that <code>n = 5</code> was the nearest <code>n</code> that could be used. This function lets us see whether there’s a geographic distribution of this data with minimal work.</p>
+<p><code><a href="../reference/acs_quick_map.html">acs_quick_map()</a></code> gives a quick map sketch of the rates. This function uses the Jenks algorithm for making breaks with <code><a href="https://rdrr.io/pkg/classInt/man/classIntervals.html">classInt::classIntervals</a></code>. This algorithm is well suited for visually displaying larger inequalities, but the number of breaks you give it won’t necessarily be the number of breaks returned. Here I supply <code>n = 6</code>, but the algorithm found instead that <code>n = 5</code> was the nearest <code>n</code> that could be used. This function lets us see whether there’s a geographic distribution of this data with minimal work.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">tenure_map &lt;-<span class="st"> </span>homeownership <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(level <span class="op">==</span><span class="st"> "4_towns"</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/acs_quick_map.html">acs_quick_map</a></span>(<span class="dt">value =</span> share, <span class="dt">level =</span> <span class="st">"town"</span>, <span class="dt">color =</span> <span class="st">"black"</span>, <span class="dt">size =</span> <span class="fl">0.4</span>, </a>
@@ -252,25 +260,25 @@
 <a href="#batch-output" class="anchor"></a>Batch output</h1>
 <p>Say as part of a pipeline, you need to do some calculations, write different sections of a data frame to CSV files to pass along to a colleague or refer to later, and then continue on to some more calculations. <code><a href="../reference/batch_csv_dump.html">batch_csv_dump()</a></code> takes either a list of data frames or a data frame plus a column to split by, and writes out a set of CSV files, then lets you move along to the next step in your pipeline.</p>
 <p>For example, I need to pull a table of populations by age group for several regions of Connecticut. I don’t need to split populations by gender, so I’ll add up male and female populations for each age group. I don’t actually need to more detailed age groups now, but I need to stash them in files for later, so I’ll aggregate, write a bunch of files, and then aggregate into broader age groups that I need for my current work.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">new_haven_regions &lt;-<span class="st"> </span>regions[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Greater New Haven"</span>, <span class="st">"New Haven Inner Ring"</span>, </a>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">new_haven_regions &lt;-<span class="st"> </span>regions[<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Greater New Haven"</span>, <span class="st">"New Haven Inner Ring"</span>, </a>
 <a class="sourceLine" id="cb10-2" data-line-number="2">                             <span class="st">"New Haven Outer Ring"</span>, <span class="st">"Lower Naugatuck Valley"</span>, <span class="st">"Greater Waterbury"</span>)]</a>
 <a class="sourceLine" id="cb10-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb10-4" data-line-number="4">acs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/multi_geo_acs.html">multi_geo_acs</a></span>(<span class="dt">table =</span> <span class="st">"B01001"</span>, <span class="dt">year =</span> <span class="dv">2016</span>, <span class="dt">towns =</span> <span class="ot">NULL</span>, <span class="dt">regions =</span> new_haven_regions, </a>
-<a class="sourceLine" id="cb10-5" data-line-number="5">              <span class="dt">counties =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"New Haven County"</span>, <span class="st">"Fairfield County"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">              <span class="dt">counties =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"New Haven County"</span>, <span class="st">"Fairfield County"</span>)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb10-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="../reference/label_acs.html">label_acs</a></span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span>(label, <span class="dt">into =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"total"</span>, <span class="st">"sex"</span>, <span class="st">"age"</span>), <span class="dt">sep =</span> <span class="st">"!!"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(age)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">age =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(age) <span class="op">%&gt;%</span><span class="st"> </span>forcats<span class="op">::</span><span class="kw"><a href="https://forcats.tidyverse.org/reference/fct_inorder.html">fct_inorder</a></span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span>(label, <span class="dt">into =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"total"</span>, <span class="st">"sex"</span>, <span class="st">"age"</span>), <span class="dt">sep =</span> <span class="st">"!!"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(age)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">age =</span> <span class="kw"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(age) <span class="op">%&gt;%</span><span class="st"> </span>forcats<span class="op">::</span><span class="kw"><a href="https://forcats.tidyverse.org/reference/fct_inorder.html">fct_inorder</a></span>()) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb10-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(NAME, level, age) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">estimate =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sum">sum</a></span>(estimate), <span class="dt">moe =</span> tidycensus<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/tidycensus/topics/moe_sum">moe_sum</a></span>(moe, estimate) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Round">round</a></span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">estimate =</span> <span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(estimate), <span class="dt">moe =</span> tidycensus<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/tidycensus/man/moe_sum.html">moe_sum</a></span>(moe, estimate) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Round.html">round</a></span>()) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb10-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span>()</a>
 <a class="sourceLine" id="cb10-13" data-line-number="13"></a>
 <a class="sourceLine" id="cb10-14" data-line-number="14"></a>
 <a class="sourceLine" id="cb10-15" data-line-number="15">acs <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-16" data-line-number="16"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/split">split</a></span>(.<span class="op">$</span>NAME) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-16" data-line-number="16"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/split.html">split</a></span>(.<span class="op">$</span>NAME) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb10-17" data-line-number="17"><span class="st">  </span><span class="kw"><a href="../reference/batch_csv_dump.html">batch_csv_dump</a></span>(<span class="dt">base_name =</span> <span class="st">"pop_by_age"</span>, <span class="dt">bind =</span> <span class="ot">TRUE</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb10-18" data-line-number="18"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(level, NAME) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-19" data-line-number="19"><span class="st">  </span>camiller<span class="op">::</span><span class="kw"><a href="https://camille-s.github.io/camiller/reference/add_grps.html">add_grps</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">ages0_4 =</span> <span class="dv">1</span>, <span class="dt">ages5_17 =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">4</span>, <span class="dt">ages0_17 =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dt">ages18_24 =</span> <span class="dv">5</span><span class="op">:</span><span class="dv">8</span>, <span class="dt">ages0_24 =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">8</span>), <span class="dt">group =</span> age, <span class="dt">estimate =</span> estimate, <span class="dt">moe =</span> moe) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-19" data-line-number="19"><span class="st">  </span>camiller<span class="op">::</span><span class="kw"><a href="https://camille-s.github.io/camiller/reference/add_grps.html">add_grps</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">ages0_4 =</span> <span class="dv">1</span>, <span class="dt">ages5_17 =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">4</span>, <span class="dt">ages0_17 =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dt">ages18_24 =</span> <span class="dv">5</span><span class="op">:</span><span class="dv">8</span>, <span class="dt">ages0_24 =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">8</span>), <span class="dt">group =</span> age, <span class="dt">estimate =</span> estimate, <span class="dt">moe =</span> moe) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb10-20" data-line-number="20"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(level, NAME, age)</a></code></pre></div>
 </div>
 <div id="employment-trends" class="section level1">
@@ -292,18 +300,18 @@
 <a class="sourceLine" id="cb11-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb11-11" data-line-number="11">employment</a>
 <a class="sourceLine" id="cb11-12" data-line-number="12"><span class="co">#&gt; # A tibble: 640 x 8</span></a>
-<a class="sourceLine" id="cb11-13" data-line-number="13"><span class="co">#&gt;     year industry state county   Emp  Payroll location    label            </span></a>
-<a class="sourceLine" id="cb11-14" data-line-number="14"><span class="co">#&gt;    &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;            </span></a>
-<a class="sourceLine" id="cb11-15" data-line-number="15"><span class="co">#&gt;  1  2002 11       09    009      700   1.65e7 New Haven … Agriculture, For…</span></a>
-<a class="sourceLine" id="cb11-16" data-line-number="16"><span class="co">#&gt;  2  2002 21       09    009      202   1.09e7 New Haven … Mining, Quarryin…</span></a>
-<a class="sourceLine" id="cb11-17" data-line-number="17"><span class="co">#&gt;  3  2002 22       09    009     1714   1.09e8 New Haven … Utilities        </span></a>
-<a class="sourceLine" id="cb11-18" data-line-number="18"><span class="co">#&gt;  4  2002 23       09    009    15582   7.63e8 New Haven … Construction     </span></a>
-<a class="sourceLine" id="cb11-19" data-line-number="19"><span class="co">#&gt;  5  2002 31-33    09    009    47159   2.38e9 New Haven … Manufacturing    </span></a>
-<a class="sourceLine" id="cb11-20" data-line-number="20"><span class="co">#&gt;  6  2002 42       09    009    16643   9.31e8 New Haven … Wholesale Trade  </span></a>
-<a class="sourceLine" id="cb11-21" data-line-number="21"><span class="co">#&gt;  7  2002 44-45    09    009    46316   1.19e9 New Haven … Retail Trade     </span></a>
-<a class="sourceLine" id="cb11-22" data-line-number="22"><span class="co">#&gt;  8  2002 48-49    09    009     7705   2.58e8 New Haven … Transportation a…</span></a>
-<a class="sourceLine" id="cb11-23" data-line-number="23"><span class="co">#&gt;  9  2002 51       09    009    14458   7.58e8 New Haven … Information      </span></a>
-<a class="sourceLine" id="cb11-24" data-line-number="24"><span class="co">#&gt; 10  2002 52       09    009    13470   7.94e8 New Haven … Finance and Insu…</span></a>
+<a class="sourceLine" id="cb11-13" data-line-number="13"><span class="co">#&gt;     year industry state county   Emp   Payroll location    label                </span></a>
+<a class="sourceLine" id="cb11-14" data-line-number="14"><span class="co">#&gt;    &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;                </span></a>
+<a class="sourceLine" id="cb11-15" data-line-number="15"><span class="co">#&gt;  1  2002 11       09    009      700    1.65e7 New Haven … Agriculture, Forestr…</span></a>
+<a class="sourceLine" id="cb11-16" data-line-number="16"><span class="co">#&gt;  2  2002 21       09    009      198    1.06e7 New Haven … Mining, Quarrying, a…</span></a>
+<a class="sourceLine" id="cb11-17" data-line-number="17"><span class="co">#&gt;  3  2002 22       09    009     1750    1.10e8 New Haven … Utilities            </span></a>
+<a class="sourceLine" id="cb11-18" data-line-number="18"><span class="co">#&gt;  4  2002 23       09    009    15568    7.60e8 New Haven … Construction         </span></a>
+<a class="sourceLine" id="cb11-19" data-line-number="19"><span class="co">#&gt;  5  2002 31-33    09    009    47368    2.39e9 New Haven … Manufacturing        </span></a>
+<a class="sourceLine" id="cb11-20" data-line-number="20"><span class="co">#&gt;  6  2002 42       09    009    16517    9.22e8 New Haven … Wholesale Trade      </span></a>
+<a class="sourceLine" id="cb11-21" data-line-number="21"><span class="co">#&gt;  7  2002 44-45    09    009    46064    1.18e9 New Haven … Retail Trade         </span></a>
+<a class="sourceLine" id="cb11-22" data-line-number="22"><span class="co">#&gt;  8  2002 48-49    09    009     7663    2.56e8 New Haven … Transportation and W…</span></a>
+<a class="sourceLine" id="cb11-23" data-line-number="23"><span class="co">#&gt;  9  2002 51       09    009    14353    7.56e8 New Haven … Information          </span></a>
+<a class="sourceLine" id="cb11-24" data-line-number="24"><span class="co">#&gt; 10  2002 52       09    009    13465    7.97e8 New Haven … Finance and Insurance</span></a>
 <a class="sourceLine" id="cb11-25" data-line-number="25"><span class="co">#&gt; # … with 630 more rows</span></a></code></pre></div>
 <p>Next, say I want to look at the industries that were largest in New Haven county in 2017, and see how those have changed both for the county and statewide over this time period. I’ll filter <code>employment</code>, get the industries with the largest numbers of employees, then filter <code>employment</code> for just those industries and plot it.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">top2017 &lt;-<span class="st"> </span>employment <span class="op">%&gt;%</span></a>
@@ -331,7 +339,7 @@
 <a class="sourceLine" id="cb13-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">label =</span> stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub</a></span>(label, <span class="dv">1</span>, <span class="dv">25</span>)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb13-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">avg_wage =</span> Payroll <span class="op">/</span><span class="st"> </span>Emp) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb13-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="../reference/adj_inflation.html">adj_inflation</a></span>(<span class="dt">value =</span> avg_wage, <span class="dt">base_year =</span> <span class="dv">2016</span>, <span class="dt">year =</span> year) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb13-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">adj_wage_1k =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Round">round</a></span>(adj_avg_wage <span class="op">/</span><span class="st"> </span><span class="dv">1000</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb13-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">adj_wage_1k =</span> <span class="kw"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(adj_avg_wage <span class="op">/</span><span class="st"> </span><span class="dv">1000</span>)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb13-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> year, <span class="dt">y =</span> adj_wage_1k, <span class="dt">color =</span> label)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb13-9" data-line-number="9"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb13-10" data-line-number="10"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="dt">labels =</span> scales<span class="op">::</span>dollar) <span class="op">+</span></a>
@@ -347,8 +355,8 @@
 <h2 class="hasAnchor">
 <a href="#local-area-unemployment-statistics" class="anchor"></a>Local Area Unemployment Statistics</h2>
 <p>To look at unemployment rates over time, I can use <code><a href="../reference/laus_trend.html">laus_trend()</a></code>. The LAUS covers smaller geographies than the QWI, so <code><a href="../reference/laus_trend.html">laus_trend()</a></code> is set up to find data by a combination of state, counties, or towns. The LAUS API returns monthly data on labor force counts, employment counts, unemployed counts, and unemployment rate; <code><a href="../reference/laus_trend.html">laus_trend()</a></code> lets you specify which of these measures to fetch.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">unemployment &lt;-<span class="st"> </span><span class="kw"><a href="../reference/laus_trend.html">laus_trend</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"New Haven"</span>, <span class="st">"New Haven County"</span>, <span class="st">"Connecticut"</span>), <span class="dt">startyear =</span> <span class="dv">2000</span>, <span class="dt">endyear =</span> <span class="dv">2017</span>, <span class="dt">measures =</span> <span class="st">"unemployment rate"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">date =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(year, periodName, <span class="st">"01"</span>, <span class="dt">sep =</span> <span class="st">"-"</span>) <span class="op">%&gt;%</span><span class="st"> </span>lubridate<span class="op">::</span><span class="kw"><a href="http://lubridate.tidyverse.org/reference/ymd.html">ymd</a></span>()) <span class="op">%&gt;%</span></a>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">unemployment &lt;-<span class="st"> </span><span class="kw"><a href="../reference/laus_trend.html">laus_trend</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"New Haven"</span>, <span class="st">"New Haven County"</span>, <span class="st">"Connecticut"</span>), <span class="dt">startyear =</span> <span class="dv">2000</span>, <span class="dt">endyear =</span> <span class="dv">2017</span>, <span class="dt">measures =</span> <span class="st">"unemployment rate"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">date =</span> <span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(year, periodName, <span class="st">"01"</span>, <span class="dt">sep =</span> <span class="st">"-"</span>) <span class="op">%&gt;%</span><span class="st"> </span>lubridate<span class="op">::</span><span class="kw"><a href="http://lubridate.tidyverse.org/reference/ymd.html">ymd</a></span>()) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb14-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">value =</span> value <span class="op">/</span><span class="st"> </span><span class="dv">100</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb14-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(area, date, value)</a>
 <a class="sourceLine" id="cb14-5" data-line-number="5"><span class="co">#&gt; REQUEST_SUCCEEDED</span></a>
@@ -377,6 +385,7 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -398,17 +407,20 @@
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by Camille Seaberry.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

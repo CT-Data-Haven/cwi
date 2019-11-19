@@ -6,9 +6,16 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shapefiles • cwi</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Shapefiles">
 <meta property="og:description" content="">
 <meta property="og:image" content="https://CT-Data-Haven.github.io/cwi/logo.png">
@@ -39,7 +46,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -65,7 +72,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/CT-Data-Haven/cwi">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -78,6 +85,7 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
@@ -91,9 +99,9 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(cwi)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(cwi)</a></code></pre></div>
 <p><code>cwi</code> ships with several shapefiles in <a href="https://r-spatial.github.io/sf/"><code>sf</code></a> (simple features) format. These include:</p>
 <ul>
 <li>Shapes straight from <a href="https://www.census.gov/geo/maps-data/data/tiger.html">TIGER</a> via <a href="https://github.com/walkerke/tigris"><code>tigris</code></a>:
@@ -115,7 +123,7 @@
 <h1 class="hasAnchor">
 <a href="#sf" class="anchor"></a><code>sf</code>
 </h1>
-<p><code>sf</code> objects are easy to plot either out of the box with <code><a href="https://www.rdocumentation.org/packages/sf/topics/plot">sf::plot.sf()</a></code>, or with <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot2::ggplot()</a></code> as of <code>ggplot2</code> version 3.0.0. Use with <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> means a <code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf()</a></code> can be overlayed on a basemap from <code>ggmap</code>, as is done in the neighborhood examples.</p>
+<p><code>sf</code> objects are easy to plot either out of the box with <code><a href="https://rdrr.io/pkg/sf/man/plot.html">sf::plot.sf()</a></code>, or with <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot2::ggplot()</a></code> as of <code>ggplot2</code> version 3.0.0. Use with <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> means a <code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf()</a></code> can be overlayed on a basemap from <code>ggmap</code>, as is done in the neighborhood examples.</p>
 <p><code>sf</code> is well-documented, and uses <code>dplyr</code>-type functions to allow for mutating, filtering, summarizing, joining, and most other data wrangling functions. See the <code>sf</code> vignettes for help getting started: <code>vignette(package = "sf")</code>.</p>
 <p><code>sf</code> data frames look and act like other data frames, but with shape information attached.</p>
 </div>
@@ -129,15 +137,15 @@
 <a class="sourceLine" id="cb2-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_void</a></span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb2-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"Connecticut towns"</span>)</a></code></pre></div>
 <p><img src="shapefiles_files/figure-html/towns-1.png" width="672"></p>
-<p>With some <code>dplyr</code> operations. For example, <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> followed by <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> conducts a union on each group’s geometries, using <code><a href="https://www.rdocumentation.org/packages/sf/topics/geos_combine">sf::st_union()</a></code> in its back-end.</p>
+<p>With some <code>dplyr</code> operations. For example, <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> followed by <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> conducts a union on each group’s geometries, using <code><a href="https://rdrr.io/pkg/sf/man/geos_combine.html">sf::st_union()</a></code> in its back-end.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">town_sf <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(name <span class="op">%in%</span><span class="st"> </span>regions<span class="op">$</span><span class="st">`</span><span class="dt">Greater New Haven</span><span class="st">`</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="dt">area =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(name <span class="op">==</span><span class="st"> "New Haven"</span>, <span class="st">"New Haven"</span>, <span class="st">"New Haven suburbs"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="dt">area =</span> <span class="kw"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span>(name <span class="op">==</span><span class="st"> "New Haven"</span>, <span class="st">"New Haven"</span>, <span class="st">"New Haven suburbs"</span>)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb3-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>() <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb3-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb3-6" data-line-number="6"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">fill =</span> area), <span class="dt">color =</span> <span class="st">"white"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb3-7" data-line-number="7"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">coord_sf</a></span>(<span class="dt">ndiscr =</span> F) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"New Haven"</span> =<span class="st"> "mediumorchid"</span>, <span class="st">"New Haven suburbs"</span> =<span class="st"> "gray70"</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span>(<span class="dt">values =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"New Haven"</span> =<span class="st"> "mediumorchid"</span>, <span class="st">"New Haven suburbs"</span> =<span class="st"> "gray70"</span>)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb3-9" data-line-number="9"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_void</a></span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb3-10" data-line-number="10"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb3-11" data-line-number="11"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"Filtering and unioning shapes"</span>)</a></code></pre></div>
@@ -156,36 +164,37 @@
 <p>Neighborhood shapes were made at DataHaven by splitting or grouping census tracts into neighborhood areas as defined by each city’s government. In some cases, boundaries were slightly adjusted to fit tracts. Small neighborhoods may be grouped together for analysis. See documentation of these at <code><a href="../reference/neighborhood_shapes.html">cwi::neighborhood_shapes</a></code> and crosswalk of tracts to neighborhoods at <code><a href="../reference/neighborhood_tracts.html">cwi::neighborhood_tracts</a></code>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">neighborhood_map &lt;-<span class="st"> </span><span class="cf">function</span>(shp, city_name) {</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="co"># get bounding box of shp</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">  bbox &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_bbox">st_bbox</a></span>(shp) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/setNames">setNames</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>, <span class="st">"right"</span>, <span class="st">"top"</span>))</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">  bbox &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/sf/man/st_bbox.html">st_bbox</a></span>(shp) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>, <span class="st">"right"</span>, <span class="st">"top"</span>))</a>
 <a class="sourceLine" id="cb5-4" data-line-number="4">  <span class="co"># get basemap based on bbox</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">  basemap &lt;-<span class="st"> </span>ggmap<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggmap/topics/get_map">get_map</a></span>(bbox, <span class="dt">source =</span> <span class="st">"stamen"</span>, <span class="dt">maptype =</span> <span class="st">"toner-lite"</span>)</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">  basemap &lt;-<span class="st"> </span>ggmap<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/ggmap/man/get_map.html">get_map</a></span>(bbox, <span class="dt">source =</span> <span class="st">"stamen"</span>, <span class="dt">maptype =</span> <span class="st">"toner-lite"</span>)</a>
 <a class="sourceLine" id="cb5-6" data-line-number="6">  <span class="co"># make centroids of neighborhoods to label them</span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">  centroids &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/geos_unary">st_centroid</a></span>(shp) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">x =</span> sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_coordinates">st_coordinates</a></span>(.)[, <span class="dv">1</span>],</a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">           <span class="dt">y =</span> sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_coordinates">st_coordinates</a></span>(.)[, <span class="dv">2</span>])</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">  centroids &lt;-<span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/sf/man/geos_unary.html">st_centroid</a></span>(shp) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">x =</span> sf<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/sf/man/st_coordinates.html">st_coordinates</a></span>(.)[, <span class="dv">1</span>],</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">           <span class="dt">y =</span> sf<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/sf/man/st_coordinates.html">st_coordinates</a></span>(.)[, <span class="dv">2</span>])</a>
 <a class="sourceLine" id="cb5-10" data-line-number="10">  city_shp &lt;-<span class="st"> </span>town_sf <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(name <span class="op">%in%</span><span class="st"> </span>city_name)</a>
 <a class="sourceLine" id="cb5-11" data-line-number="11">  </a>
-<a class="sourceLine" id="cb5-12" data-line-number="12">  ggmap<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggmap/topics/ggmap">ggmap</a></span>(basemap, <span class="dt">darken =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">0.4</span>, <span class="st">"white"</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12">  ggmap<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/ggmap/man/ggmap.html">ggmap</a></span>(basemap, <span class="dt">darken =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.4</span>, <span class="st">"white"</span>)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb5-13" data-line-number="13"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="dt">data =</span> shp, <span class="dt">inherit.aes =</span> F, <span class="dt">color =</span> <span class="st">"mediumorchid3"</span>, <span class="dt">fill =</span> <span class="st">"orchid3"</span>, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb5-14" data-line-number="14"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="dt">data =</span> city_shp, <span class="dt">inherit.aes =</span> F, <span class="dt">color =</span> <span class="st">"#7636C7"</span>, <span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">size =</span> <span class="fl">0.8</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="st">    </span>ggrepel<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggrepel/topics/geom_text_repel">geom_text_repel</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, <span class="dt">label =</span> name), <span class="dt">data =</span> centroids, <span class="dt">inherit.aes =</span> F, <span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="st">    </span>ggrepel<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/ggrepel/man/geom_text_repel.html">geom_text_repel</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, <span class="dt">label =</span> name), <span class="dt">data =</span> centroids, <span class="dt">inherit.aes =</span> F, <span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb5-16" data-line-number="16"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_void</a></span>()</a>
 <a class="sourceLine" id="cb5-17" data-line-number="17">}</a></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">  <span class="st">"New Haven"</span> =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">shp =</span> new_haven_sf, <span class="dt">city =</span> <span class="st">"New Haven"</span>),</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">  <span class="st">"Stamford"</span> =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">shp =</span> stamford_sf, <span class="dt">city =</span> <span class="st">"Stamford"</span>),</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">  <span class="st">"Hartford/West Hartford"</span> =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">shp =</span> hartford_sf, <span class="dt">city =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Hartford"</span>, <span class="st">"West Hartford"</span>)),</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">  <span class="st">"Bridgeport"</span> =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">shp =</span> bridgeport_sf, <span class="dt">city =</span> <span class="st">"Bridgeport"</span>)</a>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">  <span class="st">"New Haven"</span> =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">shp =</span> new_haven_sf, <span class="dt">city =</span> <span class="st">"New Haven"</span>),</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">  <span class="st">"Stamford"</span> =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">shp =</span> stamford_sf, <span class="dt">city =</span> <span class="st">"Stamford"</span>),</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">  <span class="st">"Hartford/West Hartford"</span> =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">shp =</span> hartford_sf, <span class="dt">city =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Hartford"</span>, <span class="st">"West Hartford"</span>)),</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">  <span class="st">"Bridgeport"</span> =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">shp =</span> bridgeport_sf, <span class="dt">city =</span> <span class="st">"Bridgeport"</span>)</a>
 <a class="sourceLine" id="cb6-6" data-line-number="6">) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb6-7" data-line-number="7"><span class="st">  </span>purrr<span class="op">::</span><span class="kw"><a href="https://purrr.tidyverse.org/reference/imap.html">iwalk</a></span>(<span class="cf">function</span>(city, title) {</a>
 <a class="sourceLine" id="cb6-8" data-line-number="8">    p &lt;-<span class="st"> </span><span class="kw">neighborhood_map</span>(city<span class="op">$</span>shp, city<span class="op">$</span>city) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(title)</a>
-<a class="sourceLine" id="cb6-9" data-line-number="9">    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(p)</a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">    <span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(p)</a>
 <a class="sourceLine" id="cb6-10" data-line-number="10">  })</a></code></pre></div>
 <p><img src="shapefiles_files/figure-html/city_maps-1.png" width="672"><img src="shapefiles_files/figure-html/city_maps-2.png" width="672"><img src="shapefiles_files/figure-html/city_maps-3.png" width="672"><img src="shapefiles_files/figure-html/city_maps-4.png" width="672"></p>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -200,17 +209,20 @@
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by Camille Seaberry.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>
