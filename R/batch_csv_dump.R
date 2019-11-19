@@ -39,12 +39,16 @@ batch_csv_dump <- function(data, split_by, path = ".", base_name = NULL, bind = 
 
   out <- data_list %>%
     purrr::iwalk(function(df, name) {
-      filename <- paste(base_name, name) %>%
-        stringr::str_replace_all("\\s+", "_")
-      filename <- paste0(filename, ".csv")
-      readr::write_csv(df, path = paste(path, filename, sep = "/"))
+      filename <- paste(c(base_name, name), collapse = "_") %>%
+        stringr::str_replace_all("\\s+", "_") %>%
+        paste0(".csv")
+      # filename <- paste(base_name, name) %>%
+        # stringr::str_replace_all("\\s+", "_")
+      # filename <- paste0(filename, ".csv")
+      filepath <- file.path(path, filename)
+      readr::write_csv(df, path = filepath)
 
-      if (verbose) message("Writing ", paste(path, filename, sep = "/"))
+      if (verbose) message("Writing ", filepath)
     })
   if (bind) {
     out <- dplyr::bind_rows(out)
