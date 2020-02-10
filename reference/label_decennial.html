@@ -43,6 +43,7 @@
 
 
 <meta property="og:title" content="Quickly add the labels of decennial variables — label_decennial" />
+<meta property="og:description" content="tidycensus::get_decennial returns a decennial data table with its variable codes, which can be joined with cwi::decennial_vars10 to get readable labels. This function is just a quick wrapper around the common task of joining these two data frames." />
 <meta property="og:image" content="https://CT-Data-Haven.github.io/cwi/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -133,6 +134,7 @@
     </div>
 
     <div class="ref-description">
+    <p><code><a href='https://rdrr.io/pkg/tidycensus/man/get_decennial.html'>tidycensus::get_decennial</a></code> returns a decennial data table with its variable codes, which can be joined with <code><a href='decennial_vars10.html'>cwi::decennial_vars10</a></code> to get readable labels. This function is just a quick wrapper around the common task of joining these two data frames.</p>
     </div>
 
     <pre class="usage"><span class='fu'>label_decennial</span>(<span class='no'>df</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2010</span>, <span class='kw'>sumfile</span> <span class='kw'>=</span> <span class='st'>"sf1"</span>, <span class='kw'>variable</span> <span class='kw'>=</span> <span class='no'>variable</span>)</pre>
@@ -150,17 +152,28 @@
     </tr>
     <tr>
       <th>sumfile</th>
-      <td><p>A string: which summary file to use. Defaults to the 100\<!-- % summary file (\code{"sf1"}), but can also be (\code{"sf3"}).} --></p>
-<p>variableThe bare column name of variable codes; defaults to <code>variable</code>, as returned by <code><a href='https://rdrr.io/pkg/tidycensus/man/get_decennial.html'>tidycensus::get_decennial</a></code>.</p></td>
+      <td><p>A string: which summary file to use. Defaults to the 100 percent summary file (<code>"sf1"</code>), but can also be <code>"sf3"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>variable</th>
+      <td><p>The bare column name of variable codes; defaults to <code>variable</code>, as returned by <code><a href='https://rdrr.io/pkg/tidycensus/man/get_decennial.html'>tidycensus::get_decennial</a></code>.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A tibble</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><a href='decennial_vars10.html'>decennial_vars10</a></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
+      <li><a href="#see-also">See also</a></li>
     </ul>
 
   </div>
