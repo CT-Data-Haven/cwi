@@ -4,8 +4,17 @@
 \alias{acs_quick_map}
 \title{Quickly create a choropleth sketch}
 \usage{
-acs_quick_map(data, name = name, value = value, level = "town",
-  city = NULL, n = 5, palette = "GnBu", title = NULL, ...)
+acs_quick_map(
+  data,
+  name = name,
+  value = value,
+  level = "town",
+  city = NULL,
+  n = 5,
+  palette = "GnBu",
+  title = NULL,
+  ...
+)
 }
 \arguments{
 \item{data}{A data frame containing data by geography.}

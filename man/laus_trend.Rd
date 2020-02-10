@@ -4,8 +4,14 @@
 \alias{laus_trend}
 \title{Fetch local area unemployment statistics (LAUS) data over time}
 \usage{
-laus_trend(names, startyear, endyear, measures = "all", annual = FALSE,
-  key = Sys.getenv("BLS_KEY"))
+laus_trend(
+  names,
+  startyear,
+  endyear,
+  measures = "all",
+  annual = FALSE,
+  key = Sys.getenv("BLS_KEY")
+)
 }
 \arguments{
 \item{names}{A character vector of place names to look up: as of now, this is limited to Connecticut, and its counties and towns.}

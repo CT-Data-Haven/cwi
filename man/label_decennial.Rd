@@ -4,15 +4,14 @@
 \alias{label_decennial}
 \title{Quickly add the labels of decennial variables}
 \usage{
-label_decennial(df, year = 2010, sumfile = "sf1",
-  variable = variable)
+label_decennial(df, year = 2010, sumfile = "sf1", variable = variable)
 }
 \arguments{
 \item{df}{A data frame/tibble.}
 
 \item{year}{The year of decennial census data; defaults 2010.}
 
-\item{sumfile}{A string: which summary file to use. Defaults to the 100\% summary file (\code{"sf1"}), but can also be (\code{"sf3"}).}
+\item{sumfile}{A string: which summary file to use. Defaults to the 100\\% summary file (\code{"sf1"}), but can also be (\code{"sf3"}).}
 
 \item{variable}{The bare column name of variable codes; defaults to \code{variable}, as returned by \code{tidycensus::get_decennial}.}
 }

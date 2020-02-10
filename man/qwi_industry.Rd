@@ -4,8 +4,14 @@
 \alias{qwi_industry}
 \title{Get employees counts and total payroll over time}
 \usage{
-qwi_industry(years, industries = naics_codes$industry, counties = NULL,
-  state = "09", annual = TRUE, key = Sys.getenv("CENSUS_API_KEY"))
+qwi_industry(
+  years,
+  industries = naics_codes$industry,
+  counties = NULL,
+  state = "09",
+  annual = TRUE,
+  key = Sys.getenv("CENSUS_API_KEY")
+)
 }
 \arguments{
 \item{years}{A numeric vector of one or more years for which to get data}

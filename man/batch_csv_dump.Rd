@@ -4,8 +4,14 @@
 \alias{batch_csv_dump}
 \title{Write a list of data frames to CSV and keep it movin'}
 \usage{
-batch_csv_dump(data, split_by, path = ".", base_name = NULL,
-  bind = FALSE, verbose = TRUE)
+batch_csv_dump(
+  data,
+  split_by,
+  path = ".",
+  base_name = NULL,
+  bind = FALSE,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{data}{A data frame or a list of data frames}

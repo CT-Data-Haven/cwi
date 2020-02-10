@@ -4,9 +4,18 @@
 \alias{multi_geo_decennial}
 \title{Fetch a decennial census table with multiple geography levels}
 \usage{
-multi_geo_decennial(table, year = 2010, neighborhoods = NULL,
-  towns = "all", regions = NULL, counties = "all", state = "09",
-  tracts = NULL, sumfile = "sf1", verbose = TRUE)
+multi_geo_decennial(
+  table,
+  year = 2010,
+  neighborhoods = NULL,
+  towns = "all",
+  regions = NULL,
+  counties = "all",
+  state = "09",
+  tracts = NULL,
+  sumfile = "sf1",
+  verbose = TRUE
+)
 }
 \arguments{
 \item{table}{A string giving the decennial census table number. These are generally formatted as one or more letters, 3 numbers, and optionally a letter.}

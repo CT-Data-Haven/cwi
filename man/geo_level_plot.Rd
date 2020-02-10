@@ -4,9 +4,18 @@
 \alias{geo_level_plot}
 \title{Quickly make a \code{ggplot} to view data by geographic level}
 \usage{
-geo_level_plot(data, name = name, value = value, level = level,
-  type = "col", hilite = "dodgerblue", title = NULL,
-  dark_gray = "gray20", light_gray = "gray60", ...)
+geo_level_plot(
+  data,
+  name = name,
+  value = value,
+  level = level,
+  type = "col",
+  hilite = "dodgerblue",
+  title = NULL,
+  dark_gray = "gray20",
+  light_gray = "gray60",
+  ...
+)
 }
 \arguments{
 \item{data}{A data frame to use for plotting.}
