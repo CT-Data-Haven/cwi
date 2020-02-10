@@ -6,7 +6,7 @@
 \usage{
 multi_geo_acs(
   table,
-  year = 2017,
+  year = 2018,
   neighborhoods = NULL,
   towns = "all",
   regions = NULL,
@@ -24,7 +24,7 @@ multi_geo_acs(
 \arguments{
 \item{table}{A string giving the ACS table number.}
 
-\item{year}{The year of the ACS table; currently defaults 2017 (most recent available).}
+\item{year}{The year of the ACS table; currently defaults 2018 (most recent available).}
 
 \item{neighborhoods}{Temporarily deprecated: A named list of neighborhoods with their 11-digit tract GEOIDs (defaults NULL).}
 
