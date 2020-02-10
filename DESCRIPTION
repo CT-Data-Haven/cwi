@@ -25,7 +25,7 @@ Imports:
     jsonlite (>= 1.5),
     assertthat (>= 0.2.0),
     blscrapeR,
-    curl (>= 3.2),
+    curl,
     janitor,
     readxl
 Roxygen: list(markdown = TRUE, wrap = TRUE)
