@@ -137,8 +137,14 @@
     <p>Fetch monthly LAUS data for a list of locations over a given time period. Requires a BLS API key; see <code><a href='https://rdrr.io/pkg/blscrapeR/man/set_bls_key.html'>blscrapeR::set_bls_key()</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>laus_trend</span>(<span class='no'>names</span>, <span class='no'>startyear</span>, <span class='no'>endyear</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>annual</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>key</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span>(<span class='st'>"BLS_KEY"</span>))</pre>
+    <pre class="usage"><span class='fu'>laus_trend</span>(
+  <span class='no'>names</span>,
+  <span class='no'>startyear</span>,
+  <span class='no'>endyear</span>,
+  <span class='kw'>measures</span> <span class='kw'>=</span> <span class='st'>"all"</span>,
+  <span class='kw'>annual</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>key</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span>(<span class='st'>"BLS_KEY"</span>)
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

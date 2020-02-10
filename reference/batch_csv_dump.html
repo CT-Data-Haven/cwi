@@ -137,8 +137,14 @@
     <p>This function takes either a list of data frames, or a data frame and a column to split by, and writes them all to CSV files. It then returns the list of data frames, optionally row-binded back together. It fits neatly in the middle of a longer piped workflow.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>batch_csv_dump</span>(<span class='no'>data</span>, <span class='no'>split_by</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"."</span>, <span class='kw'>base_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>bind</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>batch_csv_dump</span>(
+  <span class='no'>data</span>,
+  <span class='no'>split_by</span>,
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"."</span>,
+  <span class='kw'>base_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>bind</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

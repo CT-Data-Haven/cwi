@@ -303,15 +303,15 @@
 <a class="sourceLine" id="cb11-13" data-line-number="13"><span class="co">#&gt;     year industry state county   Emp   Payroll location    label                </span></a>
 <a class="sourceLine" id="cb11-14" data-line-number="14"><span class="co">#&gt;    &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;                </span></a>
 <a class="sourceLine" id="cb11-15" data-line-number="15"><span class="co">#&gt;  1  2002 11       09    009      700    1.65e7 New Haven … Agriculture, Forestr…</span></a>
-<a class="sourceLine" id="cb11-16" data-line-number="16"><span class="co">#&gt;  2  2002 21       09    009      198    1.06e7 New Haven … Mining, Quarrying, a…</span></a>
-<a class="sourceLine" id="cb11-17" data-line-number="17"><span class="co">#&gt;  3  2002 22       09    009     1750    1.10e8 New Haven … Utilities            </span></a>
-<a class="sourceLine" id="cb11-18" data-line-number="18"><span class="co">#&gt;  4  2002 23       09    009    15568    7.60e8 New Haven … Construction         </span></a>
-<a class="sourceLine" id="cb11-19" data-line-number="19"><span class="co">#&gt;  5  2002 31-33    09    009    47368    2.39e9 New Haven … Manufacturing        </span></a>
-<a class="sourceLine" id="cb11-20" data-line-number="20"><span class="co">#&gt;  6  2002 42       09    009    16517    9.22e8 New Haven … Wholesale Trade      </span></a>
-<a class="sourceLine" id="cb11-21" data-line-number="21"><span class="co">#&gt;  7  2002 44-45    09    009    46064    1.18e9 New Haven … Retail Trade         </span></a>
-<a class="sourceLine" id="cb11-22" data-line-number="22"><span class="co">#&gt;  8  2002 48-49    09    009     7663    2.56e8 New Haven … Transportation and W…</span></a>
-<a class="sourceLine" id="cb11-23" data-line-number="23"><span class="co">#&gt;  9  2002 51       09    009    14353    7.56e8 New Haven … Information          </span></a>
-<a class="sourceLine" id="cb11-24" data-line-number="24"><span class="co">#&gt; 10  2002 52       09    009    13465    7.97e8 New Haven … Finance and Insurance</span></a>
+<a class="sourceLine" id="cb11-16" data-line-number="16"><span class="co">#&gt;  2  2002 21       09    009      197    1.04e7 New Haven … Mining, Quarrying, a…</span></a>
+<a class="sourceLine" id="cb11-17" data-line-number="17"><span class="co">#&gt;  3  2002 22       09    009     1719    1.09e8 New Haven … Utilities            </span></a>
+<a class="sourceLine" id="cb11-18" data-line-number="18"><span class="co">#&gt;  4  2002 23       09    009    15656    7.64e8 New Haven … Construction         </span></a>
+<a class="sourceLine" id="cb11-19" data-line-number="19"><span class="co">#&gt;  5  2002 31-33    09    009    47134    2.37e9 New Haven … Manufacturing        </span></a>
+<a class="sourceLine" id="cb11-20" data-line-number="20"><span class="co">#&gt;  6  2002 42       09    009    16922    9.53e8 New Haven … Wholesale Trade      </span></a>
+<a class="sourceLine" id="cb11-21" data-line-number="21"><span class="co">#&gt;  7  2002 44-45    09    009    46325    1.19e9 New Haven … Retail Trade         </span></a>
+<a class="sourceLine" id="cb11-22" data-line-number="22"><span class="co">#&gt;  8  2002 48-49    09    009     7681    2.58e8 New Haven … Transportation and W…</span></a>
+<a class="sourceLine" id="cb11-23" data-line-number="23"><span class="co">#&gt;  9  2002 51       09    009    14362    7.54e8 New Haven … Information          </span></a>
+<a class="sourceLine" id="cb11-24" data-line-number="24"><span class="co">#&gt; 10  2002 52       09    009    13552    8.08e8 New Haven … Finance and Insurance</span></a>
 <a class="sourceLine" id="cb11-25" data-line-number="25"><span class="co">#&gt; # … with 630 more rows</span></a></code></pre></div>
 <p>Next, say I want to look at the industries that were largest in New Haven county in 2017, and see how those have changed both for the county and statewide over this time period. I’ll filter <code>employment</code>, get the industries with the largest numbers of employees, then filter <code>employment</code> for just those industries and plot it.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">top2017 &lt;-<span class="st"> </span>employment <span class="op">%&gt;%</span></a>

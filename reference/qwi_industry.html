@@ -137,8 +137,14 @@
     <p>This gets data from the Quarterly Workforce Indicators (QWI) via the Census API. It's an alternative to <code>censusapi</code> that fetches a set of variables (employees and payroll) but makes a somewhat more dynamic API call. The API returns a maximum of 10 years of data; calling this function with more than 10 years will require multiple API calls, which takes a little longer.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>qwi_industry</span>(<span class='no'>years</span>, <span class='kw'>industries</span> <span class='kw'>=</span> <span class='no'>naics_codes</span>$<span class='no'>industry</span>, <span class='kw'>counties</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>state</span> <span class='kw'>=</span> <span class='st'>"09"</span>, <span class='kw'>annual</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span>(<span class='st'>"CENSUS_API_KEY"</span>))</pre>
+    <pre class="usage"><span class='fu'>qwi_industry</span>(
+  <span class='no'>years</span>,
+  <span class='kw'>industries</span> <span class='kw'>=</span> <span class='no'>naics_codes</span>$<span class='no'>industry</span>,
+  <span class='kw'>counties</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>state</span> <span class='kw'>=</span> <span class='st'>"09"</span>,
+  <span class='kw'>annual</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>key</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span>(<span class='st'>"CENSUS_API_KEY"</span>)
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -181,18 +187,18 @@
 <span class='fu'>qwi_industry</span>(<span class='fl'>2012</span>:<span class='fl'>2017</span>, <span class='kw'>industries</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"23"</span>, <span class='st'>"62"</span>), <span class='kw'>counties</span> <span class='kw'>=</span> <span class='st'>"009"</span>)</div><div class='output co'>#&gt; # A tibble: 12 x 6
 #&gt;     year industry state county   Emp    Payroll
 #&gt;    &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;      &lt;dbl&gt;
-#&gt;  1  2012 23       09    009    12860  775481456
-#&gt;  2  2012 62       09    009    68712 3281149707
-#&gt;  3  2013 23       09    009    13268  813987579
-#&gt;  4  2013 62       09    009    69403 3309654225
-#&gt;  5  2014 23       09    009    13988  883480249
-#&gt;  6  2014 62       09    009    69872 3432956952
-#&gt;  7  2015 23       09    009    14629  963915338
-#&gt;  8  2015 62       09    009    70324 3453606257
-#&gt;  9  2016 23       09    009    15143 1008594663
-#&gt; 10  2016 62       09    009    71326 3561217443
-#&gt; 11  2017 23       09    009    14851 1010315682
-#&gt; 12  2017 62       09    009    70927 3576310162</div><div class='input'># }
+#&gt;  1  2012 23       09    009    12768  771047628
+#&gt;  2  2012 62       09    009    68736 3280491477
+#&gt;  3  2013 23       09    009    13145  807173263
+#&gt;  4  2013 62       09    009    69456 3312274069
+#&gt;  5  2014 23       09    009    13782  870459510
+#&gt;  6  2014 62       09    009    69908 3432474167
+#&gt;  7  2015 23       09    009    14376  947590495
+#&gt;  8  2015 62       09    009    70342 3455143080
+#&gt;  9  2016 23       09    009    14945  998409608
+#&gt; 10  2016 62       09    009    71220 3554788637
+#&gt; 11  2017 23       09    009    14817 1013380326
+#&gt; 12  2017 62       09    009    70808 3568640962</div><div class='input'># }
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

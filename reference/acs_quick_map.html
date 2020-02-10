@@ -137,8 +137,17 @@
     <p>This is a quick way to create a choropleth sketch of town-, neighborhood-, or tract-level data. Uses a corresponding <code>sf</code> object; as of June 2018, this <code>sf</code> object must be one that ships with this package, or otherwise be globally available and have a column <code>name</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>acs_quick_map</span>(<span class='no'>data</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>name</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='no'>value</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='st'>"town"</span>,
-  <span class='kw'>city</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"GnBu"</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>acs_quick_map</span>(
+  <span class='no'>data</span>,
+  <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>name</span>,
+  <span class='kw'>value</span> <span class='kw'>=</span> <span class='no'>value</span>,
+  <span class='kw'>level</span> <span class='kw'>=</span> <span class='st'>"town"</span>,
+  <span class='kw'>city</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"GnBu"</span>,
+  <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -191,7 +200,7 @@
 <span class='kw'>variables</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>median_age</span> <span class='kw'>=</span> <span class='st'>"B01002_001"</span>), <span class='kw'>state</span> <span class='kw'>=</span> <span class='st'>"09"</span>, <span class='kw'>county</span> <span class='kw'>=</span> <span class='st'>"09"</span>) <span class='kw'>%&gt;%</span>
   <span class='kw pkg'>camiller</span><span class='kw ns'>::</span><span class='fu'><a href='https://camille-s.github.io/camiller/reference/town_names.html'>town_names</a></span>(<span class='no'>NAME</span>) <span class='kw'>%&gt;%</span>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>NAME</span> <span class='kw'>%in%</span> <span class='no'>regions</span>$<span class='no'>`Greater New Haven`</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>acs_quick_map</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>NAME</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='no'>estimate</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Median age by town, 2017"</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>6</span>)</div><div class='output co'>#&gt; <span class='message'>Getting data from the 2013-2017 5-year ACS</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Unknown or uninitialised column: 'name'.</span></div><div class='img'><img src='acs_quick_map-1.png' alt='' width='700' height='433' /></div><div class='input'># }
+  <span class='fu'>acs_quick_map</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>NAME</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='no'>estimate</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Median age by town, 2017"</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>6</span>)</div><div class='output co'>#&gt; <span class='message'>Getting data from the 2014-2018 5-year ACS</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Unknown or uninitialised column: 'name'.</span></div><div class='img'><img src='acs_quick_map-1.png' alt='' width='700' height='433' /></div><div class='input'># }
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
