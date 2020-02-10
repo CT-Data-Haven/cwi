@@ -32,7 +32,7 @@ laus_trend <- function(names, startyear, endyear, measures = "all", annual = FAL
   } else {
     # assertthat::assert_that(all(measures %in% laus_measures$measure_text), msg = sprintf("Possible measures are %s, or all", paste(laus_measures$measure_text, collapse = ", ")))
     if (!all(measures %in% laus_measures$measure_text)) stop(sprintf("Possible measures are %s, or all", paste(laus_measures$measure_text, collapse = ", ")))
-    measure_lookup <- dplyr::data_frame(measure_text = measures) %>%
+    measure_lookup <- dplyr::tibble(measure_text = measures) %>%
       dplyr::inner_join(laus_measures, by = "measure_text")
   }
   # laus area lookup table

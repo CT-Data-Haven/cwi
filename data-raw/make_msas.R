@@ -1,5 +1,5 @@
 # make list of regional MSAs via tidycensus
-fips <- dplyr::data_frame(
+fips <- dplyr::tibble(
   state = c("CT", "MA", "ME", "NH", "RI", "VT"),
   code = c("09", "23", "25", "33", "44", "50")
 )

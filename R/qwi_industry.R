@@ -62,7 +62,7 @@ qwi_industry <- function(years, industries = naics_codes$industry, counties = NU
     data <- jsonlite::fromJSON(httr::content(request, as = "text"))
     colnames(data) <- data[1, ]
 
-    dplyr::as_data_frame(data[-1, ]) %>%
+    dplyr::as_tibble(data[-1, ]) %>%
       dplyr::mutate_at(dplyr::vars(quarter, Emp, Payroll), as.numeric)
   })
 
