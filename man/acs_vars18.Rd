@@ -4,12 +4,14 @@
 \name{acs_vars18}
 \alias{acs_vars18}
 \title{Variable labels from the 2018 ACS}
-\format{A data frame with 26996 rows and 3 variables:
+\format{
+A data frame with 26996 rows and 3 variables:
 \describe{
 \item{name}{Variable code, where first 6 characters are the table number and last 3 digits are the variable number}
 \item{label}{Readable label of each variable}
 \item{concept}{Table name}
-}}
+}
+}
 \source{
 US Census Bureau via \code{tidycensus}
 }

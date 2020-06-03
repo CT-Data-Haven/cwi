@@ -9,7 +9,8 @@
 \alias{stamford_tracts}
 \alias{hartford_tracts}
 \title{City neighborhoods by tract or block group}
-\format{A data frame
+\format{
+A data frame
 \describe{
 \item{town}{For \code{hartford_tracts}, the name of the town, because both Hartford and West Hartford neighborhoods are included; otherwise, no \code{town} variable is needed}
 \item{name}{Neighborhood name}
@@ -17,7 +18,18 @@
 \item{tract}{6-digit FIPS code of the tract}
 \item{block_group}{Single digit number of the block group, if applicable (\code{nhv_bgrps})}
 \item{weight}{Share of tract/block group households in that neighborhood}
-}}
+}
+
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 34 rows and 4 columns.
+
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 110 rows and 5 columns.
+
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 49 rows and 4 columns.
+
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 30 rows and 4 columns.
+
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 56 rows and 5 columns.
+}
 \usage{
 nhv_tracts
 

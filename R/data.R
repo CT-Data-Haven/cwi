@@ -125,7 +125,7 @@ NULL
 #'
 #' A crosswalk of Connecticut's Census-designated places (CDP) to the towns (county subdivisions) containing them.
 #'
-#' @format A data frame with 89 rows and 4 variables:
+#' @format A data frame with 90 rows and 4 variables:
 #' \describe{
 #'   \item{cdp_geoid}{7-digits CDP FIPS code}
 #'   \item{place}{CDP name}

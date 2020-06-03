@@ -8,7 +8,17 @@
 \alias{new_haven_sf}
 \alias{stamford_sf}
 \title{Neighborhood shapefiles of Connecticut cities}
-\format{Data frames (classes \code{data.frame} and \code{sf}). In each, \code{name} is the name of each neighborhood, and \code{geometry} is the shape of each neighborhood as either a \code{sfc_POLYGON} or \code{sfc_MULTIPOLYGON} object. \code{hartford_sf} contains an additional variable, \code{town}, which marks the neighborhoods as being in Hartford or West Hartford.}
+\format{
+Data frames (classes \code{data.frame} and \code{sf}). In each, \code{name} is the name of each neighborhood, and \code{geometry} is the shape of each neighborhood as either a \code{sfc_POLYGON} or \code{sfc_MULTIPOLYGON} object. \code{hartford_sf} contains an additional variable, \code{town}, which marks the neighborhoods as being in Hartford or West Hartford.
+
+An object of class \code{sf} (inherits from \code{data.frame}) with 13 rows and 2 columns.
+
+An object of class \code{sf} (inherits from \code{data.frame}) with 27 rows and 3 columns.
+
+An object of class \code{sf} (inherits from \code{data.frame}) with 20 rows and 2 columns.
+
+An object of class \code{sf} (inherits from \code{data.frame}) with 16 rows and 2 columns.
+}
 \usage{
 bridgeport_sf
 

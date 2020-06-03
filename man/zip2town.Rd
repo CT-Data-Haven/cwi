@@ -4,7 +4,8 @@
 \name{zip2town}
 \alias{zip2town}
 \title{Zip to town lookup}
-\format{A data frame with 407 rows and 7 variables:
+\format{
+A data frame with 407 rows and 7 variables:
 \describe{
 \item{zip}{5-digit zip code (ZCTA5)}
 \item{town_geoid}{10-digit town FIPS code}
@@ -13,7 +14,8 @@
 \item{hupt}{Number of housing units in this combination of zip and town}
 \item{pct_zip_hh_in_town}{Percentage of the zip's total households that are also in this town}
 \item{pct_town_hh_in_zip}{Percentage of the town's total households that are also in this zip}
-}}
+}
+}
 \source{
 Cleaned-up version of the Census \href{https://www.census.gov/geo/maps-data/data/zcta_rel_download.html}{2010 ZCTA to county subdivision relationship file}
 }

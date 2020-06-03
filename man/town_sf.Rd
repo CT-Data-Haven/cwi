@@ -4,12 +4,14 @@
 \name{town_sf}
 \alias{town_sf}
 \title{Connecticut town shapefile}
-\format{Data frame of class \code{sf}.
+\format{
+Data frame of class \code{sf}.
 \describe{
 \item{name}{Town name}
 \item{GEOID}{Town GEOID}
 \item{geometry}{Town geometry as \code{sfc_MULTIPOLYGON}}
-}}
+}
+}
 \usage{
 town_sf
 }

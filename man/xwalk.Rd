@@ -4,14 +4,16 @@
 \name{xwalk}
 \alias{xwalk}
 \title{CT crosswalk}
-\format{A data frame with 67485 rows and 5 variables:
+\format{
+A data frame with 67485 rows and 5 variables:
 \describe{
 \item{block}{Block FIPS code}
 \item{block_grp}{Block group FIPS code}
 \item{tract}{Tract FIPS code}
 \item{town}{Town name}
 \item{town_fips}{Town FIPS code}
-}}
+}
+}
 \source{
 This is a filtered, cleaned, and pared down version of a file downloaded from \href{https://lehd.ces.census.gov/data/lodes/LODES7/ct/}{LEHD}.
 }

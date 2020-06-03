@@ -4,11 +4,13 @@
 \name{tract_sf}
 \alias{tract_sf}
 \title{Connecticut tract shapefile}
-\format{Data frame of class \code{sf}.
+\format{
+Data frame of class \code{sf}.
 \describe{
 \item{name}{Tract FIPS code}
 \item{geometry}{Tract geometry as \code{sfc_MULTIPOLYGON}}
-}}
+}
+}
 \usage{
 tract_sf
 }

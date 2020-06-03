@@ -4,13 +4,15 @@
 \name{village2town}
 \alias{village2town}
 \title{Village to town lookup}
-\format{A data frame with 89 rows and 4 variables:
+\format{
+A data frame with 90 rows and 4 variables:
 \describe{
 \item{cdp_geoid}{7-digits CDP FIPS code}
 \item{place}{CDP name}
 \item{town_geoid}{10-digit town FIPS code}
 \item{town}{Town name}
-}}
+}
+}
 \source{
 Spatial overlay of TIGER shapefiles
 }

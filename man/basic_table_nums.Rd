@@ -4,7 +4,9 @@
 \name{basic_table_nums}
 \alias{basic_table_nums}
 \title{Basic ACS table numbers}
-\format{A named list of length 11, where names correspond to abbreviated subjects and string values correspond to table numbers.}
+\format{
+A named list of length 11, where names correspond to abbreviated subjects and string values correspond to table numbers.
+}
 \usage{
 basic_table_nums
 }

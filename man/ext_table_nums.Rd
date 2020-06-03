@@ -4,7 +4,9 @@
 \name{ext_table_nums}
 \alias{ext_table_nums}
 \title{Extended ACS table numbers}
-\format{A named list of length 26, where names correspond to abbreviated subjects and string values correspond to table numbers.}
+\format{
+A named list of length 26, where names correspond to abbreviated subjects and string values correspond to table numbers.
+}
 \usage{
 ext_table_nums
 }

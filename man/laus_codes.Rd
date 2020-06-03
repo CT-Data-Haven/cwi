@@ -4,12 +4,14 @@
 \name{laus_codes}
 \alias{laus_codes}
 \title{LAUS area codes}
-\format{A data frame with 178 rows and 3 variables:
+\format{
+A data frame with 178 rows and 3 variables:
 \describe{
 \item{type}{Area type code}
 \item{area}{Area name}
 \item{code}{Area code}
-}}
+}
+}
 \source{
 This is a filtered and cleaned version of a file downloaded from \href{https://download.bls.gov/pub/time.series/la/la.area}{BLS}.
 }

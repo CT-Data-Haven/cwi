@@ -4,11 +4,13 @@
 \name{ct5_clusters}
 \alias{ct5_clusters}
 \title{Five Connecticuts clusters}
-\format{A data frame with 169 rows and 2 variables:
+\format{
+A data frame with 169 rows and 2 variables:
 \describe{
 \item{town}{Town name}
 \item{cluster}{Cluster label}
-}}
+}
+}
 \source{
 Levy, Don: Five Connecticuts 2010 Update. (2015). Produced for Siena College Research Institute and DataHaven based on original 1990 and 2000 designations from "Levy, Don, Orlando Rodriguez, and Wayne Villemez. 2004. The Changing Demographics of Connecticut - 1990 to 2000. Part 2: The Five Connecticuts. Storrs, Connecticut: University of Connecticut, The Connecticut State Data Center, Series, no. OP 2004-01."
 }

@@ -4,7 +4,9 @@
 \name{regions}
 \alias{regions}
 \title{Regions of Connecticut}
-\format{A named list of vectors, where names give the names of regions and vectors give the names of towns making up each region.}
+\format{
+A named list of vectors, where names give the names of regions and vectors give the names of towns making up each region.
+}
 \source{
 DataHaven internal
 }
