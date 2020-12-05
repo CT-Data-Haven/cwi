@@ -39,7 +39,7 @@ acs_quick_map <- function(data, name = name, value = value, level = "town", city
       stringr::str_replace_all(" ", "_") %>%
       paste0("_sf")
     assertthat::assert_that(exists(shape_name), msg = sprintf("Please check the name of your city: does %s exist?", shape_name))
-    shape <- get(shape_name)
+    shape <- getFromNamespace(shape_name, "cwi")
     shape <- shape %>% dplyr::filter(name %in% locations)
   } else if (level == "tract") {
     shape <- tract_sf %>% dplyr::filter(name %in% locations)
@@ -72,16 +72,14 @@ acs_quick_map <- function(data, name = name, value = value, level = "town", city
 
   p <- shape %>%
     # dplyr::inner_join(data_fct, by = rlang::quo_name(name_var)) %>%
-    dplyr::inner_join(data_fct, by = suppressWarnings(stats::setNames(rlang::quo_name(name_var), "name"))) %>%
-    dplyr::mutate(brk = cut(!!value_var,
-                          breaks = classInt::classIntervals(!!value_var, n = n, style = "jenks")$brk %>% unique(),
-                          include.lowest = T)) %>%
+    dplyr::inner_join(data_fct, by = stats::setNames(rlang::as_label(name_var), "name")) %>%
+    dplyr::mutate(brk = jenks({{ value_var }}, n = n)) %>%
     ggplot2::ggplot() +
     ggplot2::geom_sf(ggplot2::aes(fill = brk), ...) +
-    ggplot2::scale_fill_brewer(palette = palette, drop = F) +
+    ggplot2::scale_fill_brewer(palette = palette, drop = FALSE) +
     ggplot2::theme_minimal() +
-    ggplot2::coord_sf(ndiscr = F) +
-    ggplot2::labs(fill = rlang::quo_name(value_var))
+    ggplot2::coord_sf(ndiscr = FALSE) +
+    ggplot2::labs(fill = rlang::as_label(value_var))
   if (!is.null(title)) p <- p + ggplot2::ggtitle(title)
   p
 }

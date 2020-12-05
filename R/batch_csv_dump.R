@@ -12,17 +12,7 @@
 #' @export
 batch_csv_dump <- function(data, split_by, path = ".", base_name = NULL, bind = FALSE, verbose = TRUE) {
   # if data is a data frame, split it. Otherwise treat as list
-  # if (is.data.frame(data)) {
-  #   if (is.null(split_by)) {
-  #     stop("Please supply either a list of data frames, or a column to split data by.")
-  #   } else {
-  #     split_var <- rlang::enquo(split_by)
-  #     data_list <- split(data, data %>% dplyr::select(!!split_var))
-  #   }
-  # } else {
-  #   data_list <- data
-  # }
-  if (is.data.frame(data) & missing(split_by)) {
+ if (is.data.frame(data) & missing(split_by)) {
     stop("Please supply either a list of data frames, or a column to split data by.")
   }
   if (is.data.frame(data)) {
@@ -46,7 +36,7 @@ batch_csv_dump <- function(data, split_by, path = ".", base_name = NULL, bind = 
         # stringr::str_replace_all("\\s+", "_")
       # filename <- paste0(filename, ".csv")
       filepath <- file.path(path, filename)
-      readr::write_csv(df, path = filepath)
+      readr::write_csv(df, file = filepath)
 
       if (verbose) message("Writing ", filepath)
     })

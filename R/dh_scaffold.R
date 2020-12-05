@@ -32,6 +32,7 @@
 #' @param gitblank Logical: whether to write a blank placeholder file in each new directory to force git tracking, even without yet having folder contents. Default: TRUE. If FALSE, empty directories will *not* be tracked by git.
 #' @return Returns nothing, but prints paths to newly created directories.
 #' @details This sets up a typical project directory structure that we use for many projects at DataHaven. It will write directories at the specified path, but it will NOT overwrite any directories that already exist. You'll have the option to cancel before anything is written.
+#' @importFrom utils menu
 #' @export
 #' @rdname dh_scaffold
 dh_scaffold <- function(dir = ".",

@@ -13,22 +13,22 @@
 #' @examples
 #' \dontrun{
 #'   wages <- data.frame(
-#'     year = 2010:2016,
+#'     fiscal_year = 2010:2016,
 #'     wage = c(50000, 51000, 52000, 53000, 54000, 55000, 54000)
 #'   )
-#'   adj_inflation(wages, value = wage, year = year, base_year = 2016)
+#'   adj_inflation(wages, value = wage, year = fiscal_year, base_year = 2016)
 #' }
 #' @export
-adj_inflation <- function(data, value, year, base_year = 2016, key = Sys.getenv("BLS_KEY")) {
+adj_inflation <- function(data, value, year, base_year = 2018, key = Sys.getenv("BLS_KEY")) {
   if (missing(value) | missing(year)) stop("Both value and year are required.")
   assertthat::assert_that(curl::has_internet(), msg = "Internet access is required to run this function.")
 
   value_var <- rlang::enquo(value)
   year_var <- rlang::enquo(year)
 
-  adj_var <- paste("adj", rlang::quo_name(value_var), sep = "_")
+  adj_var <- paste("adj", rlang::as_label(value_var), sep = "_")
 
-  yr_range <- range(data[rlang::quo_name(year_var)])
+  yr_range <- range(data[rlang::as_label(year_var)])
   startyear <- min(c(yr_range[1], base_year))
   endyear <- max(c(yr_range[2], base_year))
 
@@ -54,7 +54,7 @@ adj_inflation <- function(data, value, year, base_year = 2016, key = Sys.getenv(
     dplyr::select(-avg_cpi)
 
   data %>%
-    dplyr::mutate(!!rlang::quo_name(year_var) := as.numeric(!!year_var)) %>%
-    dplyr::left_join(cpi, by = c(rlang::quo_name(year_var), "year")) %>%
-    dplyr::mutate(!!adj_var := !!value_var / adj_factor)
+    dplyr::mutate(dplyr::across({{ year_var }}, as.numeric)) %>%
+    dplyr::left_join(cpi, by = stats::setNames("year", rlang::as_label(year_var))) %>%
+    dplyr::mutate({{ adj_var }} := {{ value_var }} / adj_factor)
 }
