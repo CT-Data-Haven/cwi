@@ -4,7 +4,7 @@
 \alias{adj_inflation}
 \title{Add inflation-adjusted values to a data frame}
 \usage{
-adj_inflation(data, value, year, base_year = 2016, key = Sys.getenv("BLS_KEY"))
+adj_inflation(data, value, year, base_year = 2018, key = Sys.getenv("BLS_KEY"))
 }
 \arguments{
 \item{data}{A data frame containing monetary values by year.}
@@ -29,9 +29,9 @@ This is a wrapper around \code{\link[blscrapeR:bls_api]{blscrapeR::bls_api()}} m
 \examples{
 \dontrun{
   wages <- data.frame(
-    year = 2010:2016,
+    fiscal_year = 2010:2016,
     wage = c(50000, 51000, 52000, 53000, 54000, 55000, 54000)
   )
-  adj_inflation(wages, value = wage, year = year, base_year = 2016)
+  adj_inflation(wages, value = wage, year = fiscal_year, base_year = 2016)
 }
 }

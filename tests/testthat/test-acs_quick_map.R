@@ -1,18 +1,17 @@
-context("Error handling in acs_quick_map")
+testthat::context("Error handling in acs_quick_map")
 library(cwi)
 library(testthat)
-library(dplyr)
 
 test_that("successful calls return ggplots", {
   set.seed(123)
-  town_df <- tibble(name = regions$`Greater New Haven`) %>%
-    mutate(value = runif(nrow(.)))
+  town_df <- dplyr::tibble(name = regions$`Greater New Haven`) %>%
+    dplyr::mutate(value = stats::runif(nrow(.)))
   # new haven neighborhoods
-  hood_df <- tibble(name = unique(nhv_tracts$name)[1:10]) %>%
-    mutate(value = runif(10))
+  hood_df <- dplyr::tibble(name = unique(nhv_tracts$name)[1:10]) %>%
+    dplyr::mutate(value = stats::runif(10))
   # new haven tracts
-  tract_df <- tibble(name = sample(unique(nhv_tracts$geoid), 10)) %>%
-    mutate(value = runif(10))
+  tract_df <- dplyr::tibble(name = sample(unique(nhv_tracts$geoid), 10)) %>%
+    dplyr::mutate(value = stats::runif(10))
 
   # each successfully return ggplot
   expect_is(acs_quick_map(town_df), "ggplot")
@@ -22,8 +21,8 @@ test_that("successful calls return ggplots", {
 
 test_that("invalid levels are caught", {
   set.seed(123)
-  hood_df <- tibble(name = unique(nhv_tracts$name)[1:10]) %>%
-    mutate(value = runif(10))
+  hood_df <- dplyr::tibble(name = unique(nhv_tracts$name)[1:10]) %>%
+    dplyr::mutate(value = stats::runif(10))
 
   # handle invalid level
   expect_error(acs_quick_map(hood_df, level = "nhood", city = "New Haven"), "Valid geography")
@@ -31,8 +30,8 @@ test_that("invalid levels are caught", {
 
 test_that("neighborhoods and city names are matched", {
   set.seed(123)
-  hood_df <- tibble(name = unique(nhv_tracts$name)[1:10]) %>%
-    mutate(value = runif(10))
+  hood_df <- dplyr::tibble(name = unique(nhv_tracts$name)[1:10]) %>%
+    dplyr::mutate(value = stats::runif(10))
 
   # if level = neighborhood, must supply city
   expect_error(acs_quick_map(hood_df, level = "neighborhood", city = NULL), "supply a city name")
@@ -43,5 +42,6 @@ test_that("neighborhoods and city names are matched", {
   # using a shapefile that doesn't match data—only match is Downtown
   expect_error(acs_quick_map(hood_df, level = "neighborhood", city = "Bridgeport"), "is nearly empty")
   # using a shapefile with no matches—filter out Downtown
-  expect_error(acs_quick_map(hood_df %>% filter(name != "Downtown"), level = "neighborhood", city = "Bridgeport"), "is empty")
+  expect_error(acs_quick_map(hood_df %>%
+                               dplyr::filter(name != "Downtown"), level = "neighborhood", city = "Bridgeport"), "is empty")
 })

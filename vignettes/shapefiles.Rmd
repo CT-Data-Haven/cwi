@@ -7,6 +7,7 @@ vignette: >
   %\usepackage[utf8]{inputenc}
 ---
 
+
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
 	echo = TRUE,
@@ -89,7 +90,7 @@ Neighborhood shapes were made at DataHaven by splitting or grouping census tract
 ```{r prep_function}
 neighborhood_map <- function(shp, city_name) {
   # get bounding box of shp
-  bbox <- sf::st_bbox(shp) %>% setNames(c("left", "bottom", "right", "top"))
+  bbox <- sf::st_bbox(shp) %>% stats::setNames(c("left", "bottom", "right", "top"))
   # get basemap based on bbox
   basemap <- ggmap::get_map(bbox, source = "stamen", maptype = "toner-lite")
   # make centroids of neighborhoods to label them

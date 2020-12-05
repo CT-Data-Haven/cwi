@@ -29,7 +29,7 @@ acs_quick_map(
 
 \item{n}{Number of breaks into which to bin values; defaults (approximately) 5.}
 
-\item{palette}{String of a ColorBrewer palette; see \code{\link[RColorBrewer:RColorBrewer]{RColorBrewer::RColorBrewer()}} for possible values. Defaults \code{"GnBu"}.}
+\item{palette}{String of a ColorBrewer palette; see \code{\link[RColorBrewer:ColorBrewer]{RColorBrewer::RColorBrewer()}} for possible values. Defaults \code{"GnBu"}.}
 
 \item{title}{String giving the title, if desired, for the plot.}
 
