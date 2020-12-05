@@ -39,7 +39,7 @@ acs_quick_map <- function(data, name = name, value = value, level = "town", city
       stringr::str_replace_all(" ", "_") %>%
       paste0("_sf")
     assertthat::assert_that(exists(shape_name), msg = sprintf("Please check the name of your city: does %s exist?", shape_name))
-    shape <- getFromNamespace(shape_name, "cwi")
+    shape <- get(shape_name)
     shape <- shape %>% dplyr::filter(name %in% locations)
   } else if (level == "tract") {
     shape <- tract_sf %>% dplyr::filter(name %in% locations)

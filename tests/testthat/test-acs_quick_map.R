@@ -14,9 +14,9 @@ test_that("successful calls return ggplots", {
     dplyr::mutate(value = stats::runif(10))
 
   # each successfully return ggplot
-  expect_is(acs_quick_map(town_df), "ggplot")
-  expect_is(acs_quick_map(hood_df, level = "neighborhood", city = "New Haven"), "ggplot")
-  expect_is(acs_quick_map(tract_df, level = "tract"), "ggplot")
+  expect_is(acs_quick_map(town_df), "gg")
+  expect_is(acs_quick_map(hood_df, level = "neighborhood", city = "New Haven"), "gg")
+  expect_is(acs_quick_map(tract_df, level = "tract"), "gg")
 })
 
 test_that("invalid levels are caught", {

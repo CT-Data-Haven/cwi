@@ -36,14 +36,14 @@ Imports:
     readr,
     readxl,
     rlang,
-    sf,
     stats,
     stringr,
     tidycensus,
     tidyr,
     camiller (>= 0.1.0),
     assertthat,
-    tibble
+    tibble,
+    sf
 Suggests: 
     censusapi,
     ggmap,

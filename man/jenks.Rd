@@ -4,7 +4,7 @@
 \alias{jenks}
 \title{jenks}
 \usage{
-jenks(x, n = 5, true_jenks = FALSE, labels = NULL)
+jenks(x, n = 5, true_jenks = FALSE, labels = NULL, ...)
 }
 \arguments{
 \item{x}{A numeric vector to cut}
@@ -14,6 +14,8 @@ jenks(x, n = 5, true_jenks = FALSE, labels = NULL)
 \item{true_jenks}{Logical: should a "true" Jenks algorithm be used? If false, uses the faster Fisher-Jenks algorithm. See \code{classInt::classIntervals} docs for discussion. Default: FALSE}
 
 \item{labels}{A string vector to be used as bin labels, Default: NULL}
+
+\item{...}{Additional arguments passed on to \code{cut}}
 }
 \value{
 A factor of the same length as x
