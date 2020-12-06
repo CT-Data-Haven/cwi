@@ -26,17 +26,17 @@ decennial_available <- function(tbl, year, sumfile) {
 #' Quickly add the labels of decennial variables
 #'
 #' `tidycensus::get_decennial` returns a decennial data table with its variable codes, which can be joined with `cwi::decennial_vars10` to get readable labels. This function is just a quick wrapper around the common task of joining these two data frames.
-#' @param df A data frame/tibble.
+#' @param .data A data frame/tibble.
 #' @param year The year of decennial census data; defaults 2010.
 #' @param sumfile A string: which summary file to use. Defaults to the 100 percent summary file (`"sf1"`), but can also be `"sf3"`.
 #' @param variable The bare column name of variable codes; defaults to `variable`, as returned by `tidycensus::get_decennial`.
 #' @return A tibble
 #' @seealso [decennial_vars10]
 #' @export
-label_decennial <- function(df, year = 2010, sumfile = "sf1", variable = variable) {
+label_decennial <- function(.data, year = 2010, sumfile = "sf1", variable = variable) {
   variable_var <- rlang::enquo(variable)
-  variable_name <- rlang::quo_name(variable_var)
+  variable_name <- rlang::as_label(variable_var)
   dec_vars <- clean_decennial_vars(year = year, sumfile = sumfile)
-  df %>%
+  .data %>%
     dplyr::left_join(dec_vars %>% dplyr::select(-concept), by = stats::setNames("name", variable_name))
 }

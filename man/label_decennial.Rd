@@ -4,10 +4,10 @@
 \alias{label_decennial}
 \title{Quickly add the labels of decennial variables}
 \usage{
-label_decennial(df, year = 2010, sumfile = "sf1", variable = variable)
+label_decennial(.data, year = 2010, sumfile = "sf1", variable = variable)
 }
 \arguments{
-\item{df}{A data frame/tibble.}
+\item{.data}{A data frame/tibble.}
 
 \item{year}{The year of decennial census data; defaults 2010.}
 

@@ -97,39 +97,39 @@ multi_geo_acs <- function(table, year = 2018, neighborhoods = NULL, towns = "all
     if (!identical(blockgroups, "all") & fips_nchar != 12) {
       warning(stringr::str_glue("FIPS codes for block groups should have 12 digits, not {fips_nchar}. Block groups will likely be dropped."))
     }
-    fetch$blockgroups <- acs_blockgroups(table, year, blockgroups, counties, st, survey)
+    fetch[["blockgroups"]] <- acs_blockgroups(table, year, blockgroups, counties, st, survey)
   }
   if (!is.null(tracts)) {
     fips_nchar <- nchar(tracts[1])
     if (!identical(tracts, "all") & fips_nchar != 11) {
       warning(stringr::str_glue("FIPS codes for tracts should have 11 digits, not {fips_nchar}. Tracts will likely be dropped."))
     }
-    fetch$tracts <- acs_tracts(table, year, tracts, counties, st, survey)
+    fetch[["tracts"]] <- acs_tracts(table, year, tracts, counties, st, survey)
   }
   if (!is.null(towns)) {
-    fetch$towns <- acs_towns(table, year, towns, counties, st, survey)
+    fetch[["towns"]] <- acs_towns(table, year, towns, counties, st, survey)
   }
   if (!is.null(regions)) {
-    fetch$regions <- acs_regions(table, year, regions, st, survey)
+    fetch[["regions"]] <- acs_regions(table, year, regions, st, survey)
   }
   if (!is.null(counties)) {
-    fetch$counties <- acs_counties(table, year, counties, st, survey)
+    fetch[["counties"]] <- acs_counties(table, year, counties, st, survey)
   }
 
-  fetch$state <- acs_state(table, year, st, survey)
+  fetch[["state"]] <- acs_state(table, year, st, survey)
 
   if (msa) {
     if (year < 2015) warning("Heads up: OMB changed MSA boundaries around 2015. These might not match the ones you're expecting.")
-    fetch$msa <- acs_msa(table, year, new_england, survey)
+    fetch[["msa"]] <- acs_msa(table, year, new_england, survey)
   }
 
   if (us) {
-    fetch$us <- suppressMessages(tidycensus::get_acs(geography = "us", table = table, year = year, survey = survey))
+    fetch[["us"]] <- suppressMessages(tidycensus::get_acs(geography = "us", table = table, year = year, survey = survey))
   }
 
   # take the names of non-null items in fetch, reverse the order (i.e. largest geo to smallest),
   # then make level labels and bind all rows
-  lvls <- fetch %>% rev()
+  lvls <- rev(fetch)
   list(lvls, names(lvls), 1:length(lvls)) %>%
     purrr::pmap_dfr(function(df, lvl, i) {
       df %>% dplyr::mutate(level = paste(i, lvl, sep = "_"))

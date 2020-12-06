@@ -52,7 +52,7 @@ gnh_data <- table_nums %>%
                      regions = gnh_regions, 
                      counties = "New Haven", 
                      state = "09")) %>%
-  map(~filter(., NAME %in% gnh_regions$`Greater New Haven` | level != "4_towns"))
+  map(~filter(., NAME %in% gnh_regions[["Greater New Haven"]] | level != "4_towns"))
 ```
 
 

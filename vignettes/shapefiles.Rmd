@@ -52,7 +52,7 @@ A basic plot of `cwi::town_sf`, with some `ggplot` aesthetics set, graticule lin
 ```{r towns}
 ggplot(town_sf) +
   geom_sf(fill = "gray70", color = "white", size = 0.5) +
-  coord_sf(ndiscr = F) +
+  coord_sf(ndiscr = FALSE) +
   theme_void() +
   ggtitle("Connecticut towns")
 ```
@@ -61,12 +61,12 @@ With some `dplyr` operations. For example, `group_by()` followed by `summarise()
 
 ```{r town_regional}
 town_sf %>%
-  filter(name %in% regions$`Greater New Haven`) %>%
+  filter(name %in% regions[["Greater New Haven"]]) %>%
   group_by(area = ifelse(name == "New Haven", "New Haven", "New Haven suburbs")) %>%
   summarise() %>%
   ggplot() +
     geom_sf(aes(fill = area), color = "white") +
-    coord_sf(ndiscr = F) +
+    coord_sf(ndiscr = FALSE) +
     scale_fill_manual(values = c("New Haven" = "mediumorchid", "New Haven suburbs" = "gray70")) +
     theme_void() +
     theme(legend.position = "bottom") +
@@ -78,7 +78,7 @@ town_sf %>%
 ```{r tracts}
 ggplot(tract_sf) +
   geom_sf(fill = "gray70", color = "white", size = 0.1) +
-  coord_sf(ndiscr = F) +
+  coord_sf(ndiscr = FALSE) +
   theme_void() +
   ggtitle("Connecticut tracts")
 ```
@@ -93,16 +93,13 @@ neighborhood_map <- function(shp, city_name) {
   bbox <- sf::st_bbox(shp) %>% stats::setNames(c("left", "bottom", "right", "top"))
   # get basemap based on bbox
   basemap <- ggmap::get_map(bbox, source = "stamen", maptype = "toner-lite")
-  # make centroids of neighborhoods to label them
-  centroids <- sf::st_centroid(shp) %>%
-    mutate(x = sf::st_coordinates(.)[, 1],
-           y = sf::st_coordinates(.)[, 2])
+  
   city_shp <- town_sf %>% filter(name %in% city_name)
   
   ggmap::ggmap(basemap, darken = c(0.4, "white")) +
-    geom_sf(data = shp, inherit.aes = F, color = "mediumorchid3", fill = "orchid3", alpha = 0.1) +
-    geom_sf(data = city_shp, inherit.aes = F, color = "#7636C7", fill = NA, size = 0.8) +
-    ggrepel::geom_text_repel(aes(x = x, y = y, label = name), data = centroids, inherit.aes = F, size = 3) +
+    geom_sf(data = shp, inherit.aes = FALSE, color = "mediumorchid3", fill = "orchid3", alpha = 0.1) +
+    geom_sf(data = city_shp, inherit.aes = FALSE, color = "#7636C7", fill = NA, size = 0.8) +
+    geom_sf_text(aes(label = name), data = shp, inherit.aes = FALSE, size = 2.8) +
     theme_void()
 }
 ```
@@ -116,7 +113,7 @@ list(
   "Bridgeport" = list(shp = bridgeport_sf, city = "Bridgeport")
 ) %>%
   purrr::iwalk(function(city, title) {
-    p <- neighborhood_map(city$shp, city$city) + ggtitle(title)
+    p <- neighborhood_map(city[["shp"]], city[["city"]]) + ggtitle(title)
     print(p)
   })
 ```

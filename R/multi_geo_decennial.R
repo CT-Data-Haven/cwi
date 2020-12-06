@@ -67,7 +67,7 @@ multi_geo_decennial <- function(table, year = 2010, neighborhoods = NULL, towns 
   type <- stringr::str_extract(table, "^(HCT|H|PCT|PCO|P)")
   nmbrs <- stringr::str_extract(table, "\\d+")
   grp <- stringr::str_extract(table, "\\D?$")
-  if (!avail$is_avail) {
+  if (!avail[["is_avail"]]) {
     if (is.na(type)) {
       lttrs <- stringr::str_extract(table, "^[[:alpha:]]+")
       msg <- stringr::str_glue("Table numbers should start with one of H, HCT, P, PCT, PCO. {lttrs} is invalid.")
@@ -103,22 +103,22 @@ multi_geo_decennial <- function(table, year = 2010, neighborhoods = NULL, towns 
     if (!identical(tracts, "all") & fips_nchar != 11) {
       warning(stringr::str_glue("FIPS codes for tracts should have 11 digits, not {fips_nchar}. Tracts will likely be dropped."))
     }
-    fetch$tracts <- decennial_tracts(table, year, tracts, counties, st, sumfile)
+    fetch[["tracts"]] <- decennial_tracts(table, year, tracts, counties, st, sumfile)
   }
   if (!is.null(towns)) {
-    fetch$towns <- decennial_towns(table, year, towns, counties, st, sumfile)
+    fetch[["towns"]] <- decennial_towns(table, year, towns, counties, st, sumfile)
   }
   if (!is.null(regions)) {
-    fetch$regions <- decennial_regions(table, year, regions, st, sumfile)
+    fetch[["regions"]] <- decennial_regions(table, year, regions, st, sumfile)
   }
   if (!is.null(counties)) {
-    fetch$counties <- decennial_counties(table, year, counties, st, sumfile)
+    fetch[["counties"]] <- decennial_counties(table, year, counties, st, sumfile)
   }
 
-  fetch$state <- decennial_state(table, year, st, sumfile)
+  fetch[["state"]] <- decennial_state(table, year, st, sumfile)
 
   # take names of all items in fetch, reverse order, make level labels & bind all
-  lvls <- fetch %>% rev()
+  lvls <- rev(fetch)
   list(lvls, names(lvls), 1:length(lvls)) %>%
     purrr::pmap_dfr(function(df, lvl, i) {
       df %>% dplyr::mutate(level = paste(i, lvl, sep = "_"))

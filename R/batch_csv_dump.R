@@ -1,7 +1,7 @@
 #' Write a list of data frames to CSV and keep it movin'
 #'
 #' This function takes either a list of data frames, or a data frame and a column to split by, and writes them all to CSV files. It then returns the list of data frames, optionally row-binded back together. It fits neatly in the middle of a longer piped workflow.
-#' @param data A data frame or a list of data frames
+#' @param .data A data frame or a list of data frames
 #' @param split_by Bare column name of variable to split by. If `data` is a list, this is unnecessary and will be ignored.
 #' @param path String giving a path at which to save files; defaults to current working directory.
 #' @param base_name Optional string to be prepended to all file names.
@@ -10,16 +10,16 @@
 #' @return Either a list of data frames (in case of `bind = FALSE`) or a single data frame (in case of `bind = TRUE`).
 #'
 #' @export
-batch_csv_dump <- function(data, split_by, path = ".", base_name = NULL, bind = FALSE, verbose = TRUE) {
+batch_csv_dump <- function(.data, split_by, path = ".", base_name = NULL, bind = FALSE, verbose = TRUE) {
   # if data is a data frame, split it. Otherwise treat as list
- if (is.data.frame(data) & missing(split_by)) {
+ if (is.data.frame(.data) & missing(split_by)) {
     stop("Please supply either a list of data frames, or a column to split data by.")
   }
-  if (is.data.frame(data)) {
+  if (is.data.frame(.data)) {
     split_var <- rlang::enquo(split_by)
-    data_list <- split(data, data %>% dplyr::select(!!split_var))
+    data_list <- split(.data, dplyr::select(.data, !!split_var))
   } else {
-    data_list <- data
+    data_list <- .data
   }
 
   if (!file.exists(path)) {
@@ -32,9 +32,6 @@ batch_csv_dump <- function(data, split_by, path = ".", base_name = NULL, bind = 
       filename <- paste(c(base_name, name), collapse = "_") %>%
         stringr::str_replace_all("\\s+", "_") %>%
         paste0(".csv")
-      # filename <- paste(base_name, name) %>%
-        # stringr::str_replace_all("\\s+", "_")
-      # filename <- paste0(filename, ".csv")
       filepath <- file.path(path, filename)
       readr::write_csv(df, file = filepath)
 

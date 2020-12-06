@@ -20,10 +20,7 @@ laus_trend <- function(names, startyear, endyear, measures = "all", annual = FAL
   if (endyear - startyear > 20) {
     message("The API can only get 20 years of data at once; making multiple calls, but this might take a little longer.")
   }
-  year_df <- data.frame(years = startyear:endyear)
-  year_df$brk <- floor(year_df$years / 20)
-  years_split <- split(year_df, year_df$brk) %>%
-    purrr::map(dplyr::pull, years)
+  years_split <- split_n(startyear:endyear, 20)
 
   # make sure measures isn't something weird & invalid
   # measures lookup table
@@ -31,12 +28,12 @@ laus_trend <- function(names, startyear, endyear, measures = "all", annual = FAL
     measure_lookup <- laus_measures
   } else {
     # assertthat::assert_that(all(measures %in% laus_measures$measure_text), msg = sprintf("Possible measures are %s, or all", paste(laus_measures$measure_text, collapse = ", ")))
-    if (!all(measures %in% laus_measures$measure_text)) stop(sprintf("Possible measures are %s, or all", paste(laus_measures$measure_text, collapse = ", ")))
+    if (!all(measures %in% laus_measures[["measure_text"]])) stop(sprintf("Possible measures are %s, or all", paste(laus_measures[["measure_text"]], collapse = ", ")))
     measure_lookup <- dplyr::tibble(measure_text = measures) %>%
       dplyr::inner_join(laus_measures, by = "measure_text")
   }
   # laus area lookup table
-  assertthat::assert_that(all(names %in% laus_codes$area), msg = "Limit names to valid Connecticut town and county names")
+  assertthat::assert_that(all(names %in% laus_codes[["area"]]), msg = "Limit names to valid Connecticut town and county names")
   areas <- laus_codes %>%
     dplyr::filter(area %in% names)
 
@@ -50,7 +47,7 @@ laus_trend <- function(names, startyear, endyear, measures = "all", annual = FAL
   out <- purrr::map_dfr(years_split, function(yrs) {
     y1 <- min(yrs)
     y2 <- max(yrs)
-    blscrapeR::bls_api(seriesid = series_df$series, startyear = y1, endyear = y2, registrationKey = key, annualaverage = annual) %>%
+    blscrapeR::bls_api(seriesid = series_df[["series"]], startyear = y1, endyear = y2, registrationKey = key, annualaverage = annual) %>%
       dplyr::left_join(series_df, by = c("seriesID" = "series")) %>%
       dplyr::select(measure_text, area, year, period, periodName, value, seriesID, footnotes)
   })

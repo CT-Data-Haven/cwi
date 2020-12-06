@@ -5,7 +5,7 @@
 \title{Quickly make a \code{ggplot} to view data by geographic level}
 \usage{
 geo_level_plot(
-  data,
+  .data,
   name = name,
   value = value,
   level = level,
@@ -18,7 +18,7 @@ geo_level_plot(
 )
 }
 \arguments{
-\item{data}{A data frame to use for plotting.}
+\item{.data}{A data frame to use for plotting.}
 
 \item{name}{Bare column name containing names, i.e. independent variable.}
 

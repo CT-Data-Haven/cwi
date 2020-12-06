@@ -4,10 +4,16 @@
 \alias{adj_inflation}
 \title{Add inflation-adjusted values to a data frame}
 \usage{
-adj_inflation(data, value, year, base_year = 2018, key = Sys.getenv("BLS_KEY"))
+adj_inflation(
+  .data,
+  value,
+  year,
+  base_year = 2018,
+  key = Sys.getenv("BLS_KEY")
+)
 }
 \arguments{
-\item{data}{A data frame containing monetary values by year.}
+\item{.data}{A data frame containing monetary values by year.}
 
 \item{value}{Bare column name of monetary values; for safety, has no default.}
 

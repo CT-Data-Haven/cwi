@@ -5,7 +5,7 @@
 \title{Write a list of data frames to CSV and keep it movin'}
 \usage{
 batch_csv_dump(
-  data,
+  .data,
   split_by,
   path = ".",
   base_name = NULL,
@@ -14,7 +14,7 @@ batch_csv_dump(
 )
 }
 \arguments{
-\item{data}{A data frame or a list of data frames}
+\item{.data}{A data frame or a list of data frames}
 
 \item{split_by}{Bare column name of variable to split by. If \code{data} is a list, this is unnecessary and will be ignored.}
 

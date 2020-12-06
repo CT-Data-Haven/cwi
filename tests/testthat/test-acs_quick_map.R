@@ -4,24 +4,30 @@ library(testthat)
 
 test_that("successful calls return ggplots", {
   set.seed(123)
-  town_df <- dplyr::tibble(name = regions$`Greater New Haven`) %>%
-    dplyr::mutate(value = stats::runif(nrow(.)))
+  town_df <- dplyr::tibble(name = regions[["Greater New Haven"]]) %>%
+    dplyr::mutate(value = stats::runif(13))
   # new haven neighborhoods
-  hood_df <- dplyr::tibble(name = unique(nhv_tracts$name)[1:10]) %>%
+  hood_df <- nhv_tracts %>%
+    dplyr::distinct(name) %>%
+    dplyr::slice(1:10) %>%
     dplyr::mutate(value = stats::runif(10))
   # new haven tracts
-  tract_df <- dplyr::tibble(name = sample(unique(nhv_tracts$geoid), 10)) %>%
+  tract_df <- nhv_tracts %>%
+    dplyr::distinct(geoid) %>%
+    dplyr::slice(1:10) %>%
     dplyr::mutate(value = stats::runif(10))
 
   # each successfully return ggplot
   expect_is(acs_quick_map(town_df), "gg")
   expect_is(acs_quick_map(hood_df, level = "neighborhood", city = "New Haven"), "gg")
-  expect_is(acs_quick_map(tract_df, level = "tract"), "gg")
+  expect_is(acs_quick_map(tract_df, name = geoid, level = "tract"), "gg")
 })
 
 test_that("invalid levels are caught", {
   set.seed(123)
-  hood_df <- dplyr::tibble(name = unique(nhv_tracts$name)[1:10]) %>%
+  hood_df <- nhv_tracts %>%
+    dplyr::distinct(name) %>%
+    dplyr::slice(1:10) %>%
     dplyr::mutate(value = stats::runif(10))
 
   # handle invalid level
@@ -30,7 +36,9 @@ test_that("invalid levels are caught", {
 
 test_that("neighborhoods and city names are matched", {
   set.seed(123)
-  hood_df <- dplyr::tibble(name = unique(nhv_tracts$name)[1:10]) %>%
+  hood_df <- nhv_tracts %>%
+    dplyr::distinct(name) %>%
+    dplyr::slice(1:10) %>%
     dplyr::mutate(value = stats::runif(10))
 
   # if level = neighborhood, must supply city

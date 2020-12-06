@@ -6,7 +6,7 @@
 \usage{
 qwi_industry(
   years,
-  industries = naics_codes$industry,
+  industries = naics_codes[["industry"]],
   counties = NULL,
   state = "09",
   annual = TRUE,

@@ -5,7 +5,7 @@
 \title{Quickly create a choropleth sketch}
 \usage{
 acs_quick_map(
-  data,
+  .data,
   name = name,
   value = value,
   level = "town",
@@ -17,7 +17,7 @@ acs_quick_map(
 )
 }
 \arguments{
-\item{data}{A data frame containing data by geography.}
+\item{.data}{A data frame containing data by geography.}
 
 \item{name}{Bare column name of location names to join; defaults \code{name}.}
 

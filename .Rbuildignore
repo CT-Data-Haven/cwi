@@ -1,3 +1,5 @@
+^renv$
+^renv\.lock$
 ^appveyor\.yml$
 ^\.travis\.yml$
 ^.*\.Rproj$
@@ -9,3 +11,5 @@
 ^inst/doc/*\.html$
 ^_pkgdown\.yml$
 ^docs$
+^doc$
+^Meta$

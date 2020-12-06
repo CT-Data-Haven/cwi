@@ -38,8 +38,8 @@ acs_available <- function(tbl, year, survey) {
 #' @export
 label_acs <- function(df, year = 2018, survey = "acs5", variable = variable) {
   variable_var <- rlang::enquo(variable)
-  variable_name <- rlang::quo_name(variable_var)
   acs_vars <- clean_acs_vars(year = year, survey = survey)
   df %>%
-    dplyr::left_join(acs_vars %>% dplyr::select(-concept), by = stats::setNames("name", variable_name))
+    dplyr::left_join(acs_vars %>% dplyr::select(-concept),
+                     by = stats::setNames("name", rlang::as_label(variable_var)))
 }

@@ -15,7 +15,7 @@
 #' qwi_industry(2012:2017, industries = c("23", "62"), counties = "009")
 #' }
 #' @export
-qwi_industry <- function(years, industries = naics_codes$industry, counties = NULL, state = "09", annual = TRUE, key = Sys.getenv("CENSUS_API_KEY")) {
+qwi_industry <- function(years, industries = naics_codes[["industry"]], counties = NULL, state = "09", annual = TRUE, key = Sys.getenv("CENSUS_API_KEY")) {
   assertthat::assert_that(!is.null(key), nchar(key) > 0, msg = "A Census API key is required. Please see tidycensus::census_api_key for installation")
 
   if (all(years < 1996)) stop("Data for Connecticut is only available for 1996 and after.")
@@ -28,9 +28,7 @@ qwi_industry <- function(years, industries = naics_codes$industry, counties = NU
   if (length(years) > 10) {
     message("The API can only get 10 years of data at once; making multiple calls, but this might take a little longer.")
   }
-  year_df <- data.frame(years = years, brk = floor(years / 10))
-  years_split <- split(year_df, year_df$brk) %>%
-    purrr::map(dplyr::pull, years)
+  years_split <- split_n(years, 10)
   base_url <- "https://api.census.gov/data/timeseries/qwi/se"
   get <- "Emp,Payroll"
   ind_list <- as.list(industries)
@@ -51,10 +49,10 @@ qwi_industry <- function(years, industries = naics_codes$industry, counties = NU
       county_join <- stringr::str_pad(counties, width = 3, side = "left", pad = "0") %>%
         paste(collapse = ",")
       county_str <- sprintf("county:%s", county_join)
-      params$`for` <- county_str
-      params$`in` <- state_str
+      params[["for"]] <- county_str
+      params[["in"]] <- state_str
     } else {
-      params$`for` <- state_str
+      params[["for"]] <- state_str
     }
 
     params <- c(params, ind_list)
@@ -63,7 +61,8 @@ qwi_industry <- function(years, industries = naics_codes$industry, counties = NU
     colnames(data) <- data[1, ]
 
     dplyr::as_tibble(data[-1, ]) %>%
-      dplyr::mutate_at(dplyr::vars(quarter, Emp, Payroll), as.numeric)
+      # dplyr::mutate_at(dplyr::vars(quarter, Emp, Payroll), as.numeric)
+      dplyr::mutate(dplyr::across(c(quarter, Emp, Payroll), as.numeric))
   })
 
 
