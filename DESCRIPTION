@@ -1,6 +1,6 @@
 Package: cwi
 Title: Prep for DataHaven's Community Wellbeing Index
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: 
     person(given = "Camille",
            family = "Seaberry",
