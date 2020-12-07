@@ -33,7 +33,7 @@ batch_csv_dump <- function(.data, split_by, path = ".", base_name = NULL, bind =
         stringr::str_replace_all("\\s+", "_") %>%
         paste0(".csv")
       filepath <- file.path(path, filename)
-      readr::write_csv(df, file = filepath)
+      write.csv(df, file = filepath, row.names = FALSE)
 
       if (verbose) message("Writing ", filepath)
     })

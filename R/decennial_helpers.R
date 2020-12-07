@@ -18,7 +18,7 @@ decennial_towns <- function(table, year, towns, counties, state, sumfile) {
       suppressMessages(tidycensus::get_decennial(geography = "county subdivision", table = table, year = year, state = st, county = county, sumfile = sumfile)) %>%
         dplyr::mutate(county = county)
     }) %>%
-    camiller::town_names(NAME)
+    town_names(NAME)
 
   if (!identical(towns, "all")) {
     fetch <- fetch %>% dplyr::filter(NAME %in% towns)

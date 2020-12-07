@@ -15,7 +15,8 @@ knitr::opts_chunk$set(
 	collapse = TRUE,
 	comment = "#>",
 	fig.width = 7,
-	fig.height = 4
+	fig.height = 4,
+	dpi = 300
 )
 ```
 
@@ -87,33 +88,15 @@ ggplot(tract_sf) +
 
 Neighborhood shapes were made at DataHaven by splitting or grouping census tracts into neighborhood areas as defined by each city's government. In some cases, boundaries were slightly adjusted to fit tracts. Small neighborhoods may be grouped together for analysis. See documentation of these at `cwi::neighborhood_shapes` and crosswalk of tracts to neighborhoods at `cwi::neighborhood_tracts`.
 
-```{r prep_function}
-neighborhood_map <- function(shp, city_name) {
-  # get bounding box of shp
-  bbox <- sf::st_bbox(shp) %>% stats::setNames(c("left", "bottom", "right", "top"))
-  # get basemap based on bbox
-  basemap <- ggmap::get_map(bbox, source = "stamen", maptype = "toner-lite")
-  
-  city_shp <- town_sf %>% filter(name %in% city_name)
-  
-  ggmap::ggmap(basemap, darken = c(0.4, "white")) +
-    geom_sf(data = shp, inherit.aes = FALSE, color = "mediumorchid3", fill = "orchid3", alpha = 0.1) +
-    geom_sf(data = city_shp, inherit.aes = FALSE, color = "#7636C7", fill = NA, size = 0.8) +
-    geom_sf_text(aes(label = name), data = shp, inherit.aes = FALSE, size = 2.8) +
-    theme_void()
-}
-```
-
-
 ```{r city_maps, message=FALSE, warning=FALSE}
-list(
-  "New Haven" = list(shp = new_haven_sf, city = "New Haven"),
-  "Stamford" = list(shp = stamford_sf, city = "Stamford"),
-  "Hartford/West Hartford" = list(shp = hartford_sf, city = c("Hartford", "West Hartford")),
-  "Bridgeport" = list(shp = bridgeport_sf, city = "Bridgeport")
-) %>%
-  purrr::iwalk(function(city, title) {
-    p <- neighborhood_map(city[["shp"]], city[["city"]]) + ggtitle(title)
+list("New Haven" = new_haven_sf, Stamford = stamford_sf, 
+     "Hartford/West Hartford" = hartford_sf, Bridgeport = bridgeport_sf) %>%
+  purrr::iwalk(function(shp, title) {
+    p <- ggplot(shp) +
+      geom_sf(color = "mediumorchid3", fill = "orchid3", alpha = 0.1) +
+      geom_sf_text(aes(label = name), size = 2.8) +
+      coord_sf(ndiscr = FALSE) +
+      theme_void()
     print(p)
   })
 ```

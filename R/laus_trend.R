@@ -1,21 +1,21 @@
 #' Fetch local area unemployment statistics (LAUS) data over time
 #'
-#' Fetch monthly LAUS data for a list of locations over a given time period. Requires a BLS API key; see [blscrapeR::set_bls_key()].
+#' Fetch monthly LAUS data for a list of locations over a given time period, modeled after `blscrapeR::bls_api`. Requires a BLS API key.
 #' @param names A character vector of place names to look up: as of now, this is limited to Connecticut, and its counties and towns.
 #' @param startyear Numeric; first year of range
 #' @param endyear Numeric; last year of range
 #' @param measures A character vector of measures, containing any combination of `"unemployment rate"`, `"unemployment"`, `"employment"`, or `"labor force"`, or `"all"` (the default) as shorthand for all of the above.
 #' @param annual Logical: whether to include annual averages along with monthly data. Defaults `FALSE`.
-#' @param key A string giving the BLS API key. Defaults to the value in `Sys.getenv("BLS_KEY")`, as set by `blscrapeR::set_bls_key`.
+#' @param key A string giving the BLS API key. Defaults to the value in `Sys.getenv("BLS_KEY")`.
 #' @return A data frame / tibble with columns for the measure, area, year, month number and name, value, series ID, and footnotes returned from the API.
 #' @examples
 #' \dontrun{
-#' laus_trend(c("New Haven", "Hamden"), 2014, 2017, annual = TRUE)
+#' laus_trend(c("Connecticut", "New Haven", "Hamden"), 2014, 2017, annual = TRUE)
 #' }
 #' @export
 laus_trend <- function(names, startyear, endyear, measures = "all", annual = FALSE, key = Sys.getenv("BLS_KEY")) {
   # make sure there's an API key
-  assertthat::assert_that(!is.null(key), nchar(key) > 0, msg = "A BLS API key is required. Please see blscrapeR::set_bls_key for installation")
+  assertthat::assert_that(!is.null(key), nchar(key) > 0, msg = "A BLS API key is required")
   # BLS API maxes at 20 years--split into groups of 20
   if (endyear - startyear > 20) {
     message("The API can only get 20 years of data at once; making multiple calls, but this might take a little longer.")
@@ -45,13 +45,31 @@ laus_trend <- function(names, startyear, endyear, measures = "all", annual = FAL
 
   # map over years_split, make calls for each
   out <- purrr::map_dfr(years_split, function(yrs) {
-    y1 <- min(yrs)
-    y2 <- max(yrs)
-    blscrapeR::bls_api(seriesid = series_df[["series"]], startyear = y1, endyear = y2, registrationKey = key, annualaverage = annual) %>%
-      dplyr::left_join(series_df, by = c("seriesID" = "series")) %>%
-      dplyr::select(measure_text, area, year, period, periodName, value, seriesID, footnotes)
+    get_laus(series_df$series, min(yrs), max(yrs), key, annual) %>%
+      dplyr::left_join(series_df, by = "series") %>%
+      dplyr::select(measure_text, area, year, period, periodName, value, series, footnotes)
   })
 
   out
+}
+
+get_laus <- function(series, startyear, endyear, key, annual) {
+  if (length(series) == 1) series <- I(series)
+  fetch <- httr::POST("https://api.bls.gov/publicAPI/v2/timeseries/data/",
+                      body = list(seriesid = series,
+                                  startyear = startyear,
+                                  endyear = endyear,
+                                  annualaverage = annual,
+                                  registrationKey = key), encode = "json")
+
+  laus <- httr::content(fetch)[["Results"]][["series"]]
+
+  laus %>%
+    purrr::map_dfr(function(l) {
+      dt <- purrr::map_dfr(l[["data"]], dplyr::as_tibble) %>%
+        dplyr::mutate(series = l[["seriesID"]])
+    }) %>%
+    dplyr::select(series, dplyr::everything()) %>%
+    dplyr::mutate(dplyr::across(c(year, value), as.numeric))
 }
 

@@ -1,14 +1,14 @@
 #' Add inflation-adjusted values to a data frame
 #'
-#' This is a wrapper around [`blscrapeR::bls_api()`] modeled after [`blscrapeR::inflation_adjust()`] that joins a data frame with an inflation adjustment table, then calculates adjusted values. It returns the original data frame with two additional columns for adjustment factors and adjustment values.
+#' This is modeled after [`blscrapeR::inflation_adjust()`] that joins a data frame with an inflation adjustment table from the Bureau of Labor Statistics, then calculates adjusted values. It returns the original data frame with two additional columns for adjustment factors and adjustment values.
 #'
-#' **Note:** Because `adj_inflation` wraps around a function that makes API calls, internet access is required.
+#' **Note:** Because `adj_inflation` makes API calls, internet access is required.
 #'
 #' @param .data A data frame containing monetary values by year.
 #' @param value Bare column name of monetary values; for safety, has no default.
 #' @param year Bare column name of years; for safety, has no default.
 #' @param base_year Year on which to base inflation amounts; defaults to 2016.
-#' @param key A string giving the BLS API key. Defaults to the value in `Sys.getenv("BLS_KEY")`, as set by `blscrapeR::set_bls_key`.
+#' @param key A string giving the BLS API key. Defaults to the value in `Sys.getenv("BLS_KEY")`.
 #' @return A data frame with two additional columns: adjustment factors, and adjusted values. The adjusted values column is named based on the name supplied as `value`; e.g. if `value = avg_wage`, the adjusted column is named `adj_avg_wage`.
 #' @examples
 #' \dontrun{
@@ -38,10 +38,8 @@ adj_inflation <- function(.data, value, year, base_year = 2018, key = Sys.getenv
   }
   years_split <- split_n(startyear:endyear, 20)
 
-  cpi_series <- "CUSR0000SA0"
-
   cpi <- purrr::map_dfr(years_split, function(yrs) {
-    blscrapeR::bls_api(cpi_series, min(yrs), max(yrs), annualaverage = FALSE, registrationKey = key)
+    get_cpi(min(yrs), max(yrs), key = key)
   }) %>%
     dplyr::select(year, period, value) %>%
     dplyr::group_by(year) %>%
@@ -54,4 +52,20 @@ adj_inflation <- function(.data, value, year, base_year = 2018, key = Sys.getenv
     dplyr::mutate(dplyr::across({{ year_var }}, as.numeric)) %>%
     dplyr::left_join(cpi, by = stats::setNames("year", rlang::as_label(year_var))) %>%
     dplyr::mutate({{ adj_var }} := {{ value_var }} / adj_factor)
+}
+
+get_cpi <- function(startyear, endyear, key) {
+  cpi_series <- "CUSR0000SA0"
+
+  fetch <- httr::POST("https://api.bls.gov/publicAPI/v2/timeseries/data/",
+                      body = list(seriesid = I(c("CUSR0000SA0")),
+                                  startyear = startyear,
+                                  endyear = endyear,
+                                  annualaverage = FALSE,
+                                  registrationKey = key), encode = "json")
+
+  cpi_data <- httr::content(fetch)[["Results"]][["series"]][[1]][["data"]]
+
+  purrr::map_dfr(cpi_data, dplyr::as_tibble) %>%
+    dplyr::mutate(dplyr::across(c(year, value), as.numeric))
 }

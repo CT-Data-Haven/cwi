@@ -22,7 +22,6 @@ RoxygenNote: 7.1.1
 Depends:
     R (>= 4.0.1)
 Imports: 
-    blscrapeR,
     classInt,
     curl,
     dplyr,
@@ -33,21 +32,18 @@ Imports:
     jsonlite,
     magrittr,
     purrr,
-    readr,
     readxl,
     rlang,
     stats,
     stringr,
     tidycensus,
     tidyr,
-    camiller (>= 0.1.0),
     assertthat,
     tibble,
     sf
 Suggests: 
-    censusapi,
-    ggmap,
-    ggrepel,
+    camiller (>= 0.2.0),
+    readr,
     knitr,
     lubridate,
     scales,
