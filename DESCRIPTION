@@ -20,7 +20,7 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Depends:
-    R (>= 4.0.1)
+    R (>= 4.0.0)
 Imports: 
     classInt,
     curl,
@@ -39,8 +39,7 @@ Imports:
     tidycensus,
     tidyr,
     assertthat,
-    tibble,
-    sf
+    tibble
 Suggests: 
     camiller (>= 0.2.0),
     readr,
@@ -48,7 +47,8 @@ Suggests:
     lubridate,
     scales,
     rmarkdown,
-    testthat
+    testthat,
+    sf
 Remotes: 
     camille-s/camiller
 VignetteBuilder:

@@ -9,6 +9,7 @@
 #' @param verbose Logical: whether to print files' paths and names as they're written. Defaults `TRUE`.
 #' @return Either a list of data frames (in case of `bind = FALSE`) or a single data frame (in case of `bind = TRUE`).
 #'
+#' @importFrom utils write.csv
 #' @export
 batch_csv_dump <- function(.data, split_by, path = ".", base_name = NULL, bind = FALSE, verbose = TRUE) {
   # if data is a data frame, split it. Otherwise treat as list

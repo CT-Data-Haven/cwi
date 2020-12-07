@@ -15,7 +15,7 @@ This includes functions to speed up and standardize analysis for
 multiple staff people, preview trends and patterns we’ll need to write
 about, and get data in more layperson-friendly formats.
 
-It depends on many functions from Camille’s brilliantly-named
+It pairs well with many functions from Camille’s brilliantly-named
 [`camiller`](https://github.com/camille-s/camiller) package.
 
 ## Installation
@@ -30,12 +30,11 @@ devtools::install_github("CT-Data-Haven/cwi")
 
 ## Dependencies
 
-In addition to `camiller`, this package relies heavily on:
+This package relies heavily on:
 
   - The [`tidyverse`](http://tidyverse.org/) packages, namely
-    `magrittr`, `dplyr`, `tidyr`, `purrr`, `readr`, `stringr`,
-    `forcats`, and `ggplot2` (version \>= 3.0.0) (so basically *all* the
-    tidyverse)
+    `magrittr`, `dplyr`, `tidyr`, `purrr`, `stringr`, `forcats`, and
+    `ggplot2` (version \>= 3.0.0) (so basically *all* the tidyverse)
   - `rlang` and `tidyselect` for non-standard evaluation in many
     functions
   - `tidycensus` for actually getting all the Census data
@@ -87,74 +86,73 @@ library(cwi)
 ``` r
 tenure <- multi_geo_acs(
   table = basic_table_nums$tenure,
-  year = 2016,
+  year = 2018,
   regions = regions[c("Greater New Haven", "New Haven Inner Ring", "New Haven Outer Ring")],
   counties = "New Haven",
-  us = T
+  towns = regions[["Greater New Haven"]],
+  us = TRUE
 )
 #> Table B25003: TENURE
 #> Geographies included:
-#> Towns: all
+#> Towns: Bethany, Branford, East Haven, Guilford, Hamden, Madison, Milford, New Haven, North Branford, North Haven, Orange, West Haven, Woodbridge
 #> Regions: Greater New Haven, New Haven Inner Ring, New Haven Outer Ring
 #> Counties: New Haven County
 #> State: 09
 #> US: Yes
 tenure
-#> # A tibble: 99 x 9
-#>    GEOID NAME        variable   estimate    moe level   state county  year
-#>    <chr> <chr>       <chr>         <dbl>  <dbl> <fct>   <chr> <chr>  <dbl>
-#>  1 1     United Sta… B25003_0… 117716237 222078 1_us    <NA>  <NA>    2016
-#>  2 1     United Sta… B25003_0…  74881068 360470 1_us    <NA>  <NA>    2016
-#>  3 1     United Sta… B25003_0…  42835169 142056 1_us    <NA>  <NA>    2016
-#>  4 09    Connecticut B25003_0…   1354713   3509 2_state <NA>  <NA>    2016
-#>  5 09    Connecticut B25003_0…    900223   5427 2_state <NA>  <NA>    2016
-#>  6 09    Connecticut B25003_0…    454490   3843 2_state <NA>  <NA>    2016
-#>  7 09009 New Haven … B25003_0…    326487   1531 3_coun… 09    <NA>    2016
-#>  8 09009 New Haven … B25003_0…    203568   1887 3_coun… 09    <NA>    2016
-#>  9 09009 New Haven … B25003_0…    122919   1716 3_coun… 09    <NA>    2016
-#> 10 <NA>  Greater Ne… B25003_0…    177415   1434 4_regi… <NA>  <NA>    2016
-#> # ... with 89 more rows
+#> # A tibble: 57 x 9
+#>    GEOID NAME            variable   estimate    moe level     state county  year
+#>    <chr> <chr>           <chr>         <dbl>  <dbl> <fct>     <chr> <chr>  <dbl>
+#>  1 1     United States   B25003_001   1.20e8 232429 1_us      <NA>  <NA>    2018
+#>  2 1     United States   B25003_002   7.64e7 367132 1_us      <NA>  <NA>    2018
+#>  3 1     United States   B25003_003   4.33e7 139467 1_us      <NA>  <NA>    2018
+#>  4 09    Connecticut     B25003_001   1.37e6   3671 2_state   <NA>  <NA>    2018
+#>  5 09    Connecticut     B25003_002   9.07e5   4800 2_state   <NA>  <NA>    2018
+#>  6 09    Connecticut     B25003_003   4.60e5   3488 2_state   <NA>  <NA>    2018
+#>  7 09009 New Haven Coun… B25003_001   3.30e5   1775 3_counti… 09    <NA>    2018
+#>  8 09009 New Haven Coun… B25003_002   2.04e5   1887 3_counti… 09    <NA>    2018
+#>  9 09009 New Haven Coun… B25003_003   1.26e5   1974 3_counti… 09    <NA>    2018
+#> 10 <NA>  Greater New Ha… B25003_001   1.77e5   1531 4_regions <NA>  <NA>    2018
+#> # … with 47 more rows
 ```
 
 ``` r
 homeownership <- tenure %>%
   label_acs() %>%
-  select(name = NAME, level, label, estimate) %>%
-  filter((!str_detect(level, "towns")) | name %in% regions$`Greater New Haven`) %>%
-  mutate(label = str_remove(label, "Total!!")) %>%
-  group_by(level, name) %>%
-  camiller::calc_shares(group = label, denom = "Total") %>%
-  filter(label == "Owner occupied")
+  group_by(level, NAME) %>%
+  mutate(share = estimate / estimate[1]) %>% # or use camiller::calc_shares
+  filter(str_detect(label, "Owner")) %>%
+  select(level, name = NAME, share)
 
 homeownership
-#> # A tibble: 19 x 5
+#> # A tibble: 19 x 3
 #> # Groups:   level, name [19]
-#>    level      name                 label          estimate share
-#>    <fct>      <chr>                <fct>             <dbl> <dbl>
-#>  1 1_us       United States        Owner occupied 74881068 0.636
-#>  2 2_state    Connecticut          Owner occupied   900223 0.665
-#>  3 3_counties New Haven County     Owner occupied   203568 0.624
-#>  4 4_regions  Greater New Haven    Owner occupied   106876 0.602
-#>  5 4_regions  New Haven Inner Ring Owner occupied    34337 0.629
-#>  6 4_regions  New Haven Outer Ring Owner occupied    58447 0.802
-#>  7 5_towns    Bethany              Owner occupied     1807 0.904
-#>  8 5_towns    Branford             Owner occupied     8331 0.679
-#>  9 5_towns    East Haven           Owner occupied     7919 0.705
-#> 10 5_towns    Guilford             Owner occupied     7314 0.855
-#> 11 5_towns    Hamden               Owner occupied    15335 0.657
-#> 12 5_towns    Madison              Owner occupied     5932 0.874
-#> 13 5_towns    Milford              Owner occupied    16314 0.757
-#> 14 5_towns    New Haven            Owner occupied    14092 0.282
-#> 15 5_towns    North Branford       Owner occupied     4818 0.883
-#> 16 5_towns    North Haven          Owner occupied     6969 0.833
-#> 17 5_towns    Orange               Owner occupied     4267 0.867
-#> 18 5_towns    West Haven           Owner occupied    11083 0.555
-#> 19 5_towns    Woodbridge           Owner occupied     2695 0.919
+#>    level      name                 share
+#>    <fct>      <chr>                <dbl>
+#>  1 1_us       United States        0.638
+#>  2 2_state    Connecticut          0.663
+#>  3 3_counties New Haven County     0.619
+#>  4 4_regions  Greater New Haven    0.600
+#>  5 4_regions  New Haven Inner Ring 0.621
+#>  6 4_regions  New Haven Outer Ring 0.803
+#>  7 5_towns    Bethany              0.915
+#>  8 5_towns    Branford             0.702
+#>  9 5_towns    East Haven           0.708
+#> 10 5_towns    Guilford             0.862
+#> 11 5_towns    Hamden               0.641
+#> 12 5_towns    Madison              0.862
+#> 13 5_towns    Milford              0.751
+#> 14 5_towns    New Haven            0.276
+#> 15 5_towns    North Branford       0.867
+#> 16 5_towns    North Haven          0.834
+#> 17 5_towns    Orange               0.883
+#> 18 5_towns    West Haven           0.549
+#> 19 5_towns    Woodbridge           0.890
 ```
 
 ``` r
 geo_level_plot(homeownership, value = share, hilite = "#EA7FA2", 
-               title = "Homeownership in Greater New Haven, 2016")
+               title = "Homeownership in Greater New Haven, 2018")
 ```
 
 <img src="man/figures/README-geo_plot-1.png" width="100%" />

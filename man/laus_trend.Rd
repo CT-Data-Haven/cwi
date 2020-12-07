@@ -24,16 +24,16 @@ laus_trend(
 
 \item{annual}{Logical: whether to include annual averages along with monthly data. Defaults \code{FALSE}.}
 
-\item{key}{A string giving the BLS API key. Defaults to the value in \code{Sys.getenv("BLS_KEY")}, as set by \code{blscrapeR::set_bls_key}.}
+\item{key}{A string giving the BLS API key. Defaults to the value in \code{Sys.getenv("BLS_KEY")}.}
 }
 \value{
 A data frame / tibble with columns for the measure, area, year, month number and name, value, series ID, and footnotes returned from the API.
 }
 \description{
-Fetch monthly LAUS data for a list of locations over a given time period. Requires a BLS API key; see \code{\link[blscrapeR:set_bls_key]{blscrapeR::set_bls_key()}}.
+Fetch monthly LAUS data for a list of locations over a given time period, modeled after \code{blscrapeR::bls_api}. Requires a BLS API key.
 }
 \examples{
 \dontrun{
-laus_trend(c("New Haven", "Hamden"), 2014, 2017, annual = TRUE)
+laus_trend(c("Connecticut", "New Haven", "Hamden"), 2014, 2017, annual = TRUE)
 }
 }
