@@ -17,6 +17,7 @@
 #' @param new_england Logical: if `TRUE` (the default), limits metro areas to just New England states.
 #' @param survey A string: which ACS estimate to use. Defaults to 5-year (`"acs5"`), but can also be 1-year (`"acs1"`) or 3-year (`"acs3"`), though both 1-year and 3-year have limited availability.
 #' @param verbose Logical: whether to print summary of geographies included. Defaults `TRUE`.
+#' @param key String: Census API key. If `NULL` (default), takes the value from `Sys.getenv("CENSUS_API_KEY")`.
 #' @param neighborhoods Temporarily deprecated: A named list of neighborhoods with their 11-digit tract GEOIDs (defaults NULL).
 #' @return A tibble with GEOID, name, variable code, estimate, moe, geography level, state, and year, as applicable, for the chosen ACS table.
 #' @seealso [tidycensus::census_api_key()], [tidycensus::get_acs()]
@@ -29,7 +30,12 @@
 #'   tracts = unique(nhv_tracts$geoid))
 #' }
 #' @export
-multi_geo_acs <- function(table, year = 2018, neighborhoods = NULL, towns = "all", regions = NULL, counties = "all", state = "09", tracts = NULL, blockgroups = NULL, msa = FALSE, us = FALSE, new_england = TRUE, survey = "acs5",  verbose = TRUE) {
+multi_geo_acs <- function(table, year = 2018, neighborhoods = NULL, towns = "all", regions = NULL, counties = "all", state = "09", tracts = NULL, blockgroups = NULL, msa = FALSE, us = FALSE, new_england = TRUE, survey = "acs5",  verbose = TRUE, key = NULL) {
+  # check key
+  if (is.null(key)) {
+    key <- Sys.getenv("CENSUS_API_KEY")
+  }
+  if (nchar(key) == 0) stop("Must supply an API key. See the docs on where to store it.")
   st <- state
   # state must not be null
   if (is.null(st)) stop("Must supply a state name or FIPS code")
@@ -73,7 +79,7 @@ multi_geo_acs <- function(table, year = 2018, neighborhoods = NULL, towns = "all
       dplyr::filter(stringr::str_detect(name, paste0("^", table))) %>%
       dplyr::pull(concept) %>%
       `[`(1)
-    message(stringr::str_glue("Table {table}: {concept}"))
+    message(stringr::str_glue("Table {table}: {concept}, {year}"))
     msg <- geo_printout(neighborhoods, towns, regions, counties, st, msa, us, new_england)
     message("Geographies included:\n", msg)
   }
@@ -97,34 +103,34 @@ multi_geo_acs <- function(table, year = 2018, neighborhoods = NULL, towns = "all
     if (!identical(blockgroups, "all") & fips_nchar != 12) {
       warning(stringr::str_glue("FIPS codes for block groups should have 12 digits, not {fips_nchar}. Block groups will likely be dropped."))
     }
-    fetch[["blockgroups"]] <- acs_blockgroups(table, year, blockgroups, counties, st, survey)
+    fetch[["blockgroups"]] <- acs_blockgroups(table, year, blockgroups, counties, st, survey, key)
   }
   if (!is.null(tracts)) {
     fips_nchar <- nchar(tracts[1])
     if (!identical(tracts, "all") & fips_nchar != 11) {
       warning(stringr::str_glue("FIPS codes for tracts should have 11 digits, not {fips_nchar}. Tracts will likely be dropped."))
     }
-    fetch[["tracts"]] <- acs_tracts(table, year, tracts, counties, st, survey)
+    fetch[["tracts"]] <- acs_tracts(table, year, tracts, counties, st, survey, key)
   }
   if (!is.null(towns)) {
-    fetch[["towns"]] <- acs_towns(table, year, towns, counties, st, survey)
+    fetch[["towns"]] <- acs_towns(table, year, towns, counties, st, survey, key)
   }
   if (!is.null(regions)) {
-    fetch[["regions"]] <- acs_regions(table, year, regions, st, survey)
+    fetch[["regions"]] <- acs_regions(table, year, regions, st, survey, key)
   }
   if (!is.null(counties)) {
-    fetch[["counties"]] <- acs_counties(table, year, counties, st, survey)
+    fetch[["counties"]] <- acs_counties(table, year, counties, st, survey, key)
   }
 
-  fetch[["state"]] <- acs_state(table, year, st, survey)
+  fetch[["state"]] <- acs_state(table, year, st, survey, key)
 
   if (msa) {
     if (year < 2015) warning("Heads up: OMB changed MSA boundaries around 2015. These might not match the ones you're expecting.")
-    fetch[["msa"]] <- acs_msa(table, year, new_england, survey)
+    fetch[["msa"]] <- acs_msa(table, year, new_england, survey, key)
   }
 
   if (us) {
-    fetch[["us"]] <- suppressMessages(tidycensus::get_acs(geography = "us", table = table, year = year, survey = survey))
+    fetch[["us"]] <- suppressMessages(tidycensus::get_acs(geography = "us", table = table, year = year, survey = survey, key))
   }
 
   # take the names of non-null items in fetch, reverse the order (i.e. largest geo to smallest),

@@ -10,12 +10,12 @@ counties_to_fetch <- function(st, counties) {
   return(out)
 }
 
-decennial_towns <- function(table, year, towns, counties, state, sumfile) {
+decennial_towns <- function(table, year, towns, counties, state, sumfile, key) {
   st <- state
 
   fetch <- counties_to_fetch(st = st, counties = counties) %>%
     purrr::map_dfr(function(county) {
-      suppressMessages(tidycensus::get_decennial(geography = "county subdivision", table = table, year = year, state = st, county = county, sumfile = sumfile)) %>%
+      suppressMessages(tidycensus::get_decennial(geography = "county subdivision", table = table, year = year, state = st, county = county, sumfile = sumfile, key = key)) %>%
         dplyr::mutate(county = county)
     }) %>%
     town_names(NAME)
@@ -27,8 +27,8 @@ decennial_towns <- function(table, year, towns, counties, state, sumfile) {
     dplyr::mutate(state = st)
 }
 
-decennial_counties <- function(table, year, counties, state, sumfile) {
-  fetch <- suppressMessages(tidycensus::get_decennial(geography = "county", table = table, year = year, state = state, sumfile = sumfile)) %>%
+decennial_counties <- function(table, year, counties, state, sumfile, key) {
+  fetch <- suppressMessages(tidycensus::get_decennial(geography = "county", table = table, year = year, state = state, sumfile = sumfile, key = key)) %>%
     dplyr::mutate(NAME = stringr::str_extract(NAME, "^.+County")) %>%
     dplyr::mutate(state = state)
 
@@ -38,10 +38,10 @@ decennial_counties <- function(table, year, counties, state, sumfile) {
   fetch
 }
 
-decennial_tracts <- function(table, year, tracts, counties, state, sumfile) {
+decennial_tracts <- function(table, year, tracts, counties, state, sumfile, key) {
   fetch <- counties_to_fetch(st = state, counties = counties) %>%
     purrr::map_dfr(function(county) {
-      suppressMessages(tidycensus::get_decennial(geography = "tract", table = table, year = year, state = state, county = county, sumfile = sumfile)) %>%
+      suppressMessages(tidycensus::get_decennial(geography = "tract", table = table, year = year, state = state, county = county, sumfile = sumfile, key = key)) %>%
         dplyr::mutate(county = county)
     })
 
@@ -52,14 +52,14 @@ decennial_tracts <- function(table, year, tracts, counties, state, sumfile) {
     dplyr::mutate(state = state)
 }
 
-decennial_state <- function(table, year, state, sumfile) {
-  fetch <- suppressMessages(tidycensus::get_decennial(geography = "state", table = table, year = year, sumfile = sumfile)) %>%
+decennial_state <- function(table, year, state, sumfile, key) {
+  fetch <- suppressMessages(tidycensus::get_decennial(geography = "state", table = table, year = year, sumfile = sumfile, key = key)) %>%
     dplyr::filter(NAME == state | GEOID == state)
   fetch
 }
 
-decennial_regions <- function(table, year, regions, state, sumfile) {
-  fetch_towns <- decennial_towns(table, year, towns = "all", counties = "all", state, sumfile)
+decennial_regions <- function(table, year, regions, state, sumfile, key) {
+  fetch_towns <- decennial_towns(table, year, towns = "all", counties = "all", state, sumfile, key)
 
   regions %>%
     purrr::imap_dfr(function(region, region_name) {
@@ -70,8 +70,8 @@ decennial_regions <- function(table, year, regions, state, sumfile) {
     })
 }
 
-decennial_neighborhoods <- function(table, year, neighborhoods, state, sumfile) {
-  fetch_tracts <- suppressMessages(tidycensus::get_decennial(geography = "tract", table = table, year = year, state = state))
+decennial_neighborhoods <- function(table, year, neighborhoods, state, sumfile, key) {
+  fetch_tracts <- suppressMessages(tidycensus::get_decennial(geography = "tract", table = table, year = year, state = state, key = key))
 
   neighborhoods %>%
     purrr::imap_dfr(function(neighborhood, neighborhood_name) {

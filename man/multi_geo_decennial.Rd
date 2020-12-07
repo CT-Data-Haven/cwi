@@ -14,7 +14,8 @@ multi_geo_decennial(
   state = "09",
   tracts = NULL,
   sumfile = "sf1",
-  verbose = TRUE
+  verbose = TRUE,
+  key = NULL
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ multi_geo_decennial(
 \item{sumfile}{A string giving the summary file to pull from. Defaults \code{"sf1"}; in some rare cases, \code{"sf3"} may be appropriate.}
 
 \item{verbose}{Logical: whether to print summary of geographies included. Defaults \code{TRUE}.}
+
+\item{key}{String: Census API key. If \code{NULL} (default), takes the value from \code{Sys.getenv("CENSUS_API_KEY")}.}
 }
 \value{
 A tibble with GEOID, name, variable code, estimate, moe, geography level, state, and year, as applicable, for the chosen table.

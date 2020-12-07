@@ -18,7 +18,8 @@ multi_geo_acs(
   us = FALSE,
   new_england = TRUE,
   survey = "acs5",
-  verbose = TRUE
+  verbose = TRUE,
+  key = NULL
 )
 }
 \arguments{
@@ -49,6 +50,8 @@ multi_geo_acs(
 \item{survey}{A string: which ACS estimate to use. Defaults to 5-year (\code{"acs5"}), but can also be 1-year (\code{"acs1"}) or 3-year (\code{"acs3"}), though both 1-year and 3-year have limited availability.}
 
 \item{verbose}{Logical: whether to print summary of geographies included. Defaults \code{TRUE}.}
+
+\item{key}{String: Census API key. If \code{NULL} (default), takes the value from \code{Sys.getenv("CENSUS_API_KEY")}.}
 }
 \value{
 A tibble with GEOID, name, variable code, estimate, moe, geography level, state, and year, as applicable, for the chosen ACS table.
