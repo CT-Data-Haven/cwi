@@ -14,22 +14,23 @@
 #' @param state A string: either name or two-digit FIPS code of a US state. Required; defaults `"09"` (Connecticut).
 #' @param tracts A character vector of 11-digit FIPS codes of tracts to include, or `"all"` for all tracts optionally filtered by county. Defaults `NULL`.
 #' @param sumfile A string giving the summary file to pull from. Defaults `"sf1"`; in some rare cases, `"sf3"` may be appropriate.
+#' @param neighborhoods A data frame with columns for neighborhood name, GEOID of tracts, and weight, e.g. share of each tract assigned to a neighborhood. If included, weighted sums will be returned for neighborhoods. Unlike `multi_geo_acs`, this doesn't take block groups.
+#' @param name Bare column name of neighborhood names. Only relevant if a neighborhood weight table is being used. Defaults `name` to match the neighborhood lookup datasets.
+#' @param geoid Bare column name of neighborhood tract GEOIDs. Only relevant if a neighborhood weight table is being used. Defaults `geoid` to match the neighborhood lookup datasets.
+#' @param weight Bare column name of weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults `weight` to match the neighborhood lookup datasets.
 #' @param verbose Logical: whether to print summary of geographies included. Defaults `TRUE`.
 #' @param key String: Census API key. If `NULL` (default), takes the value from `Sys.getenv("CENSUS_API_KEY")`.
-#' @param neighborhoods Temporarily deprecated: A named list of neighborhoods with their 11-digit tract GEOIDs (defaults NULL).
 #' @return A tibble with GEOID, name, variable code, estimate, moe, geography level, state, and year, as applicable, for the chosen table.
 #' @seealso [tidycensus::census_api_key()], [tidycensus::get_decennial()]
 #' @examples
 #' \dontrun{
 #' multi_geo_decennial("P001", 2010,
-#'   neighborhoods = list(downtown = c("09009140100", "09009361401", "09009361402"),
-#'     dixwell = "090091416"),
 #'   towns = "all",
 #'   regions = list(inner_ring = c("Hamden", "East Haven", "West Haven")),
 #'   counties = "New Haven County")
 #' }
 #' @export
-multi_geo_decennial <- function(table, year = 2010, neighborhoods = NULL, towns = "all", regions = NULL, counties = "all", state = "09", tracts = NULL, sumfile = "sf1", verbose = TRUE, key = NULL) {
+multi_geo_decennial <- function(table, year = 2010, towns = "all", regions = NULL, counties = "all", state = "09", neighborhoods = NULL, tracts = NULL, name = name, geoid = geoid, weight = weight, sumfile = "sf1", verbose = TRUE, key = NULL) {
   # check key
   if (is.null(key)) {
     key <- Sys.getenv("CENSUS_API_KEY")
@@ -94,23 +95,35 @@ multi_geo_decennial <- function(table, year = 2010, neighborhoods = NULL, towns 
       dplyr::pull(concept) %>%
       `[`(1)
     message(stringr::str_glue("Table {table}: {concept}, {year}"))
-    msg <- geo_printout(neighborhoods, towns, regions, counties, st, msa = F, new_england = F)
+    if (!is.null(neighborhoods)) {
+      msg <- geo_printout(dplyr::pull(neighborhoods, {{ name }}), towns, regions, counties, st, msa = FALSE, new_england = FALSE)
+    } else {
+      msg <- geo_printout(neighborhoods, towns, regions, counties, st, msa = FALSE, new_england = FALSE)
+    }
     message("Geographies included:\n", msg)
   }
 
   # fetch everything
   fetch <- list()
 
-  # if (!is.null(neighborhoods)) {
-  #   fetch$neighborhoods <- decennial_neighborhoods(table, year, neighborhoods, st, sumfile)
-  # }
   if (!is.null(tracts)) {
-    fips_nchar <- nchar(tracts[1])
-    if (!identical(tracts, "all") & fips_nchar != 11) {
+    fips_nchar <- nchar(tracts)
+    if (!identical(tracts, "all") & !all(fips_nchar == 11)) {
       warning(stringr::str_glue("FIPS codes for tracts should have 11 digits, not {fips_nchar}. Tracts will likely be dropped."))
     }
     fetch[["tracts"]] <- decennial_tracts(table, year, tracts, counties, st, sumfile, key)
   }
+
+  if (!is.null(neighborhoods)) {
+    fips_nchar <- nchar(dplyr::pull(neighborhoods, {{ geoid }}))
+    if (all(fips_nchar == 11)) {
+      message("Assuming neighborhood GEOIDs are for tracts")
+      fetch[["neighborhoods"]] <- decennial_nhood(table, year, neighborhoods, counties, state, sumfile, name, geoid, weight, key)
+    } else {
+      message("The GEOIDs to create neighborhoods from tracts seem to be incorrect, so neighborhoods are being skipped. Check that they are either tracts or block groups.")
+    }
+  }
+
   if (!is.null(towns)) {
     fetch[["towns"]] <- decennial_towns(table, year, towns, counties, st, sumfile, key)
   }

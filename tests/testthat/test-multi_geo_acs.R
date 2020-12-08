@@ -35,3 +35,11 @@ test_that("handles tables that don't exist", {
   expect_silent(multi_geo_acs(table = "B27010", towns = NULL, counties = NULL, verbose = F, year = 2016))
   expect_error(multi_geo_acs(table = "B27010", towns = NULL, counties = NULL, verbose = F, year = 2011), "not available")
 })
+
+test_that("handles neighborhood geoids", {
+  skip_on_ci()
+  dummy_nhood <- dplyr::mutate(nhv_tracts, geoid = paste0(geoid, "00"))
+  expect_message(multi_geo_acs("B01003", neighborhoods = nhv_tracts), "tracts")
+  expect_message(multi_geo_acs("B01003", neighborhoods = nhv_bgrps), "block groups")
+  expect_message(multi_geo_acs("B01003", neighborhoods = dummy_nhood), "incorrect")
+})

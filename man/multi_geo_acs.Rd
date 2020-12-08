@@ -7,16 +7,19 @@
 multi_geo_acs(
   table,
   year = 2018,
-  neighborhoods = NULL,
   towns = "all",
   regions = NULL,
   counties = "all",
   state = "09",
+  neighborhoods = NULL,
   tracts = NULL,
   blockgroups = NULL,
   msa = FALSE,
   us = FALSE,
   new_england = TRUE,
+  name = name,
+  geoid = geoid,
+  weight = weight,
   survey = "acs5",
   verbose = TRUE,
   key = NULL
@@ -27,8 +30,6 @@ multi_geo_acs(
 
 \item{year}{The year of the ACS table; currently defaults 2018 (most recent available).}
 
-\item{neighborhoods}{Temporarily deprecated: A named list of neighborhoods with their 11-digit tract GEOIDs (defaults NULL).}
-
 \item{towns}{A character vector of names of towns to include; \code{"all"} (default) for all towns optionally filtered by county; or \code{NULL} to not fetch town-level table.}
 
 \item{regions}{A named list of regions with their town names (defaults \code{NULL}).}
@@ -36,6 +37,8 @@ multi_geo_acs(
 \item{counties}{A character vector of names of counties to include; \code{"all"} (default) for all counties in the state; or \code{NULL} to not fetch county-level table.}
 
 \item{state}{A string: either name or two-digit FIPS code of a US state. Required; defaults \code{"09"} (Connecticut).}
+
+\item{neighborhoods}{A data frame with columns for neighborhood name, GEOID of either tracts or block groups, and weight, e.g. share of each tract assigned to a neighborhood. If included, weighted sums and MOEs will be returned for neighborhoods.}
 
 \item{tracts}{A character vector of 11-digit FIPS codes of tracts to include, or \code{"all"} for all tracts optionally filtered by county. Defaults \code{NULL}.}
 
@@ -47,7 +50,13 @@ multi_geo_acs(
 
 \item{new_england}{Logical: if \code{TRUE} (the default), limits metro areas to just New England states.}
 
-\item{survey}{A string: which ACS estimate to use. Defaults to 5-year (\code{"acs5"}), but can also be 1-year (\code{"acs1"}) or 3-year (\code{"acs3"}), though both 1-year and 3-year have limited availability.}
+\item{name}{Bare column name of neighborhood names. Only relevant if a neighborhood weight table is being used. Defaults \code{name} to match the neighborhood lookup datasets.}
+
+\item{geoid}{Bare column name of neighborhood GEOIDs, either tracts or block groups. Only relevant if a neighborhood weight table is being used. Defaults \code{geoid} to match the neighborhood lookup datasets.}
+
+\item{weight}{Bare column name of weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults \code{weight} to match the neighborhood lookup datasets.}
+
+\item{survey}{A string: which ACS estimate to use. Defaults to 5-year (\code{"acs5"}), but can also be 1-year (\code{"acs1"}).}
 
 \item{verbose}{Logical: whether to print summary of geographies included. Defaults \code{TRUE}.}
 
@@ -64,11 +73,18 @@ This function essentially calls \code{tidycensus::get_acs()} multiple times, dep
 }
 \examples{
 \dontrun{
-multi_geo_acs("B01003", 2016,
+multi_geo_acs("B01003", 2018,
   towns = "all",
   regions = list(inner_ring = c("Hamden", "East Haven", "West Haven")),
   counties = "New Haven County",
   tracts = unique(nhv_tracts$geoid))
+
+multi_geo_acs("B01003", 2018,
+  towns = "Bridgeport",
+  counties = "Fairfield County",
+  neighborhoods = bridgeport_tracts
+)
+
 }
 }
 \seealso{

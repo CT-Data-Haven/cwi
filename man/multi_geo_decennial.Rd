@@ -7,12 +7,15 @@
 multi_geo_decennial(
   table,
   year = 2010,
-  neighborhoods = NULL,
   towns = "all",
   regions = NULL,
   counties = "all",
   state = "09",
+  neighborhoods = NULL,
   tracts = NULL,
+  name = name,
+  geoid = geoid,
+  weight = weight,
   sumfile = "sf1",
   verbose = TRUE,
   key = NULL
@@ -23,8 +26,6 @@ multi_geo_decennial(
 
 \item{year}{The year of the census table; currently defaults 2010 (most recent decennial census).}
 
-\item{neighborhoods}{Temporarily deprecated: A named list of neighborhoods with their 11-digit tract GEOIDs (defaults NULL).}
-
 \item{towns}{A character vector of towns to include; \code{"all"} (default) for all towns optionally filtered by county; or \code{NULL} to not fetch town-level table.}
 
 \item{regions}{A named list of regions with their town names (defaults \code{NULL}).}
@@ -33,7 +34,15 @@ multi_geo_decennial(
 
 \item{state}{A string: either name or two-digit FIPS code of a US state. Required; defaults \code{"09"} (Connecticut).}
 
+\item{neighborhoods}{A data frame with columns for neighborhood name, GEOID of tracts, and weight, e.g. share of each tract assigned to a neighborhood. If included, weighted sums will be returned for neighborhoods. Unlike \code{multi_geo_acs}, this doesn't take block groups.}
+
 \item{tracts}{A character vector of 11-digit FIPS codes of tracts to include, or \code{"all"} for all tracts optionally filtered by county. Defaults \code{NULL}.}
+
+\item{name}{Bare column name of neighborhood names. Only relevant if a neighborhood weight table is being used. Defaults \code{name} to match the neighborhood lookup datasets.}
+
+\item{geoid}{Bare column name of neighborhood tract GEOIDs. Only relevant if a neighborhood weight table is being used. Defaults \code{geoid} to match the neighborhood lookup datasets.}
+
+\item{weight}{Bare column name of weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults \code{weight} to match the neighborhood lookup datasets.}
 
 \item{sumfile}{A string giving the summary file to pull from. Defaults \code{"sf1"}; in some rare cases, \code{"sf3"} may be appropriate.}
 
@@ -55,8 +64,6 @@ Be advised that decennial table numbers may change from year to year, so if you'
 \examples{
 \dontrun{
 multi_geo_decennial("P001", 2010,
-  neighborhoods = list(downtown = c("09009140100", "09009361401", "09009361402"),
-    dixwell = "090091416"),
   towns = "all",
   regions = list(inner_ring = c("Hamden", "East Haven", "West Haven")),
   counties = "New Haven County")

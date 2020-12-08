@@ -66,25 +66,25 @@ acs_regions <- function(table, year, regions, state, survey, key) {
       fetch_towns %>%
         dplyr::filter(NAME %in% region) %>%
         dplyr::group_by(NAME = region_name, variable) %>%
-        dplyr::summarise(estimate = sum(estimate), moe = tidycensus::moe_sum(moe, estimate) %>% round())
+        dplyr::summarise(estimate = sum(estimate),
+                         moe = round(tidycensus::moe_sum(moe, estimate)))
     })
 }
 
-acs_neighborhoods <- function(table, year, neighborhoods, state, blockgroups, survey, key) {
-  if (blockgroups) {
-    fetch_nhoods <- suppressMessages(tidycensus::get_acs(geography = "block group", table = table, year = year, state = state, survey = survey, key = key))
+acs_nhood <- function(table, year, .data, counties, state, survey, name, geoid, weight, key, is_tract) {
+  geoids <- unique(dplyr::pull(.data, {{ geoid }}))
+  if (is_tract) {
+    fetch <- acs_tracts(table, year, geoids, counties, state, survey, key)
   } else {
-    fetch_nhoods <- suppressMessages(tidycensus::get_acs(geography = "tract", table = table, year = year, state = state, survey = survey, key = key))
+    fetch <- acs_blockgroups(table, year, geoids, counties, state, survey, key)
   }
 
-  # TODO: need to handle weighting
-  neighborhoods %>%
-    purrr::imap_dfr(function(neighborhood, neighborhood_name) {
-      fetch_nhoods %>%
-        dplyr::filter(GEOID %in% neighborhood) %>%
-        dplyr::group_by(NAME = neighborhood_name, variable) %>%
-        dplyr::summarise(estimate = sum(estimate), moe = tidycensus::moe_sum(moe, estimate) %>% round())
-    })
+  .data %>%
+    dplyr::left_join(fetch, by = stats::setNames("GEOID", rlang::as_label({{ rlang::enquo(geoid) }}))) %>%
+    dplyr::group_by(variable, county, state, name) %>%
+    dplyr::summarise(estimate = round(sum(estimate * {{ weight }})),
+                     moe = round(tidycensus::moe_sum(moe, estimate * {{ weight }}))) %>%
+    dplyr::ungroup()
 }
 
 acs_msa <- function(table, year, new_england, survey, key) {

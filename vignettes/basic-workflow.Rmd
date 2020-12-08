@@ -61,6 +61,13 @@ gnh_data <- table_nums %>%
 gnh_data$total_pop
 ```
 
+Neighborhoods with corresponding tracts or block groups are included for 4 cities (see `neighborhood_tracts`). Pass those to get neighborhood-level aggregates.
+
+```{r}
+multi_geo_acs("B01003", towns = "New Haven", counties = "New Haven", neighborhoods = nhv_tracts)
+```
+
+
 # Aggregating and analyzing data
 
 The total population data is very straightforward, as it only has one variable, `B01003_001`. The tibble returned has the GEOID, except for custom geographies like regions; the name of each geography, including the names of each region; the variable codes; estimates; margins of error at the default 90\% confidence level; the geographic level, numbered in order of decreasing size; and the counties of the towns.

@@ -1,7 +1,7 @@
 # make geography printout--not exported
 geo_printout <- function(neighborhoods, towns, regions, counties, state, msa = FALSE, us = FALSE, new_england = FALSE) {
 
-  out <- list(names(neighborhoods), towns, names(regions), counties, state) %>%
+  out <- list(unique(neighborhoods), towns, names(regions), counties, state) %>%
     purrr::map2(c("Neighborhoods", "Towns", "Regions", "Counties", "State"), function(geo, geo_head) {
       if (!is.null(geo)) {
         str1 <- paste(geo, collapse = ", ")

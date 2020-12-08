@@ -15,22 +15,32 @@
 #' @param msa Logical: whether to fetch New England states' metropolitan statistical areas. Defaults `FALSE`.
 #' @param us Logical: whether to fetch US-level table. Defaults `FALSE`.
 #' @param new_england Logical: if `TRUE` (the default), limits metro areas to just New England states.
-#' @param survey A string: which ACS estimate to use. Defaults to 5-year (`"acs5"`), but can also be 1-year (`"acs1"`) or 3-year (`"acs3"`), though both 1-year and 3-year have limited availability.
+#' @param survey A string: which ACS estimate to use. Defaults to 5-year (`"acs5"`), but can also be 1-year (`"acs1"`).
+#' @param neighborhoods A data frame with columns for neighborhood name, GEOID of either tracts or block groups, and weight, e.g. share of each tract assigned to a neighborhood. If included, weighted sums and MOEs will be returned for neighborhoods.
+#' @param name Bare column name of neighborhood names. Only relevant if a neighborhood weight table is being used. Defaults `name` to match the neighborhood lookup datasets.
+#' @param geoid Bare column name of neighborhood GEOIDs, either tracts or block groups. Only relevant if a neighborhood weight table is being used. Defaults `geoid` to match the neighborhood lookup datasets.
+#' @param weight Bare column name of weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults `weight` to match the neighborhood lookup datasets.
 #' @param verbose Logical: whether to print summary of geographies included. Defaults `TRUE`.
 #' @param key String: Census API key. If `NULL` (default), takes the value from `Sys.getenv("CENSUS_API_KEY")`.
-#' @param neighborhoods Temporarily deprecated: A named list of neighborhoods with their 11-digit tract GEOIDs (defaults NULL).
 #' @return A tibble with GEOID, name, variable code, estimate, moe, geography level, state, and year, as applicable, for the chosen ACS table.
 #' @seealso [tidycensus::census_api_key()], [tidycensus::get_acs()]
 #' @examples
 #' \dontrun{
-#' multi_geo_acs("B01003", 2016,
+#' multi_geo_acs("B01003", 2018,
 #'   towns = "all",
 #'   regions = list(inner_ring = c("Hamden", "East Haven", "West Haven")),
 #'   counties = "New Haven County",
 #'   tracts = unique(nhv_tracts$geoid))
+#'
+#' multi_geo_acs("B01003", 2018,
+#'   towns = "Bridgeport",
+#'   counties = "Fairfield County",
+#'   neighborhoods = bridgeport_tracts
+#' )
+#'
 #' }
 #' @export
-multi_geo_acs <- function(table, year = 2018, neighborhoods = NULL, towns = "all", regions = NULL, counties = "all", state = "09", tracts = NULL, blockgroups = NULL, msa = FALSE, us = FALSE, new_england = TRUE, survey = "acs5",  verbose = TRUE, key = NULL) {
+multi_geo_acs <- function(table, year = 2018, towns = "all", regions = NULL, counties = "all", state = "09", neighborhoods = NULL, tracts = NULL, blockgroups = NULL, msa = FALSE, us = FALSE, new_england = TRUE, name = name, geoid = geoid, weight = weight, survey = "acs5", verbose = TRUE, key = NULL) {
   # check key
   if (is.null(key)) {
     key <- Sys.getenv("CENSUS_API_KEY")
@@ -80,38 +90,46 @@ multi_geo_acs <- function(table, year = 2018, neighborhoods = NULL, towns = "all
       dplyr::pull(concept) %>%
       `[`(1)
     message(stringr::str_glue("Table {table}: {concept}, {year}"))
-    msg <- geo_printout(neighborhoods, towns, regions, counties, st, msa, us, new_england)
+    if (!is.null(neighborhoods)) {
+      msg <- geo_printout(dplyr::pull(neighborhoods, {{ name }}), towns, regions, counties, st, msa, us, new_england)
+    } else {
+      msg <- geo_printout(neighborhoods, towns, regions, counties, st, msa, us, new_england)
+    }
     message("Geographies included:\n", msg)
   }
 
   # fetch everything using functions from acs_helpers
   fetch <- list()
 
-  # if (!is.null(neighborhoods)) {
-  #   # check nchar in the first FIPS code: block groups are 12 digits, tracts are 11
-  #   fips_nchar <- nchar(unlist(neighborhoods)[1])
-  #   if (blockgroups & fips_nchar != 12) {
-  #     warning(stringr::str_glue("FIPS codes for block groups should have 12 digits, not {fips_nchar}. Neighborhoods may be dropped."))
-  #   }
-  #   if (!blockgroups & fips_nchar == 12) {
-  #     warning(stringr::str_glue("FIPS codes for tracts should have 11 digits, not {fips_nchar}. Neighborhoods may be dropped."))
-  #   }
-  #   fetch$neighborhoods <- acs_neighborhoods(table, year, neighborhoods, st, blockgroups, survey)
-  # }
+
   if (!is.null(blockgroups)) {
-    fips_nchar <- nchar(blockgroups[1])
-    if (!identical(blockgroups, "all") & fips_nchar != 12) {
-      warning(stringr::str_glue("FIPS codes for block groups should have 12 digits, not {fips_nchar}. Block groups will likely be dropped."))
+    fips_nchar <- nchar(blockgroups)
+    if (!identical(blockgroups, "all") & !all(fips_nchar == 12)) {
+      warning(stringr::str_glue("FIPS codes for block groups should have 12 digits, not {fips_nchar[1]}. Block groups will likely be dropped."))
     }
     fetch[["blockgroups"]] <- acs_blockgroups(table, year, blockgroups, counties, st, survey, key)
   }
   if (!is.null(tracts)) {
-    fips_nchar <- nchar(tracts[1])
-    if (!identical(tracts, "all") & fips_nchar != 11) {
-      warning(stringr::str_glue("FIPS codes for tracts should have 11 digits, not {fips_nchar}. Tracts will likely be dropped."))
+    fips_nchar <- nchar(tracts)
+    if (!identical(tracts, "all") & !all(fips_nchar == 11)) {
+      warning(stringr::str_glue("FIPS codes for tracts should have 11 digits, not {fips_nchar[1]}. Tracts will likely be dropped."))
     }
     fetch[["tracts"]] <- acs_tracts(table, year, tracts, counties, st, survey, key)
   }
+
+  if (!is.null(neighborhoods)) {
+    fips_nchar <- nchar(dplyr::pull(neighborhoods, {{ geoid }}))
+    if (all(fips_nchar == 11)) {
+      message("Assuming neighborhood GEOIDs are for tracts")
+      fetch[["neighborhoods"]] <- acs_nhood(table, year, neighborhoods, counties, state, survey, name, geoid, weight, key, is_tract = TRUE)
+    } else if (all(fips_nchar == 12)) {
+      message("Assuming neighborhood GEOIDs are for block groups")
+      fetch[["neighborhoods"]] <- acs_nhood(table, year, neighborhoods, counties, state, survey, name, geoid, weight, key, is_tract = FALSE)
+    } else {
+      message("The GEOIDs to create neighborhoods seem to be incorrect, so neighborhoods are being skipped. Check that they are either tracts or block groups.")
+    }
+  }
+
   if (!is.null(towns)) {
     fetch[["towns"]] <- acs_towns(table, year, towns, counties, st, survey, key)
   }

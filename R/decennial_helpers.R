@@ -70,14 +70,13 @@ decennial_regions <- function(table, year, regions, state, sumfile, key) {
     })
 }
 
-decennial_neighborhoods <- function(table, year, neighborhoods, state, sumfile, key) {
-  fetch_tracts <- suppressMessages(tidycensus::get_decennial(geography = "tract", table = table, year = year, state = state, key = key))
+decennial_nhood <- function(table, year, .data, counties, state, sumfile, name, geoid, weight, key) {
+  geoids <- unique(dplyr::pull(.data, {{ geoid }}))
+  fetch <- decennial_tracts(table, year, geoids, counties, state, sumfile, key)
 
-  neighborhoods %>%
-    purrr::imap_dfr(function(neighborhood, neighborhood_name) {
-      fetch_tracts %>%
-        dplyr::filter(GEOID %in% neighborhood) %>%
-        dplyr::group_by(NAME = neighborhood_name, variable) %>%
-        dplyr::summarise(value = sum(value))
-    })
+  .data %>%
+    dplyr::left_join(fetch, by = stats::setNames("GEOID", rlang::as_label({{ rlang::enquo(geoid) }}))) %>%
+    dplyr::group_by(variable, county, state, name) %>%
+    dplyr::summarise(value = round(sum(value * {{ weight }}))) %>%
+    dplyr::ungroup()
 }
