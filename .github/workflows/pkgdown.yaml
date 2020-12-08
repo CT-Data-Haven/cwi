@@ -10,7 +10,9 @@ jobs:
   pkgdown:
     runs-on: macOS-latest
     env:
-      GITHUB_PAT: ${{ secrets.GH_TOKEN }}
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      BLS_KEY: ${{ secrets.BLS_KEY }}
+      CENSUS_API_KEY: ${{ secrets.CENSUS_API_KEY }}
     steps:
       - uses: actions/checkout@v2
 
