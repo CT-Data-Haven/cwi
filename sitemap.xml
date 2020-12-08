@@ -28,10 +28,16 @@
     <loc>https://CT-Data-Haven.github.io/cwi/reference/decennial_vars10.html</loc>
   </url>
   <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/reference/dh_scaffold.html</loc>
+  </url>
+  <url>
     <loc>https://CT-Data-Haven.github.io/cwi/reference/ext_table_nums.html</loc>
   </url>
   <url>
     <loc>https://CT-Data-Haven.github.io/cwi/reference/geo_level_plot.html</loc>
+  </url>
+  <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/reference/jenks.html</loc>
   </url>
   <url>
     <loc>https://CT-Data-Haven.github.io/cwi/reference/label_acs.html</loc>
@@ -77,6 +83,9 @@
   </url>
   <url>
     <loc>https://CT-Data-Haven.github.io/cwi/reference/tidyeval.html</loc>
+  </url>
+  <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/reference/town_names.html</loc>
   </url>
   <url>
     <loc>https://CT-Data-Haven.github.io/cwi/reference/town_sf.html</loc>
