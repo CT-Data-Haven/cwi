@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Zip to town lookup — zip2town • cwi</title>
+<title>Changelog • cwi</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,7 @@
 
 
 
-<meta property="og:title" content="Zip to town lookup — zip2town" />
-<meta property="og:description" content="A crosswalk of Connecticut's ZCTA5s, towns, and town GEOIDs with shares of households in overlapping areas. Each row corresponds to a combination of zip and town; therefore, some zips have more than one observation, as do towns." />
+<meta property="og:title" content="Changelog" />
 <meta property="og:image" content="https://CT-Data-Haven.github.io/cwi/logo.png" />
 
 
@@ -67,7 +66,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-topic">
+    <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -134,41 +133,41 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Zip to town lookup</h1>
-    <small class="dont-index">Source: <a href='https://github.com/CT-Data-Haven/cwi/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>zip2town.Rd</code></div>
+      <h1 data-toc-skip>Changelog <small></small></h1>
+      <small>Source: <a href='https://github.com/CT-Data-Haven/cwi/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="ref-description">
-    <p>A crosswalk of Connecticut's ZCTA5s, towns, and town GEOIDs with shares of households in overlapping areas. Each row corresponds to a combination of zip and town; therefore, some zips have more than one observation, as do towns.</p>
-    </div>
-
-    <pre class="usage"><span class='va'>zip2town</span></pre>
-
-
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>A data frame with 407 rows and 7 variables:</p><dl>
-<dt>zip</dt><dd><p>5-digit zip code (ZCTA5)</p></dd>
-<dt>town_geoid</dt><dd><p>10-digit town FIPS code</p></dd>
-<dt>town</dt><dd><p>Town name</p></dd>
-<dt>poppt</dt><dd><p>Population living in this combination of zip and town</p></dd>
-<dt>hupt</dt><dd><p>Number of housing units in this combination of zip and town</p></dd>
-<dt>pct_zip_hh_in_town</dt><dd><p>Percentage of the zip's total households that are also in this town</p></dd>
-<dt>pct_town_hh_in_zip</dt><dd><p>Percentage of the town's total households that are also in this zip</p></dd>
-
-</dl>
-
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    <p>Cleaned-up version of the Census <a href='https://www.census.gov/geo/maps-data/data/zcta_rel_download.html'>2010 ZCTA to county subdivision relationship file</a></p>
-
+    <div id="cwi-011" class="section level1">
+<h1 class="page-header" data-toc-text="0.1.1">
+<a href="#cwi-011" class="anchor"></a>cwi 0.1.1</h1>
+<ul>
+<li>Expanded <code>xwalk</code> data to include more geographic levels.</li>
+<li>Minor vignette cleanup.</li>
+</ul>
+</div>
+    <div id="cwi-010" class="section level1">
+<h1 class="page-header" data-toc-text="0.1.0">
+<a href="#cwi-010" class="anchor"></a>cwi 0.1.0</h1>
+<ul>
+<li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
+<li>Functions that make use of API keys have explicit key arguments so Census and BLS API keys don’t have to be stored in specific environment variables, though they’ll still default to those same environment variables.</li>
+<li>Installation should be easier and have less overhead, because there are now fewer dependencies.</li>
+<li>Fixed bugs with BLS API in <code>adj_inflation</code>.</li>
+<li>Both <code>multi_geo_acs</code> and <code>multi_geo_decennial</code> can aggregate neighborhood data. There’s an example in the workflow vignette.</li>
+<li>Should now be up to date with newer <code>dplyr</code> 1.0.0 &amp; <code>tidyr</code> 1.0.0 functions.</li>
+<li>
+<strong>New functions:</strong> <code>jenks</code>, <code>dh_scaffold</code>
+</li>
+</ul>
+</div>
   </div>
+
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
+
 </div>
 
 

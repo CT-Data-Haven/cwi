@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -67,6 +67,9 @@
       <a href="../articles/shapefiles.html">Shapefiles</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -118,38 +121,15 @@
 <div id="fetching-data-from-acs" class="section level1">
 <h1 class="hasAnchor">
 <a href="#fetching-data-from-acs" class="anchor"></a>Fetching data from ACS</h1>
-<p>I’m pulling out the entries in the <code>cwi</code> dataset <code><a href="../reference/regions.html">cwi::regions</a></code> (a list) to only include the Greater New Haven-area ones. Then I fetch the ACS tables, and filter them to only have geographic levels other than town, or to only be towns in Greater New Haven.</p>
+<p>I’m pulling out the entries in the <code>cwi</code> dataset <code><a href="../reference/regions.html">cwi::regions</a></code> (a list) to only include the Greater New Haven-area ones. Then I fetch the ACS tables for those regions, their towns, and New Haven County.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gnh_regions</span> <span class="op">&lt;-</span> <span class="va">regions</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Greater New Haven"</span>, <span class="st">"New Haven Inner Ring"</span>, <span class="st">"New Haven Outer Ring"</span><span class="op">)</span><span class="op">]</span>
 
-<span class="va">gnh_data</span> <span class="op">&lt;-</span> <span class="va">table_nums</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="op">~</span><span class="fu"><a href="../reference/multi_geo_acs.html">multi_geo_acs</a></span><span class="op">(</span>table <span class="op">=</span> <span class="va">.</span>, 
-                     year <span class="op">=</span> <span class="va">year</span>, 
-                     towns <span class="op">=</span> <span class="st">"all"</span>, 
-                     regions <span class="op">=</span> <span class="va">gnh_regions</span>, 
-                     counties <span class="op">=</span> <span class="st">"New Haven"</span>, 
-                     state <span class="op">=</span> <span class="st">"09"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="op">~</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">NAME</span> <span class="op">%in%</span> <span class="va">gnh_regions</span><span class="op">[[</span><span class="st">"Greater New Haven"</span><span class="op">]</span><span class="op">]</span> <span class="op">|</span> <span class="va">level</span> <span class="op">!=</span> <span class="st">"4_towns"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Table B01003: TOTAL POPULATION, 2018</span>
-<span class="co">#&gt; Geographies included:</span>
-<span class="co">#&gt; Towns: all</span>
-<span class="co">#&gt; Regions: Greater New Haven, New Haven Inner Ring, New Haven Outer Ring</span>
-<span class="co">#&gt; Counties: New Haven County</span>
-<span class="co">#&gt; State: 09</span>
-<span class="co">#&gt; Table B03002: HISPANIC OR LATINO ORIGIN BY RACE, 2018</span>
-<span class="co">#&gt; Geographies included:</span>
-<span class="co">#&gt; Towns: all</span>
-<span class="co">#&gt; Regions: Greater New Haven, New Haven Inner Ring, New Haven Outer Ring</span>
-<span class="co">#&gt; Counties: New Haven County</span>
-<span class="co">#&gt; State: 09</span>
-<span class="co">#&gt; Table B25003: TENURE, 2018</span>
-<span class="co">#&gt; Geographies included:</span>
-<span class="co">#&gt; Towns: all</span>
-<span class="co">#&gt; Regions: Greater New Haven, New Haven Inner Ring, New Haven Outer Ring</span>
-<span class="co">#&gt; Counties: New Haven County</span>
-<span class="co">#&gt; State: 09</span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gnh_data</span><span class="op">$</span><span class="va">total_pop</span>
+<span class="va">gnh_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">table_nums</span>, 
+    <span class="op">~</span><span class="fu"><a href="../reference/multi_geo_acs.html">multi_geo_acs</a></span><span class="op">(</span>table <span class="op">=</span> <span class="va">.</span>, year <span class="op">=</span> <span class="va">year</span>, towns <span class="op">=</span> <span class="va">regions</span><span class="op">$</span><span class="va">`Greater New Haven`</span>,
+                   regions <span class="op">=</span> <span class="va">gnh_regions</span>, counties <span class="op">=</span> <span class="st">"New Haven"</span>, state <span class="op">=</span> <span class="st">"09"</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">gnh_data</span><span class="op">$</span><span class="va">total_pop</span>
 <span class="co">#&gt; # A tibble: 18 x 9</span>
 <span class="co">#&gt;    GEOID    NAME         variable  estimate   moe level   state county      year</span>
 <span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;        &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;   &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt;</span>
@@ -172,7 +152,7 @@
 <span class="co">#&gt; 17 0900982… West Haven   B01003_0…    54918    54 4_towns 09    New Haven…  2018</span>
 <span class="co">#&gt; 18 0900987… Woodbridge   B01003_0…     8868    31 4_towns 09    New Haven…  2018</span></code></pre></div>
 <p>Neighborhoods with corresponding tracts or block groups are included for 4 cities (see <code>neighborhood_tracts</code>). Pass those to get neighborhood-level aggregates.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/multi_geo_acs.html">multi_geo_acs</a></span><span class="op">(</span><span class="st">"B01003"</span>, towns <span class="op">=</span> <span class="st">"New Haven"</span>, counties <span class="op">=</span> <span class="st">"New Haven"</span>, neighborhoods <span class="op">=</span> <span class="va">nhv_tracts</span><span class="op">)</span>
 <span class="co">#&gt; Table B01003: TOTAL POPULATION, 2018</span>
 <span class="co">#&gt; Geographies included:</span>
@@ -208,7 +188,7 @@
 <li>
 <code><a href="https://camille-s.github.io/camiller/reference/calc_shares.html">camiller::calc_shares()</a></code> then gives shares of each group’s estimate over the <code>"total"</code> denominator.</li>
 </ul>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gnh_data</span><span class="op">$</span><span class="va">race</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/label_acs.html">label_acs</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">county</span>, <span class="va">NAME</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -230,7 +210,7 @@
 <span class="co">#&gt; 10 2_counties &lt;NA&gt;   New Haven County other     55533  0.065</span>
 <span class="co">#&gt; # … with 80 more rows</span></code></pre></div>
 <p>With the tenure table, it’s easiest to separate the labels by <code>"!!"</code>. Here the table can be wrangled into shares of households that are owner-occupied.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">homeownership</span> <span class="op">&lt;-</span> <span class="va">gnh_data</span><span class="op">$</span><span class="va">tenure</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/label_acs.html">label_acs</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">label</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"total"</span>, <span class="st">"tenure"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"!!"</span>, fill <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -268,33 +248,32 @@
 <h1 class="hasAnchor">
 <a href="#visual-sketches" class="anchor"></a>Visual sketches</h1>
 <p><code><a href="../reference/geo_level_plot.html">geo_level_plot()</a></code> gives a quick visual overview of the homeownership rates, highlighting town-level values.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">homeownership</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../reference/geo_level_plot.html">geo_level_plot</a></span><span class="op">(</span>value <span class="op">=</span> <span class="va">share</span>, hilite <span class="op">=</span> <span class="st">"darkslateblue"</span>, type <span class="op">=</span> <span class="st">"point"</span><span class="op">)</span></code></pre></div>
-<p><img src="basic-workflow_files/figure-html/unnamed-chunk-8-1.png" width="1050"></p>
-<p><code><a href="../reference/acs_quick_map.html">acs_quick_map()</a></code> gives a quick map sketch of the rates. This function uses the Jenks algorithm for making breaks with <code><a href="https://r-spatial.github.io/classInt/reference/classIntervals.html">classInt::classIntervals</a></code>. This algorithm is well suited for visually displaying larger inequalities, but the number of breaks you give it won’t necessarily be the number of breaks returned. Here I supply <code>n = 6</code>, but the algorithm found instead that <code>n = 5</code> was the nearest <code>n</code> that could be used. This function lets us see whether there’s a geographic distribution of this data with minimal work.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<p><img src="basic-workflow_files/figure-html/geo_plot-1.png" width="1050"></p>
+<p><code><a href="../reference/acs_quick_map.html">acs_quick_map()</a></code> gives a quick map sketch of the rates. This function uses the Jenks algorithm for making breaks with <code><a href="../reference/jenks.html">jenks()</a></code>. This algorithm is well suited for visually displaying larger inequalities, but the number of breaks you give it won’t necessarily be the number of breaks returned.This function lets us see whether there’s a geographic distribution of this data with minimal work.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tenure_map</span> <span class="op">&lt;-</span> <span class="va">homeownership</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">level</span> <span class="op">==</span> <span class="st">"4_towns"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/acs_quick_map.html">acs_quick_map</a></span><span class="op">(</span>value <span class="op">=</span> <span class="va">share</span>, level <span class="op">=</span> <span class="st">"town"</span>, color <span class="op">=</span> <span class="st">"black"</span>, size <span class="op">=</span> <span class="fl">0.4</span>, 
                 title <span class="op">=</span> <span class="st">"Homeownership, Greater New Haven"</span>, palette <span class="op">=</span> <span class="st">"BuPu"</span><span class="op">)</span>
 
 <span class="va">tenure_map</span></code></pre></div>
-<p><img src="basic-workflow_files/figure-html/unnamed-chunk-9-1.png" width="1050"></p>
+<p><img src="basic-workflow_files/figure-html/quick_map1-1.png" width="1050"></p>
 <p>Since this returns a <code>ggplot</code> object with <code>sf</code> data, we can add additional <code>ggplot</code> functions, such as labeling, themes, or additional scales or geoms.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tenure_map</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>subtitle <span class="op">=</span> <span class="st">"By town, 2018"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">.</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">name</span> <span class="op">==</span> <span class="st">"New Haven"</span><span class="op">)</span>, fill <span class="op">=</span> <span class="cn">NA</span>, color <span class="op">=</span> <span class="st">"black"</span>, size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">coord_sf</a></span><span class="op">(</span>ndiscr <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
-<p><img src="basic-workflow_files/figure-html/unnamed-chunk-10-1.png" width="1050"></p>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">.</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">name</span> <span class="op">==</span> <span class="st">"New Haven"</span><span class="op">)</span>, fill <span class="op">=</span> <span class="cn">NA</span>, color <span class="op">=</span> <span class="st">"black"</span>, size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span></code></pre></div>
+<p><img src="basic-workflow_files/figure-html/quick_map2-1.png" width="1050"></p>
 </div>
 <div id="batch-output" class="section level1">
 <h1 class="hasAnchor">
 <a href="#batch-output" class="anchor"></a>Batch output</h1>
 <p>Say as part of a pipeline, you need to do some calculations, write different sections of a data frame to CSV files to pass along to a colleague or refer to later, and then continue on to some more calculations. <code><a href="../reference/batch_csv_dump.html">batch_csv_dump()</a></code> takes either a list of data frames or a data frame plus a column to split by, and writes out a set of CSV files, then lets you move along to the next step in your pipeline.</p>
 <p>For example, I need to pull a table of populations by age group for several regions of Connecticut. I don’t need to split populations by gender, so I’ll add up male and female populations for each age group. I don’t actually need to more detailed age groups now, but I need to stash them in files for later, so I’ll aggregate, write a bunch of files, and then aggregate into broader age groups that I need for my current work.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">new_haven_regions</span> <span class="op">&lt;-</span> <span class="va">regions</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Greater New Haven"</span>, <span class="st">"New Haven Inner Ring"</span>, 
                              <span class="st">"New Haven Outer Ring"</span>, <span class="st">"Lower Naugatuck Valley"</span>, <span class="st">"Greater Waterbury"</span><span class="op">)</span><span class="op">]</span>
 
@@ -307,7 +286,6 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">NAME</span>, <span class="va">level</span>, <span class="va">age</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>estimate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">estimate</span><span class="op">)</span>, moe <span class="op">=</span> <span class="fu">tidycensus</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tidycensus/man/moe_sum.html">moe_sum</a></span><span class="op">(</span><span class="va">moe</span>, <span class="va">estimate</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span>
-
 
 <span class="va">acs</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">.</span><span class="op">$</span><span class="va">NAME</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -323,7 +301,7 @@
 <h2 class="hasAnchor">
 <a href="#quarterly-workforce-indicators" class="anchor"></a>Quarterly Workforce Indicators</h2>
 <p>I’m also interested in learning about employment by industry over the past several years. <code><a href="../reference/qwi_industry.html">qwi_industry()</a></code> fetches county-level data by industry over time, either quarterly or annually. Here I’ll look at annual averages of all industries for New Haven County and Connecticut over the past 16 years. I’m filtering out the industry code “00”, which is the counts for all industries.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">nhc_employment</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qwi_industry.html">qwi_industry</a></span><span class="op">(</span><span class="fl">2002</span><span class="op">:</span><span class="fl">2018</span>, counties <span class="op">=</span> <span class="st">"009"</span>, annual <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>location <span class="op">=</span> <span class="st">"New Haven County"</span><span class="op">)</span>
 <span class="co">#&gt; The API can only get 10 years of data at once; making multiple calls, but this might take a little longer.</span>
@@ -350,7 +328,7 @@
 <span class="co">#&gt; 10  2002 52       09    009    13594    8.27e8 New Haven … Finance and Insurance</span>
 <span class="co">#&gt; # … with 670 more rows</span></code></pre></div>
 <p>Next, say I want to look at the industries that were largest in New Haven county in 2018, and see how those have changed both for the county and statewide over this time period. I’ll filter <code>employment</code>, get the industries with the largest numbers of employees, then filter <code>employment</code> for just those industries and plot it.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">top2018</span> <span class="op">&lt;-</span> <span class="va">employment</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">==</span> <span class="fl">2018</span>, <span class="va">county</span> <span class="op">==</span> <span class="st">"009"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/top_n.html">top_n</a></span><span class="op">(</span><span class="fl">8</span>, <span class="va">Emp</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -368,9 +346,9 @@
          subtitle <span class="op">=</span> <span class="st">"Connecticut and New Haven County, 2002-2018"</span>, color <span class="op">=</span> <span class="st">"Industry"</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">location</span><span class="op">)</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span></code></pre></div>
-<p><img src="basic-workflow_files/figure-html/unnamed-chunk-13-1.png" width="1050"></p>
+<p><img src="basic-workflow_files/figure-html/qwi2-1.png" width="1050"></p>
 <p>If I’m interested in changes in wages over this period, I can use the <code><a href="../reference/adj_inflation.html">adj_inflation()</a></code> function. This takes a data frame, the name of the column containing dollar amounts, and a base year, then adds two columns for the inflation adjustment factor and the adjusted value.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">employment</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">industry</span> <span class="op">%in%</span> <span class="va">top2018</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub</a></span><span class="op">(</span><span class="va">label</span>, <span class="fl">1</span>, <span class="fl">25</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -384,14 +362,14 @@
          subtitle <span class="op">=</span> <span class="st">"Connecticut and New Haven County, 2002-2018"</span>, color <span class="op">=</span> <span class="st">"Industry"</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">location</span><span class="op">)</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span></code></pre></div>
-<p><img src="basic-workflow_files/figure-html/unnamed-chunk-14-1.png" width="1050"></p>
+<p><img src="basic-workflow_files/figure-html/inflation-1.png" width="1050"></p>
 <p>Now we have a visual that shows that in a few industries, wages have climbed over the past several years, but in many industries, wages haven’t increased except by inflation.</p>
 </div>
 <div id="local-area-unemployment-statistics" class="section level2">
 <h2 class="hasAnchor">
 <a href="#local-area-unemployment-statistics" class="anchor"></a>Local Area Unemployment Statistics</h2>
 <p>To look at unemployment rates over time, I can use <code><a href="../reference/laus_trend.html">laus_trend()</a></code>. The LAUS covers smaller geographies than the QWI, so <code><a href="../reference/laus_trend.html">laus_trend()</a></code> is set up to find data by a combination of state, counties, or towns. The LAUS API returns monthly data on labor force counts, employment counts, unemployed counts, and unemployment rate; <code><a href="../reference/laus_trend.html">laus_trend()</a></code> lets you specify which of these measures to fetch.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">unemployment</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/laus_trend.html">laus_trend</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"New Haven"</span>, <span class="st">"New Haven County"</span>, <span class="st">"Connecticut"</span><span class="op">)</span>, startyear <span class="op">=</span> <span class="fl">2000</span>, endyear <span class="op">=</span> <span class="fl">2018</span>, measures <span class="op">=</span> <span class="st">"unemployment rate"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">periodName</span>, <span class="st">"01"</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">ymd</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>value <span class="op">=</span> <span class="va">value</span> <span class="op">/</span> <span class="fl">100</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -411,13 +389,13 @@
 <span class="co">#&gt;  8 Connecticut 2018-05-01 0.0410</span>
 <span class="co">#&gt;  9 Connecticut 2018-04-01 0.0410</span>
 <span class="co">#&gt; 10 Connecticut 2018-03-01 0.046 </span>
-<span class="co">#&gt; # … with 674 more rows</span></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">unemployment</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">value</span>, group <span class="op">=</span> <span class="va">area</span>, color <span class="op">=</span> <span class="va">area</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span>
+<span class="co">#&gt; # … with 674 more rows</span>
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">unemployment</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">value</span>, group <span class="op">=</span> <span class="va">area</span>, color <span class="op">=</span> <span class="va">area</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>se <span class="op">=</span> <span class="cn">FALSE</span>, method <span class="op">=</span> <span class="st">"loess"</span>, size <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span>
 <span class="co">#&gt; `geom_smooth()` using formula 'y ~ x'</span></code></pre></div>
-<p><img src="basic-workflow_files/figure-html/unnamed-chunk-16-1.png" width="1050"></p>
+<p><img src="basic-workflow_files/figure-html/laus-1.png" width="1050"></p>
 </div>
 </div>
   </div>
