@@ -132,7 +132,7 @@ NULL
 #'   \item{town_geoid}{10-digit town FIPS code}
 #'   \item{town}{Town name}
 #' }
-#' @source Spatial overlay of TIGER shapefiles
+#' @source Spatial overlay of TIGER shapefiles, plus manual additions of non-CDP villages when we run into them in the wild.
 "village2town"
 
 
@@ -181,17 +181,23 @@ NULL
 
 #' CT crosswalk
 #'
-#' A shortened version of the CT crosswalk file from the LEHD/LODES files, to translate between Connecticut blocks, block groups, tracts, and towns.
+#' A shortened version of the CT crosswalk file from the LEHD/LODES files, to translate between geographies in Connecticut.
 #'
-#' @format A data frame with 67485 rows and 5 variables:
+#' @format A data frame with 67485 rows and 11 variables:
 #' \describe{
 #'   \item{block}{Block FIPS code}
 #'   \item{block_grp}{Block group FIPS code}
 #'   \item{tract}{Tract FIPS code}
 #'   \item{town}{Town name}
 #'   \item{town_fips}{Town FIPS code}
+#'   \item{county}{County name}
+#'   \item{county_fips}{County FIPS code}
+#'   \item{msa}{Metro/micropolitan area name}
+#'   \item{msa_fips}{Metro/micropolitan area FIPS code}
+#'   \item{puma}{PUMA name}
+#'   \item{puma_fips}{PUMA FIPS code}
 #' }
-#' @source This is a filtered, cleaned, and pared down version of a file downloaded from [LEHD](https://lehd.ces.census.gov/data/lodes/LODES7/ct/).
+#' @source This is a filtered, cleaned, and pared down version of a file downloaded from [LEHD](https://lehd.ces.census.gov/data/lodes/LODES7/ct/), plus some spatial joins of TIGER shapefiles.
 "xwalk"
 
 

@@ -14,7 +14,7 @@ A data frame with 90 rows and 4 variables:
 }
 }
 \source{
-Spatial overlay of TIGER shapefiles
+Spatial overlay of TIGER shapefiles, plus manual additions of non-CDP villages when we run into them in the wild.
 }
 \usage{
 village2town
