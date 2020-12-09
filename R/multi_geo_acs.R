@@ -159,5 +159,6 @@ multi_geo_acs <- function(table, year = 2018, towns = "all", regions = NULL, cou
       df %>% dplyr::mutate(level = paste(i, lvl, sep = "_"))
     }) %>%
     dplyr::mutate(year = year) %>%
-    dplyr::mutate(level = forcats::as_factor(level))
+    dplyr::mutate(level = forcats::as_factor(level)) %>%
+    janitor::clean_names()
 }

@@ -74,7 +74,7 @@ The race and ethnicity table will require some calculations, using the brilliant
 ```{r calc}
 gnh_data$race %>%
   label_acs() %>% 
-  group_by(level, county, NAME) %>%
+  group_by(level, county, name) %>%
   add_grps(list(total = 1, white = 3, black = 4, latino = 12, other = 5:9), group = label) %>%
   calc_shares(group = label, denom = "total")
 ```
@@ -85,7 +85,7 @@ With the tenure table, it's easiest to separate the labels by `"!!"`. Here the t
 homeownership <- gnh_data$tenure %>%
   label_acs() %>%
   separate(label, into = c("total", "tenure"), sep = "!!", fill = "left") %>%
-  select(level, name = NAME, tenure, estimate) %>%
+  select(level, name, tenure, estimate) %>%
   filter(tenure != "Renter occupied") %>%
   group_by(level, name) %>%
   calc_shares(group = tenure, denom = "Total") %>%
@@ -138,16 +138,16 @@ acs <- multi_geo_acs(table = "B01001", year = 2018, towns = NULL, regions = new_
   separate(label, into = c("total", "sex", "age"), sep = "!!") %>%
   filter(!is.na(age)) %>%
   mutate(age = as.factor(age) %>% forcats::fct_inorder()) %>%
-  group_by(NAME, level, age) %>%
+  group_by(name, level, age) %>%
   summarise(estimate = sum(estimate), moe = tidycensus::moe_sum(moe, estimate) %>% round()) %>%
   ungroup()
 
 acs %>%
-  split(.$NAME) %>%
+  split(.$name) %>%
   batch_csv_dump(base_name = "pop_by_age", bind = TRUE, verbose = TRUE) %>%
-  group_by(level, NAME) %>%
+  group_by(level, name) %>%
   camiller::add_grps(list(ages0_4 = 1, ages5_17 = 2:4, ages0_17 = 1:4, ages18_24 = 5:8, ages0_24 = 1:8), group = age, estimate = estimate, moe = moe) %>%
-  arrange(level, NAME, age)
+  arrange(level, name, age)
 ```
 
 # Employment trends

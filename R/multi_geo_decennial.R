@@ -143,5 +143,6 @@ multi_geo_decennial <- function(table, year = 2010, towns = "all", regions = NUL
       df %>% dplyr::mutate(level = paste(i, lvl, sep = "_"))
     }) %>%
     dplyr::mutate(year = year) %>%
-    dplyr::mutate(level = forcats::as_factor(level))
+    dplyr::mutate(level = forcats::as_factor(level)) %>%
+    janitor::clean_names()
 }
