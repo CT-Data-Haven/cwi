@@ -1,3 +1,7 @@
+# cwi 0.1.2
+
+* `multi_geo_acs` & `multi_geo_decennial` call `janitor::clean_names` before returning. This keeps columns aligned properly if neighborhoods are included.
+
 # cwi 0.1.1
 
 * Expanded `xwalk` data to include more geographic levels.
