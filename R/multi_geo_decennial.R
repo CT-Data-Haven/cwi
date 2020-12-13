@@ -140,9 +140,10 @@ multi_geo_decennial <- function(table, year = 2010, towns = "all", regions = NUL
   lvls <- rev(fetch)
   list(lvls, names(lvls), 1:length(lvls)) %>%
     purrr::pmap_dfr(function(df, lvl, i) {
-      df %>% dplyr::mutate(level = paste(i, lvl, sep = "_"))
+      df %>%
+        dplyr::mutate(level = paste(i, lvl, sep = "_")) %>%
+        janitor::clean_names()
     }) %>%
     dplyr::mutate(year = year) %>%
-    dplyr::mutate(level = forcats::as_factor(level)) %>%
-    janitor::clean_names()
+    dplyr::mutate(level = forcats::as_factor(level))
 }
