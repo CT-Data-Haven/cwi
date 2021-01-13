@@ -36,10 +36,10 @@ Imports:
     rlang,
     stats,
     stringr,
-    tidycensus,
     tidyr,
     assertthat,
-    tibble
+    tibble,
+    tidycensus
 Suggests: 
     camiller (>= 0.2.0),
     readr,

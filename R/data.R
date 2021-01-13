@@ -183,7 +183,7 @@ NULL
 #'
 #' A shortened version of the CT crosswalk file from the LEHD/LODES files, to translate between geographies in Connecticut.
 #'
-#' @format A data frame with 67485 rows and 11 variables:
+#' @format A data frame with 67465 rows and 11 variables:
 #' \describe{
 #'   \item{block}{Block FIPS code}
 #'   \item{block_grp}{Block group FIPS code}
