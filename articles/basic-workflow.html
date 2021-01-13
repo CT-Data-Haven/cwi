@@ -46,7 +46,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -75,7 +75,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/CT-Data-Haven/cwi/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -89,8 +89,7 @@
 
       
 
-      </header><script src="basic-workflow_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="basic-workflow_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="basic-workflow_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="basic-workflow_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Basic workflow</h1>
@@ -107,7 +106,7 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://camille-s.github.io/camiller">camiller</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/CT-Data-Haven/cwi">cwi</a></span><span class="op">)</span></code></pre></div>
 <p>The tables I’m working with are <code>B01003</code>, total population; <code>B03002</code>, race and Latino ethnicity; and <code>B25003</code>, housing tenure. It’s easiest to save these in a named list, then map over the list calling <code><a href="../reference/multi_geo_acs.html">multi_geo_acs()</a></code> for each table number.</p>
@@ -182,7 +181,7 @@
 <p>The total population data is very straightforward, as it only has one variable, <code>B01003_001</code>. The tibble returned has the GEOID, except for custom geographies like regions; the name of each geography, including the names of each region; the variable codes; estimates; margins of error at the default 90% confidence level; the geographic level, numbered in order of decreasing size; and the counties of the towns.</p>
 <p>The race and ethnicity table will require some calculations, using the brilliantly-titled <a href="https://github.com/camille-s/camiller"><code>camiller</code> package</a>:</p>
 <ul>
-<li>Using <code><a href="../reference/label_acs.html">label_acs()</a></code>, join the <code>race</code> tibble with the <code><a href="https://camille-s.github.io/camiller/reference/acs_vars.html">cwi::acs_vars</a></code> dataset to get variable labels. Oftentimes, these labels need to be separated by their <code>"!!"</code> delimeter.</li>
+<li>Using <code><a href="../reference/label_acs.html">label_acs()</a></code>, join the <code>race</code> tibble with the <code>cwi::acs_vars</code> dataset to get variable labels. Oftentimes, these labels need to be separated by their <code>"!!"</code> delimeter.</li>
 <li>Group by the geographic level, county, and name.</li>
 <li>Call <code><a href="https://camille-s.github.io/camiller/reference/add_grps.html">camiller::add_grps()</a></code> with a list of racial groups and their labels’ positions in the <code>label</code> column. This gives estimates and, optionally, margins of error for aggregates</li>
 <li>

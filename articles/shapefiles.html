@@ -46,7 +46,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -75,7 +75,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/CT-Data-Haven/cwi/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -89,8 +89,7 @@
 
       
 
-      </header><script src="shapefiles_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="shapefiles_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="shapefiles_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="shapefiles_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Shapefiles</h1>
@@ -105,7 +104,7 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/CT-Data-Haven/cwi">cwi</a></span><span class="op">)</span></code></pre></div>
 <p><code>cwi</code> ships with several shapefiles in <a href="https://r-spatial.github.io/sf/"><code>sf</code></a> (simple features) format. These include:</p>
 <ul>
@@ -156,7 +155,9 @@
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Filtering and unioning shapes"</span><span class="op">)</span>
-<span class="co">#&gt; `summarise()` ungrouping output (override with `.groups` argument)</span></code></pre></div>
+<span class="co">#&gt; `summarise()` ungrouping output (override with `.groups` argument)</span>
+<span class="co">#&gt; although coordinates are longitude/latitude, st_union assumes that they are planar</span>
+<span class="co">#&gt; although coordinates are longitude/latitude, st_union assumes that they are planar</span></code></pre></div>
 <p><img src="shapefiles_files/figure-html/town_regional-1.png" width="1050"></p>
 <p><code><a href="../reference/tract_sf.html">cwi::tract_sf</a></code>, a fairly large shape containing all tracts in the state.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
