@@ -4,6 +4,7 @@ development:
 template:
   params:
     bootswatch: yeti
+
 reference:
 - title: Functions - fetching
   desc: Functions to fetch data from APIs
@@ -12,19 +13,20 @@ reference:
   - 'multi_geo_acs'
   - 'multi_geo_decennial'
   - 'qwi_industry'
+
 - title: Functions - analyzing and plotting
   desc: Functions to analyze or quickly plot data
   contents:
   - 'acs_quick_map'
   - 'adj_inflation'
-  - 'batch_csv_dump'
   - 'geo_level_plot'
   - 'label_acs'
   - 'label_decennial'
+
 - title: Datasets
   desc: Reference datasets, lookup tables, and crosswalks
   contents:
-  - 'acs_vars17'
+  - 'acs_vars19'
   - 'basic_table_nums'
   - 'ct5_clusters'
   - 'decennial_vars10'
@@ -34,13 +36,23 @@ reference:
   - 'naics_codes'
   - 'neighborhood_tracts'
   - 'regions'
+  - 'school_dists'
   - 'tract2town'
   - 'village2town'
   - 'xwalk'
   - 'zip2town'
+
 - title: Shapefiles
   desc: Shapefiles in `sf` format
   contents:
   - 'neighborhood_shapes'
   - 'town_sf'
   - 'tract_sf'
+
+- title: Misc. / utilities
+  desc: Miscellaneous functions
+  contents:
+  - 'batch_csv_dump'
+  - 'dh_scaffold'
+  - 'jenks'
+  - 'town_names'
