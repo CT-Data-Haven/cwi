@@ -111,7 +111,7 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/CT-Data-Haven/cwi">cwi</a></span><span class="op">)</span></code></pre></div>
 <p>The tables I’m working with are <code>B01003</code>, total population; <code>B03002</code>, race and Latino ethnicity; and <code>B25003</code>, housing tenure. It’s easiest to save these in a named list, then map over the list calling <code><a href="../reference/multi_geo_acs.html">multi_geo_acs()</a></code> for each table number.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">year</span> <span class="op">&lt;-</span> <span class="fl">2018</span>
+<code class="sourceCode R"><span class="va">yr</span> <span class="op">&lt;-</span> <span class="fl">2019</span>
 <span class="va">table_nums</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
   total_pop <span class="op">=</span> <span class="st">"B01003"</span>, 
   race <span class="op">=</span> <span class="st">"B03002"</span>,
@@ -125,35 +125,35 @@
 <code class="sourceCode R"><span class="va">gnh_regions</span> <span class="op">&lt;-</span> <span class="va">regions</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Greater New Haven"</span>, <span class="st">"New Haven Inner Ring"</span>, <span class="st">"New Haven Outer Ring"</span><span class="op">)</span><span class="op">]</span>
 
 <span class="va">gnh_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">table_nums</span>, 
-    <span class="op">~</span><span class="fu"><a href="../reference/multi_geo_acs.html">multi_geo_acs</a></span><span class="op">(</span>table <span class="op">=</span> <span class="va">.</span>, year <span class="op">=</span> <span class="va">year</span>, towns <span class="op">=</span> <span class="va">regions</span><span class="op">$</span><span class="va">`Greater New Haven`</span>,
+    <span class="op">~</span><span class="fu"><a href="../reference/multi_geo_acs.html">multi_geo_acs</a></span><span class="op">(</span>table <span class="op">=</span> <span class="va">.</span>, year <span class="op">=</span> <span class="va">yr</span>, towns <span class="op">=</span> <span class="va">regions</span><span class="op">$</span><span class="va">`Greater New Haven`</span>,
                    regions <span class="op">=</span> <span class="va">gnh_regions</span>, counties <span class="op">=</span> <span class="st">"New Haven"</span>, state <span class="op">=</span> <span class="st">"09"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">gnh_data</span><span class="op">$</span><span class="va">total_pop</span>
 <span class="co">#&gt; # A tibble: 18 x 9</span>
 <span class="co">#&gt;    geoid    name         variable  estimate   moe level   state county      year</span>
 <span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;        &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;   &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 09       Connecticut  B01003_0…  3581504    NA 1_state &lt;NA&gt;  &lt;NA&gt;        2018</span>
-<span class="co">#&gt;  2 09009    New Haven C… B01003_0…   859339    NA 2_coun… 09    &lt;NA&gt;        2018</span>
-<span class="co">#&gt;  3 &lt;NA&gt;     Greater New… B01003_0…   464425   190 3_regi… &lt;NA&gt;  &lt;NA&gt;        2018</span>
-<span class="co">#&gt;  4 &lt;NA&gt;     New Haven I… B01003_0…   144984    83 3_regi… &lt;NA&gt;  &lt;NA&gt;        2018</span>
-<span class="co">#&gt;  5 &lt;NA&gt;     New Haven O… B01003_0…   188912   133 3_regi… &lt;NA&gt;  &lt;NA&gt;        2018</span>
-<span class="co">#&gt;  6 0900904… Bethany      B01003_0…     5504    17 4_towns 09    New Haven…  2018</span>
-<span class="co">#&gt;  7 0900907… Branford     B01003_0…    28094    28 4_towns 09    New Haven…  2018</span>
-<span class="co">#&gt;  8 0900922… East Haven   B01003_0…    28860    31 4_towns 09    New Haven…  2018</span>
-<span class="co">#&gt;  9 0900934… Guilford     B01003_0…    22285    42 4_towns 09    New Haven…  2018</span>
-<span class="co">#&gt; 10 0900935… Hamden       B01003_0…    61206    55 4_towns 09    New Haven…  2018</span>
-<span class="co">#&gt; 11 0900944… Madison      B01003_0…    18183    83 4_towns 09    New Haven…  2018</span>
-<span class="co">#&gt; 12 0900947… Milford      B01003_0…    54047    34 4_towns 09    New Haven…  2018</span>
-<span class="co">#&gt; 13 0900952… New Haven    B01003_0…   130529   108 4_towns 09    New Haven…  2018</span>
-<span class="co">#&gt; 14 0900953… North Branf… B01003_0…    14208    25 4_towns 09    New Haven…  2018</span>
-<span class="co">#&gt; 15 0900954… North Haven  B01003_0…    23786    62 4_towns 09    New Haven…  2018</span>
-<span class="co">#&gt; 16 0900957… Orange       B01003_0…    13937    37 4_towns 09    New Haven…  2018</span>
-<span class="co">#&gt; 17 0900982… West Haven   B01003_0…    54918    54 4_towns 09    New Haven…  2018</span>
-<span class="co">#&gt; 18 0900987… Woodbridge   B01003_0…     8868    31 4_towns 09    New Haven…  2018</span></code></pre></div>
+<span class="co">#&gt;  1 09       Connecticut  B01003_0…  3575074    NA 1_state &lt;NA&gt;  &lt;NA&gt;        2019</span>
+<span class="co">#&gt;  2 09009    New Haven C… B01003_0…   857513    NA 2_coun… 09    &lt;NA&gt;        2019</span>
+<span class="co">#&gt;  3 &lt;NA&gt;     Greater New… B01003_0…   463682   155 3_regi… &lt;NA&gt;  &lt;NA&gt;        2019</span>
+<span class="co">#&gt;  4 &lt;NA&gt;     New Haven I… B01003_0…   144487    79 3_regi… &lt;NA&gt;  &lt;NA&gt;        2019</span>
+<span class="co">#&gt;  5 &lt;NA&gt;     New Haven O… B01003_0…   188864   125 3_regi… &lt;NA&gt;  &lt;NA&gt;        2019</span>
+<span class="co">#&gt;  6 0900904… Bethany      B01003_0…     5513    19 4_towns 09    New Haven…  2019</span>
+<span class="co">#&gt;  7 0900907… Branford     B01003_0…    28020    32 4_towns 09    New Haven…  2019</span>
+<span class="co">#&gt;  8 0900922… East Haven   B01003_0…    28742    30 4_towns 09    New Haven…  2019</span>
+<span class="co">#&gt;  9 0900934… Guilford     B01003_0…    22216    39 4_towns 09    New Haven…  2019</span>
+<span class="co">#&gt; 10 0900935… Hamden       B01003_0…    60982    49 4_towns 09    New Haven…  2019</span>
+<span class="co">#&gt; 11 0900944… Madison      B01003_0…    18113    21 4_towns 09    New Haven…  2019</span>
+<span class="co">#&gt; 12 0900947… Milford      B01003_0…    54328    88 4_towns 09    New Haven…  2019</span>
+<span class="co">#&gt; 13 0900952… New Haven    B01003_0…   130331    47 4_towns 09    New Haven…  2019</span>
+<span class="co">#&gt; 14 0900953… North Branf… B01003_0…    14191    24 4_towns 09    New Haven…  2019</span>
+<span class="co">#&gt; 15 0900954… North Haven  B01003_0…    23722    25 4_towns 09    New Haven…  2019</span>
+<span class="co">#&gt; 16 0900957… Orange       B01003_0…    13934    36 4_towns 09    New Haven…  2019</span>
+<span class="co">#&gt; 17 0900982… West Haven   B01003_0…    54763    54 4_towns 09    New Haven…  2019</span>
+<span class="co">#&gt; 18 0900987… Woodbridge   B01003_0…     8827    46 4_towns 09    New Haven…  2019</span></code></pre></div>
 <p>Neighborhoods with corresponding tracts or block groups are included for 4 cities (see <code>neighborhood_tracts</code>). Pass those to get neighborhood-level aggregates.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/multi_geo_acs.html">multi_geo_acs</a></span><span class="op">(</span><span class="st">"B01003"</span>, towns <span class="op">=</span> <span class="st">"New Haven"</span>, counties <span class="op">=</span> <span class="st">"New Haven"</span>, neighborhoods <span class="op">=</span> <span class="va">nhv_tracts</span><span class="op">)</span>
-<span class="co">#&gt; Table B01003: TOTAL POPULATION, 2018</span>
+<span class="co">#&gt; Table B01003: TOTAL POPULATION, 2019</span>
 <span class="co">#&gt; Geographies included:</span>
 <span class="co">#&gt; Neighborhoods: 19 neighborhoods</span>
 <span class="co">#&gt; Towns: New Haven</span>
@@ -163,16 +163,16 @@
 <span class="co">#&gt; # A tibble: 22 x 9</span>
 <span class="co">#&gt;    geoid    name       variable  estimate   moe level     state county      year</span>
 <span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;     &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 09       Connectic… B01003_0…  3581504    NA 1_state   &lt;NA&gt;  &lt;NA&gt;        2018</span>
-<span class="co">#&gt;  2 09009    New Haven… B01003_0…   859339    NA 2_counti… 09    &lt;NA&gt;        2018</span>
-<span class="co">#&gt;  3 0900952… New Haven  B01003_0…   130529   108 3_towns   09    New Haven…  2018</span>
-<span class="co">#&gt;  4 &lt;NA&gt;     Amity      B01003_0…     4990   552 4_neighb… 09    New Haven…  2018</span>
-<span class="co">#&gt;  5 &lt;NA&gt;     Annex      B01003_0…     7327   798 4_neighb… 09    New Haven…  2018</span>
-<span class="co">#&gt;  6 &lt;NA&gt;     Beaver Hi… B01003_0…     4612   557 4_neighb… 09    New Haven…  2018</span>
-<span class="co">#&gt;  7 &lt;NA&gt;     Dixwell    B01003_0…     5045   505 4_neighb… 09    New Haven…  2018</span>
-<span class="co">#&gt;  8 &lt;NA&gt;     Downtown   B01003_0…    11122   644 4_neighb… 09    New Haven…  2018</span>
-<span class="co">#&gt;  9 &lt;NA&gt;     Dwight     B01003_0…     4051   636 4_neighb… 09    New Haven…  2018</span>
-<span class="co">#&gt; 10 &lt;NA&gt;     East Rock  B01003_0…     8911  1131 4_neighb… 09    New Haven…  2018</span>
+<span class="co">#&gt;  1 09       Connectic… B01003_0…  3575074    NA 1_state   &lt;NA&gt;  &lt;NA&gt;        2019</span>
+<span class="co">#&gt;  2 09009    New Haven… B01003_0…   857513    NA 2_counti… 09    &lt;NA&gt;        2019</span>
+<span class="co">#&gt;  3 0900952… New Haven  B01003_0…   130331    47 3_towns   09    New Haven…  2019</span>
+<span class="co">#&gt;  4 &lt;NA&gt;     Amity      B01003_0…     4730   504 4_neighb… 09    New Haven…  2019</span>
+<span class="co">#&gt;  5 &lt;NA&gt;     Annex      B01003_0…     7296   851 4_neighb… 09    New Haven…  2019</span>
+<span class="co">#&gt;  6 &lt;NA&gt;     Beaver Hi… B01003_0…     4943   461 4_neighb… 09    New Haven…  2019</span>
+<span class="co">#&gt;  7 &lt;NA&gt;     Dixwell    B01003_0…     5149   470 4_neighb… 09    New Haven…  2019</span>
+<span class="co">#&gt;  8 &lt;NA&gt;     Downtown   B01003_0…    11026   677 4_neighb… 09    New Haven…  2019</span>
+<span class="co">#&gt;  9 &lt;NA&gt;     Dwight     B01003_0…     3874   548 4_neighb… 09    New Haven…  2019</span>
+<span class="co">#&gt; 10 &lt;NA&gt;     East Rock  B01003_0…     8825  1154 4_neighb… 09    New Haven…  2019</span>
 <span class="co">#&gt; # … with 12 more rows</span></code></pre></div>
 </div>
 <div id="aggregating-and-analyzing-data" class="section level1">
@@ -189,7 +189,7 @@
 </ul>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gnh_data</span><span class="op">$</span><span class="va">race</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/label_acs.html">label_acs</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="../reference/label_acs.html">label_acs</a></span><span class="op">(</span>year <span class="op">=</span> <span class="va">yr</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">county</span>, <span class="va">name</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://camille-s.github.io/camiller/reference/add_grps.html">add_grps</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>total <span class="op">=</span> <span class="fl">1</span>, white <span class="op">=</span> <span class="fl">3</span>, black <span class="op">=</span> <span class="fl">4</span>, latino <span class="op">=</span> <span class="fl">12</span>, other <span class="op">=</span> <span class="fl">5</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span>, group <span class="op">=</span> <span class="va">label</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://camille-s.github.io/camiller/reference/calc_shares.html">calc_shares</a></span><span class="op">(</span>group <span class="op">=</span> <span class="va">label</span>, denom <span class="op">=</span> <span class="st">"total"</span><span class="op">)</span>
@@ -197,21 +197,21 @@
 <span class="co">#&gt; # Groups:   level, county, name [18]</span>
 <span class="co">#&gt;    level      county name             label  estimate  share</span>
 <span class="co">#&gt;    &lt;fct&gt;      &lt;chr&gt;  &lt;chr&gt;            &lt;fct&gt;     &lt;dbl&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 1_state    &lt;NA&gt;   Connecticut      total   3581504 NA    </span>
-<span class="co">#&gt;  2 1_state    &lt;NA&gt;   Connecticut      white   2418696  0.675</span>
-<span class="co">#&gt;  3 1_state    &lt;NA&gt;   Connecticut      black    351817  0.098</span>
-<span class="co">#&gt;  4 1_state    &lt;NA&gt;   Connecticut      latino   561791  0.157</span>
-<span class="co">#&gt;  5 1_state    &lt;NA&gt;   Connecticut      other    249200  0.07 </span>
-<span class="co">#&gt;  6 2_counties &lt;NA&gt;   New Haven County total    859339 NA    </span>
-<span class="co">#&gt;  7 2_counties &lt;NA&gt;   New Haven County white    546120  0.636</span>
-<span class="co">#&gt;  8 2_counties &lt;NA&gt;   New Haven County black    106325  0.124</span>
-<span class="co">#&gt;  9 2_counties &lt;NA&gt;   New Haven County latino   151361  0.176</span>
-<span class="co">#&gt; 10 2_counties &lt;NA&gt;   New Haven County other     55533  0.065</span>
+<span class="co">#&gt;  1 1_state    &lt;NA&gt;   Connecticut      total   3575074 NA    </span>
+<span class="co">#&gt;  2 1_state    &lt;NA&gt;   Connecticut      white   2392013  0.669</span>
+<span class="co">#&gt;  3 1_state    &lt;NA&gt;   Connecticut      black    354120  0.099</span>
+<span class="co">#&gt;  4 1_state    &lt;NA&gt;   Connecticut      latino   574240  0.161</span>
+<span class="co">#&gt;  5 1_state    &lt;NA&gt;   Connecticut      other    254701  0.071</span>
+<span class="co">#&gt;  6 2_counties &lt;NA&gt;   New Haven County total    857513 NA    </span>
+<span class="co">#&gt;  7 2_counties &lt;NA&gt;   New Haven County white    539298  0.629</span>
+<span class="co">#&gt;  8 2_counties &lt;NA&gt;   New Haven County black    107111  0.125</span>
+<span class="co">#&gt;  9 2_counties &lt;NA&gt;   New Haven County latino   155335  0.181</span>
+<span class="co">#&gt; 10 2_counties &lt;NA&gt;   New Haven County other     55769  0.065</span>
 <span class="co">#&gt; # … with 80 more rows</span></code></pre></div>
 <p>With the tenure table, it’s easiest to separate the labels by <code>"!!"</code>. Here the table can be wrangled into shares of households that are owner-occupied.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">homeownership</span> <span class="op">&lt;-</span> <span class="va">gnh_data</span><span class="op">$</span><span class="va">tenure</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/label_acs.html">label_acs</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/label_acs.html">label_acs</a></span><span class="op">(</span>year <span class="op">=</span> <span class="va">yr</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">label</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"total"</span>, <span class="st">"tenure"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"!!"</span>, fill <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">name</span>, <span class="va">tenure</span>, <span class="va">estimate</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">tenure</span> <span class="op">!=</span> <span class="st">"Renter occupied"</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -224,24 +224,24 @@
 <span class="co">#&gt; # Groups:   level, name [18]</span>
 <span class="co">#&gt;    level      name                 tenure         estimate share</span>
 <span class="co">#&gt;    &lt;fct&gt;      &lt;chr&gt;                &lt;fct&gt;             &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 1_state    Connecticut          Owner occupied   907134 0.663</span>
-<span class="co">#&gt;  2 2_counties New Haven County     Owner occupied   204295 0.619</span>
-<span class="co">#&gt;  3 3_regions  Greater New Haven    Owner occupied   106296 0.6  </span>
-<span class="co">#&gt;  4 3_regions  New Haven Inner Ring Owner occupied    33319 0.621</span>
-<span class="co">#&gt;  5 3_regions  New Haven Outer Ring Owner occupied    59250 0.803</span>
-<span class="co">#&gt;  6 4_towns    Bethany              Owner occupied     1800 0.915</span>
-<span class="co">#&gt;  7 4_towns    Branford             Owner occupied     8724 0.702</span>
-<span class="co">#&gt;  8 4_towns    East Haven           Owner occupied     7871 0.708</span>
-<span class="co">#&gt;  9 4_towns    Guilford             Owner occupied     7167 0.862</span>
-<span class="co">#&gt; 10 4_towns    Hamden               Owner occupied    14698 0.641</span>
-<span class="co">#&gt; 11 4_towns    Madison              Owner occupied     5958 0.862</span>
-<span class="co">#&gt; 12 4_towns    Milford              Owner occupied    16578 0.751</span>
-<span class="co">#&gt; 13 4_towns    New Haven            Owner occupied    13727 0.276</span>
-<span class="co">#&gt; 14 4_towns    North Branford       Owner occupied     4727 0.867</span>
-<span class="co">#&gt; 15 4_towns    North Haven          Owner occupied     7325 0.834</span>
-<span class="co">#&gt; 16 4_towns    Orange               Owner occupied     4361 0.883</span>
-<span class="co">#&gt; 17 4_towns    West Haven           Owner occupied    10750 0.549</span>
-<span class="co">#&gt; 18 4_towns    Woodbridge           Owner occupied     2610 0.89</span></code></pre></div>
+<span class="co">#&gt;  1 1_state    Connecticut          Owner occupied   905681 0.661</span>
+<span class="co">#&gt;  2 2_counties New Haven County     Owner occupied   204451 0.618</span>
+<span class="co">#&gt;  3 3_regions  Greater New Haven    Owner occupied   106231 0.599</span>
+<span class="co">#&gt;  4 3_regions  New Haven Inner Ring Owner occupied    33401 0.623</span>
+<span class="co">#&gt;  5 3_regions  New Haven Outer Ring Owner occupied    59073 0.794</span>
+<span class="co">#&gt;  6 4_towns    Bethany              Owner occupied     1832 0.908</span>
+<span class="co">#&gt;  7 4_towns    Branford             Owner occupied     8433 0.682</span>
+<span class="co">#&gt;  8 4_towns    East Haven           Owner occupied     8102 0.727</span>
+<span class="co">#&gt;  9 4_towns    Guilford             Owner occupied     7269 0.866</span>
+<span class="co">#&gt; 10 4_towns    Hamden               Owner occupied    14432 0.639</span>
+<span class="co">#&gt; 11 4_towns    Madison              Owner occupied     5919 0.856</span>
+<span class="co">#&gt; 12 4_towns    Milford              Owner occupied    16720 0.745</span>
+<span class="co">#&gt; 13 4_towns    New Haven            Owner occupied    13757 0.28 </span>
+<span class="co">#&gt; 14 4_towns    North Branford       Owner occupied     4570 0.856</span>
+<span class="co">#&gt; 15 4_towns    North Haven          Owner occupied     7406 0.817</span>
+<span class="co">#&gt; 16 4_towns    Orange               Owner occupied     4372 0.879</span>
+<span class="co">#&gt; 17 4_towns    West Haven           Owner occupied    10867 0.546</span>
+<span class="co">#&gt; 18 4_towns    Woodbridge           Owner occupied     2552 0.881</span></code></pre></div>
 </div>
 <div id="visual-sketches" class="section level1">
 <h1 class="hasAnchor">
@@ -263,7 +263,7 @@
 <p>Since this returns a <code>ggplot</code> object with <code>sf</code> data, we can add additional <code>ggplot</code> functions, such as labeling, themes, or additional scales or geoms.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tenure_map</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>subtitle <span class="op">=</span> <span class="st">"By town, 2018"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>subtitle <span class="op">=</span> <span class="st">"By town, 2019"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">.</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">name</span> <span class="op">==</span> <span class="st">"New Haven"</span><span class="op">)</span>, fill <span class="op">=</span> <span class="cn">NA</span>, color <span class="op">=</span> <span class="st">"black"</span>, size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span></code></pre></div>
 <p><img src="basic-workflow_files/figure-html/quick_map2-1.png" width="1050"></p>
 </div>
@@ -276,9 +276,9 @@
 <code class="sourceCode R"><span class="va">new_haven_regions</span> <span class="op">&lt;-</span> <span class="va">regions</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Greater New Haven"</span>, <span class="st">"New Haven Inner Ring"</span>, 
                              <span class="st">"New Haven Outer Ring"</span>, <span class="st">"Lower Naugatuck Valley"</span>, <span class="st">"Greater Waterbury"</span><span class="op">)</span><span class="op">]</span>
 
-<span class="va">acs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/multi_geo_acs.html">multi_geo_acs</a></span><span class="op">(</span>table <span class="op">=</span> <span class="st">"B01001"</span>, year <span class="op">=</span> <span class="fl">2018</span>, towns <span class="op">=</span> <span class="cn">NULL</span>, regions <span class="op">=</span> <span class="va">new_haven_regions</span>, 
+<span class="va">acs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/multi_geo_acs.html">multi_geo_acs</a></span><span class="op">(</span>table <span class="op">=</span> <span class="st">"B01001"</span>, year <span class="op">=</span> <span class="va">yr</span>, towns <span class="op">=</span> <span class="cn">NULL</span>, regions <span class="op">=</span> <span class="va">new_haven_regions</span>, 
               counties <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"New Haven County"</span>, <span class="st">"Fairfield County"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/label_acs.html">label_acs</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/label_acs.html">label_acs</a></span><span class="op">(</span>year <span class="op">=</span> <span class="va">yr</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">label</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"total"</span>, <span class="st">"sex"</span>, <span class="st">"age"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"!!"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">forcats</span><span class="fu">::</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_inorder.html">fct_inorder</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -338,8 +338,8 @@
 <span class="va">employment</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">industry</span> <span class="op">%in%</span> <span class="va">top2018</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub</a></span><span class="op">(</span><span class="va">label</span>, <span class="fl">1</span>, <span class="fl">25</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Emp <span class="op">=</span> <span class="va">Emp</span> <span class="op">/</span> <span class="fl">1000</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>, y <span class="op">=</span> <span class="va">Emp</span>, color <span class="op">=</span> <span class="va">label</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Emp_1k <span class="op">=</span> <span class="va">Emp</span> <span class="op">/</span> <span class="fl">1000</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>, y <span class="op">=</span> <span class="va">Emp_1k</span>, color <span class="op">=</span> <span class="va">label</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Year"</span>, y <span class="op">=</span> <span class="st">"Employees (thousands)"</span>, title <span class="op">=</span> <span class="st">"Employment by industry"</span>, 
          subtitle <span class="op">=</span> <span class="st">"Connecticut and New Haven County, 2002-2018"</span>, color <span class="op">=</span> <span class="st">"Industry"</span><span class="op">)</span> <span class="op">+</span>
@@ -360,7 +360,8 @@
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Year"</span>, y <span class="op">=</span> <span class="st">"Average annual wages (thousands)"</span>, title <span class="op">=</span> <span class="st">"Average annual wages by industry (adjusted to 2018 dollars)"</span>, 
          subtitle <span class="op">=</span> <span class="st">"Connecticut and New Haven County, 2002-2018"</span>, color <span class="op">=</span> <span class="st">"Industry"</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">location</span><span class="op">)</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span></code></pre></div>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">location</span><span class="op">)</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span>
+<span class="co">#&gt; The API can only get 10 years of data at once; making multiple calls, but this might take a little longer.</span></code></pre></div>
 <p><img src="basic-workflow_files/figure-html/inflation-1.png" width="1050"></p>
 <p>Now we have a visual that shows that in a few industries, wages have climbed over the past several years, but in many industries, wages haven’t increased except by inflation.</p>
 </div>
