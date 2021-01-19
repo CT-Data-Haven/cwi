@@ -1,3 +1,5 @@
+# cwi 0.1.3
+
 # cwi 0.1.2
 
 * `multi_geo_acs` & `multi_geo_decennial` call `janitor::clean_names` before returning. This keeps columns aligned properly if neighborhoods are included.
