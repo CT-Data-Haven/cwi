@@ -1,17 +1,17 @@
-#' Variable labels from the 2018 ACS
+#' Variable labels from the 2019 ACS
 #'
-#' Dataset of ACS variable labels, loaded from `tidycensus::load_variables()` for 2018 and cleaned up slightly.
+#' Dataset of ACS variable labels, loaded from `tidycensus::load_variables()` for 2019 and cleaned up slightly.
 #'
 #' This dataset is updated and renamed accordingly with each annual ACS release.
 #'
-#' @format A data frame with 26996 rows and 3 variables:
+#' @format A data frame with 27039 rows and 3 variables:
 #' \describe{
 #'   \item{name}{Variable code, where first 6 characters are the table number and last 3 digits are the variable number}
 #'   \item{label}{Readable label of each variable}
 #'   \item{concept}{Table name}
 #' }
 #' @source US Census Bureau via `tidycensus`
-"acs_vars18"
+"acs_vars19"
 
 
 #' Variable labels from the 2010 Decennial Census

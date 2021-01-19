@@ -31,7 +31,7 @@ library(cwi)
 The tables I'm working with are `B01003`, total population; `B03002`, race and Latino ethnicity; and `B25003`, housing tenure. It's easiest to save these in a named list, then map over the list calling `multi_geo_acs()` for each table number.
 
 ```{r tbls}
-year <- 2018
+yr <- 2019
 table_nums <- list(
   total_pop = "B01003", 
   race = "B03002",
@@ -47,7 +47,7 @@ I'm pulling out the entries in the `cwi` dataset `cwi::regions` (a list) to only
 gnh_regions <- regions[c("Greater New Haven", "New Haven Inner Ring", "New Haven Outer Ring")]
 
 gnh_data <- map(table_nums, 
-    ~multi_geo_acs(table = ., year = year, towns = regions$`Greater New Haven`,
+    ~multi_geo_acs(table = ., year = yr, towns = regions$`Greater New Haven`,
                    regions = gnh_regions, counties = "New Haven", state = "09"))
 
 gnh_data$total_pop
@@ -73,7 +73,7 @@ The race and ethnicity table will require some calculations, using the brilliant
 
 ```{r calc}
 gnh_data$race %>%
-  label_acs() %>% 
+  label_acs(year = yr) %>% 
   group_by(level, county, name) %>%
   add_grps(list(total = 1, white = 3, black = 4, latino = 12, other = 5:9), group = label) %>%
   calc_shares(group = label, denom = "total")
@@ -83,7 +83,7 @@ With the tenure table, it's easiest to separate the labels by `"!!"`. Here the t
 
 ```{r sep}
 homeownership <- gnh_data$tenure %>%
-  label_acs() %>%
+  label_acs(year = yr) %>%
   separate(label, into = c("total", "tenure"), sep = "!!", fill = "left") %>%
   select(level, name, tenure, estimate) %>%
   filter(tenure != "Renter occupied") %>%
@@ -118,7 +118,7 @@ Since this returns a `ggplot` object with `sf` data, we can add additional `ggpl
 
 ```{r quick_map2, message=FALSE, warning=FALSE}
 tenure_map +
-  labs(subtitle = "By town, 2018") +
+  labs(subtitle = "By town, 2019") +
   geom_sf(data = . %>% filter(name == "New Haven"), fill = NA, color = "black", size = 1.5)
 ```
 
@@ -132,9 +132,9 @@ For example, I need to pull a table of populations by age group for several regi
 new_haven_regions <- regions[c("Greater New Haven", "New Haven Inner Ring", 
                              "New Haven Outer Ring", "Lower Naugatuck Valley", "Greater Waterbury")]
 
-acs <- multi_geo_acs(table = "B01001", year = 2018, towns = NULL, regions = new_haven_regions, 
+acs <- multi_geo_acs(table = "B01001", year = yr, towns = NULL, regions = new_haven_regions, 
               counties = c("New Haven County", "Fairfield County")) %>%
-  label_acs() %>%
+  label_acs(year = yr) %>%
   separate(label, into = c("total", "sex", "age"), sep = "!!") %>%
   filter(!is.na(age)) %>%
   mutate(age = as.factor(age) %>% forcats::fct_inorder()) %>%
@@ -180,8 +180,8 @@ top2018
 employment %>%
   filter(industry %in% top2018) %>%
   mutate(label = stringr::str_sub(label, 1, 25)) %>%
-  mutate(Emp = Emp / 1000) %>%
-  ggplot(aes(x = year, y = Emp, color = label)) +
+  mutate(Emp_1k = Emp / 1000) %>%
+  ggplot(aes(x = year, y = Emp_1k, color = label)) +
     geom_line() +
     labs(x = "Year", y = "Employees (thousands)", title = "Employment by industry", 
          subtitle = "Connecticut and New Haven County, 2002-2018", color = "Industry") +

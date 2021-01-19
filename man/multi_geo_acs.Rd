@@ -6,7 +6,7 @@
 \usage{
 multi_geo_acs(
   table,
-  year = 2018,
+  year = 2019,
   towns = "all",
   regions = NULL,
   counties = "all",
@@ -28,7 +28,7 @@ multi_geo_acs(
 \arguments{
 \item{table}{A string giving the ACS table number.}
 
-\item{year}{The year of the ACS table; currently defaults 2018 (most recent available).}
+\item{year}{The year of the ACS table; currently defaults 2019 (most recent available).}
 
 \item{towns}{A character vector of names of towns to include; \code{"all"} (default) for all towns optionally filtered by county; or \code{NULL} to not fetch town-level table.}
 
@@ -73,7 +73,7 @@ This function essentially calls \code{tidycensus::get_acs()} multiple times, dep
 }
 \examples{
 \dontrun{
-multi_geo_acs("B01003", 2018,
+multi_geo_acs("B01003", 2019,
   towns = "all",
   regions = list(inner_ring = c("Hamden", "East Haven", "West Haven")),
   counties = "New Haven County",

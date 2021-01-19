@@ -5,7 +5,7 @@
 \alias{xwalk}
 \title{CT crosswalk}
 \format{
-A data frame with 67485 rows and 11 variables:
+A data frame with 67465 rows and 11 variables:
 \describe{
 \item{block}{Block FIPS code}
 \item{block_grp}{Block group FIPS code}

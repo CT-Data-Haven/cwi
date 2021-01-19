@@ -1,6 +1,7 @@
 # make sf objects of towns, neighborhoods
-town_sf <- tigris::county_subdivisions(state = "09", cb = TRUE, class = "sf", year = 2018) %>%
-  dplyr::select(name = NAME, GEOID, geometry)
+town_sf <- tigris::county_subdivisions(state = "09", cb = TRUE, class = "sf", year = 2019) %>%
+  dplyr::select(name = NAME, GEOID, geometry) %>%
+  dplyr::arrange(GEOID)
 
 
 new_haven_sf <- sf::st_read("https://gist.githubusercontent.com/camille-s/c8cfa583ef22105e90d53ceb299f1a7b/raw/fc087f30ddb2658a05fb5408f1e9d5276b8a433d/nhv.json") %>%
@@ -24,7 +25,7 @@ hartford_sf <- sf::st_read("https://gist.github.com/camille-s/9e9761b69a7c86bf6d
   sf::st_transform(sf::st_crs(tract_sf))
 
 
-tract_sf <- tigris::tracts(state = "09", cb = TRUE, class = "sf", year = 2018) %>%
+tract_sf <- tigris::tracts(state = "09", cb = TRUE, class = "sf", year = 2019) %>%
   dplyr::select(name = GEOID, geometry)
 
 usethis::use_data(town_sf, overwrite = TRUE)

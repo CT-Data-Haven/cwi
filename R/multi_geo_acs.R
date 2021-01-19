@@ -5,7 +5,7 @@
 #' This function essentially calls `tidycensus::get_acs()` multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying `tidycensus::get_acs()` requires a Census API key. As is the case with other `tidycensus` functions, `multi_geo_acs` assumes this key is stored as `CENSUS_API_KEY` in your `.Renviron`. See [tidycensus::census_api_key()] for installation.
 #'
 #' @param table A string giving the ACS table number.
-#' @param year The year of the ACS table; currently defaults 2018 (most recent available).
+#' @param year The year of the ACS table; currently defaults 2019 (most recent available).
 #' @param towns A character vector of names of towns to include; `"all"` (default) for all towns optionally filtered by county; or `NULL` to not fetch town-level table.
 #' @param regions A named list of regions with their town names (defaults `NULL`).
 #' @param counties A character vector of names of counties to include; `"all"` (default) for all counties in the state; or `NULL` to not fetch county-level table.
@@ -26,7 +26,7 @@
 #' @seealso [tidycensus::census_api_key()], [tidycensus::get_acs()]
 #' @examples
 #' \dontrun{
-#' multi_geo_acs("B01003", 2018,
+#' multi_geo_acs("B01003", 2019,
 #'   towns = "all",
 #'   regions = list(inner_ring = c("Hamden", "East Haven", "West Haven")),
 #'   counties = "New Haven County",
@@ -40,7 +40,7 @@
 #'
 #' }
 #' @export
-multi_geo_acs <- function(table, year = 2018, towns = "all", regions = NULL, counties = "all", state = "09", neighborhoods = NULL, tracts = NULL, blockgroups = NULL, msa = FALSE, us = FALSE, new_england = TRUE, name = name, geoid = geoid, weight = weight, survey = "acs5", verbose = TRUE, key = NULL) {
+multi_geo_acs <- function(table, year = 2019, towns = "all", regions = NULL, counties = "all", state = "09", neighborhoods = NULL, tracts = NULL, blockgroups = NULL, msa = FALSE, us = FALSE, new_england = TRUE, name = name, geoid = geoid, weight = weight, survey = "acs5", verbose = TRUE, key = NULL) {
   # check key
   if (is.null(key)) {
     key <- Sys.getenv("CENSUS_API_KEY")

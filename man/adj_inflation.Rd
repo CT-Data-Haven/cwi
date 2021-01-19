@@ -8,7 +8,7 @@ adj_inflation(
   .data,
   value,
   year,
-  base_year = 2018,
+  base_year = 2019,
   key = Sys.getenv("BLS_KEY")
 )
 }
@@ -19,7 +19,7 @@ adj_inflation(
 
 \item{year}{Bare column name of years; for safety, has no default.}
 
-\item{base_year}{Year on which to base inflation amounts; defaults to 2016.}
+\item{base_year}{Year on which to base inflation amounts; defaults to 2019.}
 
 \item{key}{A string giving the BLS API key. Defaults to the value in \code{Sys.getenv("BLS_KEY")}.}
 }
@@ -27,7 +27,7 @@ adj_inflation(
 A data frame with two additional columns: adjustment factors, and adjusted values. The adjusted values column is named based on the name supplied as \code{value}; e.g. if \code{value = avg_wage}, the adjusted column is named \code{adj_avg_wage}.
 }
 \description{
-This is modeled after \code{\link[blscrapeR:inflation_adjust]{blscrapeR::inflation_adjust()}} that joins a data frame with an inflation adjustment table from the Bureau of Labor Statistics, then calculates adjusted values. It returns the original data frame with two additional columns for adjustment factors and adjustment values.
+This is modeled after \code{blscrapeR::inflation_adjust} that joins a data frame with an inflation adjustment table from the Bureau of Labor Statistics, then calculates adjusted values. It returns the original data frame with two additional columns for adjustment factors and adjustment values.
 }
 \details{
 \strong{Note:} Because \code{adj_inflation} makes API calls, internet access is required.

@@ -1,13 +1,13 @@
 #' Add inflation-adjusted values to a data frame
 #'
-#' This is modeled after [`blscrapeR::inflation_adjust()`] that joins a data frame with an inflation adjustment table from the Bureau of Labor Statistics, then calculates adjusted values. It returns the original data frame with two additional columns for adjustment factors and adjustment values.
+#' This is modeled after `blscrapeR::inflation_adjust` that joins a data frame with an inflation adjustment table from the Bureau of Labor Statistics, then calculates adjusted values. It returns the original data frame with two additional columns for adjustment factors and adjustment values.
 #'
 #' **Note:** Because `adj_inflation` makes API calls, internet access is required.
 #'
 #' @param .data A data frame containing monetary values by year.
 #' @param value Bare column name of monetary values; for safety, has no default.
 #' @param year Bare column name of years; for safety, has no default.
-#' @param base_year Year on which to base inflation amounts; defaults to 2016.
+#' @param base_year Year on which to base inflation amounts; defaults to 2019.
 #' @param key A string giving the BLS API key. Defaults to the value in `Sys.getenv("BLS_KEY")`.
 #' @return A data frame with two additional columns: adjustment factors, and adjusted values. The adjusted values column is named based on the name supplied as `value`; e.g. if `value = avg_wage`, the adjusted column is named `adj_avg_wage`.
 #' @examples
@@ -19,7 +19,7 @@
 #'   adj_inflation(wages, value = wage, year = fiscal_year, base_year = 2016)
 #' }
 #' @export
-adj_inflation <- function(.data, value, year, base_year = 2018, key = Sys.getenv("BLS_KEY")) {
+adj_inflation <- function(.data, value, year, base_year = 2019, key = Sys.getenv("BLS_KEY")) {
   if (missing(value) | missing(year)) stop("Both value and year are required.")
   assertthat::assert_that(curl::has_internet(), msg = "Internet access is required to run this function.")
 
@@ -33,10 +33,10 @@ adj_inflation <- function(.data, value, year, base_year = 2018, key = Sys.getenv
   endyear <- max(c(yr_range[2], base_year))
 
   # API only handles 20 years at a time
-  if (endyear - startyear > 20) {
-    message("The API can only get 20 years of data at once; making multiple calls, but this might take a little longer.")
+  if (endyear - startyear > 10) {
+    message("The API can only get 10 years of data at once; making multiple calls, but this might take a little longer.")
   }
-  years_split <- split_n(startyear:endyear, 20)
+  years_split <- split_n(startyear:endyear, 10)
 
   cpi <- purrr::map_dfr(years_split, function(yrs) {
     get_cpi(min(yrs), max(yrs), key = key)
@@ -58,7 +58,7 @@ get_cpi <- function(startyear, endyear, key) {
   cpi_series <- "CUSR0000SA0"
 
   fetch <- httr::POST("https://api.bls.gov/publicAPI/v2/timeseries/data/",
-                      body = list(seriesid = I(c("CUSR0000SA0")),
+                      body = list(seriesid = I(c(cpi_series)),
                                   startyear = startyear,
                                   endyear = endyear,
                                   annualaverage = FALSE,
@@ -69,3 +69,4 @@ get_cpi <- function(startyear, endyear, key) {
   purrr::map_dfr(cpi_data, dplyr::as_tibble) %>%
     dplyr::mutate(dplyr::across(c(year, value), as.numeric))
 }
+
