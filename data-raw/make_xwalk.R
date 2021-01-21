@@ -39,6 +39,7 @@ xwalk <- xwalk_read %>%
                    by = "town") %>%
   dplyr::filter(stringr::str_detect(town_fips, "^09")) %>%
   dplyr::left_join(blocks, by = "tract") %>%
+  dplyr::mutate(county = stringr::str_remove(county, ", CT")) %>%
   dplyr::select(block, block_grp, tract, town, town_fips, county, county_fips, msa, msa_fips, puma, puma_fips)
 
 usethis::use_data(xwalk, overwrite = TRUE)
