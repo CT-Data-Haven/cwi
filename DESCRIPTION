@@ -39,9 +39,9 @@ Imports:
     tidyr,
     assertthat,
     tibble,
+    camiller (>= 0.2.0),
     tidycensus
 Suggests: 
-    camiller (>= 0.2.0),
     readr,
     knitr,
     lubridate,
