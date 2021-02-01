@@ -40,11 +40,12 @@
 #'
 #' }
 #' @export
-multi_geo_acs <- function(table, year = 2019, towns = "all", regions = NULL, counties = "all", state = "09", neighborhoods = NULL, tracts = NULL, blockgroups = NULL, msa = FALSE, us = FALSE, new_england = TRUE, name = name, geoid = geoid, weight = weight, survey = "acs5", verbose = TRUE, key = NULL) {
+multi_geo_acs <- function(table, year = 2019, towns = "all", regions = NULL, counties = "all", state = "09", neighborhoods = NULL, tracts = NULL, blockgroups = NULL, msa = FALSE, us = FALSE, new_england = TRUE, name = name, geoid = geoid, weight = weight, survey = c("acs5", "acs1"), verbose = TRUE, key = NULL) {
   # check key
   if (is.null(key)) {
     key <- Sys.getenv("CENSUS_API_KEY")
   }
+  survey <- match.arg(survey, c("acs5", "acs1"))
   if (nchar(key) == 0) stop("Must supply an API key. See the docs on where to store it.")
   st <- state
   # state must not be null

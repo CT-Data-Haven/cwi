@@ -30,11 +30,12 @@
 #'   counties = "New Haven County")
 #' }
 #' @export
-multi_geo_decennial <- function(table, year = 2010, towns = "all", regions = NULL, counties = "all", state = "09", neighborhoods = NULL, tracts = NULL, name = name, geoid = geoid, weight = weight, sumfile = "sf1", verbose = TRUE, key = NULL) {
+multi_geo_decennial <- function(table, year = 2010, towns = "all", regions = NULL, counties = "all", state = "09", neighborhoods = NULL, tracts = NULL, name = name, geoid = geoid, weight = weight, sumfile = c("sf1", "sf3"), verbose = TRUE, key = NULL) {
   # check key
   if (is.null(key)) {
     key <- Sys.getenv("CENSUS_API_KEY")
   }
+  sumfile <- match.arg(sumfile, c("sf1", "sf3"))
   if (nchar(key) == 0) stop("Must supply an API key. See the docs on where to store it.")
   st <- state
   # state must not be null

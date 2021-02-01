@@ -40,8 +40,7 @@ Imports:
     assertthat,
     tibble,
     magick,
-    cowplot
-Suggests: 
+    cowplot,
     camiller (>= 0.2.0),
     tidycensus
 Suggests: 

@@ -16,7 +16,7 @@ multi_geo_decennial(
   name = name,
   geoid = geoid,
   weight = weight,
-  sumfile = "sf1",
+  sumfile = c("sf1", "sf3"),
   verbose = TRUE,
   key = NULL
 )

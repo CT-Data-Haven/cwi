@@ -31,7 +31,7 @@ test_that("invalid levels are caught", {
     dplyr::mutate(value = stats::runif(10))
 
   # handle invalid level
-  expect_error(acs_quick_map(hood_df, level = "nhood", city = "New Haven"), "Valid geography")
+  expect_error(acs_quick_map(hood_df, level = "nhood", city = "New Haven"))
 })
 
 test_that("neighborhoods and city names are matched", {

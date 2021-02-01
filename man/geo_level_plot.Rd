@@ -9,7 +9,7 @@ geo_level_plot(
   name = name,
   value = value,
   level = level,
-  type = "col",
+  type = c("col", "hist", "point"),
   hilite = "dodgerblue",
   title = NULL,
   dark_gray = "gray20",

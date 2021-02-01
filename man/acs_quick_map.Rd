@@ -8,7 +8,7 @@ acs_quick_map(
   .data,
   name = name,
   value = value,
-  level = "town",
+  level = c("town", "neighborhood", "tract"),
   city = NULL,
   n = 5,
   palette = "GnBu",

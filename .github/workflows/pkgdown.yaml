@@ -35,7 +35,7 @@ jobs:
 
       - name: Install package
         run: |
-          devtools::install()
+          devtools::install(upgrade = FALSE)
         shell: Rscript {0}
 
       - name: Check package

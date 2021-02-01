@@ -21,9 +21,9 @@
 #'   acs_quick_map(name = NAME, value = estimate, title = "Median age by town, 2017", n = 6)
 #' }
 #' @export
-acs_quick_map <- function(.data, name = name, value = value, level = "town", city = NULL, n = 5, palette = "GnBu", title = NULL, ...) {
+acs_quick_map <- function(.data, name = name, value = value, level = c("town", "neighborhood", "tract"), city = NULL, n = 5, palette = "GnBu", title = NULL, ...) {
   # supply city if it's neighborhoods
-  assertthat::assert_that(level %in% c("town", "neighborhood", "tract"), msg = "Valid geography levels are town, neighborhood, or tract.")
+  level <- match.arg(level, c("town", "neighborhood", "tract"))
 
   if (level == "neighborhood" & is.null(city)) stop("If using neighborhoods, please supply a city name.")
 

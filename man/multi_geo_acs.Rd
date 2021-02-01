@@ -20,7 +20,7 @@ multi_geo_acs(
   name = name,
   geoid = geoid,
   weight = weight,
-  survey = "acs5",
+  survey = c("acs5", "acs1"),
   verbose = TRUE,
   key = NULL
 )

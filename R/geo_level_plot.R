@@ -13,9 +13,9 @@
 #' @param ... Any additional parameters to pass to the underlying geom function.
 #' @return A ggplot
 #' @export
-geo_level_plot <- function(.data, name = name, value = value, level = level, type = "col", hilite = "dodgerblue", title = NULL, dark_gray = "gray20", light_gray = "gray60", ...) {
+geo_level_plot <- function(.data, name = name, value = value, level = level, type = c("col", "hist", "point"), hilite = "dodgerblue", title = NULL, dark_gray = "gray20", light_gray = "gray60", ...) {
   # type can be column (col), histogram (hist), or point (point)
-  if (!type %in% c("col", "hist", "point")) stop("'type' must be one of col, hist, or point")
+  type <- match.arg(type, c("col", "hist", "point"))
   if (!grepl("gr(a|e)y", dark_gray)) dark_gray <- "gray20"
   if (!grepl("gr(a|e)y", light_gray)) light_gray <- "gray60"
 
