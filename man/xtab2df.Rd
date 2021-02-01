@@ -37,6 +37,12 @@ extracts the question codes (e.g. Q4A), question text, categories, and
 demographic groups, and joins those descriptions with survey responses and
 values, making it ready for analysis.
 }
+\examples{
+if(interactive()){
+  xtab <- read_xtabs(system.file("inst/extdata/test_xtab2018.xlsx", package = "cwi"))
+  xtab2df(xtab)
+ }
+}
 \seealso{
 \code{\link[=read_xtabs]{read_xtabs()}}
 }

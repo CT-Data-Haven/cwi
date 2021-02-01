@@ -14,6 +14,12 @@ reference:
   - 'multi_geo_decennial'
   - 'qwi_industry'
 
+- title: Functions - survey & crosstabs
+  desc: Functions to read, clean, and analyze DataHaven Community Wellbeing Survey crosstabs
+  contents:
+  - 'read_dcws'
+  - 'xtab2df'
+
 - title: Functions - analyzing and plotting
   desc: Functions to analyze or quickly plot data
   contents:
@@ -52,6 +58,7 @@ reference:
 - title: Misc. / utilities
   desc: Miscellaneous functions
   contents:
+  - 'add_logo'
   - 'batch_csv_dump'
   - 'dh_scaffold'
   - 'jenks'

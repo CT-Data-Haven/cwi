@@ -2,7 +2,7 @@
 % Please edit documentation in R/dh_scaffold.R
 \name{dh_scaffold}
 \alias{dh_scaffold}
-\title{dh_scaffold}
+\title{Setup directories for a typical DataHaven project}
 \usage{
 dh_scaffold(
   dir = ".",
@@ -66,8 +66,5 @@ Standard use: utility scripts and miscellaneous files, e.g. logo images, snippet
 Returns nothing, but prints paths to newly created directories.
 }
 \description{
-Setup directories for a typical DataHaven project
-}
-\details{
-This sets up a typical project directory structure that we use for many projects at DataHaven. It will write directories at the specified path, but it will NOT overwrite any directories that already exist. You'll have the option to cancel before anything is written.
+This sets up a typical (opinionated) project directory structure that we use for many projects at DataHaven. It will write directories at the specified path, but it will NOT overwrite any directories that already exist. You'll have the option to cancel before anything is written.
 }

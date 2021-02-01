@@ -1,11 +1,11 @@
-#' @title jenks
-#' @description Quickly cut a vector with the Jenks/Fisher algorithms
+#' @title Quickly cut a vector with the Jenks/Fisher algorithms
+#' @description Given a numeric vector, this returns a factor of those values cut
+#' into `n` number of breaks using the Jenks/Fisher algorithms. The algorithm(s) sets breaks in a way that highlights very high or very low values well. It's good to use for choropleths that need to convey imbalances or inequities.
 #' @param x A numeric vector to cut
 #' @param n Number of bins, Default: 5
 #' @param true_jenks Logical: should a "true" Jenks algorithm be used? If false, uses the faster Fisher-Jenks algorithm. See `classInt::classIntervals` docs for discussion. Default: FALSE
 #' @param labels A string vector to be used as bin labels, Default: NULL
 #' @param ... Additional arguments passed on to `cut`
-#' @details The Jenks/Fisher algorithms cut a set of numbers into bins in a way that highlights very high or very low values well. It's good to use for choropleths that need to convey imbalances or inequities.
 #' @return A factor of the same length as x
 #' @examples
 #'  set.seed(123)

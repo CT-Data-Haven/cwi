@@ -2,7 +2,7 @@
 % Please edit documentation in R/jenks.R
 \name{jenks}
 \alias{jenks}
-\title{jenks}
+\title{Quickly cut a vector with the Jenks/Fisher algorithms}
 \usage{
 jenks(x, n = 5, true_jenks = FALSE, labels = NULL, ...)
 }
@@ -21,10 +21,8 @@ jenks(x, n = 5, true_jenks = FALSE, labels = NULL, ...)
 A factor of the same length as x
 }
 \description{
-Quickly cut a vector with the Jenks/Fisher algorithms
-}
-\details{
-The Jenks/Fisher algorithms cut a set of numbers into bins in a way that highlights very high or very low values well. It's good to use for choropleths that need to convey imbalances or inequities.
+Given a numeric vector, this returns a factor of those values cut
+into \code{n} number of breaks using the Jenks/Fisher algorithms. The algorithm(s) sets breaks in a way that highlights very high or very low values well. It's good to use for choropleths that need to convey imbalances or inequities.
 }
 \examples{
  set.seed(123)
