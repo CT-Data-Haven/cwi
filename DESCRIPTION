@@ -39,7 +39,9 @@ Imports:
     tidycensus,
     tidyr,
     assertthat,
-    tibble
+    tibble,
+    magick,
+    cowplot
 Suggests: 
     camiller (>= 0.2.0),
     readr,

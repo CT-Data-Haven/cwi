@@ -1,6 +1,6 @@
 #' Add inflation-adjusted values to a data frame
 #'
-#' This is modeled after [`blscrapeR::inflation_adjust()`] that joins a data frame with an inflation adjustment table from the Bureau of Labor Statistics, then calculates adjusted values. It returns the original data frame with two additional columns for adjustment factors and adjustment values.
+#' This is modeled after `blscrapeR::inflation_adjust` that joins a data frame with an inflation adjustment table from the Bureau of Labor Statistics, then calculates adjusted values. It returns the original data frame with two additional columns for adjustment factors and adjustment values.
 #'
 #' **Note:** Because `adj_inflation` makes API calls, internet access is required.
 #'
