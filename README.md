@@ -3,8 +3,10 @@
 
 # cwi <img src="man/figures/logo.png" align="right" />
 
-<!-- badges: start --> [![R build
-status](https://github.com/CT-Data-Haven/cwi/workflows/pkgdown/badge.svg)](https://github.com/CT-Data-Haven/cwi/actions)
+<!-- badges: start -->
+
+[![R build
+status](https://github.com/CT-Data-Haven/cwi/workflows/pkgdown/badge.svg)](https://github.com/CT-Data-Haven/cwi/actions?workflow=pkgdown)
 <!-- badges: end -->
 
 The goal of `cwi` is to get data, primarily the Census ACS, fetched,

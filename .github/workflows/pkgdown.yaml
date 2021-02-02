@@ -20,6 +20,12 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v1
 
+      - name: Install spatial libraries
+        run: |
+          # copied from sf github
+          rm '/usr/local/bin/gfortran'
+          brew install pkg-config gdal proj geos
+
       - name: Query dependencies
         run: |
           install.packages(c("renv", "devtools", "pkgdown"))
