@@ -17,7 +17,7 @@ reference:
 - title: Functions - survey & crosstabs
   desc: Functions to read, clean, and analyze DataHaven Community Wellbeing Survey crosstabs
   contents:
-  - 'read_dcws'
+  - 'read_xtabs'
   - 'xtab2df'
 
 - title: Functions - analyzing and plotting
