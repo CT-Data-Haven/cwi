@@ -149,7 +149,7 @@ multi_geo_acs <- function(table, year = 2019, towns = "all", regions = NULL, cou
   }
 
   if (us) {
-    fetch[["us"]] <- suppressMessages(tidycensus::get_acs(geography = "us", table = table, year = year, survey = survey, key))
+    fetch[["us"]] <- suppressMessages(tidycensus::get_acs(geography = "us", table = table, year = year, survey = survey, key = key))
   }
 
   # take the names of non-null items in fetch, reverse the order (i.e. largest geo to smallest),
