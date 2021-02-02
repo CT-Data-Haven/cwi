@@ -6,9 +6,9 @@ output: github_document
 
 # cwi <img src="man/figures/logo.png" align="right" />
 
-  <!-- badges: start -->
-  [![R build status](https://github.com/CT-Data-Haven/cwi/workflows/pkgdown/badge.svg)](https://github.com/CT-Data-Haven/cwi/actions)
-  <!-- badges: end -->
+<!-- badges: start -->
+[![pkgdown](https://github.com/CT-Data-Haven/cwi/workflows/pkgdown/badge.svg)](https://github.com/CT-Data-Haven/cwi/actions)
+<!-- badges: end -->
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
@@ -67,7 +67,6 @@ Here's an example of getting a big table to calculate homeownership rates across
 
 ```{r example, message=FALSE, warning=FALSE}
 library(dplyr)
-library(stringr)
 library(cwi)
 ```
 
@@ -87,10 +86,10 @@ tenure
 ```{r homeownership_rates}
 homeownership <- tenure %>%
   label_acs() %>%
-  group_by(level, NAME) %>%
+  group_by(level, name) %>%
   mutate(share = estimate / estimate[1]) %>% # or use camiller::calc_shares
-  filter(str_detect(label, "Owner")) %>%
-  select(level, name = NAME, share)
+  filter(stringr::str_detect(label, "Owner")) %>%
+  select(level, name, share)
 
 homeownership
 ```

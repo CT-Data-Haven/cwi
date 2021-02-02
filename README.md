@@ -3,10 +3,9 @@
 
 # cwi <img src="man/figures/logo.png" align="right" />
 
-[![Build
-Status](https://travis-ci.org/CT-Data-Haven/cwi.svg?branch=master)](https://travis-ci.org/CT-Data-Haven/cwi)
-[![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/CT-Data-Haven/cwi?branch=master&svg=true)](https://ci.appveyor.com/project/CT-Data-Haven/cwi)
+<!-- badges: start --> [![R build
+status](https://github.com/CT-Data-Haven/cwi/workflows/pkgdown/badge.svg)](https://github.com/CT-Data-Haven/cwi/actions)
+<!-- badges: end -->
 
 The goal of `cwi` is to get data, primarily the Census ACS, fetched,
 aggregated, and analyzed for [DataHaven’s 2019 Community Index
@@ -32,23 +31,23 @@ devtools::install_github("CT-Data-Haven/cwi")
 
 This package relies heavily on:
 
-  - The [`tidyverse`](http://tidyverse.org/) packages, namely
+-   The [`tidyverse`](http://tidyverse.org/) packages, namely
     `magrittr`, `dplyr`, `tidyr`, `purrr`, `stringr`, `forcats`, and
-    `ggplot2` (version \>= 3.0.0) (so basically *all* the tidyverse)
-  - `rlang` and `tidyselect` for non-standard evaluation in many
+    `ggplot2` (version &gt;= 3.0.0) (so basically *all* the tidyverse)
+-   `rlang` and `tidyselect` for non-standard evaluation in many
     functions
-  - `tidycensus` for actually getting all the Census data
-  - `sf` isn’t required but it’s encouraged
+-   `tidycensus` for actually getting all the Census data
+-   `sf` isn’t required but it’s encouraged
 
 ## Data
 
 `cwi` ships with several datasets and shapefiles. These include:
 
-  - Shapes (as `sf` objects) of towns, tracts, and city neighborhoods
+-   Shapes (as `sf` objects) of towns, tracts, and city neighborhoods
     for New Haven, Hartford, Bridgeport, and Stamford
-  - Common ACS table numbers—hopefully decreases time spent prowling
+-   Common ACS table numbers—hopefully decreases time spent prowling
     around [FactFinder](https://factfinder.census.gov)
-  - Definitions of neighborhoods by tract or block group, and of regions
+-   Definitions of neighborhoods by tract or block group, and of regions
     by town
 
 ## Sources
@@ -56,15 +55,15 @@ This package relies heavily on:
 This package contains functions to make it easier and more reproducible
 to fetch and analyze data from:
 
-  - [American Community
+-   [American Community
     Survey](https://www.census.gov/programs-surveys/acs/) (US Census
     Bureau)
-  - [Decennial
+-   [Decennial
     Census](https://www.census.gov/programs-surveys/decennial-census.html)
     (US Census Bureau)
-  - [Quarterly Workforce Indicators](https://lehd.ces.census.gov/) (US
+-   [Quarterly Workforce Indicators](https://lehd.ces.census.gov/) (US
     Census Bureau Center for Economic Studies)
-  - [Local Area Unemployment Statistics](https://www.bls.gov/lau/)
+-   [Local Area Unemployment Statistics](https://www.bls.gov/lau/)
     (Bureau of Labor Statistics)
 
 More to come (as of 7/17/2018) may include simplifications of working
@@ -79,7 +78,6 @@ rates across many geographies at once:
 
 ``` r
 library(dplyr)
-library(stringr)
 library(cwi)
 ```
 
@@ -92,7 +90,7 @@ tenure <- multi_geo_acs(
   towns = regions[["Greater New Haven"]],
   us = TRUE
 )
-#> Table B25003: TENURE
+#> Table B25003: TENURE, 2018
 #> Geographies included:
 #> Towns: Bethany, Branford, East Haven, Guilford, Hamden, Madison, Milford, New Haven, North Branford, North Haven, Orange, West Haven, Woodbridge
 #> Regions: Greater New Haven, New Haven Inner Ring, New Haven Outer Ring
@@ -101,7 +99,7 @@ tenure <- multi_geo_acs(
 #> US: Yes
 tenure
 #> # A tibble: 57 x 9
-#>    GEOID NAME            variable   estimate    moe level     state county  year
+#>    geoid name            variable   estimate    moe level     state county  year
 #>    <chr> <chr>           <chr>         <dbl>  <dbl> <fct>     <chr> <chr>  <dbl>
 #>  1 1     United States   B25003_001   1.20e8 232429 1_us      <NA>  <NA>    2018
 #>  2 1     United States   B25003_002   7.64e7 367132 1_us      <NA>  <NA>    2018
@@ -119,10 +117,10 @@ tenure
 ``` r
 homeownership <- tenure %>%
   label_acs() %>%
-  group_by(level, NAME) %>%
+  group_by(level, name) %>%
   mutate(share = estimate / estimate[1]) %>% # or use camiller::calc_shares
-  filter(str_detect(label, "Owner")) %>%
-  select(level, name = NAME, share)
+  filter(stringr::str_detect(label, "Owner")) %>%
+  select(level, name, share)
 
 homeownership
 #> # A tibble: 19 x 3

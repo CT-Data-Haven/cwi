@@ -19,6 +19,7 @@ reference:
   contents:
   - 'read_xtabs'
   - 'xtab2df'
+  - 'sub_nonanswers'
 
 - title: Functions - analyzing and plotting
   desc: Functions to analyze or quickly plot data
