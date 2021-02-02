@@ -319,16 +319,16 @@
 <span class="co">#&gt; # A tibble: 680 x 8</span>
 <span class="co">#&gt;     year industry state county   Emp   Payroll location    label                </span>
 <span class="co">#&gt;    &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;                </span>
-<span class="co">#&gt;  1  2002 11       09    009      704    1.67e7 New Haven … Agriculture, Forestr…</span>
-<span class="co">#&gt;  2  2002 21       09    009      191    1.00e7 New Haven … Mining, Quarrying, a…</span>
-<span class="co">#&gt;  3  2002 22       09    009     1933    1.25e8 New Haven … Utilities            </span>
-<span class="co">#&gt;  4  2002 23       09    009    15596    7.60e8 New Haven … Construction         </span>
-<span class="co">#&gt;  5  2002 31-33    09    009    47395    2.39e9 New Haven … Manufacturing        </span>
-<span class="co">#&gt;  6  2002 42       09    009    16631    9.27e8 New Haven … Wholesale Trade      </span>
-<span class="co">#&gt;  7  2002 44-45    09    009    46362    1.19e9 New Haven … Retail Trade         </span>
-<span class="co">#&gt;  8  2002 48-49    09    009     7674    2.59e8 New Haven … Transportation and W…</span>
-<span class="co">#&gt;  9  2002 51       09    009    14487    7.60e8 New Haven … Information          </span>
-<span class="co">#&gt; 10  2002 52       09    009    13594    8.27e8 New Haven … Finance and Insurance</span>
+<span class="co">#&gt;  1  2002 11       09    009      709    1.67e7 New Haven … Agriculture, Forestr…</span>
+<span class="co">#&gt;  2  2002 21       09    009      193    1.02e7 New Haven … Mining, Quarrying, a…</span>
+<span class="co">#&gt;  3  2002 22       09    009     1864    1.22e8 New Haven … Utilities            </span>
+<span class="co">#&gt;  4  2002 23       09    009    15628    7.63e8 New Haven … Construction         </span>
+<span class="co">#&gt;  5  2002 31-33    09    009    47472    2.40e9 New Haven … Manufacturing        </span>
+<span class="co">#&gt;  6  2002 42       09    009    16591    9.28e8 New Haven … Wholesale Trade      </span>
+<span class="co">#&gt;  7  2002 44-45    09    009    46374    1.19e9 New Haven … Retail Trade         </span>
+<span class="co">#&gt;  8  2002 48-49    09    009     7669    2.58e8 New Haven … Transportation and W…</span>
+<span class="co">#&gt;  9  2002 51       09    009    14416    7.61e8 New Haven … Information          </span>
+<span class="co">#&gt; 10  2002 52       09    009    13542    7.97e8 New Haven … Finance and Insurance</span>
 <span class="co">#&gt; # … with 670 more rows</span></code></pre></div>
 <p>Next, say I want to look at the industries that were largest in New Haven county in 2018, and see how those have changed both for the county and statewide over this time period. I’ll filter <code>employment</code>, get the industries with the largest numbers of employees, then filter <code>employment</code> for just those industries and plot it.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
