@@ -1,4 +1,5 @@
 url: https://CT-Data-Haven.github.io/cwi
+destination: docs/
 development:
   mode: auto
 template:
