@@ -1,3 +1,10 @@
+rleid <- function(x, default = TRUE) {
+  x1 <- x != dplyr::lag(x, default = default)
+  cumsum(x1)
+}
+
+short_patt <- function(pattern) paste0(stringr::str_remove(pattern, "\\$"), "\\b")
+
 count_valid_cols <- function(data) {
   # count number of non-NAs per row
   dplyr::mutate(data, count_valid = rowSums(!is.na(data)))
@@ -5,22 +12,37 @@ count_valid_cols <- function(data) {
 
 mark_questions <- function(.data, col, pattern) {
   # mark which rows only contain question text
+  # if x1 is a question & lead(x1) is also a question, extract code & collapse--deals with lead-in lines that have code attached
+  # this is so ugly
   marked <- .data %>%
     count_valid_cols() %>%
     dplyr::mutate(
       is_question = !is.na({{ col }}) & !stringr::str_detect({{ col }}, pattern) & count_valid == 1,
       is_code     = !is.na({{ col }}) &  stringr::str_detect({{ col }}, pattern) & count_valid == 1,
-      q_number = cumsum(is_question),
-      q = dplyr::if_else(is_question, {{ col }}, NA_character_)
+      is_leadin = is_question & dplyr::lead(is_question, default = FALSE),
+      q = dplyr::case_when(
+        is_leadin   ~ stringr::str_remove({{ col }}, sprintf("(?<=%s).+$", short_patt(pattern))),
+        is_question ~ {{ col }},
+        TRUE        ~ NA_character_
+      ),
+      rl = rleid(is_question)
+      # q_number = cumsum(is_question),
+      # q = dplyr::if_else(is_question, {{ col }}, NA_character_)
     ) %>%
-    tidyr::fill(q, .direction = "down")
+    dplyr::group_by(rl) %>%
+    dplyr::mutate(q = dplyr::if_else(is_question, paste(q, collapse = ". "), q)) %>%
+    dplyr::filter(!is_leadin) %>%
+    dplyr::ungroup() %>%
+    tidyr::fill(q, .direction = "down") %>%
+    dplyr::mutate(q_number = cumsum(is_question))
   codes <- question_codes(marked, col = {{ col }}, pattern = pattern)
   marked %>%
     dplyr::filter(!is_question & !is_code) %>%
     dplyr::select(-q) %>%
     dplyr::left_join(codes, by = "q_number") %>%
-    dplyr::select(code, question = q, dplyr::everything(), -count_valid, -is_question, -is_code, -q_number)
+    dplyr::select(code, question = q, dplyr::everything(), -count_valid, -is_question, -is_code, -is_leadin, -rl, -q_number)
 }
+
 
 question_codes <- function(.data, col, pattern) {
   # split out question numbers, e.g. Q4A
@@ -29,7 +51,7 @@ question_codes <- function(.data, col, pattern) {
   # if no true values in is_code, both qcode & qtext are in same cell
   if (!any(.data[["is_code"]])) {
     # no separate codes --> split codes & questions by pattern
-    split_patt <- paste0(stringr::str_remove(pattern, "\\$"), "\\b")
+    split_patt <- short_patt(pattern)
     .data %>%
       dplyr::mutate(q = stringr::str_remove_all(q, "\\.")) %>%
       tidyr::extract(q, into = c("code", "q"), regex = sprintf("(%s)(.+$)", split_patt)) %>%
@@ -65,7 +87,10 @@ make_headings <- function(.data, col) {
 
 # export
 #' @title Extract survey data and descriptions from crosstabs into a tidy data frame
-#' @description Like `read_xtab` & `read_weights`, this is a bespoke function
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' Like `read_xtab` & `read_weights`, this is a bespoke function
 #' to make it easier to extract data from the DataHaven Community Wellbeing
 #' Survey. Applications to other crosstabs are probably limited unless their
 #' formatting is largely the same. After reading a crosstab excel file, `xtab2df`

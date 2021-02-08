@@ -47,6 +47,8 @@ For \code{read_weights}, only 2 columns, one for demographic groups and one for
 their associated weights.
 }
 \description{
+\ifelse{html}{\out{<a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a>}}{\strong{Experimental}}
+
 These two functions facilitate reading in Excel
 spreadsheets of crosstabs generated from SPSS. Note that they're likely
 only useful for working with the DataHaven Community Wellbeing Survey.

@@ -5,7 +5,10 @@ read_xtabs_ <- function(path, name_prefix) {
 }
 
 #' @title Read crosstab data and weights
-#' @description These two functions facilitate reading in Excel
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' These two functions facilitate reading in Excel
 #' spreadsheets of crosstabs generated from SPSS. Note that they're likely
 #' only useful for working with the DataHaven Community Wellbeing Survey.
 #' @param path Path to an excel file

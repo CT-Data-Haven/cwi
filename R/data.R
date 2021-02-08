@@ -226,3 +226,20 @@ NULL
 #'
 #' @source Levy, Don: Five Connecticuts 2010 Update. (2015). Produced for Siena College Research Institute and DataHaven based on original 1990 and 2000 designations from "Levy, Don, Orlando Rodriguez, and Wayne Villemez. 2004. The Changing Demographics of Connecticut - 1990 to 2000. Part 2: The Five Connecticuts. Storrs, Connecticut: University of Connecticut, The Connecticut State Data Center, Series, no. OP 2004-01."
 "ct5_clusters"
+
+
+#' CWS demo data
+#'
+#' This is a sample of 2015 DataHaven Community Wellbeing Survey data for Greater New Haven with weights attached. It's more or less what's created in the crosstabs vignette, saved here for use in examples.
+#'
+#' @format A data frame with 100 rows and 7 variables:
+#' \describe{
+#'   \item{code}{Question code}
+#'   \item{question}{Question text}
+#'   \item{category}{Category: gender, age, etc.}
+#'   \item{group}{Group: male, female, ages 18–34, etc.}
+#'   \item{response}{Survey response}
+#'   \item{value}{Percentage value}
+#'   \item{weight}{Survey weight}
+#' }
+"cws_demo"
