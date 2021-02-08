@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extended ACS table numbers — ext_table_nums • cwi</title>
+<title>CWS demo data — cws_demo • cwi</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Extended ACS table numbers — ext_table_nums" />
-<meta property="og:description" content="List of ACS tables less commonly used by DataHaven. These are used for &quot;extended&quot; profiles, such as neighborhood profiles distributed as PDF on the DataHaven website." />
+<meta property="og:title" content="CWS demo data — cws_demo" />
+<meta property="og:description" content="This is a sample of 2015 DataHaven Community Wellbeing Survey data for Greater New Haven with weights attached. It's more or less what's created in the crosstabs vignette, saved here for use in examples." />
 <meta property="og:image" content="https://CT-Data-Haven.github.io/cwi/logo.png" />
 
 
@@ -140,24 +140,31 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extended ACS table numbers</h1>
+    <h1>CWS demo data</h1>
     <small class="dont-index">Source: <a href='https://github.com/CT-Data-Haven/cwi/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>ext_table_nums.Rd</code></div>
+    <div class="hidden name"><code>cws_demo.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>List of ACS tables less commonly used by DataHaven. These are used for "extended" profiles, such as neighborhood profiles distributed as PDF on the DataHaven website.</p>
+    <p>This is a sample of 2015 DataHaven Community Wellbeing Survey data for Greater New Haven with weights attached. It's more or less what's created in the crosstabs vignette, saved here for use in examples.</p>
     </div>
 
-    <pre class="usage"><span class='va'>ext_table_nums</span></pre>
+    <pre class="usage"><span class='va'>cws_demo</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A named list of length 26, where names correspond to abbreviated subjects and string values correspond to table numbers.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <p>A data frame with 100 rows and 7 variables:</p><dl>
+<dt>code</dt><dd><p>Question code</p></dd>
+<dt>question</dt><dd><p>Question text</p></dd>
+<dt>category</dt><dd><p>Category: gender, age, etc.</p></dd>
+<dt>group</dt><dd><p>Group: male, female, ages 18–34, etc.</p></dd>
+<dt>response</dt><dd><p>Survey response</p></dd>
+<dt>value</dt><dd><p>Percentage value</p></dd>
+<dt>weight</dt><dd><p>Survey weight</p></dd>
 
-    <div class='dont-index'><p><a href='basic_table_nums.html'>basic_table_nums</a></p></div>
+</dl>
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
