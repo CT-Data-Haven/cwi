@@ -47,7 +47,8 @@ sub_nonanswers <- function(.data, response = response, value = value, nons = c("
 
   out <- .data %>%
     tidyr::pivot_wider(names_from = {{ response }}, values_from = {{ value }}) %>%
-    dplyr::mutate(non_sum = rowSums(dplyr::select(., dplyr::any_of(nons))),
+    # dplyr::mutate(non_sum = rowSums(dplyr::select(dplyr::ungroup(.), dplyr::any_of(nons))),
+    dplyr::mutate(non_sum = sum(dplyr::c_across(dplyr::any_of(nons))) ,
                   dplyr::across(c(!!!responses), ~. / (1 - non_sum))) %>%
     dplyr::select(-non_sum, -dplyr::any_of(nons)) %>%
     tidyr::pivot_longer(c(!!!responses),
