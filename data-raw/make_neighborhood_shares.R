@@ -1,7 +1,7 @@
 xwalk <- readr::read_csv("./data-raw/files/block2town.csv", col_types = "ccc")
 
-block_pops_fc <- tidycensus::get_decennial(geography = "block", variables = "H0030001", state = "09", county = "01", year = 2010, sumfile = "sf1", geometry = T)
-block_pops_hc <- tidycensus::get_decennial(geography = "block", variables = "H0030001", state = "09", county = "03", year = 2010, sumfile = "sf1", geometry = T)
+block_pops_fc <- tidycensus::get_decennial(geography = "block", variables = "H003001", state = "09", county = "01", year = 2010, sumfile = "sf1", geometry = T)
+block_pops_hc <- tidycensus::get_decennial(geography = "block", variables = "H003001", state = "09", county = "03", year = 2010, sumfile = "sf1", geometry = T)
 
 stamford_tracts <- block_pops_fc %>%
   dplyr::inner_join(xwalk %>% dplyr::filter(town == "Stamford"), by = c("GEOID" = "block")) %>%
