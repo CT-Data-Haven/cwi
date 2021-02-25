@@ -27,7 +27,7 @@ jobs:
 
       - name: Query dependencies
         run: |
-          install.packages(c("renv", "devtools", "pkgdown"))
+          install.packages(c("renv", "devtools", "pkgdown"), type = "binary")
           renv::restore()
         shell: Rscript {0}
 

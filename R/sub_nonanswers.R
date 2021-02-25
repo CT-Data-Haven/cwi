@@ -45,14 +45,24 @@ sub_nonanswers <- function(.data, response = response, value = value, nons = c("
     setdiff(nons) %>%
     rlang::syms()
 
-  out <- .data %>%
-    tidyr::pivot_wider(names_from = {{ response }}, values_from = {{ value }}) %>%
-    # dplyr::mutate(non_sum = rowSums(dplyr::select(dplyr::ungroup(.), dplyr::any_of(nons))),
-    dplyr::mutate(non_sum = sum(dplyr::c_across(dplyr::any_of(nons))) ,
-                  dplyr::across(c(!!!responses), ~. / (1 - non_sum))) %>%
+  grps <- dplyr::groups(.data)
+
+  wide <- .data %>%
+    dplyr::ungroup() %>%
+    tidyr::pivot_wider(names_from = {{ response }}, values_from = {{ value }})
+
+  non_sum <- wide %>%
+    dplyr::select(dplyr::any_of(nons)) %>%
+    rowSums()
+  out <- wide %>%
+    dplyr::mutate(non_sum = non_sum)
+  out <- out %>%
+    dplyr::mutate(dplyr::across(c(!!!responses), ~. / (1 - non_sum)))
+  out <- out %>%
     dplyr::select(-non_sum, -dplyr::any_of(nons)) %>%
     tidyr::pivot_longer(c(!!!responses),
-                        names_to = rlang::as_string(quote(response)), values_to = rlang::as_string(quote(value)))
+                        names_to = rlang::as_string(quote(response)), values_to = rlang::as_string(quote(value))) %>%
+    dplyr::group_by(!!!grps)
   if (factor_response) {
     dplyr::mutate(out, dplyr::across({{ response }}, forcats::as_factor))
   }
