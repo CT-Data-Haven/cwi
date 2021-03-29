@@ -32,7 +32,7 @@ a grob, or to \code{cowplot::draw_image} otherwise.}
 A \code{ggplot} object.
 }
 \description{
-\ifelse{html}{\out{<a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a>}}{\strong{Experimental}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
 This function wraps around a few functions from \code{cowplot} and
 \code{magick} to add a logo (or other annotation) to the bottom of a \code{ggplot} plot,
