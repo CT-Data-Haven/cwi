@@ -20,27 +20,25 @@ tract2town <- sf::st_join(tract_sf, town_sf, join = st_intersects,
 
 # drop if no associated town
 xwalk_read <- readr::read_csv("https://lehd.ces.census.gov/data/lodes/LODES7/ct/ct_xwalk.csv.gz") %>%
-  dplyr::filter(ctycsub != "9999999999")
+  dplyr::filter(stringr::str_detect(ctycsub, "^09"),
+                trct != "09001990000") %>%
+  town_names(ctycsubname)
 
 blocks <- xwalk_read %>%
   dplyr::select(block = tabblk2010, block_grp = bgrp, tract = trct)
 
 # more roundabout but keeps fewer weird artifacts (hopefully)
-xwalk <- xwalk_read %>%
-  dplyr::select(tract = trct, county = ctyname, county_fips = cty, msa = cbsaname, msa_fips = cbsa) %>%
+xwalk <- # block, block_grp, tract, town, town_fips, county, county_fips, msa, msa_fips, puma, puma_fips
+  xwalk_read %>%
+  dplyr::select(town = ctycsubname, town_fips = ctycsub, county = ctyname, county_fips = cty, msa = cbsaname, msa_fips = cbsa) %>%
   dplyr::distinct() %>%
-  dplyr::filter(tract != "09001990000") %>%
-  dplyr::left_join(tract2town, by = "tract") %>%
+  dplyr::left_join(tract2town, by = "town") %>%
   dplyr::left_join(town2puma, by = "town") %>%
-  dplyr::left_join(xwalk_read %>%
-                     dplyr::select(town = ctycsubname, town_fips = ctycsub) %>%
-                     town_names(town) %>%
-                     dplyr::distinct(),
-                   by = "town") %>%
-  dplyr::filter(stringr::str_detect(town_fips, "^09")) %>%
   dplyr::left_join(blocks, by = "tract") %>%
   dplyr::mutate(county = stringr::str_remove(county, ", CT")) %>%
   dplyr::select(block, block_grp, tract, town, town_fips, county, county_fips, msa, msa_fips, puma, puma_fips)
 
 usethis::use_data(xwalk, overwrite = TRUE)
 usethis::use_data(tract2town, overwrite = TRUE)
+
+
