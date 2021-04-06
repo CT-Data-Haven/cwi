@@ -322,16 +322,16 @@
 <span class="co">#&gt; # A tibble: 680 x 8</span>
 <span class="co">#&gt;     year industry state county   Emp   Payroll location    label                </span>
 <span class="co">#&gt;    &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;                </span>
-<span class="co">#&gt;  1  2002 11       09    009      709    1.67e7 New Haven … Agriculture, Forestr…</span>
-<span class="co">#&gt;  2  2002 21       09    009      193    1.02e7 New Haven … Mining, Quarrying, a…</span>
-<span class="co">#&gt;  3  2002 22       09    009     1864    1.22e8 New Haven … Utilities            </span>
-<span class="co">#&gt;  4  2002 23       09    009    15628    7.63e8 New Haven … Construction         </span>
-<span class="co">#&gt;  5  2002 31-33    09    009    47472    2.40e9 New Haven … Manufacturing        </span>
-<span class="co">#&gt;  6  2002 42       09    009    16591    9.28e8 New Haven … Wholesale Trade      </span>
-<span class="co">#&gt;  7  2002 44-45    09    009    46374    1.19e9 New Haven … Retail Trade         </span>
-<span class="co">#&gt;  8  2002 48-49    09    009     7669    2.58e8 New Haven … Transportation and W…</span>
-<span class="co">#&gt;  9  2002 51       09    009    14416    7.61e8 New Haven … Information          </span>
-<span class="co">#&gt; 10  2002 52       09    009    13542    7.97e8 New Haven … Finance and Insurance</span>
+<span class="co">#&gt;  1  2002 11       09    009      700    1.65e7 New Haven … Agriculture, Forestr…</span>
+<span class="co">#&gt;  2  2002 21       09    009      196    1.03e7 New Haven … Mining, Quarrying, a…</span>
+<span class="co">#&gt;  3  2002 22       09    009     1891    1.23e8 New Haven … Utilities            </span>
+<span class="co">#&gt;  4  2002 23       09    009    15558    7.60e8 New Haven … Construction         </span>
+<span class="co">#&gt;  5  2002 31-33    09    009    47114    2.37e9 New Haven … Manufacturing        </span>
+<span class="co">#&gt;  6  2002 42       09    009    16519    9.28e8 New Haven … Wholesale Trade      </span>
+<span class="co">#&gt;  7  2002 44-45    09    009    46244    1.19e9 New Haven … Retail Trade         </span>
+<span class="co">#&gt;  8  2002 48-49    09    009     7724    2.61e8 New Haven … Transportation and W…</span>
+<span class="co">#&gt;  9  2002 51       09    009    14724    7.80e8 New Haven … Information          </span>
+<span class="co">#&gt; 10  2002 52       09    009    13549    7.91e8 New Haven … Finance and Insurance</span>
 <span class="co">#&gt; # … with 670 more rows</span></code></pre></div>
 <p>Next, say I want to look at the industries that were largest in New Haven county in 2018, and see how those have changed both for the county and statewide over this time period. I’ll filter <code>employment</code>, get the industries with the largest numbers of employees, then filter <code>employment</code> for just those industries and plot it.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -363,7 +363,7 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>adj_wage_1k <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">adj_avg_wage</span> <span class="op">/</span> <span class="fl">1000</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>, y <span class="op">=</span> <span class="va">adj_wage_1k</span>, color <span class="op">=</span> <span class="va">label</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="va"><a href="https://scales.r-lib.org//reference/label_dollar.html">dollar</a></span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="va"><a href="https://scales.r-lib.org/reference/label_dollar.html">dollar</a></span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Year"</span>, y <span class="op">=</span> <span class="st">"Average annual wages (thousands)"</span>, title <span class="op">=</span> <span class="st">"Average annual wages by industry (adjusted to 2018 dollars)"</span>, 
          subtitle <span class="op">=</span> <span class="st">"Connecticut and New Haven County, 2002-2018"</span>, color <span class="op">=</span> <span class="st">"Industry"</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
@@ -386,16 +386,16 @@
 <span class="co">#&gt; # A tibble: 684 x 3</span>
 <span class="co">#&gt;    area        date        value</span>
 <span class="co">#&gt;    &lt;chr&gt;       &lt;date&gt;      &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 Connecticut 2018-12-01 0.034 </span>
-<span class="co">#&gt;  2 Connecticut 2018-11-01 0.033 </span>
-<span class="co">#&gt;  3 Connecticut 2018-10-01 0.036 </span>
-<span class="co">#&gt;  4 Connecticut 2018-09-01 0.037 </span>
-<span class="co">#&gt;  5 Connecticut 2018-08-01 0.0410</span>
-<span class="co">#&gt;  6 Connecticut 2018-07-01 0.043 </span>
-<span class="co">#&gt;  7 Connecticut 2018-06-01 0.044 </span>
-<span class="co">#&gt;  8 Connecticut 2018-05-01 0.0410</span>
-<span class="co">#&gt;  9 Connecticut 2018-04-01 0.0410</span>
-<span class="co">#&gt; 10 Connecticut 2018-03-01 0.046 </span>
+<span class="co">#&gt;  1 Connecticut 2018-12-01 0.032 </span>
+<span class="co">#&gt;  2 Connecticut 2018-11-01 0.03  </span>
+<span class="co">#&gt;  3 Connecticut 2018-10-01 0.035 </span>
+<span class="co">#&gt;  4 Connecticut 2018-09-01 0.035 </span>
+<span class="co">#&gt;  5 Connecticut 2018-08-01 0.04  </span>
+<span class="co">#&gt;  6 Connecticut 2018-07-01 0.0410</span>
+<span class="co">#&gt;  7 Connecticut 2018-06-01 0.042 </span>
+<span class="co">#&gt;  8 Connecticut 2018-05-01 0.038 </span>
+<span class="co">#&gt;  9 Connecticut 2018-04-01 0.038 </span>
+<span class="co">#&gt; 10 Connecticut 2018-03-01 0.043 </span>
 <span class="co">#&gt; # … with 674 more rows</span>
 
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">unemployment</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">value</span>, group <span class="op">=</span> <span class="va">area</span>, color <span class="op">=</span> <span class="va">area</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>

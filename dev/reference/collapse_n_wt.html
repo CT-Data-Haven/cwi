@@ -149,7 +149,7 @@ larger groups and taking a weighted mean based on a set of survey weights." />
     </div>
 
     <div class="ref-description">
-    <p><a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a></p>
+    <p><a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a></p>
 <p>This is just a quick wrapper for a common, tedious task of
 collapsing several demographic groups, such as income brackets, into
 larger groups and taking a weighted mean based on a set of survey weights.</p>
@@ -235,25 +235,25 @@ the collapsed groups, and the <code>.value</code> column will have average value
 <span class='va'>cws_demo</span> <span class='op'>%&gt;%</span>
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>category</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Greater New Haven"</span>, <span class='st'>"Income"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>collapse_n_wt</span><span class='op'>(</span><span class='va'>code</span><span class='op'>:</span><span class='va'>response</span>, .lvls <span class='op'>=</span> <span class='va'>income_lvls</span>, .digits <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 16 x 6</span><span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 16 x 6</span><span>
 #&gt;    code  question                        category      group      response value
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                           </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> Q1    Are you satisfied with the cit… Greater New … Greater N… Yes       0.82
-#&gt; </span><span style='color: #555555;'> 2</span><span> Q1    Are you satisfied with the cit… Greater New … Greater N… No        0.17
-#&gt; </span><span style='color: #555555;'> 3</span><span> Q1    Are you satisfied with the cit… Greater New … Greater N… Don't k…  0.01
-#&gt; </span><span style='color: #555555;'> 4</span><span> Q1    Are you satisfied with the cit… Greater New … Greater N… Refused   0   
-#&gt; </span><span style='color: #555555;'> 5</span><span> Q1    Are you satisfied with the cit… Income        &lt;$30K      Yes       0.77
-#&gt; </span><span style='color: #555555;'> 6</span><span> Q1    Are you satisfied with the cit… Income        &lt;$30K      No        0.22
-#&gt; </span><span style='color: #555555;'> 7</span><span> Q1    Are you satisfied with the cit… Income        &lt;$30K      Don't k…  0.01
-#&gt; </span><span style='color: #555555;'> 8</span><span> Q1    Are you satisfied with the cit… Income        &lt;$30K      Refused   0   
-#&gt; </span><span style='color: #555555;'> 9</span><span> Q1    Are you satisfied with the cit… Income        $30K-$100K Yes       0.83
-#&gt; </span><span style='color: #555555;'>10</span><span> Q1    Are you satisfied with the cit… Income        $30K-$100K No        0.15
-#&gt; </span><span style='color: #555555;'>11</span><span> Q1    Are you satisfied with the cit… Income        $30K-$100K Don't k…  0.01
-#&gt; </span><span style='color: #555555;'>12</span><span> Q1    Are you satisfied with the cit… Income        $30K-$100K Refused   0   
-#&gt; </span><span style='color: #555555;'>13</span><span> Q1    Are you satisfied with the cit… Income        $100K+     Yes       0.85
-#&gt; </span><span style='color: #555555;'>14</span><span> Q1    Are you satisfied with the cit… Income        $100K+     No        0.14
-#&gt; </span><span style='color: #555555;'>15</span><span> Q1    Are you satisfied with the cit… Income        $100K+     Don't k…  0.01
-#&gt; </span><span style='color: #555555;'>16</span><span> Q1    Are you satisfied with the cit… Income        $100K+     Refused   0   </div></span></pre>
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                           </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> Q1    Are you satisfied with the cit… Greater New … Greater N… Yes       0.82
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> Q1    Are you satisfied with the cit… Greater New … Greater N… No        0.17
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> Q1    Are you satisfied with the cit… Greater New … Greater N… Don't k…  0.01
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> Q1    Are you satisfied with the cit… Greater New … Greater N… Refused   0   
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> Q1    Are you satisfied with the cit… Income        &lt;$30K      Yes       0.77
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> Q1    Are you satisfied with the cit… Income        &lt;$30K      No        0.22
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> Q1    Are you satisfied with the cit… Income        &lt;$30K      Don't k…  0.01
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> Q1    Are you satisfied with the cit… Income        &lt;$30K      Refused   0   
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> Q1    Are you satisfied with the cit… Income        $30K-$100K Yes       0.83
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> Q1    Are you satisfied with the cit… Income        $30K-$100K No        0.15
+#&gt; </span><span style='color: #BCBCBC;'>11</span><span> Q1    Are you satisfied with the cit… Income        $30K-$100K Don't k…  0.01
+#&gt; </span><span style='color: #BCBCBC;'>12</span><span> Q1    Are you satisfied with the cit… Income        $30K-$100K Refused   0   
+#&gt; </span><span style='color: #BCBCBC;'>13</span><span> Q1    Are you satisfied with the cit… Income        $100K+     Yes       0.85
+#&gt; </span><span style='color: #BCBCBC;'>14</span><span> Q1    Are you satisfied with the cit… Income        $100K+     No        0.14
+#&gt; </span><span style='color: #BCBCBC;'>15</span><span> Q1    Are you satisfied with the cit… Income        $100K+     Don't k…  0.01
+#&gt; </span><span style='color: #BCBCBC;'>16</span><span> Q1    Are you satisfied with the cit… Income        $100K+     Refused   0   </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
