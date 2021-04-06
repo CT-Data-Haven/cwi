@@ -19,7 +19,7 @@ tract2town <- sf::st_join(tract_sf, town_sf, join = st_intersects,
   dplyr::as_tibble()
 
 # drop if no associated town
-xwalk_read <- readr::read_csv("https://lehd.ces.census.gov/data/lodes/LODES7/ct/ct_xwalk.csv.gz") %>%
+xwalk_read <- readr::read_csv("https://lehd.ces.census.gov/data/lodes/LODES7/ct/ct_xwalk.csv.gz", col_types = readr::cols(.default = "c")) %>%
   dplyr::filter(stringr::str_detect(ctycsub, "^09"),
                 trct != "09001990000") %>%
   town_names(ctycsubname)
