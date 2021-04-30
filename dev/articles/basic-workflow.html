@@ -384,18 +384,18 @@
 
 <span class="va">unemployment</span>
 <span class="co">#&gt; # A tibble: 684 x 3</span>
-<span class="co">#&gt;    area        date        value</span>
-<span class="co">#&gt;    &lt;chr&gt;       &lt;date&gt;      &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 Connecticut 2018-12-01 0.032 </span>
-<span class="co">#&gt;  2 Connecticut 2018-11-01 0.03  </span>
-<span class="co">#&gt;  3 Connecticut 2018-10-01 0.035 </span>
-<span class="co">#&gt;  4 Connecticut 2018-09-01 0.035 </span>
-<span class="co">#&gt;  5 Connecticut 2018-08-01 0.04  </span>
-<span class="co">#&gt;  6 Connecticut 2018-07-01 0.0410</span>
-<span class="co">#&gt;  7 Connecticut 2018-06-01 0.042 </span>
-<span class="co">#&gt;  8 Connecticut 2018-05-01 0.038 </span>
-<span class="co">#&gt;  9 Connecticut 2018-04-01 0.038 </span>
-<span class="co">#&gt; 10 Connecticut 2018-03-01 0.043 </span>
+<span class="co">#&gt;    area        date       value</span>
+<span class="co">#&gt;    &lt;chr&gt;       &lt;date&gt;     &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 Connecticut 2018-12-01 0.032</span>
+<span class="co">#&gt;  2 Connecticut 2018-11-01 0.03 </span>
+<span class="co">#&gt;  3 Connecticut 2018-10-01 0.035</span>
+<span class="co">#&gt;  4 Connecticut 2018-09-01 0.035</span>
+<span class="co">#&gt;  5 Connecticut 2018-08-01 0.04 </span>
+<span class="co">#&gt;  6 Connecticut 2018-07-01 0.041</span>
+<span class="co">#&gt;  7 Connecticut 2018-06-01 0.042</span>
+<span class="co">#&gt;  8 Connecticut 2018-05-01 0.038</span>
+<span class="co">#&gt;  9 Connecticut 2018-04-01 0.038</span>
+<span class="co">#&gt; 10 Connecticut 2018-03-01 0.043</span>
 <span class="co">#&gt; # … with 674 more rows</span>
 
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">unemployment</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">value</span>, group <span class="op">=</span> <span class="va">area</span>, color <span class="op">=</span> <span class="va">area</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
