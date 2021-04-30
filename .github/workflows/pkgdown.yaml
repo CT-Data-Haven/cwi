@@ -23,7 +23,8 @@ jobs:
       - name: Install spatial libraries
         run: |
           # copied from sf github
-          brew install pkg-config gdal proj geos
+          brew install pkg-config
+          brew install gdal
 
       - name: Query dependencies
         run: |
