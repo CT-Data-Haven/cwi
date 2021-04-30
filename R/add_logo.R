@@ -14,7 +14,7 @@
 #' an image already with `magick::image_read` or other `magick` functions;
 #' a `ggplot` object / grob; some other object that can be handled by
 #' `cowplot::draw_image`; or `NULL`, the default. If `NULL`, the image will
-#' come from the file at `system.file("inst/extdata/logo.svg", package = "cwi")`.
+#' come from the file at `system.file("extdata/logo.svg", package = "cwi")`.
 #' As built, this is a logo for DataHaven, but that file can be replaced for
 #' repackaging this library for other organizations or projects.
 #' @param position String, either "left" or "right", giving the side on which
@@ -33,7 +33,7 @@
 #'
 #'      add_logo(p)
 #'      add_logo(p,
-#'               magick::image_read("inst/extdata/25th_logo.png"), height = 0.1)
+#'               magick::image_read("extdata/25th_logo.png"), height = 0.1)
 #'
 #'      # This example logo is not all that attractive, but shows how you might
 #'      # attach a ggplot grob as a dynamically-created logo
@@ -68,7 +68,7 @@ add_logo <- function(plot, image = NULL, position = c("left", "right"), height =
   p1 <- cowplot::ggdraw() +
     cowplot::draw_plot(plot + ggplot2::theme(plot.margin = ggplot2::margin(0, 0, 0, 0)))
   if (is.null(image)) {
-    image <- magick::image_read(system.file("inst/extdata/logo.svg", package = "cwi"))
+    image <- magick::image_read(system.file("extdata/logo.svg", package = "cwi"))
   }
   if ("magick-image" %in% class(image)) {
     out <- p1 + cowplot::draw_image(image, x = 0, halign = halign, y = 0, valign = 0, height = height, ...)

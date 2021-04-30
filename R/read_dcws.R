@@ -34,7 +34,7 @@ read_xtabs_ <- function(path, name_prefix) {
 #' their associated weights.
 #' @examples
 #' if(interactive()) {
-#'   xt <- system.file("inst/extdata/test_xtab2018.xlsx", package = "cwi")
+#'   xt <- system.file("extdata/test_xtab2018.xlsx", package = "cwi")
 #'   read_weights(xt)
 #'
 #'   # returns a not-very-pretty data frame of the crosstabs to be processed

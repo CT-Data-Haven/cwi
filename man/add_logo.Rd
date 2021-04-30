@@ -14,7 +14,7 @@ read by \code{magick::image_read}; the results of reading a file or manipulating
 an image already with \code{magick::image_read} or other \code{magick} functions;
 a \code{ggplot} object / grob; some other object that can be handled by
 \code{cowplot::draw_image}; or \code{NULL}, the default. If \code{NULL}, the image will
-come from the file at \code{system.file("inst/extdata/logo.svg", package = "cwi")}.
+come from the file at \code{system.file("extdata/logo.svg", package = "cwi")}.
 As built, this is a logo for DataHaven, but that file can be replaced for
 repackaging this library for other organizations or projects.}
 
@@ -49,7 +49,7 @@ if(interactive()){
 
      add_logo(p)
      add_logo(p,
-              magick::image_read("inst/extdata/25th_logo.png"), height = 0.1)
+              magick::image_read("extdata/25th_logo.png"), height = 0.1)
 
      # This example logo is not all that attractive, but shows how you might
      # attach a ggplot grob as a dynamically-created logo

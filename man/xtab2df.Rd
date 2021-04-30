@@ -41,7 +41,7 @@ values, making it ready for analysis.
 }
 \examples{
 if(interactive()){
-  xtab <- read_xtabs(system.file("inst/extdata/test_xtab2018.xlsx", package = "cwi"))
+  xtab <- read_xtabs(system.file("extdata/test_xtab2018.xlsx", package = "cwi"))
   xtab2df(xtab)
  }
 }

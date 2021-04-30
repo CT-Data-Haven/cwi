@@ -55,7 +55,7 @@ only useful for working with the DataHaven Community Wellbeing Survey.
 }
 \examples{
 if(interactive()) {
-  xt <- system.file("inst/extdata/test_xtab2018.xlsx", package = "cwi")
+  xt <- system.file("extdata/test_xtab2018.xlsx", package = "cwi")
   read_weights(xt)
 
   # returns a not-very-pretty data frame of the crosstabs to be processed
