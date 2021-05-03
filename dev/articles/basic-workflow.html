@@ -398,11 +398,21 @@
 <span class="co">#&gt; 10 Connecticut 2018-03-01 0.043</span>
 <span class="co">#&gt; # … with 674 more rows</span>
 
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">unemployment</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">value</span>, group <span class="op">=</span> <span class="va">area</span>, color <span class="op">=</span> <span class="va">area</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<span class="va">unemp_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">unemployment</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">value</span>, group <span class="op">=</span> <span class="va">area</span>, color <span class="op">=</span> <span class="va">area</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>se <span class="op">=</span> <span class="cn">FALSE</span>, method <span class="op">=</span> <span class="st">"loess"</span>, size <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span>
+<span class="va">unemp_plot</span>
 <span class="co">#&gt; `geom_smooth()` using formula 'y ~ x'</span></code></pre></div>
 <p><img src="basic-workflow_files/figure-html/laus-1.png" width="1050"></p>
+</div>
+<div id="adding-a-logo" class="section level2">
+<h2 class="hasAnchor">
+<a href="#adding-a-logo" class="anchor"></a>Adding a logo</h2>
+<p>DataHaven’s logo is saved as an SVG file inside this package. (Folks at other orgs who fork this, feel free to replace with your own logo.) <code>add_logo</code> tacks on a logo, either that default, or another image or <code>ggplot</code> grob, making it easier to create distribution-ready plots (which this one is not, tbh).</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/add_logo.html">add_logo</a></span><span class="op">(</span><span class="va">unemp_plot</span>, position <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span>
+<span class="co">#&gt; `geom_smooth()` using formula 'y ~ x'</span></code></pre></div>
+<p><img src="basic-workflow_files/figure-html/logo-1.png" width="1050"></p>
 </div>
 </div>
   </div>
