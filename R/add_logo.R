@@ -22,6 +22,9 @@
 #' @param height Numeric: the height of the logo, as a percentage of the height
 #' of the image given in `plot`. Adjust as necessary based on the dimensions
 #' of the logo. Default: 0.05
+#' @param place_inside Logical: if `TRUE` (default), logo will be drawn within
+#' the plotting area; otherwise, an additional grob is built below the plot,
+#' meaning the logo could later be cropped away, which may be undesirable.
 #' @param ... Additional arguments passed to `cowplot::draw_grob` if attaching
 #' a grob, or to `cowplot::draw_image` otherwise.
 #' @return A `ggplot` object.
@@ -32,8 +35,8 @@
 #'        ggplot2::labs(title = "Test chart", caption = "Source: 2019 ACS 5-year estimates")
 #'
 #'      add_logo(p)
-#'      add_logo(p,
-#'               magick::image_read("extdata/25th_logo.png"), height = 0.1)
+#'      add_logo(p, magick::image_read(system.file("extdata/25th_logo.png", package = "cwi")),
+#'      height = 0.1)
 #'
 #'      # This example logo is not all that attractive, but shows how you might
 #'      # attach a ggplot grob as a dynamically-created logo
@@ -51,7 +54,7 @@
 #' @export
 #' @rdname add_logo
 #' @seealso [magick::image_read()], [cowplot::draw_image()]
-add_logo <- function(plot, image = NULL, position = c("left", "right"), height = 0.05, ...) {
+add_logo <- function(plot, image = NULL, position = c("left", "right"), height = 0.05, place_inside = TRUE, ...) {
   m <- ggplot2::calc_element("plot.margin", plot$theme)
   if (!is.null(m)) {
     margin <- m
@@ -70,12 +73,30 @@ add_logo <- function(plot, image = NULL, position = c("left", "right"), height =
   if (is.null(image)) {
     image <- magick::image_read(system.file("extdata/logo.svg", package = "cwi"))
   }
-  if ("magick-image" %in% class(image)) {
-    out <- p1 + cowplot::draw_image(image, x = 0, halign = halign, y = 0, valign = 0, height = height, ...)
-  } else if ("gg" %in% class(image)) {
-    out <- p1 + cowplot::draw_grob(cowplot::as_grob(image), x = 0, halign = halign, y = 0, valign = 0, height = height, ...)
+
+  # height is relative to canvas, so if outside main plot, set to take up whole height
+  if (place_inside) {
+    h_logo <- height
   } else {
-    out <- p1 + cowplot::draw_image(image, x = 0, halign = halign, y = 0, valign = 0, height = height, ...)
+    h_logo <- 1
+  }
+
+  if ("magick-image" %in% class(image)) {
+    logo_grob <- cowplot::draw_image(image, x = 0, halign = halign, y = 0, valign = 0, height = h_logo, ...)
+  } else if ("gg" %in% class(image)) {
+    logo_grob <- cowplot::draw_grob(cowplot::as_grob(image), x = 0, halign = halign, y = 0, valign = 0, height = h_logo, ...)
+  } else {
+    logo_grob <- cowplot::draw_image(image, x = 0, halign = halign, y = 0, valign = 0, height = h_logo, ...)
+  }
+
+  if (place_inside) {
+    out <- p1 + logo_grob
+  } else {
+    out <- cowplot::plot_grid(
+      plot,
+      cowplot::ggdraw() + logo_grob,
+      ncol = 1, rel_heights = c(1, height)
+    )
   }
   out +
     ggplot2::theme(plot.margin = margin)

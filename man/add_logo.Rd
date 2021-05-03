@@ -4,7 +4,14 @@
 \alias{add_logo}
 \title{Easily add a logo to a ggplot}
 \usage{
-add_logo(plot, image = NULL, position = c("left", "right"), height = 0.05, ...)
+add_logo(
+  plot,
+  image = NULL,
+  position = c("left", "right"),
+  height = 0.05,
+  place_inside = TRUE,
+  ...
+)
 }
 \arguments{
 \item{plot}{A \code{ggplot} object onto which the logo will be placed.}
@@ -24,6 +31,10 @@ the logo should be aligned. Default: "left"}
 \item{height}{Numeric: the height of the logo, as a percentage of the height
 of the image given in \code{plot}. Adjust as necessary based on the dimensions
 of the logo. Default: 0.05}
+
+\item{place_inside}{Logical: if \code{TRUE} (default), logo will be drawn within
+the plotting area; otherwise, an additional grob is built below the plot,
+meaning the logo could later be cropped away, which may be undesirable.}
 
 \item{...}{Additional arguments passed to \code{cowplot::draw_grob} if attaching
 a grob, or to \code{cowplot::draw_image} otherwise.}
@@ -49,7 +60,7 @@ if(interactive()){
 
      add_logo(p)
      add_logo(p,
-              magick::image_read("extdata/25th_logo.png"), height = 0.1)
+              magick::image_read(system.file("extdata/25th_logo.png", package = "cwi")), height = 0.1)
 
      # This example logo is not all that attractive, but shows how you might
      # attach a ggplot grob as a dynamically-created logo
