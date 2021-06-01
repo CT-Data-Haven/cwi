@@ -7,15 +7,15 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r message=FALSE, warning=FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
 
-```{r setup}
-knitr::opts_chunk$set(warning = TRUE, message = FALSE)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = FALSE,
+	message = FALSE,
+	warning = FALSE,
+	collapse = TRUE,
+	comment = "#>"
+)
 library(cwi)
 library(dplyr)
 ```
@@ -58,7 +58,11 @@ tbl_changes %>%
   split(.$table) %>%
   purrr::map(select, name, starts_with("x")) %>%
   purrr::map(janitor::remove_empty, "cols") %>%
-  purrr::map(knitr::kable)
+  # purrr::map(knitr::kable) %>%
+  purrr::iwalk(function(tbl, ind) {
+    print(sprintf("**%s**", tbl))
+    print(knitr::kable(tbl))
+  })
 ```
 
 

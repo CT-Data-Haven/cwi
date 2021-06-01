@@ -59,8 +59,8 @@ if(interactive()){
        ggplot2::labs(title = "Test chart", caption = "Source: 2019 ACS 5-year estimates")
 
      add_logo(p)
-     add_logo(p,
-              magick::image_read(system.file("extdata/25th_logo.png", package = "cwi")), height = 0.1)
+     add_logo(p, magick::image_read(system.file("extdata/25th_logo.png", package = "cwi")),
+     height = 0.1)
 
      # This example logo is not all that attractive, but shows how you might
      # attach a ggplot grob as a dynamically-created logo
