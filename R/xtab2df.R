@@ -1,6 +1,5 @@
 rleid <- function(x, default = TRUE) {
-  x1 <- x != dplyr::lag(x, default = default)
-  cumsum(x1)
+  cumsum(x != dplyr::lag(x, default = default))
 }
 
 short_patt <- function(pattern) paste0(stringr::str_remove(pattern, "\\$"), "\\b")
@@ -40,7 +39,7 @@ mark_questions <- function(.data, col, pattern) {
     dplyr::filter(!is_question & !is_code) %>%
     dplyr::select(-q) %>%
     dplyr::left_join(codes, by = "q_number") %>%
-    dplyr::select(code, question = q, dplyr::everything(), -count_valid, -is_question, -is_code, -is_leadin, -rl, -q_number)
+    dplyr::select(code, q_number, question = q, dplyr::everything(), -count_valid, -is_question, -is_code, -is_leadin, -rl)
 }
 
 
@@ -54,7 +53,7 @@ question_codes <- function(.data, col, pattern) {
     split_patt <- short_patt(pattern)
     .data %>%
       dplyr::mutate(q = stringr::str_remove_all(q, "\\.")) %>%
-      tidyr::extract(q, into = c("code", "q"), regex = sprintf("(%s)(.+$)", split_patt)) %>%
+      tidyr::extract(q, into = c("code", "q"), regex = sprintf("(%s)?(.+$)", split_patt)) %>%
       dplyr::mutate(dplyr::across(c(code, q), stringr::str_squish)) %>%
       dplyr::filter(!is.na(code)) %>%
       dplyr::select(q_number, code, q) %>%
@@ -78,7 +77,7 @@ make_headings <- function(.data, col) {
     janitor::remove_empty(which = "cols") %>%
     dplyr::slice(1:2) %>%
     dplyr::mutate(h = paste0("h", dplyr::row_number())) %>%
-    dplyr::select(-code, -question) %>%
+    dplyr::select(-code, -question, -q_number) %>%
     tidyr::pivot_longer(-h, names_to = "column") %>%
     tidyr::pivot_wider(names_from = h) %>%
     tidyr::fill(dplyr::matches("^h\\d+"), .direction = "down") %>%
@@ -105,7 +104,8 @@ make_headings <- function(.data, col) {
 #' pretty finicky, so you probably don't want to change it.
 #' Default: `"^[A-Z\\d_]{1,20}$"`
 #' @return A data frame with the following columns:
-#' * code
+#' * code (if questions have codes in crosstabs)
+#' * q_number (if questions don't have codes in crosstabs, assigned in order they occur)
 #' * question
 #' * category (e.g. age, gender)
 #' * group (e.g. 18–34, male)
@@ -128,12 +128,17 @@ xtab2df <- function(.data, col = x1, code_pattern = "^[A-Z\\d_]{1,20}$") {
   headings <- make_headings(marked, {{ col }})
 
   # get just data rows, attach headings (gender, age, etc)
-  marked %>%
+  out <- marked %>%
     dplyr::filter(!is.na({{ col }})) %>%
-    tidyr::pivot_longer(c(-code, -question, -{{ col }}), names_to = "column") %>%
+    tidyr::pivot_longer(c(-code, -q_number, -question, -{{ col }}), names_to = "column") %>%
     dplyr::left_join(headings, by = "column") %>%
-    dplyr::select(code, question, dplyr::matches("^h\\d+"), response = {{ col }}, value) %>%
+    dplyr::select(code, q_number, question, dplyr::matches("^h\\d+"), response = {{ col }}, value) %>%
     dplyr::rename_with(~hier[seq_along(.)], dplyr::matches("^h\\d+")) %>%
     dplyr::mutate(value = readr::parse_number(value)) %>%
     dplyr::filter(!is.na(value))
+  if (any(nchar(out$code) > 0)) {
+    dplyr::select(out, -q_number)
+  } else {
+    dplyr::select(out, -code)
+  }
 }

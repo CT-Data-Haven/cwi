@@ -48,16 +48,16 @@ read_xtabs_ <- function(path, name_prefix) {
 read_xtabs <- function(path, name_prefix = "x", marker = "Nature of the [Ss]ample", year = 2018, process = FALSE, ...) {
   data <- read_xtabs_(path, name_prefix)
   first_col <- rlang::sym(names(data)[1])
-  if (year == 2015) {
-    data <- camiller::filter_after(data, grepl("Sample Size", x1))
+  if (as.numeric(year) == 2015) {
+    data <- camiller::filter_after(data, grepl("Sample Size", {{ first_col }}))
   }
   data <- dplyr::filter(data, !stringr::str_detect({{ first_col }}, "Weighted [Tt]otal") | is.na({{ first_col }}))
   if (!is.null(marker)) {
     data <- camiller::filter_until(data, grepl(marker, {{ first_col }}))
   }
   if (process) {
-    xt_params(...)
-    xtab2df(data, ...)
+    xt_params(list(col = first_col, ...))
+    xtab2df(data, col = {{ first_col }}, ...)
   } else {
     data
   }
@@ -79,12 +79,11 @@ read_weights <- function(path, marker = "Nature of the [Ss]ample") {
     dplyr::mutate(weight = round(as.numeric(weight), digits = 3))
 }
 
-xt_params <- function(...) {
+xt_params <- function(args) {
   defaults <- formals(xtab2df)
-  user <- rlang::list2(...)
   # don't need to include .data
-  from_def <- defaults[!names(defaults) %in% names(user)][-1]
-  params <- c(from_def, user)
+  from_def <- defaults[!names(defaults) %in% names(args)][-1]
+  params <- c(from_def, args)
   params <- params[names(defaults)[-1]]
   param_str <- paste(names(params), params, sep = " = ", collapse = ", ")
   message("xtab2df is being called on the data with the parameters ", param_str)
