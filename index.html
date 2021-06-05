@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -65,10 +65,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/acs_updates.html">ACS updates</a>
+      <a href="articles/acs-updates.html">ACS updates</a>
     </li>
     <li>
       <a href="articles/basic-workflow.html">Basic workflow</a>
+    </li>
+    <li>
+      <a href="articles/crosstabs.html">Working with Community Wellbeing Survey crosstabs</a>
     </li>
     <li>
       <a href="articles/shapefiles.html">Shapefiles</a>
@@ -102,6 +105,7 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#cwi-" class="anchor"></a>cwi <img src="reference/figures/logo.png" align="right">
 </h1></div>
+<!-- badges: start -->
 
 <p>The goal of <code>cwi</code> is to get data, primarily the Census ACS, fetched, aggregated, and analyzed for <a href="http://ctdatahaven.org/reports/greater-new-haven-community-index">DataHaven’s 2019 Community Index reports</a>. This includes functions to speed up and standardize analysis for multiple staff people, preview trends and patterns we’ll need to write about, and get data in more layperson-friendly formats.</p>
 <p>It pairs well with many functions from Camille’s brilliantly-named <a href="https://github.com/camille-s/camiller"><code>camiller</code></a> package.</p>
@@ -160,7 +164,6 @@
 <p>Here’s an example of getting a big table to calculate homeownership rates across many geographies at once:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://stringr.tidyverse.org">stringr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/CT-Data-Haven/cwi">cwi</a></span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tenure</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/multi_geo_acs.html">multi_geo_acs</a></span><span class="op">(</span>
@@ -171,7 +174,7 @@
   towns <span class="op">=</span> <span class="va">regions</span><span class="op">[[</span><span class="st">"Greater New Haven"</span><span class="op">]</span><span class="op">]</span>,
   us <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span>
-<span class="co">#&gt; Table B25003: TENURE</span>
+<span class="co">#&gt; Table B25003: TENURE, 2018</span>
 <span class="co">#&gt; Geographies included:</span>
 <span class="co">#&gt; Towns: Bethany, Branford, East Haven, Guilford, Hamden, Madison, Milford, New Haven, North Branford, North Haven, Orange, West Haven, Woodbridge</span>
 <span class="co">#&gt; Regions: Greater New Haven, New Haven Inner Ring, New Haven Outer Ring</span>
@@ -180,7 +183,7 @@
 <span class="co">#&gt; US: Yes</span>
 <span class="va">tenure</span>
 <span class="co">#&gt; # A tibble: 57 x 9</span>
-<span class="co">#&gt;    GEOID NAME            variable   estimate    moe level     state county  year</span>
+<span class="co">#&gt;    geoid name            variable   estimate    moe level     state county  year</span>
 <span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;           &lt;chr&gt;         &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;     &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 1     United States   B25003_001   1.20e8 232429 1_us      &lt;NA&gt;  &lt;NA&gt;    2018</span>
 <span class="co">#&gt;  2 1     United States   B25003_002   7.64e7 367132 1_us      &lt;NA&gt;  &lt;NA&gt;    2018</span>
@@ -196,10 +199,10 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">homeownership</span> <span class="op">&lt;-</span> <span class="va">tenure</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/label_acs.html">label_acs</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">NAME</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">name</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>share <span class="op">=</span> <span class="va">estimate</span> <span class="op">/</span> <span class="va">estimate</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># or use camiller::calc_shares</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">label</span>, <span class="st">"Owner"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">level</span>, name <span class="op">=</span> <span class="va">NAME</span>, <span class="va">share</span><span class="op">)</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">label</span>, <span class="st">"Owner"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">name</span>, <span class="va">share</span><span class="op">)</span>
 
 <span class="va">homeownership</span>
 <span class="co">#&gt; # A tibble: 19 x 3</span>
@@ -261,8 +264,7 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/CT-Data-Haven/cwi"><img src="https://travis-ci.org/CT-Data-Haven/cwi.svg?branch=master" alt="Build Status"></a></li>
-<li><a href="https://ci.appveyor.com/project/CT-Data-Haven/cwi"><img src="https://ci.appveyor.com/api/projects/status/github/CT-Data-Haven/cwi?branch=master&amp;svg=true" alt="AppVeyor build status"></a></li>
+<li><a href="https://github.com/CT-Data-Haven/cwi/actions?workflow=pkgdown"><img src="https://github.com/CT-Data-Haven/cwi/workflows/pkgdown/badge.svg" alt="R build status"></a></li>
 </ul>
 </div>
 </div>
