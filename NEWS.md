@@ -1,4 +1,8 @@
-# cwi (development version)
+# cwi 0.2.0
+
+* Added finished versions of `read_xtab`, `read_weights`, `xtab2df`, and `collapse_n_wt` for working with DataHaven Community Wellbeing Survey crosstabs—see vignettes 
+* Added `add_logo` with built-in DataHaven logo
+* Bug fixes in `sub_nonanswers`, `xwalk`
 
 # cwi 0.1.3
 
