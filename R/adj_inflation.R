@@ -23,12 +23,12 @@ adj_inflation <- function(.data, value, year, base_year = 2019, key = Sys.getenv
   if (missing(value) | missing(year)) stop("Both value and year are required.")
   assertthat::assert_that(curl::has_internet(), msg = "Internet access is required to run this function.")
 
-  value_var <- rlang::enquo(value)
-  year_var <- rlang::enquo(year)
+  value_lbl <- rlang::as_label(rlang::enquo(value))
+  year_lbl <- rlang::as_label(rlang::enquo(year))
 
-  adj_var <- paste("adj", rlang::as_label(value_var), sep = "_")
+  adj_var <- paste("adj", value_lbl, sep = "_")
 
-  yr_range <- range(.data[rlang::as_label(year_var)])
+  yr_range <- range(.data[year_lbl])
   startyear <- min(c(yr_range[1], base_year))
   endyear <- max(c(yr_range[2], base_year))
 
@@ -49,9 +49,9 @@ adj_inflation <- function(.data, value, year, base_year = 2019, key = Sys.getenv
     dplyr::select(-avg_cpi)
 
   .data %>%
-    dplyr::mutate(dplyr::across({{ year_var }}, as.numeric)) %>%
-    dplyr::left_join(cpi, by = stats::setNames("year", rlang::as_label(year_var))) %>%
-    dplyr::mutate({{ adj_var }} := {{ value_var }} / adj_factor)
+    dplyr::mutate(dplyr::across({{ year }}, as.numeric)) %>%
+    dplyr::left_join(cpi, by = stats::setNames("year", year_lbl)) %>%
+    dplyr::mutate({{ adj_var }} := {{ value }} / adj_factor)
 }
 
 get_cpi <- function(startyear, endyear, key) {

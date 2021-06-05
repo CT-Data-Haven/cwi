@@ -75,7 +75,7 @@ decennial_nhood <- function(table, year, .data, counties, state, sumfile, name, 
   fetch <- decennial_tracts(table, year, geoids, counties, state, sumfile, key)
 
   .data %>%
-    dplyr::left_join(fetch, by = stats::setNames("GEOID", rlang::as_label({{ rlang::enquo(geoid) }}))) %>%
+    dplyr::left_join(fetch, by = stats::setNames("GEOID", rlang::as_label(rlang::enquo(geoid)))) %>%
     dplyr::group_by(variable, county, state, name) %>%
     dplyr::summarise(value = round(sum(value * {{ weight }}))) %>%
     dplyr::ungroup()

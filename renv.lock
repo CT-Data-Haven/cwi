@@ -44,6 +44,27 @@
       "Repository": "CRAN",
       "Hash": "4ed05e9c9726267e4a5872e09c04587c"
     },
+    "R.methodsS3": {
+      "Package": "R.methodsS3",
+      "Version": "1.8.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "4bf6453323755202d5909697b6f7c109"
+    },
+    "R.oo": {
+      "Package": "R.oo",
+      "Version": "1.24.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "5709328352717e2f0a9c012be8a97554"
+    },
+    "R.utils": {
+      "Package": "R.utils",
+      "Version": "2.10.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "a9e316277ff12a43997266f2f6567780"
+    },
     "R6": {
       "Package": "R6",
       "Version": "2.5.0",
@@ -698,6 +719,20 @@
       "Repository": "CRAN",
       "Hash": "d82215b501772c9faadb4dcd71395c7d"
     },
+    "showtext": {
+      "Package": "showtext",
+      "Version": "0.9-2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "e5dab22dca0b4626733ffca54b81fb6b"
+    },
+    "showtextdb": {
+      "Package": "showtextdb",
+      "Version": "3.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "c12e756cf947e58b0f2c2a520521a5a8"
+    },
     "snakecase": {
       "Package": "snakecase",
       "Version": "0.11.0",
@@ -770,15 +805,15 @@
     },
     "tidycensus": {
       "Package": "tidycensus",
-      "Version": "1.0",
+      "Version": "1.0.0.9000",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteUsername": "walkerke",
       "RemoteRepo": "tidycensus",
       "RemoteRef": "master",
-      "RemoteSha": "d1a2a0cf4f92f3020e421790c221b9e52a704d7e",
+      "RemoteSha": "dd92b52ea8889c4c7fb13a7325dbd32b93b58669",
       "RemoteHost": "api.github.com",
-      "Hash": "20c1ecff6fdb7a699c0c5002bcca65ba"
+      "Hash": "52b8494b35ac624d9d1342d742dd0593"
     },
     "tidyr": {
       "Package": "tidyr",

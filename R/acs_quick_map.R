@@ -27,11 +27,11 @@ acs_quick_map <- function(.data, name = name, value = value, level = c("town", "
 
   if (level == "neighborhood" & is.null(city)) stop("If using neighborhoods, please supply a city name.")
 
-  name_var <- rlang::enquo(name)
-  value_var <- rlang::enquo(value)
+  name_lbl <- rlang::as_label(rlang::enquo(name))
+  value_lbl <- rlang::as_label(rlang::enquo(value))
 
   # locations <- .data %>% dplyr::pull(!!name_var) %>% unique()
-  locations <- unique(.data[[rlang::as_label({{ name_var }})]])
+  locations <- unique(.data[[name_lbl]])
 
   if (level == "neighborhood") {
     shape_name <- city %>%
@@ -70,18 +70,18 @@ acs_quick_map <- function(.data, name = name, value = value, level = c("town", "
   # make shape$name, data$name_var characters if not already
   data_to_map <- .data %>%
     dplyr::ungroup() %>%
-    dplyr::mutate(dplyr::across({{ name_var }}, as.character))
+    dplyr::mutate(dplyr::across({{ name }}, as.character))
 
   p <- shape %>%
     # dplyr::inner_join(data_fct, by = rlang::quo_name(name_var)) %>%
-    dplyr::inner_join(data_to_map, by = stats::setNames(rlang::as_label({{ name_var }}), "name")) %>%
-    dplyr::mutate(brk = jenks({{ value_var }}, n = n)) %>%
+    dplyr::inner_join(data_to_map, by = stats::setNames(name_lbl, "name")) %>%
+    dplyr::mutate(brk = jenks({{ value }}, n = n)) %>%
     ggplot2::ggplot() +
     ggplot2::geom_sf(ggplot2::aes(fill = brk), ...) +
     ggplot2::scale_fill_brewer(palette = palette, drop = FALSE) +
     ggplot2::theme_minimal() +
     ggplot2::coord_sf(ndiscr = FALSE) +
-    ggplot2::labs(fill = rlang::as_label(value_var))
+    ggplot2::labs(fill = value_lbl)
   if (!is.null(title)) p <- p + ggplot2::ggtitle(title)
   p
 }

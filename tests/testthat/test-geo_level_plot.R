@@ -11,3 +11,11 @@ test_that("checks for valid plot types", {
   expect_is(geo_level_plot(df, dark_gray = "pink"), "ggplot")
   expect_error(geo_level_plot(df, type = "boxplot"))
 })
+
+test_that("handles tidyeval", {
+  df <- data.frame(location = letters[1:10],
+                   pop = rnorm(10),
+                   geo_lvl = sample(LETTERS[1:3], 10, replace = TRUE)
+  )
+  expect_is(geo_level_plot(df, name = location, value = pop, level = geo_lvl), "ggplot")
+})

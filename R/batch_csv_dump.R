@@ -17,8 +17,7 @@ batch_csv_dump <- function(.data, split_by, path = ".", base_name = NULL, bind =
     stop("Please supply either a list of data frames, or a column to split data by.")
   }
   if (is.data.frame(.data)) {
-    split_var <- rlang::enquo(split_by)
-    data_list <- split(.data, dplyr::select(.data, !!split_var))
+    data_list <- split(.data, dplyr::select(.data, {{ split_by }}))
   } else {
     data_list <- .data
   }

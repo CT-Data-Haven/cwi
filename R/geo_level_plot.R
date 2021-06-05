@@ -19,11 +19,7 @@ geo_level_plot <- function(.data, name = name, value = value, level = level, typ
   if (!grepl("gr(a|e)y", dark_gray)) dark_gray <- "gray20"
   if (!grepl("gr(a|e)y", light_gray)) light_gray <- "gray60"
 
-  value_var <- rlang::enquo(value)
-  name_var <- rlang::enquo(name)
-  level_var <- rlang::enquo(level)
-
-  geos <- sort(unique(.data[["level"]]))
+  geos <- sort(unique(.data[[rlang::as_label(rlang::enquo(level))]]))
 
   g1 <- stringr::str_extract(dark_gray, "\\d+$") %>% as.numeric()
   g2 <- stringr::str_extract(light_gray, "\\d+$") %>% as.numeric()
@@ -32,21 +28,20 @@ geo_level_plot <- function(.data, name = name, value = value, level = level, typ
 
   p <- .data %>%
     dplyr::ungroup() %>%
-    dplyr::mutate({{ name_var }} := forcats::fct_reorder(forcats::as_factor({{ name_var }}), {{ value_var }})) %>%
-    # dplyr::mutate(!!rlang::quo_name(name_var) := as.factor(!!name_var) %>% forcats::fct_reorder(!!value_var)) %>%
-    ggplot2::ggplot(ggplot2::aes(fill = !!level_var)) +
+    dplyr::mutate({{ name }} := forcats::fct_reorder(forcats::as_factor({{ name }}), {{ value }})) %>%
+    ggplot2::ggplot(ggplot2::aes(fill = {{ level }})) +
     ggplot2::scale_fill_manual(values = pal)
 
   if (type == "hist") {
     p_out <- p +
-      ggplot2::geom_histogram(ggplot2::aes(x = !!value_var), ...)
+      ggplot2::geom_histogram(ggplot2::aes(x = {{ value }}), ...)
   } else if (type == "point") {
     p_out <- p +
-      ggplot2::geom_point(ggplot2::aes(x = !!name_var, y = !!value_var), stroke = 0, size = 4, shape = 21, ...) +
+      ggplot2::geom_point(ggplot2::aes(x = {{ name }}, y = {{ value }}), stroke = 0, size = 4, shape = 21, ...) +
       ggplot2::coord_flip()
   } else {
     p_out <- p +
-      ggplot2::geom_col(ggplot2::aes(x = !!name_var, y = !!value_var), width = 0.8, ...) +
+      ggplot2::geom_col(ggplot2::aes(x = {{ name }}, y = {{ value }}), width = 0.8, ...) +
       ggplot2::coord_flip()
   }
   if (!is.null(title)) {

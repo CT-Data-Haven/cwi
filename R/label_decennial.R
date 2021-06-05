@@ -34,9 +34,10 @@ decennial_available <- function(tbl, year, sumfile) {
 #' @seealso [decennial_vars10]
 #' @export
 label_decennial <- function(.data, year = 2010, sumfile = "sf1", variable = variable) {
-  variable_var <- rlang::enquo(variable)
-  variable_name <- rlang::as_label(variable_var)
+  # variable_var <- rlang::enquo(variable)
+  # variable_name <- rlang::as_label(variable_var)
   dec_vars <- clean_decennial_vars(year = year, sumfile = sumfile)
   .data %>%
-    dplyr::left_join(dec_vars %>% dplyr::select(-concept), by = stats::setNames("name", variable_name))
+    dplyr::left_join(dec_vars %>% dplyr::select(-concept),
+                     by = stats::setNames("name", rlang::as_label(rlang::enquo(variable))))
 }
