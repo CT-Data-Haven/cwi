@@ -107,9 +107,6 @@ For many questions, what you probably want to report out or display is the share
 
 ```{r chart, fig.width=6, fig.height=3}
 library(ggplot2)
-library(showtext)
-font_add_google("Barlow Semi Condensed")
-showtext_auto()
 
 cws %>%
   filter(code == "Q1", category %in% c("Greater New Haven", "Gender", "Age")) %>%
@@ -123,13 +120,14 @@ cws %>%
          lbl = scales::percent(value, accuracy = 1)) %>%
   ggplot(aes(x = forcats::fct_rev(group), y = value)) +
   geom_col(width = 0.8, fill = "#047e87") +
-  geom_text(aes(label = lbl), hjust = 1, nudge_y = -0.01, fontface = "bold", family = "Barlow Semi Condensed", color = "white") +
+  geom_text(aes(label = lbl), hjust = 1, nudge_y = -0.01, fontface = "bold", color = "white") +
   scale_y_continuous(breaks = NULL, expand = expansion(mult = c(0, 0.05))) +
   coord_flip() +
   facet_grid(rows = vars(category), scales = "free_y", space = "free_y", switch = "y") +
-  camiller::theme_din(base_family = "Barlow Semi Condensed", ygrid = FALSE) +
   theme(strip.placement = "outside",
-        strip.text.y.left = element_text(angle = 0, hjust = 0, face = "bold")) +
+        strip.text.y.left = element_text(angle = 0, hjust = 0, face = "bold"),
+        panel.grid = element_blank(),
+        panel.background = element_blank()) +
   labs(x = NULL, y = NULL, 
        title = "Neighborhood satisfaction is high across age and gender",
        subtitle = "Share of adults satisfied with area, Greater New Haven, 2015",
@@ -179,14 +177,15 @@ cws_out %>%
   filter(category %in% c("Total", "Age", "Race/Ethnicity")) %>%
   ggplot(aes(x = forcats::fct_rev(group), y = value)) +
   geom_col(width = 0.8, fill = "#047e87") +
-  geom_text(aes(label = lbl), hjust = 1, nudge_y = -0.01, fontface = "bold", family = "Barlow Semi Condensed", color = "white") +
+  geom_text(aes(label = lbl), hjust = 1, nudge_y = -0.01, fontface = "bold", color = "white") +
   scale_y_continuous(breaks = NULL, expand = expansion(mult = c(0, 0.05))) +
   coord_flip() +
   facet_grid(rows = vars(category), cols = vars(indicator), scales = "free", space = "free_y", switch = "y") +
-  camiller::theme_din(base_family = "Barlow Semi Condensed", ygrid = FALSE) +
   theme(strip.placement = "outside",
         strip.text.y.left = element_text(angle = 0, hjust = 0),
-        strip.text = element_text(face = "bold")) +
+        strip.text = element_text(face = "bold"),
+        panel.grid = element_blank(),
+        panel.background = element_blank()) +
   labs(x = NULL, y = NULL,
        title = "Neighborhood satisfaction is high, even when government feels unresponsive",
        subtitle = "Share of adults, Greater New Haven, 2015",
