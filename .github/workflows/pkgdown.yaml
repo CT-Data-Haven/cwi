@@ -8,7 +8,7 @@ name: pkgdown
 
 jobs:
   pkgdown:
-    runs-on: macOS-latest
+      runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       BLS_KEY: ${{ secrets.BLS_KEY }}
@@ -23,8 +23,11 @@ jobs:
       - name: Install spatial libraries
         run: |
           # copied from sf github
-          brew install pkg-config
-          brew install gdal
+          #  brew install pkg-config
+          #  brew install gdal
+          apt-get update -qq \
+            && apt-get install -y gdal-bin \
+            pkg-config 
 
       - name: Query dependencies
         run: |
