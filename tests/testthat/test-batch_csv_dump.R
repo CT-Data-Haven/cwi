@@ -5,8 +5,8 @@ library(testthat)
 test_that("checks input data & split_by", {
   set.seed(123)
   df <- data.frame(
-    name = sample(letters, 20, replace = F),
-    region = sample(LETTERS[1:5], 20, replace = T),
+    name = sample(letters, 20, replace = FALSE),
+    region = sample(LETTERS[1:5], 20, replace = TRUE),
     value = rnorm(20)
   )
   split_df <- split(df, df$region)
@@ -18,8 +18,8 @@ test_that("checks input data & split_by", {
 test_that("output is same as input", {
   set.seed(123)
   df <- data.frame(
-    name = sample(letters, 20, replace = F),
-    region = sample(LETTERS[1:5], 20, replace = T),
+    name = sample(letters, 20, replace = FALSE),
+    region = sample(LETTERS[1:5], 20, replace = TRUE),
     value = rnorm(20)
   )
   df <- df[order(df$region, df$name), ]
@@ -33,19 +33,22 @@ test_that("output is same as input", {
 test_that("warns of missing path", {
   set.seed(123)
   df <- data.frame(
-    name = sample(letters, 20, replace = F),
-    region = sample(LETTERS[1:5], 20, replace = T),
+    name = sample(letters, 20, replace = FALSE),
+    region = sample(LETTERS[1:5], 20, replace = TRUE),
     value = rnorm(20)
   )
 
+  # will write to working directory, so delete files after
+  fns <- paste(LETTERS[1:5], "csv", sep = ".")
   expect_warning(batch_csv_dump(df, split_by = region, path = "dummy"), "does not exist")
+  on.exit(purrr::walk(fns, file.remove), add = TRUE)
 })
 
 test_that("prints messages if verbose", {
   set.seed(123)
   df <- data.frame(
-    name = sample(letters, 20, replace = F),
-    region = sample(LETTERS[1:5], 20, replace = T),
+    name = sample(letters, 20, replace = FALSE),
+    region = sample(LETTERS[1:5], 20, replace = TRUE),
     value = rnorm(20)
   )
 

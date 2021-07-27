@@ -22,7 +22,7 @@ batch_csv_dump <- function(.data, split_by, path = ".", base_name = NULL, bind =
     data_list <- .data
   }
 
-  if (!file.exists(path)) {
+  if (!dir.exists(path)) {
     warning("Path ", path, " does not exist. Defaulting to current working directory.")
     path <- "."
   }

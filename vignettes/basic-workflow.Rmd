@@ -126,7 +126,7 @@ tenure_map +
 
 Say as part of a pipeline, you need to do some calculations, write different sections of a data frame to CSV files to pass along to a colleague or refer to later, and then continue on to some more calculations. `batch_csv_dump()` takes either a list of data frames or a data frame plus a column to split by, and writes out a set of CSV files, then lets you move along to the next step in your pipeline.
 
-For example, I need to pull a table of populations by age group for several regions of Connecticut. I don't need to split populations by gender, so I'll add up male and female populations for each age group. I don't actually need to more detailed age groups now, but I need to stash them in files for later, so I'll  aggregate, write a bunch of files, and then aggregate into broader age groups that I need for my current work.
+For example, I need to pull a table of populations by age group for several regions of Connecticut. I don't need to split populations by gender, so I'll add up male and female populations for each age group. I don't actually need to more detailed age groups now, but I need to stash them in files for later, so I'll aggregate, write a bunch of files, and then aggregate into broader age groups that I need for my current work.
 
 ```{r batch, eval=FALSE, message=TRUE, warning=TRUE}
 new_haven_regions <- regions[c("Greater New Haven", "New Haven Inner Ring", 
@@ -135,7 +135,8 @@ new_haven_regions <- regions[c("Greater New Haven", "New Haven Inner Ring",
 acs <- multi_geo_acs(table = "B01001", year = yr, towns = NULL, regions = new_haven_regions, 
               counties = c("New Haven County", "Fairfield County")) %>%
   label_acs(year = yr) %>%
-  separate(label, into = c("total", "sex", "age"), sep = "!!") %>%
+  # shortcut around tidyr::separate
+  separate_acs(into = c("sex", "age"), drop_total = TRUE) %>%
   filter(!is.na(age)) %>%
   mutate(age = as.factor(age) %>% forcats::fct_inorder()) %>%
   group_by(name, level, age) %>%
@@ -156,7 +157,9 @@ acs %>%
 
 I'm also interested in learning about employment by industry over the past several years. `qwi_industry()` fetches county-level data by industry over time, either quarterly or annually. Here I'll look at annual averages of all industries for New Haven County and Connecticut over the past 16 years. I'm filtering out the industry code "00", which is the counts for all industries.
 
-```{r qwi1}
+*Note 7/26/2021:* The Census Bureau's QWI API is down, so these next couple chunks aren't running right now, but the code is still accurate :-/
+
+```{r qwi1, eval=FALSE, include=TRUE}
 nhc_employment <- qwi_industry(2002:2018, counties = "009", annual = TRUE) %>%
   mutate(location = "New Haven County")
 ct_employment <- qwi_industry(2002:2018, annual = T) %>%
@@ -170,7 +173,7 @@ employment
 
 Next, say I want to look at the industries that were largest in New Haven county in 2018, and see how those have changed both for the county and statewide over this time period. I'll filter `employment`, get the industries with the largest numbers of employees, then filter `employment` for just those industries and plot it.
 
-```{r qwi2}
+```{r qwi2, eval=FALSE, include=TRUE}
 top2018 <- employment %>%
   filter(year == 2018, county == "009") %>%
   top_n(8, Emp) %>%
@@ -191,7 +194,7 @@ employment %>%
 
 If I'm interested in changes in wages over this period, I can use the `adj_inflation()` function. This takes a data frame, the name of the column containing dollar amounts, and a base year, then adds two columns for the inflation adjustment factor and the adjusted value.
 
-```{r inflation}
+```{r inflation, eval=FALSE, include=TRUE}
 employment %>%
   filter(industry %in% top2018) %>%
   mutate(label = stringr::str_sub(label, 1, 25)) %>%
