@@ -51,7 +51,8 @@ Suggests:
     rmarkdown,
     testthat,
     sf,
-    showtext
+    showtext,
+    R.utils
 Remotes: 
     camille-s/camiller
 VignetteBuilder:
