@@ -22,7 +22,9 @@ jobs:
 
       - name: Install spatial libraries
         run: |
-          sudo apt install -y gdal-bin pkg-config 
+          sudo apt install -y gdal-bin \
+            pkg-config \
+            libcurl4-openssl-dev
 
       - name: Query dependencies
         run: |
