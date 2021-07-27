@@ -1,3 +1,7 @@
+# cwi 0.3.0
+* QWI example in the basic workflow vignette is currently turned off, because the Census QWI API has been down for at least a few days now. Will turn it back on when the API is (hopefully) back online.
+* **New function:** Add a function `separate_acs` as a very lazy way to split ACS labels.
+
 # cwi 0.2.0
 
 * Added finished versions of `read_xtab`, `read_weights`, `xtab2df`, and `collapse_n_wt` for working with DataHaven Community Wellbeing Survey crosstabs—see vignettes 
