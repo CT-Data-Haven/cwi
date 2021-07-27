@@ -22,12 +22,7 @@ jobs:
 
       - name: Install spatial libraries
         run: |
-          # copied from sf github
-          #  brew install pkg-config
-          #  brew install gdal
-          sudo apt-get update -qq \
-            && apt-get install -y gdal-bin \
-            pkg-config 
+          sudo apt install -y gdal-bin pkg-config 
 
       - name: Query dependencies
         run: |
