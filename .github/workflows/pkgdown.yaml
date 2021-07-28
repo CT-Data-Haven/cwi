@@ -45,18 +45,18 @@ jobs:
             libharfbuzz-dev \
             libfribidi-dev
 
-      - name: Query dependencies
-        run: |
-          install.packages(c("renv", "devtools", "pkgdown"), type = "binary")
-          renv::restore(repos = list(CRAN = "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"))
-        shell: Rscript {0}
-
       - name: Cache R packages
         uses: actions/cache@v2
         with:
           path: $HOME/.local/share/renv
-          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+          key: r-${{ hashFiles('renv.lock') }}
+          restore-keys: r-
+
+      - name: Install dependencies
+        run: |
+          install.packages(c("renv", "devtools", "pkgdown"))
+          renv::restore(repos = list(CRAN = "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"))
+        shell: Rscript {0}
 
       - name: Install package
         run: |
