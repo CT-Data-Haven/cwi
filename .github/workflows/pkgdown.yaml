@@ -24,7 +24,22 @@ jobs:
         run: |
           sudo apt install -y gdal-bin \
             pkg-config \
-            libcurl4-openssl-dev
+            libcurl4-openssl-dev \
+            libssl-dev \
+            libicu-dev \
+            imagemagick \
+            libmagick++-dev \
+            gsfonts \
+            libxml2-dev \
+            libudunits2-dev \
+            libgdal-dev \
+            gdal-bin \
+            libgeos-dev \
+            libproj-dev \
+            pandoc \
+            libfreetype6-dev \
+            libpng-dev \
+            zlib1g-dev
 
       - name: Query dependencies
         run: |
