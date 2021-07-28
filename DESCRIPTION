@@ -42,15 +42,15 @@ Imports:
     magick,
     cowplot,
     camiller (>= 0.2.0),
+    sf,
+    readr,
     tidycensus
 Suggests: 
-    readr,
     knitr,
     lubridate,
     scales,
     rmarkdown,
     testthat,
-    sf,
     showtext,
     R.utils
 Remotes: 
