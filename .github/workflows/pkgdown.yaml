@@ -39,7 +39,9 @@ jobs:
             pandoc \
             libfreetype6-dev \
             libpng-dev \
-            zlib1g-dev
+            zlib1g-dev \
+            libharfbuzz-dev \
+            libfribidi-dev
 
       - name: Query dependencies
         run: |
