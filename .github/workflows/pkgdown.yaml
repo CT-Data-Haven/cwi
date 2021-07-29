@@ -58,7 +58,7 @@ jobs:
 
       - name: Check
         run: |
-          rcmdcheck::rcmdcheck(error_on = "error", build_args = c("--no-manual"))
+          rcmdcheck::rcmdcheck(error_on = "error", args = c("--no-build-vignettes", "--no-manual"))
         shell: Rscript {0}
 
       - name: Deploy site
