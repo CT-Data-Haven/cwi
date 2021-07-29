@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      BLS_KEY: ${{ secrets.BLS_KEY }}
+      CENSUS_API_KEY: ${{ secrets.CENSUS_API_KEY }}
       CRAN: "https://packagemanager.rstudio.com/all/latest"
     steps:
       - uses: actions/checkout@v2
