@@ -15,7 +15,7 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       BLS_KEY: ${{ secrets.BLS_KEY }}
       CENSUS_API_KEY: ${{ secrets.CENSUS_API_KEY }}
-      CRAN: "https://packagemanager.rstudio.com/all/latest"
+      CRAN: "https://packagemanager.rstudio.com/all/__linux__/focal/latest"
     steps:
       - uses: actions/checkout@v2
 
