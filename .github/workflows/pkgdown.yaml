@@ -56,7 +56,7 @@ jobs:
 
       - name: Check
         run: |
-          rcmdcheck::rcmdcheck(error_on = "error")
+          rcmdcheck::rcmdcheck(error_on = "error", build_args = c("--no-manual"))
         shell: Rscript {0}
 
       - name: Deploy site

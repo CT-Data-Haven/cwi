@@ -42,11 +42,11 @@ Imports:
     magick,
     cowplot,
     camiller (>= 0.2.0),
-    sf,
     readr,
     tidycensus
 Suggests: 
     knitr,
+    sf,
     lubridate,
     scales,
     rmarkdown,
