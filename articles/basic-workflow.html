@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -135,7 +135,7 @@
                    regions <span class="op">=</span> <span class="va">gnh_regions</span>, counties <span class="op">=</span> <span class="st">"New Haven"</span>, state <span class="op">=</span> <span class="st">"09"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">gnh_data</span><span class="op">$</span><span class="va">total_pop</span>
-<span class="co">#&gt; # A tibble: 18 x 9</span>
+<span class="co">#&gt; # A tibble: 18 × 9</span>
 <span class="co">#&gt;    geoid    name         variable  estimate   moe level   state county      year</span>
 <span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;        &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;   &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 09       Connecticut  B01003_0…  3575074    NA 1_state &lt;NA&gt;  &lt;NA&gt;        2019</span>
@@ -166,7 +166,7 @@
 <span class="co">#&gt; Counties: New Haven County</span>
 <span class="co">#&gt; State: 09</span>
 <span class="co">#&gt; Assuming neighborhood GEOIDs are for tracts</span>
-<span class="co">#&gt; # A tibble: 22 x 9</span>
+<span class="co">#&gt; # A tibble: 22 × 9</span>
 <span class="co">#&gt;    geoid    name       variable  estimate   moe level     state county      year</span>
 <span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;     &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 09       Connectic… B01003_0…  3575074    NA 1_state   &lt;NA&gt;  &lt;NA&gt;        2019</span>
@@ -199,7 +199,7 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">county</span>, <span class="va">name</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://camille-s.github.io/camiller/reference/add_grps.html">add_grps</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>total <span class="op">=</span> <span class="fl">1</span>, white <span class="op">=</span> <span class="fl">3</span>, black <span class="op">=</span> <span class="fl">4</span>, latino <span class="op">=</span> <span class="fl">12</span>, other <span class="op">=</span> <span class="fl">5</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span>, group <span class="op">=</span> <span class="va">label</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://camille-s.github.io/camiller/reference/calc_shares.html">calc_shares</a></span><span class="op">(</span>group <span class="op">=</span> <span class="va">label</span>, denom <span class="op">=</span> <span class="st">"total"</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 90 x 6</span>
+<span class="co">#&gt; # A tibble: 90 × 6</span>
 <span class="co">#&gt; # Groups:   level, county, name [18]</span>
 <span class="co">#&gt;    level      county name             label  estimate  share</span>
 <span class="co">#&gt;    &lt;fct&gt;      &lt;chr&gt;  &lt;chr&gt;            &lt;fct&gt;     &lt;dbl&gt;  &lt;dbl&gt;</span>
@@ -226,7 +226,7 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">share</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">homeownership</span>
-<span class="co">#&gt; # A tibble: 18 x 5</span>
+<span class="co">#&gt; # A tibble: 18 × 5</span>
 <span class="co">#&gt; # Groups:   level, name [18]</span>
 <span class="co">#&gt;    level      name                 tenure         estimate share</span>
 <span class="co">#&gt;    &lt;fct&gt;      &lt;chr&gt;                &lt;fct&gt;             &lt;dbl&gt; &lt;dbl&gt;</span>
@@ -285,7 +285,8 @@
 <span class="va">acs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/multi_geo_acs.html">multi_geo_acs</a></span><span class="op">(</span>table <span class="op">=</span> <span class="st">"B01001"</span>, year <span class="op">=</span> <span class="va">yr</span>, towns <span class="op">=</span> <span class="cn">NULL</span>, regions <span class="op">=</span> <span class="va">new_haven_regions</span>, 
               counties <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"New Haven County"</span>, <span class="st">"Fairfield County"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/label_acs.html">label_acs</a></span><span class="op">(</span>year <span class="op">=</span> <span class="va">yr</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">label</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"total"</span>, <span class="st">"sex"</span>, <span class="st">"age"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"!!"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="co"># shortcut around tidyr::separate</span>
+  <span class="fu"><a href="../reference/separate_acs.html">separate_acs</a></span><span class="op">(</span>into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"sex"</span>, <span class="st">"age"</span><span class="op">)</span>, drop_total <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">forcats</span><span class="fu">::</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_inorder.html">fct_inorder</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">level</span>, <span class="va">age</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -306,32 +307,17 @@
 <h2 class="hasAnchor">
 <a href="#quarterly-workforce-indicators" class="anchor"></a>Quarterly Workforce Indicators</h2>
 <p>I’m also interested in learning about employment by industry over the past several years. <code><a href="../reference/qwi_industry.html">qwi_industry()</a></code> fetches county-level data by industry over time, either quarterly or annually. Here I’ll look at annual averages of all industries for New Haven County and Connecticut over the past 16 years. I’m filtering out the industry code “00”, which is the counts for all industries.</p>
+<p><em>Note 7/26/2021:</em> The Census Bureau’s QWI API is down, so these next couple chunks aren’t running right now, but the code is still accurate :-/</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">nhc_employment</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qwi_industry.html">qwi_industry</a></span><span class="op">(</span><span class="fl">2002</span><span class="op">:</span><span class="fl">2018</span>, counties <span class="op">=</span> <span class="st">"009"</span>, annual <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>location <span class="op">=</span> <span class="st">"New Haven County"</span><span class="op">)</span>
-<span class="co">#&gt; The API can only get 10 years of data at once; making multiple calls, but this might take a little longer.</span>
 <span class="va">ct_employment</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qwi_industry.html">qwi_industry</a></span><span class="op">(</span><span class="fl">2002</span><span class="op">:</span><span class="fl">2018</span>, annual <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>location <span class="op">=</span> <span class="st">"Connecticut"</span><span class="op">)</span>
-<span class="co">#&gt; The API can only get 10 years of data at once; making multiple calls, but this might take a little longer.</span>
 <span class="va">employment</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">nhc_employment</span>, <span class="va">ct_employment</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">industry</span> <span class="op">!=</span> <span class="st">"00"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">naics_codes</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">ind_level</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"industry"</span><span class="op">)</span>
 
-<span class="va">employment</span>
-<span class="co">#&gt; # A tibble: 680 x 8</span>
-<span class="co">#&gt;     year industry state county   Emp   Payroll location    label                </span>
-<span class="co">#&gt;    &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;                </span>
-<span class="co">#&gt;  1  2002 11       09    009      713    1.66e7 New Haven … Agriculture, Forestr…</span>
-<span class="co">#&gt;  2  2002 21       09    009      206    1.07e7 New Haven … Mining, Quarrying, a…</span>
-<span class="co">#&gt;  3  2002 22       09    009     1928    1.25e8 New Haven … Utilities            </span>
-<span class="co">#&gt;  4  2002 23       09    009    15428    7.49e8 New Haven … Construction         </span>
-<span class="co">#&gt;  5  2002 31-33    09    009    48303    2.42e9 New Haven … Manufacturing        </span>
-<span class="co">#&gt;  6  2002 42       09    009    16903    9.28e8 New Haven … Wholesale Trade      </span>
-<span class="co">#&gt;  7  2002 44-45    09    009    46316    1.18e9 New Haven … Retail Trade         </span>
-<span class="co">#&gt;  8  2002 48-49    09    009     7752    2.57e8 New Haven … Transportation and W…</span>
-<span class="co">#&gt;  9  2002 51       09    009    14433    7.57e8 New Haven … Information          </span>
-<span class="co">#&gt; 10  2002 52       09    009    13400    7.89e8 New Haven … Finance and Insurance</span>
-<span class="co">#&gt; # … with 670 more rows</span></code></pre></div>
+<span class="va">employment</span></code></pre></div>
 <p>Next, say I want to look at the industries that were largest in New Haven county in 2018, and see how those have changed both for the county and statewide over this time period. I’ll filter <code>employment</code>, get the industries with the largest numbers of employees, then filter <code>employment</code> for just those industries and plot it.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">top2018</span> <span class="op">&lt;-</span> <span class="va">employment</span> <span class="op">%&gt;%</span>
@@ -339,7 +325,6 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/top_n.html">top_n</a></span><span class="op">(</span><span class="fl">8</span>, <span class="va">Emp</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">industry</span><span class="op">)</span>
 <span class="va">top2018</span>
-<span class="co">#&gt; [1] "31-33" "42"    "44-45" "54"    "56"    "61"    "62"    "72"</span>
 
 <span class="va">employment</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">industry</span> <span class="op">%in%</span> <span class="va">top2018</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -351,7 +336,6 @@
          subtitle <span class="op">=</span> <span class="st">"Connecticut and New Haven County, 2002-2018"</span>, color <span class="op">=</span> <span class="st">"Industry"</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">location</span><span class="op">)</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span></code></pre></div>
-<p><img src="basic-workflow_files/figure-html/qwi2-1.png" width="1050"></p>
 <p>If I’m interested in changes in wages over this period, I can use the <code><a href="../reference/adj_inflation.html">adj_inflation()</a></code> function. This takes a data frame, the name of the column containing dollar amounts, and a base year, then adds two columns for the inflation adjustment factor and the adjusted value.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">employment</span> <span class="op">%&gt;%</span>
@@ -366,9 +350,7 @@
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Year"</span>, y <span class="op">=</span> <span class="st">"Average annual wages (thousands)"</span>, title <span class="op">=</span> <span class="st">"Average annual wages by industry (adjusted to 2018 dollars)"</span>, 
          subtitle <span class="op">=</span> <span class="st">"Connecticut and New Haven County, 2002-2018"</span>, color <span class="op">=</span> <span class="st">"Industry"</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">location</span><span class="op">)</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span>
-<span class="co">#&gt; The API can only get 10 years of data at once; making multiple calls, but this might take a little longer.</span></code></pre></div>
-<p><img src="basic-workflow_files/figure-html/inflation-1.png" width="1050"></p>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">location</span><span class="op">)</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span></code></pre></div>
 <p>Now we have a visual that shows that in a few industries, wages have climbed over the past several years, but in many industries, wages haven’t increased except by inflation.</p>
 </div>
 <div id="local-area-unemployment-statistics" class="section level2">
@@ -382,7 +364,7 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">area</span>, <span class="va">date</span>, <span class="va">value</span><span class="op">)</span>
 
 <span class="va">unemployment</span>
-<span class="co">#&gt; # A tibble: 684 x 3</span>
+<span class="co">#&gt; # A tibble: 684 × 3</span>
 <span class="co">#&gt;    area        date       value</span>
 <span class="co">#&gt;    &lt;chr&gt;       &lt;date&gt;     &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 Connecticut 2018-12-01 0.032</span>

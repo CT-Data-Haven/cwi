@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -125,7 +125,7 @@
 <code class="sourceCode R"><span class="va">xtab_in</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_xtabs.html">read_xtabs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata/test_xtab2015.xlsx"</span>, package <span class="op">=</span> <span class="st">"cwi"</span><span class="op">)</span>, year <span class="op">=</span> <span class="fl">2015</span><span class="op">)</span>
 
 <span class="va">xtab_in</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">7</span>, <span class="op">]</span>
-<span class="co">#&gt; # A tibble: 7 x 26</span>
+<span class="co">#&gt; # A tibble: 7 × 26</span>
 <span class="co">#&gt;   x1     x2    x3    x4    x5    x6    x7    x8    x9    x10   x11   x12   x13  </span>
 <span class="co">#&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;</span>
 <span class="co">#&gt; 1 Q1. A… &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; </span>
@@ -145,7 +145,7 @@
 <span class="va">cws</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">code</span> <span class="op">==</span> <span class="st">"Q8"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 6 x 6</span>
+<span class="co">#&gt; # A tibble: 6 × 6</span>
 <span class="co">#&gt;   code  question                           category     group     response value</span>
 <span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt;                              &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 Q8    Do you have access to a car when … Connecticut  Connecti… Very of…  0.85</span>
@@ -162,7 +162,7 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">wts_in</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_xtabs.html">read_weights</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata/test_xtab2015.xlsx"</span>, package <span class="op">=</span> <span class="st">"cwi"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">wts_in</span>
-<span class="co">#&gt; # A tibble: 23 x 2</span>
+<span class="co">#&gt; # A tibble: 23 × 2</span>
 <span class="co">#&gt;    group                  weight</span>
 <span class="co">#&gt;    &lt;chr&gt;                   &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 Male                    0.47 </span>
@@ -196,7 +196,7 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="va">category</span><span class="op">:</span><span class="va">response</span>, <span class="fu">forcats</span><span class="fu">::</span><span class="va"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/replace_na.html">replace_na</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>weight <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/collapse_n_wt.html">collapse_n_wt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">code</span>, <span class="va">category</span><span class="op">:</span><span class="va">response</span><span class="op">)</span>, .lvls <span class="op">=</span> <span class="va">income_lvls</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 28 x 5</span>
+<span class="co">#&gt; # A tibble: 28 × 5</span>
 <span class="co">#&gt;    code  category          group             response      value</span>
 <span class="co">#&gt;    &lt;chr&gt; &lt;fct&gt;             &lt;fct&gt;             &lt;fct&gt;         &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 Q8    Greater New Haven Greater New Haven Very often   0.82  </span>
@@ -219,7 +219,7 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cws</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">code</span> <span class="op">==</span> <span class="st">"Q1"</span>, <span class="va">category</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Greater New Haven"</span>, <span class="st">"Gender"</span>, <span class="st">"Age"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 28 x 6</span>
+<span class="co">#&gt; # A tibble: 28 × 6</span>
 <span class="co">#&gt;    code  question                        category      group      response value</span>
 <span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;                           &lt;chr&gt;         &lt;chr&gt;      &lt;chr&gt;    &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 Q1    Are you satisfied with the cit… Greater New … Greater N… Yes       0.82</span>
@@ -238,7 +238,7 @@
 <code class="sourceCode R"><span class="va">cws</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">code</span> <span class="op">==</span> <span class="st">"Q1"</span>, <span class="va">category</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Greater New Haven"</span>, <span class="st">"Gender"</span>, <span class="st">"Age"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/sub_nonanswers.html">sub_nonanswers</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 14 x 6</span>
+<span class="co">#&gt; # A tibble: 14 × 6</span>
 <span class="co">#&gt;    code  question                        category      group      response value</span>
 <span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;                           &lt;chr&gt;         &lt;chr&gt;      &lt;fct&gt;    &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 Q1    Are you satisfied with the cit… Greater New … Greater N… Yes      0.828</span>
@@ -296,7 +296,7 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">code</span>, <span class="va">question</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>responses <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">response</span>, collapse <span class="op">=</span> <span class="st">", "</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; `summarise()` has grouped output by 'code'. You can override using the `.groups` argument.</span>
-<span class="co">#&gt; # A tibble: 7 x 3</span>
+<span class="co">#&gt; # A tibble: 7 × 3</span>
 <span class="co">#&gt; # Groups:   code [7]</span>
 <span class="co">#&gt;   code  question                              responses                         </span>
 <span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt;                                 &lt;chr&gt;                             </span>
