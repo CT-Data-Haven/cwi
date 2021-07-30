@@ -35,6 +35,7 @@ theme_clean <- function(...) {
         panel.grid = element_blank(),
         panel.background = element_blank(),
         plot.title.position = "plot",
+        plot.title = element_text(size = rel(1.1)),
         axis.ticks = element_blank(),
         ...)
 }
@@ -193,7 +194,7 @@ cws_out %>%
   facet_grid(rows = vars(category), cols = vars(indicator), scales = "free", space = "free_y", switch = "y") +
   theme_clean() +
   labs(x = NULL, y = NULL,
-       title = "Neighborhood satisfaction is high, even when government feels unresponsive",
+       title = "Neighborhood satisfaction is high, even when government\nfeels unresponsive",
        subtitle = "Share of adults, Greater New Haven, 2015",
        caption = "Source: 2015 DataHaven Community Wellbeing Survey")
 ```
