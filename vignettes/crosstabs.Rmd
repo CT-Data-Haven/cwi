@@ -25,6 +25,19 @@ knitr::opts_chunk$set(
 library(dplyr)
 library(stringr)
 library(cwi)
+
+# tiny theme of a few cleaned up arguments
+theme_clean <- function(...) {
+  theme_gray() +
+    theme(strip.placement = "outside",
+        strip.text.y.left = element_text(angle = 0, hjust = 0),
+        strip.text = element_text(face = "bold"),
+        panel.grid = element_blank(),
+        panel.background = element_blank(),
+        plot.title.position = "plot",
+        axis.ticks = element_blank(),
+        ...)
+}
 ```
 
 This is a quick look at using the crosstab-related functions being finished up for what will likely be `cwi` v.0.2.0. There are 3 test files of crosstabs that ship with this package for internal testing and illustration. This vignette recreates the data in the `cws_demo` dataset. 
@@ -105,7 +118,7 @@ cws %>%
 
 For many questions, what you probably want to report out or display is the share of people who answered yes, or the combination of "strongly agree" & "somewhat agree".
 
-```{r chart, fig.width=6, fig.height=3}
+```{r chart}
 library(ggplot2)
 
 cws %>%
@@ -124,10 +137,7 @@ cws %>%
   scale_y_continuous(breaks = NULL, expand = expansion(mult = c(0, 0.05))) +
   coord_flip() +
   facet_grid(rows = vars(category), scales = "free_y", space = "free_y", switch = "y") +
-  theme(strip.placement = "outside",
-        strip.text.y.left = element_text(angle = 0, hjust = 0, face = "bold"),
-        panel.grid = element_blank(),
-        panel.background = element_blank()) +
+  theme_clean() +
   labs(x = NULL, y = NULL, 
        title = "Neighborhood satisfaction is high across age and gender",
        subtitle = "Share of adults satisfied with area, Greater New Haven, 2015",
@@ -146,7 +156,7 @@ cws %>%
 
 A common use is to show multiple related indicators side by side in a table or chart. Here I'm prepping to show both the question about neighborhood satisfaction (yes / no) and the responsiveness of local government (combined excellent & good).
 
-```{r govt_chart, fig.width=6, fig.height=4}
+```{r govt_chart}
 govt <- cws %>%
   mutate(across(c(category, group), forcats::as_factor)) %>%
   filter(code %in% c("Q1", "Q3A")) %>%
@@ -181,11 +191,7 @@ cws_out %>%
   scale_y_continuous(breaks = NULL, expand = expansion(mult = c(0, 0.05))) +
   coord_flip() +
   facet_grid(rows = vars(category), cols = vars(indicator), scales = "free", space = "free_y", switch = "y") +
-  theme(strip.placement = "outside",
-        strip.text.y.left = element_text(angle = 0, hjust = 0),
-        strip.text = element_text(face = "bold"),
-        panel.grid = element_blank(),
-        panel.background = element_blank()) +
+  theme_clean() +
   labs(x = NULL, y = NULL,
        title = "Neighborhood satisfaction is high, even when government feels unresponsive",
        subtitle = "Share of adults, Greater New Haven, 2015",

@@ -43,7 +43,8 @@ Imports:
     cowplot,
     camiller (>= 0.2.0),
     readr,
-    tidycensus
+    tidycensus,
+    tidyselect
 Suggests: 
     knitr,
     sf,

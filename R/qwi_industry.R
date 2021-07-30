@@ -61,14 +61,13 @@ qwi_industry <- function(years, industries = naics_codes[["industry"]], counties
     colnames(data) <- data[1, ]
 
     dplyr::as_tibble(data[-1, ]) %>%
-      # dplyr::mutate_at(dplyr::vars(quarter, Emp, Payroll), as.numeric)
       dplyr::mutate(dplyr::across(c(quarter, Emp, Payroll), as.numeric))
   })
 
 
   if (annual) {
     out %>%
-      dplyr::group_by_if(is.character) %>%
+      dplyr::group_by(dplyr::across(where(is.character))) %>%
       dplyr::summarise(Emp = round(mean(Emp)), Payroll = sum(Payroll)) %>%
       dplyr::ungroup() %>%
       dplyr::mutate(year = as.numeric(year))
@@ -77,3 +76,5 @@ qwi_industry <- function(years, industries = naics_codes[["industry"]], counties
       dplyr::mutate(year = as.numeric(year))
   }
 }
+
+utils::globalVariables("where")

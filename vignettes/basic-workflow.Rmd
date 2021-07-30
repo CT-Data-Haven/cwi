@@ -138,7 +138,7 @@ acs <- multi_geo_acs(table = "B01001", year = yr, towns = NULL, regions = new_ha
   # shortcut around tidyr::separate
   separate_acs(into = c("sex", "age"), drop_total = TRUE) %>%
   filter(!is.na(age)) %>%
-  mutate(age = as.factor(age) %>% forcats::fct_inorder()) %>%
+  mutate(age = forcats::as_factor(age)) %>%
   group_by(name, level, age) %>%
   summarise(estimate = sum(estimate), moe = tidycensus::moe_sum(moe, estimate) %>% round()) %>%
   ungroup()
