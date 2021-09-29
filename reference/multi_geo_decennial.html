@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
       </span>
     </div>
 
@@ -232,11 +232,11 @@
     <p>A tibble with GEOID, name, variable code, estimate, moe, geography level, state, and year, as applicable, for the chosen table.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function essentially calls <code><a href='https://rdrr.io/pkg/tidycensus/man/get_decennial.html'>tidycensus::get_decennial()</a></code> multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying <code><a href='https://rdrr.io/pkg/tidycensus/man/get_decennial.html'>tidycensus::get_decennial()</a></code> requires a Census API key. As is the case with other <code>tidycensus</code> functions, <code>multi_geo_decennial</code> assumes this key is stored as <code>CENSUS_API_KEY</code> in your <code>.Renviron</code>. See <code><a href='https://rdrr.io/pkg/tidycensus/man/census_api_key.html'>tidycensus::census_api_key()</a></code> for installation.</p>
+    <p>This function essentially calls <code><a href='https://walker-data.com/tidycensus/reference/get_decennial.html'>tidycensus::get_decennial()</a></code> multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying <code><a href='https://walker-data.com/tidycensus/reference/get_decennial.html'>tidycensus::get_decennial()</a></code> requires a Census API key. As is the case with other <code>tidycensus</code> functions, <code>multi_geo_decennial</code> assumes this key is stored as <code>CENSUS_API_KEY</code> in your <code>.Renviron</code>. See <code><a href='https://walker-data.com/tidycensus/reference/census_api_key.html'>tidycensus::census_api_key()</a></code> for installation.</p>
 <p>Be advised that decennial table numbers may change from year to year, so if you're looking at trends, check FactFinder or another source to make sure the tables have the same meaning. Setting <code>verbose = TRUE</code> is helpful for this as well.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/tidycensus/man/census_api_key.html'>tidycensus::census_api_key()</a></code>, <code><a href='https://rdrr.io/pkg/tidycensus/man/get_decennial.html'>tidycensus::get_decennial()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://walker-data.com/tidycensus/reference/census_api_key.html'>tidycensus::census_api_key()</a></code>, <code><a href='https://walker-data.com/tidycensus/reference/get_decennial.html'>tidycensus::get_decennial()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
