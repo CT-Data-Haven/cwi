@@ -51,7 +51,9 @@ collapse_n_wt <- function(.data, ..., .lvls, .group = group, .value = value, .we
 
   if (.fill_wts) {
     message("HEADS UP: Missing values in your weights column are being filled in. Make sure this is intentional!")
-    to_wt <- tidyr::replace_na(to_wt, list({{ .weight }} := 1))
+    # to_wt <- tidyr::replace_na(to_wt, list({{ .weight }} := 1))
+    to_wt <- to_wt %>%
+      dplyr::mutate({{ .weight }} := tidyr::replace_na({{ .weight }}, 1))
   }
   out <- to_wt %>%
     dplyr::summarise({{ .value }} := stats::weighted.mean({{ .value }}, w = {{ .weight }}))
