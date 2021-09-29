@@ -18,7 +18,7 @@
 #' As built, this is a logo for DataHaven, but that file can be replaced for
 #' repackaging this library for other organizations or projects.
 #' @param position String, either "left" or "right", giving the side on which
-#' the logo should be aligned. Default: "left"
+#' the logo should be aligned. Default: "right"
 #' @param height Numeric: the height of the logo, as a percentage of the height
 #' of the image given in `plot`. Adjust as necessary based on the dimensions
 #' of the logo. Default: 0.05
@@ -54,7 +54,7 @@
 #' @export
 #' @rdname add_logo
 #' @seealso [magick::image_read()], [cowplot::draw_image()]
-add_logo <- function(plot, image = NULL, position = c("left", "right"), height = 0.05, place_inside = TRUE, ...) {
+add_logo <- function(plot, image = NULL, position = c("right", "left"), height = 0.05, place_inside = TRUE, ...) {
   m <- ggplot2::calc_element("plot.margin", plot$theme)
   if (!is.null(m)) {
     margin <- m
