@@ -1,9 +1,16 @@
+# cwi 0.4.0
+
+* Rewrote neighborhood weights with the 2020 redistricting block boundaries. Dropped the block group table that was only done for New Haven, and changed the name of `nhv_tracts` to `new_haven_tracts` to match those for other cities.
+* QWI API is working again, but payroll data is missing from their database.
+
 # cwi 0.3.2
 
 # cwi 0.3.1
+
 * Minor behind-the-scenes updates
 
 # cwi 0.3.0
+
 * QWI example in the basic workflow vignette is currently turned off, because the Census QWI API has been down for at least a few days now. Will turn it back on when the API is (hopefully) back online.
 * **New function:** Add a function `separate_acs` as a very lazy way to split ACS labels.
 

@@ -35,7 +35,7 @@ This package relies heavily on:
 
 -   The [`tidyverse`](http://tidyverse.org/) packages, namely
     `magrittr`, `dplyr`, `tidyr`, `purrr`, `stringr`, `forcats`, and
-    `ggplot2` (version &gt;= 3.0.0) (so basically *all* the tidyverse)
+    `ggplot2` (version >= 3.0.0) (so basically *all* the tidyverse)
 -   `rlang` and `tidyselect` for non-standard evaluation in many
     functions
 -   `tidycensus` for actually getting all the Census data
@@ -92,7 +92,7 @@ tenure <- multi_geo_acs(
   towns = regions[["Greater New Haven"]],
   us = TRUE
 )
-#> Table B25003: TENURE, 2018
+#> Table B25003: TENURE (WHITE ALONE HOUSEHOLDER), 2018
 #> Geographies included:
 #> Towns: Bethany, Branford, East Haven, Guilford, Hamden, Madison, Milford, New Haven, North Branford, North Haven, Orange, West Haven, Woodbridge
 #> Regions: Greater New Haven, New Haven Inner Ring, New Haven Outer Ring
@@ -100,19 +100,19 @@ tenure <- multi_geo_acs(
 #> State: 09
 #> US: Yes
 tenure
-#> # A tibble: 57 x 9
-#>    geoid name            variable   estimate    moe level     state county  year
-#>    <chr> <chr>           <chr>         <dbl>  <dbl> <fct>     <chr> <chr>  <dbl>
-#>  1 1     United States   B25003_001   1.20e8 232429 1_us      <NA>  <NA>    2018
-#>  2 1     United States   B25003_002   7.64e7 367132 1_us      <NA>  <NA>    2018
-#>  3 1     United States   B25003_003   4.33e7 139467 1_us      <NA>  <NA>    2018
-#>  4 09    Connecticut     B25003_001   1.37e6   3671 2_state   <NA>  <NA>    2018
-#>  5 09    Connecticut     B25003_002   9.07e5   4800 2_state   <NA>  <NA>    2018
-#>  6 09    Connecticut     B25003_003   4.60e5   3488 2_state   <NA>  <NA>    2018
-#>  7 09009 New Haven Coun… B25003_001   3.30e5   1775 3_counti… 09    <NA>    2018
-#>  8 09009 New Haven Coun… B25003_002   2.04e5   1887 3_counti… 09    <NA>    2018
-#>  9 09009 New Haven Coun… B25003_003   1.26e5   1974 3_counti… 09    <NA>    2018
-#> 10 <NA>  Greater New Ha… B25003_001   1.77e5   1531 4_regions <NA>  <NA>    2018
+#> # A tibble: 57 × 9
+#>    geoid name              variable    estimate    moe level  state county  year
+#>    <chr> <chr>             <chr>          <dbl>  <dbl> <fct>  <chr> <chr>  <dbl>
+#>  1 1     United States     B25003_001 119730128 232429 1_us   <NA>  <NA>    2018
+#>  2 1     United States     B25003_002  76444810 367132 1_us   <NA>  <NA>    2018
+#>  3 1     United States     B25003_003  43285318 139467 1_us   <NA>  <NA>    2018
+#>  4 09    Connecticut       B25003_001   1367374   3671 2_sta… <NA>  <NA>    2018
+#>  5 09    Connecticut       B25003_002    907134   4800 2_sta… <NA>  <NA>    2018
+#>  6 09    Connecticut       B25003_003    460240   3488 2_sta… <NA>  <NA>    2018
+#>  7 09009 New Haven County  B25003_001    329857   1775 3_cou… 09    <NA>    2018
+#>  8 09009 New Haven County  B25003_002    204295   1887 3_cou… 09    <NA>    2018
+#>  9 09009 New Haven County  B25003_003    125562   1974 3_cou… 09    <NA>    2018
+#> 10 <NA>  Greater New Haven B25003_001    177197   1531 4_reg… <NA>  <NA>    2018
 #> # … with 47 more rows
 ```
 
@@ -125,7 +125,7 @@ homeownership <- tenure %>%
   select(level, name, share)
 
 homeownership
-#> # A tibble: 19 x 3
+#> # A tibble: 19 × 3
 #> # Groups:   level, name [19]
 #>    level      name                 share
 #>    <fct>      <chr>                <dbl>
