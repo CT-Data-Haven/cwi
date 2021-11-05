@@ -1,8 +1,7 @@
-testthat::context("add_logo returns gg")
 library(cwi)
 library(testthat)
 
-test_that("url as logo returns ggplot", {
+test_that("add_logo with url as logo returns ggplot", {
   set.seed(123)
   towns <- regions[["New Haven Inner Ring"]]
   town_df <- dplyr::tibble(name = towns, value = runif(length(towns)))
@@ -14,7 +13,7 @@ test_that("url as logo returns ggplot", {
   expect_true("gg" %in% class(p_out))
 })
 
-test_that("img as logo returns ggplot", {
+test_that("add_logo with img as logo returns ggplot", {
   set.seed(123)
   towns <- regions[["New Haven Inner Ring"]]
   town_df <- dplyr::tibble(name = towns, value = runif(length(towns)))
@@ -26,7 +25,7 @@ test_that("img as logo returns ggplot", {
   expect_true("gg" %in% class(p_out))
 })
 
-test_that("null as logo returns ggplot", {
+test_that("add_logo with null as logo returns ggplot", {
   set.seed(123)
   towns <- regions[["New Haven Inner Ring"]]
   town_df <- dplyr::tibble(name = towns, value = runif(length(towns)))

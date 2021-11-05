@@ -1,8 +1,8 @@
-context("Read & reshape crosstabs")
 library(cwi)
 library(testthat)
 
-test_that("xtabs read correct number of rows", {
+# all_xt is a non-exported wrapper I wrote for the purposes of testing, see R/test_utils.R
+test_that("read_xtabs read correct number of rows", {
   xts <- all_xt(read_xtabs)
   expect_equal(nrow(xts[["2015"]]), 59)
   expect_equal(nrow(xts[["2018"]]), 42)
@@ -19,14 +19,14 @@ test_that("read_xtabs removes weighted total rows", {
   expect_false(found[["2020"]])
 })
 
-test_that("weights read correct number of rows", {
+test_that("read_weights read correct number of rows", {
   wts <- all_xt(read_weights)
   expect_equal(nrow(wts[["2015"]]), 23)
   expect_equal(nrow(wts[["2018"]]), 18)
   expect_equal(nrow(wts[["2020"]]), 29)
 })
 
-test_that("allows custom name prefixes", {
+test_that("read_xtabs allows custom name prefixes", {
   xts <- all_xt(read_xtabs, list(name_prefix = "vv"))
   hdrs <- xts %>% purrr::map(ncol) %>% purrr::map(seq_len) %>% purrr::map(~paste0("vv", .))
   expect_equal(names(xts[["2015"]]), hdrs[["2015"]])

@@ -1,18 +1,17 @@
-testthat::context("Error handling in acs_quick_map")
 library(cwi)
 library(testthat)
 
-test_that("successful calls return ggplots", {
+test_that("acs_quick_map successful calls return ggplots", {
   set.seed(123)
   town_df <- dplyr::tibble(name = regions[["Greater New Haven"]]) %>%
     dplyr::mutate(value = stats::runif(13))
   # new haven neighborhoods
-  hood_df <- nhv_tracts %>%
+  hood_df <- new_haven_tracts %>%
     dplyr::distinct(name) %>%
     dplyr::slice(1:10) %>%
     dplyr::mutate(value = stats::runif(10))
   # new haven tracts
-  tract_df <- nhv_tracts %>%
+  tract_df <- new_haven_tracts %>%
     dplyr::distinct(geoid) %>%
     dplyr::slice(1:10) %>%
     dplyr::mutate(value = stats::runif(10))
@@ -23,9 +22,9 @@ test_that("successful calls return ggplots", {
   expect_is(acs_quick_map(tract_df, name = geoid, level = "tract"), "gg")
 })
 
-test_that("invalid levels are caught", {
+test_that("acs_quick_map catches invalid geo levels", {
   set.seed(123)
-  hood_df <- nhv_tracts %>%
+  hood_df <- new_haven_tracts %>%
     dplyr::distinct(name) %>%
     dplyr::slice(1:10) %>%
     dplyr::mutate(value = stats::runif(10))
@@ -34,9 +33,9 @@ test_that("invalid levels are caught", {
   expect_error(acs_quick_map(hood_df, level = "nhood", city = "New Haven"))
 })
 
-test_that("neighborhoods and city names are matched", {
+test_that("acs_quick_map matches neighborhoods and city names", {
   set.seed(123)
-  hood_df <- nhv_tracts %>%
+  hood_df <- new_haven_tracts %>%
     dplyr::distinct(name) %>%
     dplyr::slice(1:10) %>%
     dplyr::mutate(value = stats::runif(10))

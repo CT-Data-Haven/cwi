@@ -1,8 +1,7 @@
-context("Column numbers in separate_acs")
 library(cwi)
 library(testthat)
 
-test_that("handles column specifications", {
+test_that("separate_acs handles column specifications", {
   df <- readRDS(system.file("test_data/age_df.rds", package = "cwi"))
 
   expect_equal(names(suppressWarnings(separate_acs(df))), c("geoid", "x1", "x2", "x3"))
@@ -14,7 +13,7 @@ test_that("handles column specifications", {
                    suppressWarnings(separate_acs(df, into = c(NA, "sex", "age"))))
 })
 
-test_that("passes arguments to tidyr::separate", {
+test_that("separate_acs passes arguments to tidyr::separate", {
   df <- readRDS(system.file("test_data/age_df.rds", package = "cwi"))
   expect_warning(separate_acs(df))
   expect_silent(separate_acs(df, fill = "left"))

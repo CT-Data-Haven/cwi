@@ -1,8 +1,7 @@
-context("Error handling in batch_csv_dump")
 library(cwi)
 library(testthat)
 
-test_that("checks input data & split_by", {
+test_that("batch_csv_dump checks input data & split_by", {
   set.seed(123)
   df <- data.frame(
     name = sample(letters, 20, replace = FALSE),
@@ -15,7 +14,7 @@ test_that("checks input data & split_by", {
   expect_is(batch_csv_dump(split_df, path = tempdir()), "list")
 })
 
-test_that("output is same as input", {
+test_that("batch_csv_dump output is same as input", {
   set.seed(123)
   df <- data.frame(
     name = sample(letters, 20, replace = FALSE),
@@ -30,7 +29,7 @@ test_that("output is same as input", {
   expect_equal(batch_csv_dump(split_df, path = tempdir()), split_df)
 })
 
-test_that("warns of missing path", {
+test_that("batch_csv_dump warns of missing path", {
   set.seed(123)
   df <- data.frame(
     name = sample(letters, 20, replace = FALSE),
@@ -44,7 +43,7 @@ test_that("warns of missing path", {
   on.exit(purrr::walk(fns, file.remove), add = TRUE)
 })
 
-test_that("prints messages if verbose", {
+test_that("batch_csv_dump prints messages if verbose", {
   set.seed(123)
   df <- data.frame(
     name = sample(letters, 20, replace = FALSE),

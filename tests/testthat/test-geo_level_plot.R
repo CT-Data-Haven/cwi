@@ -1,8 +1,7 @@
-context("Bit of error handling in geo_level_plot")
 library(cwi)
 library(testthat)
 
-test_that("checks for valid plot types", {
+test_that("geo_level_plot checks for valid plot types", {
   df <- data.frame(name = letters[1:10],
                    value = rnorm(10),
                    level = sample(LETTERS[1:3], 10, replace = TRUE)
@@ -12,7 +11,7 @@ test_that("checks for valid plot types", {
   expect_error(geo_level_plot(df, type = "boxplot"))
 })
 
-test_that("handles tidyeval", {
+test_that("geo_level_plot handles tidyeval", {
   df <- data.frame(location = letters[1:10],
                    pop = rnorm(10),
                    geo_lvl = sample(LETTERS[1:3], 10, replace = TRUE)
