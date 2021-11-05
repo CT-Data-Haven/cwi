@@ -16,7 +16,7 @@
 #' @param us Logical: whether to fetch US-level table. Defaults `FALSE`.
 #' @param new_england Logical: if `TRUE` (the default), limits metro areas to just New England states.
 #' @param survey A string: which ACS estimate to use. Defaults to 5-year (`"acs5"`), but can also be 1-year (`"acs1"`).
-#' @param neighborhoods A data frame with columns for neighborhood name, GEOID of either tracts or block groups, and weight, e.g. share of each tract assigned to a neighborhood. If included, weighted sums and MOEs will be returned for neighborhoods.
+#' @param neighborhoods A data frame with columns for neighborhood name, GEOID of either tracts or block groups, and weight, e.g. share of each tract assigned to a neighborhood. If included, weighted sums and MOEs will be returned for neighborhoods. Try to match the formatting of the [built-in neighborhood tables][neighborhood_tracts].
 #' @param name Bare column name of neighborhood names. Only relevant if a neighborhood weight table is being used. Defaults `name` to match the neighborhood lookup datasets.
 #' @param geoid Bare column name of neighborhood GEOIDs, either tracts or block groups. Only relevant if a neighborhood weight table is being used. Defaults `geoid` to match the neighborhood lookup datasets.
 #' @param weight Bare column name of weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults `weight` to match the neighborhood lookup datasets.
@@ -30,7 +30,7 @@
 #'   towns = "all",
 #'   regions = list(inner_ring = c("Hamden", "East Haven", "West Haven")),
 #'   counties = "New Haven County",
-#'   tracts = unique(nhv_tracts$geoid))
+#'   tracts = unique(new_haven_tracts$geoid))
 #'
 #' multi_geo_acs("B01003", 2018,
 #'   towns = "Bridgeport",

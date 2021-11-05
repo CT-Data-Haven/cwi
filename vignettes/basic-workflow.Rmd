@@ -56,7 +56,7 @@ gnh_data$total_pop
 Neighborhoods with corresponding tracts or block groups are included for 4 cities (see `neighborhood_tracts`). Pass those to get neighborhood-level aggregates.
 
 ```{r acs2}
-multi_geo_acs("B01003", towns = "New Haven", counties = "New Haven", neighborhoods = nhv_tracts)
+multi_geo_acs("B01003", towns = "New Haven", counties = "New Haven", neighborhoods = new_haven_tracts)
 ```
 
 
@@ -157,9 +157,8 @@ acs %>%
 
 I'm also interested in learning about employment by industry over the past several years. `qwi_industry()` fetches county-level data by industry over time, either quarterly or annually. Here I'll look at annual averages of all industries for New Haven County and Connecticut over the past 16 years. I'm filtering out the industry code "00", which is the counts for all industries.
 
-*Note 7/26/2021:* The Census Bureau's QWI API is down, so these next couple chunks aren't running right now, but the code is still accurate :-/
 
-```{r qwi1, eval=FALSE, include=TRUE}
+```{r qwi1}
 nhc_employment <- qwi_industry(2002:2018, counties = "009", annual = TRUE) %>%
   mutate(location = "New Haven County")
 ct_employment <- qwi_industry(2002:2018, annual = T) %>%
@@ -173,7 +172,7 @@ employment
 
 Next, say I want to look at the industries that were largest in New Haven county in 2018, and see how those have changed both for the county and statewide over this time period. I'll filter `employment`, get the industries with the largest numbers of employees, then filter `employment` for just those industries and plot it.
 
-```{r qwi2, eval=FALSE, include=TRUE}
+```{r qwi2}
 top2018 <- employment %>%
   filter(year == 2018, county == "009") %>%
   top_n(8, Emp) %>%
@@ -191,6 +190,8 @@ employment %>%
     theme_minimal() +
     facet_wrap(vars(location), scales = "free_y")
 ```
+
+**Update 11/2021:** The QWI API was broken for a little while. It's up again, but all the payroll data is missing. This code should still be valid if it ever gets returned.
 
 If I'm interested in changes in wages over this period, I can use the `adj_inflation()` function. This takes a data frame, the name of the column containing dollar amounts, and a base year, then adds two columns for the inflation adjustment factor and the adjusted value.
 

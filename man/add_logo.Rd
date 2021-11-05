@@ -7,7 +7,7 @@
 add_logo(
   plot,
   image = NULL,
-  position = c("left", "right"),
+  position = c("right", "left"),
   height = 0.05,
   place_inside = TRUE,
   ...
@@ -26,7 +26,7 @@ As built, this is a logo for DataHaven, but that file can be replaced for
 repackaging this library for other organizations or projects.}
 
 \item{position}{String, either "left" or "right", giving the side on which
-the logo should be aligned. Default: "left"}
+the logo should be aligned. Default: "right"}
 
 \item{height}{Numeric: the height of the logo, as a percentage of the height
 of the image given in \code{plot}. Adjust as necessary based on the dimensions

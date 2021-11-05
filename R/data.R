@@ -60,27 +60,23 @@
 "msa"
 
 
-#' City neighborhoods by tract or block group
+#' City neighborhoods by tract
 #'
-#' Datasets of neighborhoods for New Haven (both Census tract and block group available), Hartford/West Hartford, Stamford, and Bridgeport. Some tracts cross between more than one neighborhood; use `weight` column for aggregating values such as populations.
+#' Datasets of neighborhoods for New Haven, Hartford/West Hartford, Stamford, and Bridgeport. Some tracts cross between more than one neighborhood; use `weight` column for aggregating values such as populations. Previously this included a block group version for New Haven, which I've removed; I'm also renaming `nhv_tracts` to `new_haven_tracts` for consistency.
 #'
 #' @format A data frame
 #' \describe{
 #'   \item{town}{For `hartford_tracts`, the name of the town, because both Hartford and West Hartford neighborhoods are included; otherwise, no `town` variable is needed}
 #'   \item{name}{Neighborhood name}
-#'   \item{geoid}{FIPS code of smallest geography. For all but `nhv_bgrps`, this is the 11-digit FIPS code of the Census tract; for `nhv_bgrps`, this is the 12-digit FIPS code of the block group.}
-#'   \item{tract}{6-digit FIPS code of the tract}
-#'   \item{block_group}{Single digit number of the block group, if applicable (`nhv_bgrps`)}
-#'   \item{weight}{Share of tract/block group households in that neighborhood}
+#'   \item{geoid}{11-digit FIPS code of the tract}
+#'   \item{tract}{6-digit FIPS code of the tract; same as geoid but missing state & county components.}
+#'   \item{weight}{Share of tract's households in that neighborhood}
 #' }
 #' @name neighborhood_tracts
 NULL
 
 #' @rdname neighborhood_tracts
-"nhv_tracts"
-
-#' @rdname neighborhood_tracts
-"nhv_bgrps"
+"new_haven_tracts"
 
 #' @rdname neighborhood_tracts
 "bridgeport_tracts"

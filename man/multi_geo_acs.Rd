@@ -38,7 +38,7 @@ multi_geo_acs(
 
 \item{state}{A string: either name or two-digit FIPS code of a US state. Required; defaults \code{"09"} (Connecticut).}
 
-\item{neighborhoods}{A data frame with columns for neighborhood name, GEOID of either tracts or block groups, and weight, e.g. share of each tract assigned to a neighborhood. If included, weighted sums and MOEs will be returned for neighborhoods.}
+\item{neighborhoods}{A data frame with columns for neighborhood name, GEOID of either tracts or block groups, and weight, e.g. share of each tract assigned to a neighborhood. If included, weighted sums and MOEs will be returned for neighborhoods. Try to match the formatting of the \link[=neighborhood_tracts]{built-in neighborhood tables}.}
 
 \item{tracts}{A character vector of 11-digit FIPS codes of tracts to include, or \code{"all"} for all tracts optionally filtered by county. Defaults \code{NULL}.}
 
@@ -77,7 +77,7 @@ multi_geo_acs("B01003", 2019,
   towns = "all",
   regions = list(inner_ring = c("Hamden", "East Haven", "West Haven")),
   counties = "New Haven County",
-  tracts = unique(nhv_tracts$geoid))
+  tracts = unique(new_haven_tracts$geoid))
 
 multi_geo_acs("B01003", 2018,
   towns = "Bridgeport",

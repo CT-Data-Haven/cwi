@@ -3,37 +3,31 @@
 \docType{data}
 \name{neighborhood_tracts}
 \alias{neighborhood_tracts}
-\alias{nhv_tracts}
-\alias{nhv_bgrps}
+\alias{new_haven_tracts}
 \alias{bridgeport_tracts}
 \alias{stamford_tracts}
 \alias{hartford_tracts}
-\title{City neighborhoods by tract or block group}
+\title{City neighborhoods by tract}
 \format{
 A data frame
 \describe{
 \item{town}{For \code{hartford_tracts}, the name of the town, because both Hartford and West Hartford neighborhoods are included; otherwise, no \code{town} variable is needed}
 \item{name}{Neighborhood name}
-\item{geoid}{FIPS code of smallest geography. For all but \code{nhv_bgrps}, this is the 11-digit FIPS code of the Census tract; for \code{nhv_bgrps}, this is the 12-digit FIPS code of the block group.}
-\item{tract}{6-digit FIPS code of the tract}
-\item{block_group}{Single digit number of the block group, if applicable (\code{nhv_bgrps})}
-\item{weight}{Share of tract/block group households in that neighborhood}
+\item{geoid}{11-digit FIPS code of the tract}
+\item{tract}{6-digit FIPS code of the tract; same as geoid but missing state & county components.}
+\item{weight}{Share of tract's households in that neighborhood}
 }
 
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 34 rows and 4 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 48 rows and 3 columns.
 
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 110 rows and 5 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 47 rows and 3 columns.
 
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 49 rows and 4 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 54 rows and 3 columns.
 
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 30 rows and 4 columns.
-
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 56 rows and 5 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 75 rows and 4 columns.
 }
 \usage{
-nhv_tracts
-
-nhv_bgrps
+new_haven_tracts
 
 bridgeport_tracts
 
@@ -42,6 +36,6 @@ stamford_tracts
 hartford_tracts
 }
 \description{
-Datasets of neighborhoods for New Haven (both Census tract and block group available), Hartford/West Hartford, Stamford, and Bridgeport. Some tracts cross between more than one neighborhood; use \code{weight} column for aggregating values such as populations.
+Datasets of neighborhoods for New Haven, Hartford/West Hartford, Stamford, and Bridgeport. Some tracts cross between more than one neighborhood; use \code{weight} column for aggregating values such as populations. Previously this included a block group version for New Haven, which I've removed; I'm also renaming \code{nhv_tracts} to \code{new_haven_tracts} for consistency.
 }
 \keyword{datasets}

@@ -18,7 +18,7 @@ qwi_industry(
 
 \item{industries}{A character vector of NAICS industry codes; default is the 20 sectors plus "All industries" from the dataset \code{naics_codes}.}
 
-\item{counties}{A character vector of county FIPS codes.}
+\item{counties}{A character vector of county FIPS codes, or \code{"*"} for all counties (the default). If \code{NULL}, will return data just at the state level.}
 
 \item{state}{A string of a state FIPS code; defaults to \code{"09"} for Connecticut}
 
@@ -33,7 +33,7 @@ A data frame / tibble
 This gets data from the Quarterly Workforce Indicators (QWI) via the Census API. It's an alternative to \code{censusapi} that fetches a set of variables (employees and payroll) but makes a somewhat more dynamic API call. The API returns a maximum of 10 years of data; calling this function with more than 10 years will require multiple API calls, which takes a little longer.
 }
 \details{
-Note that when looking at data quarterly, the payroll reported will be for that quarter, not the yearly payroll that you may be more accustomed to.
+Note that when looking at data quarterly, the payroll reported will be for that quarter, not the yearly payroll that you may be more accustomed to. As of November 2021, payroll data seems to be missing from the database; even the QWI Explorer app just turns up empty.
 }
 \examples{
 \dontrun{

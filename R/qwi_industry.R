@@ -2,10 +2,10 @@
 #'
 #' This gets data from the Quarterly Workforce Indicators (QWI) via the Census API. It's an alternative to `censusapi` that fetches a set of variables (employees and payroll) but makes a somewhat more dynamic API call. The API returns a maximum of 10 years of data; calling this function with more than 10 years will require multiple API calls, which takes a little longer.
 #'
-#' Note that when looking at data quarterly, the payroll reported will be for that quarter, not the yearly payroll that you may be more accustomed to.
+#' Note that when looking at data quarterly, the payroll reported will be for that quarter, not the yearly payroll that you may be more accustomed to. As of November 2021, payroll data seems to be missing from the database; even the QWI Explorer app just turns up empty.
 #' @param years A numeric vector of one or more years for which to get data
 #' @param industries A character vector of NAICS industry codes; default is the 20 sectors plus "All industries" from the dataset `naics_codes`.
-#' @param counties A character vector of county FIPS codes.
+#' @param counties A character vector of county FIPS codes, or `"*"` for all counties (the default). If `NULL`, will return data just at the state level.
 #' @param state A string of a state FIPS code; defaults to `"09"` for Connecticut
 #' @param annual Logical, whether to return annual averages (default) or quarterly data.
 #' @param key A Census API key. Defaults to the value at `"CENSUS_API_KEY"` in your `.Renviron` file, as set by `tidycensus::census_api_key()`.
@@ -46,9 +46,14 @@ qwi_industry <- function(years, industries = naics_codes[["industry"]], counties
     )
 
     if (!is.null(counties)) {
-      county_join <- stringr::str_pad(counties, width = 3, side = "left", pad = "0") %>%
-        paste(collapse = ",")
-      county_str <- sprintf("county:%s", county_join)
+      if (counties == "*") {
+        county_str <- sprintf("county:%s", counties)
+      } else {
+        county_join <- stringr::str_pad(counties, width = 3, side = "left", pad = "0") %>%
+          paste(collapse = ",")
+        county_str <- sprintf("county:%s", county_join)
+      }
+
       params[["for"]] <- county_str
       params[["in"]] <- state_str
     } else {
