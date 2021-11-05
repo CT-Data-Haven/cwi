@@ -83,7 +83,7 @@ larger groups and taking a weighted mean based on a set of survey weights." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -185,7 +185,7 @@ values and weights.</p></td>
     <tr>
       <th>.lvls</th>
       <td><p>A named list, where values are character vectors of smaller
-groups (e.g. <code><a href='https://rdrr.io/r/base/c.html'>c("&lt;$15K", "$15K-$30K")</a></code>) and names are the groups those will
+groups (e.g. <code>c("&lt;$15K", "$15K-$30K")</code>) and names are the groups those will
 be replaced by (e.g. <code>"&lt;$30K"</code>). This will be split into the arguments to
 <code><a href='https://forcats.tidyverse.org/reference/fct_collapse.html'>forcats::fct_collapse()</a></code>.</p></td>
     </tr>
@@ -226,34 +226,35 @@ the collapsed groups, and the <code>.value</code> column will have average value
     <div class='dont-index'><p><code><a href='xtab2df.html'>xtab2df()</a></code>, <code><a href='read_xtabs.html'>read_weights()</a></code>, <code><a href='https://forcats.tidyverse.org/reference/fct_collapse.html'>forcats::fct_collapse()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># collapse income groups, such that &lt;$15K, $15K-$30K become &lt;$30K, etc</span>
-<span class='va'>income_lvls</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-  <span class='st'>"&lt;$30K"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"&lt;$15K"</span>, <span class='st'>"$15K-$30K"</span><span class='op'>)</span>,
-  <span class='st'>"$30K-$100K"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"$30K-$50K"</span>, <span class='st'>"$50K-$75K"</span>, <span class='st'>"$75K-$100K"</span><span class='op'>)</span>,
-  <span class='st'>"$100K+"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"$100K-$200K"</span>, <span class='st'>"$200K+"</span><span class='op'>)</span>
-<span class='op'>)</span>
-<span class='va'>cws_demo</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>category</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Greater New Haven"</span>, <span class='st'>"Income"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>collapse_n_wt</span><span class='op'>(</span><span class='va'>code</span><span class='op'>:</span><span class='va'>response</span>, .lvls <span class='op'>=</span> <span class='va'>income_lvls</span>, .digits <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 16 × 6</span>
-#&gt;    code  question                        category      group      response value
-#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                           <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'> 1</span> Q1    Are you satisfied with the cit… Greater New … Greater N… Yes       0.82
-#&gt; <span style='color: #BCBCBC;'> 2</span> Q1    Are you satisfied with the cit… Greater New … Greater N… No        0.17
-#&gt; <span style='color: #BCBCBC;'> 3</span> Q1    Are you satisfied with the cit… Greater New … Greater N… Don't k…  0.01
-#&gt; <span style='color: #BCBCBC;'> 4</span> Q1    Are you satisfied with the cit… Greater New … Greater N… Refused   0   
-#&gt; <span style='color: #BCBCBC;'> 5</span> Q1    Are you satisfied with the cit… Income        &lt;$30K      Yes       0.77
-#&gt; <span style='color: #BCBCBC;'> 6</span> Q1    Are you satisfied with the cit… Income        &lt;$30K      No        0.22
-#&gt; <span style='color: #BCBCBC;'> 7</span> Q1    Are you satisfied with the cit… Income        &lt;$30K      Don't k…  0.01
-#&gt; <span style='color: #BCBCBC;'> 8</span> Q1    Are you satisfied with the cit… Income        &lt;$30K      Refused   0   
-#&gt; <span style='color: #BCBCBC;'> 9</span> Q1    Are you satisfied with the cit… Income        $30K-$100K Yes       0.83
-#&gt; <span style='color: #BCBCBC;'>10</span> Q1    Are you satisfied with the cit… Income        $30K-$100K No        0.15
-#&gt; <span style='color: #BCBCBC;'>11</span> Q1    Are you satisfied with the cit… Income        $30K-$100K Don't k…  0.01
-#&gt; <span style='color: #BCBCBC;'>12</span> Q1    Are you satisfied with the cit… Income        $30K-$100K Refused   0   
-#&gt; <span style='color: #BCBCBC;'>13</span> Q1    Are you satisfied with the cit… Income        $100K+     Yes       0.85
-#&gt; <span style='color: #BCBCBC;'>14</span> Q1    Are you satisfied with the cit… Income        $100K+     No        0.14
-#&gt; <span style='color: #BCBCBC;'>15</span> Q1    Are you satisfied with the cit… Income        $100K+     Don't k…  0.01
-#&gt; <span style='color: #BCBCBC;'>16</span> Q1    Are you satisfied with the cit… Income        $100K+     Refused   0   </div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># collapse income groups, such that &lt;$15K, $15K-$30K become &lt;$30K, etc</span></span>
+<span class='r-in'><span class='va'>income_lvls</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='st'>"&lt;$30K"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"&lt;$15K"</span>, <span class='st'>"$15K-$30K"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='st'>"$30K-$100K"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"$30K-$50K"</span>, <span class='st'>"$50K-$75K"</span>, <span class='st'>"$75K-$100K"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='st'>"$100K+"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"$100K-$200K"</span>, <span class='st'>"$200K+"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>cws_demo</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>category</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Greater New Haven"</span>, <span class='st'>"Income"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>collapse_n_wt</span><span class='op'>(</span><span class='va'>code</span><span class='op'>:</span><span class='va'>response</span>, .lvls <span class='op'>=</span> <span class='va'>income_lvls</span>, .digits <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 16 × 6</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    code  question                        category      group      response value</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                           <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> Q1    Are you satisfied with the cit… Greater New … Greater N… Yes       0.82</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span> Q1    Are you satisfied with the cit… Greater New … Greater N… No        0.17</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span> Q1    Are you satisfied with the cit… Greater New … Greater N… Don't k…  0.01</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span> Q1    Are you satisfied with the cit… Greater New … Greater N… Refused   0   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span> Q1    Are you satisfied with the cit… Income        &lt;$30K      Yes       0.77</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span> Q1    Are you satisfied with the cit… Income        &lt;$30K      No        0.22</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span> Q1    Are you satisfied with the cit… Income        &lt;$30K      Don't k…  0.01</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span> Q1    Are you satisfied with the cit… Income        &lt;$30K      Refused   0   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span> Q1    Are you satisfied with the cit… Income        $30K-$100K Yes       0.83</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span> Q1    Are you satisfied with the cit… Income        $30K-$100K No        0.15</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>11</span> Q1    Are you satisfied with the cit… Income        $30K-$100K Don't k…  0.01</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>12</span> Q1    Are you satisfied with the cit… Income        $30K-$100K Refused   0   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>13</span> Q1    Are you satisfied with the cit… Income        $100K+     Yes       0.85</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>14</span> Q1    Are you satisfied with the cit… Income        $100K+     No        0.14</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>15</span> Q1    Are you satisfied with the cit… Income        $100K+     Don't k…  0.01</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>16</span> Q1    Are you satisfied with the cit… Income        $100K+     Refused   0   </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

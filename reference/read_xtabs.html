@@ -83,7 +83,7 @@ only useful for working with the DataHaven Community Wellbeing Survey." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -217,16 +217,16 @@ their associated weights.</p>
     <div class='dont-index'><p><code><a href='xtab2df.html'>xtab2df()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='va'>xt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata/test_xtab2018.xlsx"</span>, package <span class='op'>=</span> <span class='st'>"cwi"</span><span class='op'>)</span>
-  <span class='fu'>read_weights</span><span class='op'>(</span><span class='va'>xt</span><span class='op'>)</span>
-
-  <span class='co'># returns a not-very-pretty data frame of the crosstabs to be processed</span>
-  <span class='fu'>read_xtabs</span><span class='op'>(</span><span class='va'>xt</span><span class='op'>)</span>
-  <span class='co'># returns a pretty data frame ready for analysis</span>
-  <span class='fu'>read_xtabs</span><span class='op'>(</span><span class='va'>xt</span>, process <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='va'>xt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata/test_xtab2018.xlsx"</span>, package <span class='op'>=</span> <span class='st'>"cwi"</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'>read_weights</span><span class='op'>(</span><span class='va'>xt</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='co'># returns a not-very-pretty data frame of the crosstabs to be processed</span></span>
+<span class='r-in'>  <span class='fu'>read_xtabs</span><span class='op'>(</span><span class='va'>xt</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='co'># returns a pretty data frame ready for analysis</span></span>
+<span class='r-in'>  <span class='fu'>read_xtabs</span><span class='op'>(</span><span class='va'>xt</span>, process <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

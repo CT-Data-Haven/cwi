@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>City neighborhoods by tract or block group — neighborhood_tracts • cwi</title>
+<title>City neighborhoods by tract — neighborhood_tracts • cwi</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="City neighborhoods by tract or block group — neighborhood_tracts" />
-<meta property="og:description" content="Datasets of neighborhoods for New Haven (both Census tract and block group available), Hartford/West Hartford, Stamford, and Bridgeport. Some tracts cross between more than one neighborhood; use weight column for aggregating values such as populations." />
+<meta property="og:title" content="City neighborhoods by tract — neighborhood_tracts" />
+<meta property="og:description" content="Datasets of neighborhoods for New Haven, Hartford/West Hartford, Stamford, and Bridgeport. Some tracts cross between more than one neighborhood; use weight column for aggregating values such as populations. Previously this included a block group version for New Haven, which I've removed; I'm also renaming nhv_tracts to new_haven_tracts for consistency." />
 <meta property="og:image" content="https://CT-Data-Haven.github.io/cwi/logo.png" />
 
 
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -140,18 +140,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>City neighborhoods by tract or block group</h1>
+    <h1>City neighborhoods by tract</h1>
     <small class="dont-index">Source: <a href='https://github.com/CT-Data-Haven/cwi/blob/master/R/data.R'><code>R/data.R</code></a></small>
     <div class="hidden name"><code>neighborhood_tracts.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Datasets of neighborhoods for New Haven (both Census tract and block group available), Hartford/West Hartford, Stamford, and Bridgeport. Some tracts cross between more than one neighborhood; use <code>weight</code> column for aggregating values such as populations.</p>
+    <p>Datasets of neighborhoods for New Haven, Hartford/West Hartford, Stamford, and Bridgeport. Some tracts cross between more than one neighborhood; use <code>weight</code> column for aggregating values such as populations. Previously this included a block group version for New Haven, which I've removed; I'm also renaming <code>nhv_tracts</code> to <code>new_haven_tracts</code> for consistency.</p>
     </div>
 
-    <pre class="usage"><span class='va'>nhv_tracts</span>
-
-<span class='va'>nhv_bgrps</span>
+    <pre class="usage"><span class='va'>new_haven_tracts</span>
 
 <span class='va'>bridgeport_tracts</span>
 
@@ -165,18 +163,16 @@
     <p>A data frame</p><dl>
 <dt>town</dt><dd><p>For <code>hartford_tracts</code>, the name of the town, because both Hartford and West Hartford neighborhoods are included; otherwise, no <code>town</code> variable is needed</p></dd>
 <dt>name</dt><dd><p>Neighborhood name</p></dd>
-<dt>geoid</dt><dd><p>FIPS code of smallest geography. For all but <code>nhv_bgrps</code>, this is the 11-digit FIPS code of the Census tract; for <code>nhv_bgrps</code>, this is the 12-digit FIPS code of the block group.</p></dd>
-<dt>tract</dt><dd><p>6-digit FIPS code of the tract</p></dd>
-<dt>block_group</dt><dd><p>Single digit number of the block group, if applicable (<code>nhv_bgrps</code>)</p></dd>
-<dt>weight</dt><dd><p>Share of tract/block group households in that neighborhood</p></dd>
+<dt>geoid</dt><dd><p>11-digit FIPS code of the tract</p></dd>
+<dt>tract</dt><dd><p>6-digit FIPS code of the tract; same as geoid but missing state &amp; county components.</p></dd>
+<dt>weight</dt><dd><p>Share of tract's households in that neighborhood</p></dd>
 
 </dl>
 
-<p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 34 rows and 4 columns.</p>
-<p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 110 rows and 5 columns.</p>
-<p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 49 rows and 4 columns.</p>
-<p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 30 rows and 4 columns.</p>
-<p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 56 rows and 5 columns.</p>
+<p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 48 rows and 3 columns.</p>
+<p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 47 rows and 3 columns.</p>
+<p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 54 rows and 3 columns.</p>
+<p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 75 rows and 4 columns.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

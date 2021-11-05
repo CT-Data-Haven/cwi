@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -199,7 +199,7 @@
     </tr>
     <tr>
       <th>neighborhoods</th>
-      <td><p>A data frame with columns for neighborhood name, GEOID of either tracts or block groups, and weight, e.g. share of each tract assigned to a neighborhood. If included, weighted sums and MOEs will be returned for neighborhoods.</p></td>
+      <td><p>A data frame with columns for neighborhood name, GEOID of either tracts or block groups, and weight, e.g. share of each tract assigned to a neighborhood. If included, weighted sums and MOEs will be returned for neighborhoods. Try to match the formatting of the <a href='neighborhood_tracts.html'>built-in neighborhood tables</a>.</p></td>
     </tr>
     <tr>
       <th>tracts</th>
@@ -243,7 +243,7 @@
     </tr>
     <tr>
       <th>key</th>
-      <td><p>String: Census API key. If <code>NULL</code> (default), takes the value from <code><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv("CENSUS_API_KEY")</a></code>.</p></td>
+      <td><p>String: Census API key. If <code>NULL</code> (default), takes the value from <code>Sys.getenv("CENSUS_API_KEY")</code>.</p></td>
     </tr>
     </table>
 
@@ -258,21 +258,21 @@
     <div class='dont-index'><p><code><a href='https://walker-data.com/tidycensus/reference/census_api_key.html'>tidycensus::census_api_key()</a></code>, <code><a href='https://walker-data.com/tidycensus/reference/get_acs.html'>tidycensus::get_acs()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='fu'>multi_geo_acs</span><span class='op'>(</span><span class='st'>"B01003"</span>, <span class='fl'>2019</span>,
-  towns <span class='op'>=</span> <span class='st'>"all"</span>,
-  regions <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>inner_ring <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Hamden"</span>, <span class='st'>"East Haven"</span>, <span class='st'>"West Haven"</span><span class='op'>)</span><span class='op'>)</span>,
-  counties <span class='op'>=</span> <span class='st'>"New Haven County"</span>,
-  tracts <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>nhv_tracts</span><span class='op'>$</span><span class='va'>geoid</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='fu'>multi_geo_acs</span><span class='op'>(</span><span class='st'>"B01003"</span>, <span class='fl'>2018</span>,
-  towns <span class='op'>=</span> <span class='st'>"Bridgeport"</span>,
-  counties <span class='op'>=</span> <span class='st'>"Fairfield County"</span>,
-  neighborhoods <span class='op'>=</span> <span class='va'>bridgeport_tracts</span>
-<span class='op'>)</span>
-
-<span class='op'>}</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='fu'>multi_geo_acs</span><span class='op'>(</span><span class='st'>"B01003"</span>, <span class='fl'>2019</span>,</span>
+<span class='r-in'>  towns <span class='op'>=</span> <span class='st'>"all"</span>,</span>
+<span class='r-in'>  regions <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>inner_ring <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Hamden"</span>, <span class='st'>"East Haven"</span>, <span class='st'>"West Haven"</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'>  counties <span class='op'>=</span> <span class='st'>"New Haven County"</span>,</span>
+<span class='r-in'>  tracts <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>new_haven_tracts</span><span class='op'>$</span><span class='va'>geoid</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>multi_geo_acs</span><span class='op'>(</span><span class='st'>"B01003"</span>, <span class='fl'>2018</span>,</span>
+<span class='r-in'>  towns <span class='op'>=</span> <span class='st'>"Bridgeport"</span>,</span>
+<span class='r-in'>  counties <span class='op'>=</span> <span class='st'>"Fairfield County"</span>,</span>
+<span class='r-in'>  neighborhoods <span class='op'>=</span> <span class='va'>bridgeport_tracts</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='op'>}</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
