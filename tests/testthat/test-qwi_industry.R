@@ -1,8 +1,6 @@
 library(cwi)
 library(testthat)
 
-skip("QWI API is down :(")
-
 test_that("qwi_industry handles county defaults", {
   skip_on_ci()
   by_state <- qwi_industry(2018, counties = NULL)

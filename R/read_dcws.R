@@ -49,7 +49,7 @@ read_xtabs <- function(path, name_prefix = "x", marker = "Nature of the [Ss]ampl
   data <- read_xtabs_(path, name_prefix)
   first_col <- rlang::sym(names(data)[1])
   if (as.numeric(year) == 2015) {
-    data <- camiller::filter_after(data, grepl("Sample Size", {{ first_col }}))
+    data <- camiller::filter_after(data, grepl("Samp[le]+ Size", {{ first_col }}))
   }
   data <- dplyr::filter(data, !stringr::str_detect({{ first_col }}, "Weighted [Tt]otal") | is.na({{ first_col }}))
   if (!is.null(marker)) {
