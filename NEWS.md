@@ -1,3 +1,8 @@
+# cwi 0.4.1
+
+* Update `tract_sf` and `town_sf` to 2020 boundaries. Don't expect anything should have changed for towns, but many tracts were added after the Census Bureau released redistricting data.
+* Handle typos in some crosstabs.
+
 # cwi 0.4.0
 
 * Rewrote neighborhood weights with the 2020 redistricting block boundaries. Dropped the block group table that was only done for New Haven, and changed the name of `nhv_tracts` to `new_haven_tracts` to match those for other cities.
