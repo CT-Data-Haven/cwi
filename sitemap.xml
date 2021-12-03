@@ -1,7 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/404.html</loc>
+  </url>
+  <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/articles/acs-updates.html</loc>
+  </url>
+  <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/articles/basic-workflow.html</loc>
+  </url>
+  <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/articles/crosstabs.html</loc>
+  </url>
+  <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/articles/shapefiles.html</loc>
+  </url>
+  <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/authors.html</loc>
+  </url>
+  <url>
     <loc>https://CT-Data-Haven.github.io/cwi/index.html</loc>
+  </url>
+  <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/news/index.html</loc>
   </url>
   <url>
     <loc>https://CT-Data-Haven.github.io/cwi/reference/acs_quick_map.html</loc>
@@ -44,6 +74,9 @@
   </url>
   <url>
     <loc>https://CT-Data-Haven.github.io/cwi/reference/geo_level_plot.html</loc>
+  </url>
+  <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/reference/index.html</loc>
   </url>
   <url>
     <loc>https://CT-Data-Haven.github.io/cwi/reference/jenks.html</loc>
@@ -125,17 +158,5 @@
   </url>
   <url>
     <loc>https://CT-Data-Haven.github.io/cwi/reference/zip2town.html</loc>
-  </url>
-  <url>
-    <loc>https://CT-Data-Haven.github.io/cwi/articles/acs-updates.html</loc>
-  </url>
-  <url>
-    <loc>https://CT-Data-Haven.github.io/cwi/articles/basic-workflow.html</loc>
-  </url>
-  <url>
-    <loc>https://CT-Data-Haven.github.io/cwi/articles/crosstabs.html</loc>
-  </url>
-  <url>
-    <loc>https://CT-Data-Haven.github.io/cwi/articles/shapefiles.html</loc>
   </url>
 </urlset>

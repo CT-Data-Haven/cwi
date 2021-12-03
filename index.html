@@ -30,6 +30,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -42,18 +44,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -84,7 +80,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/CT-Data-Haven/cwi/">
+  <a href="https://github.com/CT-Data-Haven/cwi/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -101,28 +97,27 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="cwi-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#cwi-" class="anchor"></a>cwi <img src="reference/figures/logo.png" align="right">
+<div class="section level1">
+<div class="page-header"><h1 id="cwi-">cwi <img src="reference/figures/logo.png" align="right"><a class="anchor" aria-label="anchor" href="#cwi-"></a>
 </h1></div>
 <!-- badges: start -->
 
-<p>The goal of <code>cwi</code> is to get data, primarily the Census ACS, fetched, aggregated, and analyzed for <a href="http://ctdatahaven.org/reports/greater-new-haven-community-index">DataHaven’s 2019 Community Index reports</a>. This includes functions to speed up and standardize analysis for multiple staff people, preview trends and patterns we’ll need to write about, and get data in more layperson-friendly formats.</p>
-<p>It pairs well with many functions from Camille’s brilliantly-named <a href="https://github.com/camille-s/camiller"><code>camiller</code></a> package.</p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install this package from <a href="https://github.com/CT-Data-Haven/cwi">GitHub</a> with:</p>
+<p>The goal of <code>cwi</code> is to get data, primarily the Census ACS, fetched, aggregated, and analyzed for <a href="http://ctdatahaven.org/reports/greater-new-haven-community-index" class="external-link">DataHaven’s 2019 Community Index reports</a>. This includes functions to speed up and standardize analysis for multiple staff people, preview trends and patterns we’ll need to write about, and get data in more layperson-friendly formats.</p>
+<p>It pairs well with many functions from Camille’s brilliantly-named <a href="https://github.com/camille-s/camiller" class="external-link"><code>camiller</code></a> package.</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>You can install this package from <a href="https://github.com/CT-Data-Haven/cwi" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"CT-Data-Haven/cwi"</span><span class="op">)</span></code></pre></div>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"CT-Data-Haven/cwi"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="dependencies" class="section level2">
-<h2 class="hasAnchor">
-<a href="#dependencies" class="anchor"></a>Dependencies</h2>
+<div class="section level2">
+<h2 id="dependencies">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies"></a>
+</h2>
 <p>This package relies heavily on:</p>
 <ul>
-<li>The <a href="http://tidyverse.org/"><code>tidyverse</code></a> packages, namely <code>magrittr</code>, <code>dplyr</code>, <code>tidyr</code>, <code>purrr</code>, <code>stringr</code>, <code>forcats</code>, and <code>ggplot2</code> (version &gt;= 3.0.0) (so basically <em>all</em> the tidyverse)</li>
+<li>The <a href="http://tidyverse.org/" class="external-link"><code>tidyverse</code></a> packages, namely <code>magrittr</code>, <code>dplyr</code>, <code>tidyr</code>, <code>purrr</code>, <code>stringr</code>, <code>forcats</code>, and <code>ggplot2</code> (version &gt;= 3.0.0) (so basically <em>all</em> the tidyverse)</li>
 <li>
 <code>rlang</code> and <code>tidyselect</code> for non-standard evaluation in many functions</li>
 <li>
@@ -131,45 +126,45 @@
 <code>sf</code> isn’t required but it’s encouraged</li>
 </ul>
 </div>
-<div id="data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#data" class="anchor"></a>Data</h2>
+<div class="section level2">
+<h2 id="data">Data<a class="anchor" aria-label="anchor" href="#data"></a>
+</h2>
 <p><code>cwi</code> ships with several datasets and shapefiles. These include:</p>
 <ul>
 <li>Shapes (as <code>sf</code> objects) of towns, tracts, and city neighborhoods for New Haven, Hartford, Bridgeport, and Stamford</li>
-<li>Common ACS table numbers—hopefully decreases time spent prowling around <a href="https://factfinder.census.gov">FactFinder</a>
+<li>Common ACS table numbers—hopefully decreases time spent prowling around <a href="https://factfinder.census.gov" class="external-link">FactFinder</a>
 </li>
 <li>Definitions of neighborhoods by tract or block group, and of regions by town</li>
 </ul>
 </div>
-<div id="sources" class="section level2">
-<h2 class="hasAnchor">
-<a href="#sources" class="anchor"></a>Sources</h2>
+<div class="section level2">
+<h2 id="sources">Sources<a class="anchor" aria-label="anchor" href="#sources"></a>
+</h2>
 <p>This package contains functions to make it easier and more reproducible to fetch and analyze data from:</p>
 <ul>
 <li>
-<a href="https://www.census.gov/programs-surveys/acs/">American Community Survey</a> (US Census Bureau)</li>
+<a href="https://www.census.gov/programs-surveys/acs/" class="external-link">American Community Survey</a> (US Census Bureau)</li>
 <li>
-<a href="https://www.census.gov/programs-surveys/decennial-census.html">Decennial Census</a> (US Census Bureau)</li>
+<a href="https://www.census.gov/programs-surveys/decennial-census.html" class="external-link">Decennial Census</a> (US Census Bureau)</li>
 <li>
-<a href="https://lehd.ces.census.gov/">Quarterly Workforce Indicators</a> (US Census Bureau Center for Economic Studies)</li>
+<a href="https://lehd.ces.census.gov/" class="external-link">Quarterly Workforce Indicators</a> (US Census Bureau Center for Economic Studies)</li>
 <li>
-<a href="https://www.bls.gov/lau/">Local Area Unemployment Statistics</a> (Bureau of Labor Statistics)</li>
+<a href="https://www.bls.gov/lau/" class="external-link">Local Area Unemployment Statistics</a> (Bureau of Labor Statistics)</li>
 </ul>
-<p>More to come (as of 7/17/2018) may include simplifications of working with <a href="https://lehd.ces.census.gov/data/">LEHD Origin-Destination Employment Statistics</a> (LODES) and ACS public use microdata samples (PUMS) via <a href="https://usa.ipums.org/usa/">IPUMS</a>.</p>
+<p>More to come (as of 7/17/2018) may include simplifications of working with <a href="https://lehd.ces.census.gov/data/" class="external-link">LEHD Origin-Destination Employment Statistics</a> (LODES) and ACS public use microdata samples (PUMS) via <a href="https://usa.ipums.org/usa/" class="external-link">IPUMS</a>.</p>
 </div>
-<div id="example" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h2>
+<div class="section level2">
+<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+</h2>
 <p>Here’s an example of getting a big table to calculate homeownership rates across many geographies at once:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/CT-Data-Haven/cwi">cwi</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/CT-Data-Haven/cwi" class="external-link">cwi</a></span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tenure</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/multi_geo_acs.html">multi_geo_acs</a></span><span class="op">(</span>
   table <span class="op">=</span> <span class="va">basic_table_nums</span><span class="op">$</span><span class="va">tenure</span>,
   year <span class="op">=</span> <span class="fl">2018</span>,
-  regions <span class="op">=</span> <span class="va">regions</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Greater New Haven"</span>, <span class="st">"New Haven Inner Ring"</span>, <span class="st">"New Haven Outer Ring"</span><span class="op">)</span><span class="op">]</span>,
+  regions <span class="op">=</span> <span class="va">regions</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Greater New Haven"</span>, <span class="st">"New Haven Inner Ring"</span>, <span class="st">"New Haven Outer Ring"</span><span class="op">)</span><span class="op">]</span>,
   counties <span class="op">=</span> <span class="st">"New Haven"</span>,
   towns <span class="op">=</span> <span class="va">regions</span><span class="op">[[</span><span class="st">"Greater New Haven"</span><span class="op">]</span><span class="op">]</span>,
   us <span class="op">=</span> <span class="cn">TRUE</span>
@@ -197,12 +192,12 @@
 <span class="co">#&gt; 10 &lt;NA&gt;  Greater New Haven B25003_001    177197   1531 4_reg… &lt;NA&gt;  &lt;NA&gt;    2018</span>
 <span class="co">#&gt; # … with 47 more rows</span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">homeownership</span> <span class="op">&lt;-</span> <span class="va">tenure</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
-  <span class="fu"><a href="reference/label_acs.html">label_acs</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">name</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>share <span class="op">=</span> <span class="va">estimate</span> <span class="op">/</span> <span class="va">estimate</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span> <span class="co"># or use camiller::calc_shares</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">label</span>, <span class="st">"Owner"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/%&gt;%.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">name</span>, <span class="va">share</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">homeownership</span> <span class="op">&lt;-</span> <span class="va">tenure</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="reference/label_acs.html">label_acs</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">name</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>share <span class="op">=</span> <span class="va">estimate</span> <span class="op">/</span> <span class="va">estimate</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="co"># or use camiller::calc_shares</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">label</span>, <span class="st">"Owner"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">name</span>, <span class="va">share</span><span class="op">)</span>
 
 <span class="va">homeownership</span>
 <span class="co">#&gt; # A tibble: 19 × 3</span>
@@ -239,44 +234,55 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/CT-Data-Haven/cwi/">https://​github.com/​CT-Data-Haven/​cwi/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/CT-Data-Haven/cwi/issues">https://​github.com/​CT-Data-Haven/​cwi/​issues</a>
-</li>
+<li><a href="https://github.com/CT-Data-Haven/cwi/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/CT-Data-Haven/cwi/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing cwi</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Camille Seaberry <br><small class="roles"> Author, maintainer </small>  </li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/CT-Data-Haven/cwi/actions?workflow=pkgdown"><img src="https://github.com/CT-Data-Haven/cwi/workflows/pkgdown/badge.svg" alt="R build status"></a></li>
+<li><a href="https://github.com/CT-Data-Haven/cwi/actions?workflow=pkgdown" class="external-link"><img src="https://github.com/CT-Data-Haven/cwi/workflows/pkgdown/badge.svg" alt="R build status"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Camille Seaberry.</p>
+  <p></p>
+<p>Developed by Camille Seaberry.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
 </div>
 
       </footer>
@@ -284,6 +290,8 @@
 
   
 
+
+  
 
   </body>
 </html>
