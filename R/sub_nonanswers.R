@@ -1,7 +1,5 @@
 #' @title Remove non-answers and rescale percentage values
 #' @description
-#' `r lifecycle::badge("experimental")`
-#'
 #' This is a convenience function for removing what might be
 #' considered non-answers ("don't know", "refused", etc.) and rescaling the
 #' remaining values to add to 1.0.

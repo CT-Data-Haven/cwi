@@ -35,7 +35,7 @@ This package relies heavily on:
 
 -   The [`tidyverse`](http://tidyverse.org/) packages, namely
     `magrittr`, `dplyr`, `tidyr`, `purrr`, `stringr`, `forcats`, and
-    `ggplot2` (version >= 3.0.0) (so basically *all* the tidyverse)
+    `ggplot2` (version \>= 3.0.0) (so basically *all* the tidyverse)
 -   `rlang` and `tidyselect` for non-standard evaluation in many
     functions
 -   `tidycensus` for actually getting all the Census data

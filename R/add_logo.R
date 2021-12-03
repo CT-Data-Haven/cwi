@@ -1,7 +1,5 @@
 #' @title Easily add a logo to a ggplot
 #' @description
-#' `r lifecycle::badge("experimental")`
-#'
 #' This function wraps around a few functions from `cowplot` and
 #' `magick` to add a logo (or other annotation) to the bottom of a `ggplot` plot,
 #' an otherwise tedious and easy to forget process. It's meant to be flexible in

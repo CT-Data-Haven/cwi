@@ -1,7 +1,5 @@
 #' @title Collapse survey groups and get weighted means
 #' @description
-#' `r lifecycle::badge("experimental")`
-#'
 #' This is just a quick wrapper for a common, tedious task of
 #' collapsing several demographic groups, such as income brackets, into
 #' larger groups and taking a weighted mean based on a set of survey weights.
