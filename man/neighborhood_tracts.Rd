@@ -7,6 +7,10 @@
 \alias{bridgeport_tracts}
 \alias{stamford_tracts}
 \alias{hartford_tracts}
+\alias{new_haven_tracts19}
+\alias{bridgeport_tracts19}
+\alias{stamford_tracts19}
+\alias{hartford_tracts19}
 \title{City neighborhoods by tract}
 \format{
 A data frame
@@ -18,13 +22,21 @@ A data frame
 \item{weight}{Share of tract's households in that neighborhood}
 }
 
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 48 rows and 3 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 37 rows and 3 columns.
 
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 47 rows and 3 columns.
 
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 54 rows and 3 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 50 rows and 3 columns.
 
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 75 rows and 4 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 64 rows and 4 columns.
+
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 36 rows and 3 columns.
+
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 48 rows and 3 columns.
+
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 39 rows and 3 columns.
+
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 60 rows and 4 columns.
 }
 \usage{
 new_haven_tracts
@@ -34,8 +46,19 @@ bridgeport_tracts
 stamford_tracts
 
 hartford_tracts
+
+new_haven_tracts19
+
+bridgeport_tracts19
+
+stamford_tracts19
+
+hartford_tracts19
 }
 \description{
 Datasets of neighborhoods for New Haven, Hartford/West Hartford, Stamford, and Bridgeport. Some tracts cross between more than one neighborhood; use \code{weight} column for aggregating values such as populations. Previously this included a block group version for New Haven, which I've removed; I'm also renaming \code{nhv_tracts} to \code{new_haven_tracts} for consistency.
+}
+\details{
+These were updated in Nov. 2021, assuming the 2020 ACS would be coming out at the beginning of December...which it didn't. Until it does come out, there will be 2019 versions of weight tables with names ending in \code{"19"}; after that, those will be deleted.
 }
 \keyword{datasets}

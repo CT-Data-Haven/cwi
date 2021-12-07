@@ -30,6 +30,8 @@ hartford_sf <- sf::st_read("https://gist.github.com/camille-s/9e9761b69a7c86bf6d
 
 tract_sf <- tigris::tracts(state = "09", cb = TRUE, class = "sf", year = 2020) %>%
   dplyr::select(name = GEOID, geometry)
+tract_sf19 <- tigris::tracts(state = "09", cb = TRUE, class = "sf", year = 2019) %>%
+  dplyr::select(name = GEOID, geometry)
 
 usethis::use_data(town_sf, overwrite = TRUE)
 usethis::use_data(new_haven_sf, overwrite = TRUE)
@@ -37,4 +39,5 @@ usethis::use_data(stamford_sf, overwrite = TRUE)
 usethis::use_data(bridgeport_sf, overwrite = TRUE)
 usethis::use_data(hartford_sf, overwrite = TRUE)
 usethis::use_data(tract_sf, overwrite = TRUE)
+usethis::use_data(tract_sf19, overwrite = TRUE)
 

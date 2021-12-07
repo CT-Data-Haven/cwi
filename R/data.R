@@ -64,6 +64,8 @@
 #'
 #' Datasets of neighborhoods for New Haven, Hartford/West Hartford, Stamford, and Bridgeport. Some tracts cross between more than one neighborhood; use `weight` column for aggregating values such as populations. Previously this included a block group version for New Haven, which I've removed; I'm also renaming `nhv_tracts` to `new_haven_tracts` for consistency.
 #'
+#' These were updated in Nov. 2021, assuming the 2020 ACS would be coming out at the beginning of December...which it didn't. Until it does come out, there will be 2019 versions of weight tables with names ending in `"19"`; after that, those will be deleted.
+#'
 #' @format A data frame
 #' \describe{
 #'   \item{town}{For `hartford_tracts`, the name of the town, because both Hartford and West Hartford neighborhoods are included; otherwise, no `town` variable is needed}
@@ -86,6 +88,18 @@ NULL
 
 #' @rdname neighborhood_tracts
 "hartford_tracts"
+
+#' @rdname neighborhood_tracts
+"new_haven_tracts19"
+
+#' @rdname neighborhood_tracts
+"bridgeport_tracts19"
+
+#' @rdname neighborhood_tracts
+"stamford_tracts19"
+
+#' @rdname neighborhood_tracts
+"hartford_tracts19"
 
 
 
