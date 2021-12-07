@@ -3,6 +3,7 @@
 \docType{data}
 \name{tract_sf}
 \alias{tract_sf}
+\alias{tract_sf19}
 \title{Connecticut tract shapefile}
 \format{
 Data frame of class \code{sf}.
@@ -10,11 +11,15 @@ Data frame of class \code{sf}.
 \item{name}{Tract FIPS code}
 \item{geometry}{Tract geometry as \code{sfc_MULTIPOLYGON}}
 }
+
+An object of class \code{sf} (inherits from \code{data.frame}) with 829 rows and 2 columns.
 }
 \usage{
 tract_sf
+
+tract_sf19
 }
 \description{
-Data frame of Connecticut tracts with \code{sf} geometries.
+Data frame of Connecticut tracts with \code{sf} geometries. This was updated in Nov. 2021 assuming the 2020 ACS data would be out in December. Because it is now delayed, I've added back in a 2019 version temporarily.
 }
 \keyword{datasets}
