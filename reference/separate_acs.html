@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.3</span>
       </span>
     </div>
 
@@ -71,14 +71,16 @@
     <p>This is a quick wrapper around <code><a href="https://tidyr.tidyverse.org/reference/separate.html" class="external-link">tidyr::separate</a></code> written to match the standard formatting used for ACS variable labels. These generally take the form e.g. "Total!!Male!!5 to 9 years". This function will separate values by <code>"!!"</code> and optionally drop the resulting "Total" column, which is generally constant for the entire data frame.</p>
     </div>
 
-    <div id="ref-usage">Usage,<div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">separate_acs</span><span class="op">(</span>
+    <div id="ref-usage">
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">separate_acs</span><span class="op">(</span>
   <span class="va">.data</span>,
   col <span class="op">=</span> <span class="va">label</span>,
   into <span class="op">=</span> <span class="cn">NULL</span>,
   sep <span class="op">=</span> <span class="st">"!!"</span>,
   drop_total <span class="op">=</span> <span class="cn">FALSE</span>,
   <span class="va">...</span>
-<span class="op">)</span></code></pre></div></div>
+<span class="op">)</span></code></pre></div>
+    </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
@@ -142,7 +144,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer></div>
