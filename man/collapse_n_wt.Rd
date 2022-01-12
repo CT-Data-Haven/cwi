@@ -51,8 +51,6 @@ A data frame with summarized values. The \code{.group} column will have
 the collapsed groups, and the \code{.value} column will have average values.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-
 This is just a quick wrapper for a common, tedious task of
 collapsing several demographic groups, such as income brackets, into
 larger groups and taking a weighted mean based on a set of survey weights.

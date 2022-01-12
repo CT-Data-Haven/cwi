@@ -253,3 +253,18 @@ NULL
 #'   \item{weight}{Survey weight}
 #' }
 "cws_demo"
+
+
+#' @title ACS demo data - tenure
+#'
+#' This is a table of housing tenure data for Greater New Haven obtained with multi_geo_acs, to be used in testing and examples.
+#'
+#' @format A data frame with 45 rows and 5 variables:
+#' \describe{
+#'   \item{\code{level}}{Geographic level}
+#'   \item{\code{name}}{Geography name}
+#'   \item{\code{tenure}}{Tenure: total households, owner-occupied, or renter-occupied}
+#'   \item{\code{estimate}}{Estimated count}
+#'   \item{\code{share}}{Calculated share of households, or `NA` for total}
+#' }
+"gnh_tenure"
