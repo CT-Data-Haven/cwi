@@ -41,6 +41,7 @@ reference:
   - 'cws_demo'
   - 'decennial_vars10'
   - 'ext_table_nums'
+  - 'gnh_tenure'
   - 'laus_codes'
   - 'msa'
   - 'naics_codes'
