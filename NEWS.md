@@ -1,3 +1,7 @@
+# cwi 0.4.3
+* Import `camiller::calc_shares`
+* Add sample data from the ACS: `gnh_tenure`
+
 # cwi 0.4.2
 
 Since the 2020 ACS is delayed, I decided we should still have copies of 2019 geography-related files. This should be temporary, but for now there are 2 versions of the tract shapefile (`tract_sf` and `tract_sf19`), and 2 versions of each neighborhood-tract weight table (e.g. `new_haven_tracts` and `new_haven_tracts19`, and so on). Once all the data is out, I'll remove the 2019 versions and bump up the package version.
