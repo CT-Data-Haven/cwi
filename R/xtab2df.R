@@ -26,7 +26,7 @@ mark_questions <- function(.data, col, pattern) {
                           ),
                           rl = rleid(is_question))
   marked <- dplyr::group_by(marked, rl)
-  marked <- dplyr::mutate(marked, q = dplyr::if_else(is_question, paste(na.omit(q), collapse = ". "), q))
+  marked <- dplyr::mutate(marked, q = dplyr::if_else(is_question, paste(stats::na.omit(q), collapse = ". "), q))
   marked <- dplyr::filter(marked, !is_leadin)
   marked <- dplyr::ungroup(marked)
   marked <- tidyr::fill(marked, q, .direction = "down")
