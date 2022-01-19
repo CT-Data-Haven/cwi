@@ -303,8 +303,8 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">code</span>, <span class="va">question</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>responses <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">response</span>, collapse <span class="op">=</span> <span class="st">", "</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; `summarise()` has grouped output by 'code'. You can override using the `.groups` argument.</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 3</span></span>
-<span class="co">#&gt; <span style="color: #949494;"># Groups:   code [7]</span></span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 8 × 3</span></span>
+<span class="co">#&gt; <span style="color: #949494;"># Groups:   code [8]</span></span>
 <span class="co">#&gt;   code  question                              responses                         </span>
 <span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                             </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Q1    Are you satisfied with the city or a… Yes, No                           </span>
@@ -312,8 +312,9 @@
 <span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Q3A   How responsive local government is t… Excellent, Good, Fair, Poor       </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Q40   Have you smoked at least 100 cigaret… Yes, No                           </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Q41   (If smoked 100 cigarettes) Do you cu… Every day, Some days, Not at all,…</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Q73   (If attacked in the past 12 months) … Yes, No                           </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Q8    Do you have access to a car when you… Very often, Fairly often, Sometim…</span></code></pre></div>
+<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Q64   Have there been times in the past 12… Yes, No                           </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Q73   (If attacked in the past 12 months) … Yes, No                           </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">8</span> Q8    Do you have access to a car when you… Very often, Fairly often, Sometim…</span></code></pre></div>
 <p>A common use is to show multiple related indicators side by side in a table or chart. Here I’m prepping to show both the question about neighborhood satisfaction (yes / no) and the responsiveness of local government (combined excellent &amp; good).</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">govt</span> <span class="op">&lt;-</span> <span class="va">cws</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
