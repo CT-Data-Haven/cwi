@@ -4,7 +4,7 @@ library(testthat)
 # all_xt is a non-exported wrapper I wrote for the purposes of testing, see R/test_utils.R
 test_that("read_xtabs read correct number of rows", {
   xts <- all_xt(read_xtabs)
-  expect_equal(nrow(xts[["2015"]]), 59)
+  expect_equal(nrow(xts[["2015"]]), 67)
   expect_equal(nrow(xts[["2018"]]), 42)
   expect_equal(nrow(xts[["2020"]]), 16)
 })

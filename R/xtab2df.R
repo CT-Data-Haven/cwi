@@ -13,33 +13,30 @@ mark_questions <- function(.data, col, pattern) {
   # mark which rows only contain question text
   # if x1 is a question & lead(x1) is also a question, extract code & collapse--deals with lead-in lines that have code attached
   # this is so ugly
-  marked <- .data %>%
-    count_valid_cols() %>%
-    dplyr::mutate(
-      is_question = !is.na({{ col }}) & !stringr::str_detect({{ col }}, pattern) & count_valid == 1,
-      is_code     = !is.na({{ col }}) &  stringr::str_detect({{ col }}, pattern) & count_valid == 1,
-      is_leadin = is_question & dplyr::lead(is_question, default = FALSE),
-      q = dplyr::case_when(
-        is_leadin   ~ stringr::str_remove({{ col }}, sprintf("(?<=%s).+$", short_patt(pattern))),
-        is_question ~ {{ col }},
-        TRUE        ~ NA_character_
-      ),
-      rl = rleid(is_question)
-      # q_number = cumsum(is_question),
-      # q = dplyr::if_else(is_question, {{ col }}, NA_character_)
-    ) %>%
-    dplyr::group_by(rl) %>%
-    dplyr::mutate(q = dplyr::if_else(is_question, paste(q, collapse = ". "), q)) %>%
-    dplyr::filter(!is_leadin) %>%
-    dplyr::ungroup() %>%
-    tidyr::fill(q, .direction = "down") %>%
-    dplyr::mutate(q_number = cumsum(is_question))
+  marked <- count_valid_cols(.data)
+  marked <- dplyr::mutate(marked,
+                          is_question = !is.na({{ col }}) & !stringr::str_detect({{ col }}, pattern) & count_valid == 1,
+                          is_code     = !is.na({{ col }}) &  stringr::str_detect({{ col }}, pattern) & count_valid == 1,
+                          is_leadin = is_question & dplyr::lead(is_question, default = FALSE),
+                          q = dplyr::case_when(
+                            # is_leadin   ~ stringr::str_remove({{ col }}, sprintf("(?<=%s).+$", short_patt(pattern))),
+                            is_leadin   ~ stringr::str_extract({{ col }}, short_patt(pattern)),
+                            is_question ~ {{ col }},
+                            TRUE        ~ NA_character_
+                          ),
+                          rl = rleid(is_question))
+  marked <- dplyr::group_by(marked, rl)
+  marked <- dplyr::mutate(marked, q = dplyr::if_else(is_question, paste(na.omit(q), collapse = ". "), q))
+  marked <- dplyr::filter(marked, !is_leadin)
+  marked <- dplyr::ungroup(marked)
+  marked <- tidyr::fill(marked, q, .direction = "down")
+  marked <- dplyr::mutate(marked, q_number = cumsum(is_question))
+
   codes <- question_codes(marked, col = {{ col }}, pattern = pattern)
-  marked %>%
-    dplyr::filter(!is_question & !is_code) %>%
-    dplyr::select(-q) %>%
-    dplyr::left_join(codes, by = "q_number") %>%
-    dplyr::select(code, q_number, question = q, dplyr::everything(), -count_valid, -is_question, -is_code, -is_leadin, -rl)
+  marked <- dplyr::filter(marked, !is_question & !is_code)
+  marked <- dplyr::select(marked, -q)
+  marked <- dplyr::left_join(marked, codes, by = "q_number")
+  marked <- dplyr::select(marked, code, q_number, question = q, dplyr::everything(), -count_valid, -is_question, -is_code, -is_leadin, -rl)
 }
 
 
@@ -102,7 +99,7 @@ make_headings <- function(.data, col) {
 #' @param code_pattern String: regex pattern denoting how to find cells that
 #' contain only a question code, such as "Q10", "Q4B", or "ASTHMA". This is
 #' pretty finicky, so you probably don't want to change it.
-#' Default: `"^[A-Z\\d_]{1,20}$"`
+#' Default: `"^[A-Z\\d_]{2,20}$"`
 #' @return A data frame with the following columns:
 #' * code (if questions have codes in crosstabs)
 #' * q_number (if questions don't have codes in crosstabs, assigned in order they occur)
@@ -120,7 +117,7 @@ make_headings <- function(.data, col) {
 #' @rdname xtab2df
 #' @seealso [cwi::read_xtabs()]
 #'
-xtab2df <- function(.data, col = x1, code_pattern = "^[A-Z\\d_]{1,20}$") {
+xtab2df <- function(.data, col = x1, code_pattern = "^[A-Z\\d_]{2,20}$") {
   # generally only includes first 2 hierarchy levels
   hier <- c("category", "group", "subgroup")
 

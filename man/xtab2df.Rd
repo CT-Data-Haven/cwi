@@ -4,7 +4,7 @@
 \alias{xtab2df}
 \title{Extract survey data and descriptions from crosstabs into a tidy data frame}
 \usage{
-xtab2df(.data, col = x1, code_pattern = "^[A-Z\\\\d_]{1,20}$")
+xtab2df(.data, col = x1, code_pattern = "^[A-Z\\\\d_]{2,20}$")
 }
 \arguments{
 \item{.data}{A data frame as returned from \code{read_xtab}.}
@@ -15,7 +15,7 @@ Default: x1, based on names assigned by \code{read_xtab}}
 \item{code_pattern}{String: regex pattern denoting how to find cells that
 contain only a question code, such as "Q10", "Q4B", or "ASTHMA". This is
 pretty finicky, so you probably don't want to change it.
-Default: \code{"^[A-Z\\\\d_]{1,20}$"}}
+Default: \code{"^[A-Z\\\\d_]{2,20}$"}}
 }
 \value{
 A data frame with the following columns:
