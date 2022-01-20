@@ -1,3 +1,6 @@
+# cwi 0.4.4
+* Add handling for reading crosstab weights placed in headers alongside data rather than in a separate table (e.g. for 2021).
+
 # cwi 0.4.3
 * Import `camiller::calc_shares`
 * Add sample data from the ACS: `gnh_tenure`
