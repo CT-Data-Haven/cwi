@@ -1,58 +1,55 @@
 library(cwi)
 library(testthat)
 
-# all_xt is a non-exported wrapper I wrote for the purposes of testing, see R/test_utils.R
-test_that("read_xtabs read correct number of rows", {
-  xts <- all_xt(read_xtabs)
-  expect_equal(nrow(xts[["2015"]]), 67)
-  expect_equal(nrow(xts[["2018"]]), 42)
-  expect_equal(nrow(xts[["2020"]]), 16)
+test_that("read_xtabs: test the test setup", {
+  yrs <- as.character(c(2015, 2018, 2020, 2021))
+  expect_equal(names(all_xt(read_xtabs)), yrs)
+  expect_equal(names(all_xt(read_weights)), yrs)
 })
 
+# all_xt is a non-exported wrapper I wrote for the purposes of testing, see R/test_utils.R
 test_that("read_xtabs removes weighted total rows", {
-  found <- all_xt(read_xtabs) %>%
+  has_wt_row <- all_xt(read_xtabs) %>%
     purrr::map(dplyr::pull, x1) %>%
     purrr::map(stringr::str_detect, "Weighted Total") %>%
     purrr::map(any, na.rm = TRUE)
-  expect_false(found[["2015"]])
-  expect_false(found[["2018"]])
-  expect_false(found[["2020"]])
+  purrr::walk(names(has_wt_row), function(yr) expect_false(has_wt_row[[!!yr]]))
 })
 
-test_that("read_weights read correct number of rows", {
+test_that("read_weights handles both weight tables and weight headers", {
   wts <- all_xt(read_weights)
-  expect_equal(nrow(wts[["2015"]]), 23)
-  expect_equal(nrow(wts[["2018"]]), 18)
-  expect_equal(nrow(wts[["2020"]]), 29)
+  # should each be data frame with 2 cols
+  purrr::walk(names(wts), function(yr) expect_s3_class(wts[[!!yr]], "data.frame"))
+  purrr::walk(names(wts), function(yr) expect_length(wts[[!!yr]], 2))
 })
 
 test_that("read_xtabs allows custom name prefixes", {
   xts <- all_xt(read_xtabs, list(name_prefix = "vv"))
-  hdrs <- xts %>% purrr::map(ncol) %>% purrr::map(seq_len) %>% purrr::map(~paste0("vv", .))
-  expect_equal(names(xts[["2015"]]), hdrs[["2015"]])
-  expect_equal(names(xts[["2018"]]), hdrs[["2018"]])
-  expect_equal(names(xts[["2020"]]), hdrs[["2020"]])
+  hdrs <- purrr::map(xts, function(x) sprintf("vv%d", seq_along(x)))
+  expect_mapequal(purrr::map(xts, names), hdrs)
 })
 
 test_that("read_xtabs successfully passes to xtab2df", {
   xts_no_process <- all_xt(read_xtabs) %>% purrr::map(xtab2df)
   xts_process <- all_xt(read_xtabs, list(process = TRUE))
-  expect_equal(xts_no_process[["2015"]], xts_process[["2015"]])
-  expect_equal(xts_no_process[["2018"]], xts_process[["2018"]])
-  expect_equal(xts_no_process[["2020"]], xts_process[["2020"]])
+  expect_mapequal(xts_no_process, xts_process)
 
   xts_no_process_args <- all_xt(read_xtabs, list(name_prefix = "v")) %>% purrr::map(xtab2df, col = v1)
   xts_process_args <- all_xt(read_xtabs, list(name_prefix = "v", process = TRUE))
-  expect_equal(xts_no_process_args[["2015"]], xts_process_args[["2015"]])
-  expect_equal(xts_no_process_args[["2018"]], xts_process_args[["2018"]])
-  expect_equal(xts_no_process_args[["2020"]], xts_process_args[["2020"]])
+  expect_mapequal(xts_no_process_args, xts_process_args)
 })
 
 test_that("xtab2df properly matches categories & groups", {
-  hdrs1 <- tibble::tibble(
-    category = c("Connecticut", "Bridgeport", rep("Gender", 2), rep("Age", 4), rep("Race/Ethnicity", 3), rep("Education", 3), rep("Income", 3), rep("Children in HH", 2)),
-    group = c("Connecticut", "Bridgeport", "M", "F", "18-34", "35-49", "50-64", "65+", "White", "Black/Afr Amer", "Hispanic", "High school or less", "Some college or Associate's", "Bachelor's or higher", "<$30K", "$30K-$75K", "$75K+", "No", "Yes")
-  )
+  hdrs1 <- tibble::enframe(list(
+    Connecticut = "Connecticut", Bridgeport = "Bridgeport",
+    Gender = c("M", "F"),
+    Age = c("18-34", "35-49", "50-64", "65+"),
+    "Race/Ethnicity" = c("White", "Black/Afr Amer", "Hispanic"),
+    Education = c("High school or less", "Some college or Associate's", "Bachelor's or higher"),
+    Income = c("<$30K", "$30K-$75K", "$75K+"),
+    "Children in HH" = c("No", "Yes")
+  ), name = "category", value = "group") %>%
+    tidyr::unnest(group)
   hdrs2 <- read_xtabs(demo_xt(2018)) %>%
     xtab2df() %>%
     dplyr::distinct(category, group)

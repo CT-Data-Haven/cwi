@@ -1,9 +1,3 @@
-read_xtabs_ <- function(path, name_prefix) {
-  readxl::read_excel(path, col_names = FALSE, .name_repair = make.names) %>%
-    rlang::set_names(function(n) paste0(name_prefix, 1:ncol(.))) %>%
-    janitor::remove_empty(which = "rows")
-}
-
 #' @title Read crosstab data and weights
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -16,8 +10,10 @@ read_xtabs_ <- function(path, name_prefix) {
 #' Default: 'x'
 #' @param marker String/regex pattern used to demarcate crosstabs from weight
 #' table. If `NULL`, it will be assumed that the file contains only crosstab
-#' data *or* weights, and no filtering will be done.
-#' Default: `"Nature of the [Ss]ample"`
+#' data *or* weights, and no filtering will be done. If `marker` is never found,
+#' it's assumed that weights are in headers above the data, such as for 2021,
+#' in which case a different operation is done but the same weights table is
+#' returned. Default: `"Nature of the [Ss]ample"`
 #' @param year Numeric. As of now, its main purpose is to add an extra filtering
 #' step to take out headers in the 2015 files. Default: 2018
 #' @param process Logical: if `FALSE` (the default), this will return the
@@ -51,7 +47,7 @@ read_xtabs <- function(path, name_prefix = "x", marker = "Nature of the [Ss]ampl
   if (as.numeric(year) == 2015) {
     data <- camiller::filter_after(data, grepl("Samp[le]+ Size", {{ first_col }}))
   }
-  data <- dplyr::filter(data, !stringr::str_detect({{ first_col }}, "(Weighted [Tt]otal|^Total\\:$)") | is.na({{ first_col }}))
+  data <- dplyr::filter(data, !stringr::str_detect({{ first_col }}, total_patt) | is.na({{ first_col }}))
   if (!is.null(marker)) {
     data <- camiller::filter_until(data, grepl(marker, {{ first_col }}))
   }
@@ -67,16 +63,52 @@ read_xtabs <- function(path, name_prefix = "x", marker = "Nature of the [Ss]ampl
 #' @rdname read_xtabs
 read_weights <- function(path, marker = "Nature of the [Ss]ample") {
   data <- read_xtabs_(path, name_prefix = "x")
-  first_col <- rlang::sym(names(data)[1])
-  if (!is.null(marker)) {
-    data <- data %>%
-      camiller::filter_after(grepl(marker, {{ first_col }}))
+
+  # is marker in col1? yes --> wt_tbl; no --> wt_hdr
+  has_wt_tbl <- !is.null(marker) & any(grepl(marker, data[[1]]))
+
+  if (has_wt_tbl) {
+    data <- camiller::filter_after(data, grepl(marker, data[[1]]))
+    wts <- read_wt_tbl(data)
+  } else {
+    data <- camiller::filter_until(data, grepl(total_patt, dplyr::lag(data[[1]])))
+    data <- dplyr::select(data, -1)
+    data <- janitor::remove_empty(data, which = "rows")
+    wts <- read_wt_hdr(data)
   }
-  data %>%
-    janitor::remove_empty(which = "cols") %>%
-    dplyr::select(group = 1, weight = 2) %>%
-    dplyr::filter(!is.na(weight)) %>%
-    dplyr::mutate(weight = round(as.numeric(weight), digits = 3))
+
+  wts
+}
+
+total_patt <- "(Weighted [Tt]otal|^Total\\:$)"
+
+read_xtabs_ <- function(path, name_prefix) {
+  out <- readxl::read_excel(path, col_names = FALSE, .name_repair = make.names)
+  out <- rlang::set_names(out, function(n) paste0(name_prefix, 1:ncol(out)))
+  out <- janitor::remove_empty(out, which = "rows")
+  out
+}
+
+read_wt_tbl <- function(data, marker) {
+  out <- janitor::remove_empty(data, which = "cols")
+  out <- dplyr::select(out, group = 1, weight = 2)
+  out <- dplyr::filter(out, !is.na(weight))
+  out <- dplyr::mutate(out, weight = round(as.numeric(weight), digits = 3))
+  out
+}
+
+read_wt_hdr <- function(data) {
+  out <- t(data)
+  out <- as.data.frame(out)
+  names(out) <- c("category", "group", "weight")
+  out <- tidyr::fill(out, category, .direction = "down")
+  out <- dplyr::filter(out, !is.na(category))
+  out$weight <- as.numeric(out$weight)
+  out <- dplyr::group_by(out, category)
+  out <- dplyr::mutate(out, weight = round(weight / sum(weight), digits = 3))
+  out <- dplyr::ungroup(out)
+  out <- dplyr::select(out, -category)
+  out
 }
 
 xt_params <- function(args) {

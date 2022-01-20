@@ -24,8 +24,10 @@ Default: 'x'}
 
 \item{marker}{String/regex pattern used to demarcate crosstabs from weight
 table. If \code{NULL}, it will be assumed that the file contains only crosstab
-data \emph{or} weights, and no filtering will be done.
-Default: \code{"Nature of the [Ss]ample"}}
+data \emph{or} weights, and no filtering will be done. If \code{marker} is never found,
+it's assumed that weights are in headers above the data, such as for 2021,
+in which case a different operation is done but the same weights table is
+returned. Default: \code{"Nature of the [Ss]ample"}}
 
 \item{year}{Numeric. As of now, its main purpose is to add an extra filtering
 step to take out headers in the 2015 files. Default: 2018}
