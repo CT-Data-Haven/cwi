@@ -20,7 +20,7 @@ only useful for working with the DataHaven Community Wellbeing Survey."><meta pr
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.4</span>
       </span>
     </div>
 
@@ -100,8 +100,10 @@ Default: 'x'</p></dd>
 <dt>marker</dt>
 <dd><p>String/regex pattern used to demarcate crosstabs from weight
 table. If <code>NULL</code>, it will be assumed that the file contains only crosstab
-data <em>or</em> weights, and no filtering will be done.
-Default: <code>"Nature of the [Ss]ample"</code></p></dd>
+data <em>or</em> weights, and no filtering will be done. If <code>marker</code> is never found,
+it's assumed that weights are in headers above the data, such as for 2021,
+in which case a different operation is done but the same weights table is
+returned. Default: <code>"Nature of the [Ss]ample"</code></p></dd>
 <dt>year</dt>
 <dd><p>Numeric. As of now, its main purpose is to add an extra filtering
 step to take out headers in the 2015 files. Default: 2018</p></dd>
@@ -153,7 +155,7 @@ their associated weights.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer></div>

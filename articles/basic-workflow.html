@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.4</span>
       </span>
     </div>
 
@@ -119,9 +119,9 @@
   race <span class="op">=</span> <span class="st">"B03002"</span>,
   tenure <span class="op">=</span> <span class="st">"B25003"</span>
 <span class="op">)</span></code></pre></div>
-<div class="section level1">
-<h1 id="fetching-data-from-acs">Fetching data from ACS<a class="anchor" aria-label="anchor" href="#fetching-data-from-acs"></a>
-</h1>
+<div class="section level2">
+<h2 id="fetching-data-from-acs">Fetching data from ACS<a class="anchor" aria-label="anchor" href="#fetching-data-from-acs"></a>
+</h2>
 <p>I’m pulling out the entries in the <code>cwi</code> dataset <code><a href="../reference/regions.html">cwi::regions</a></code> (a list) to only include the Greater New Haven-area ones. Then I fetch the ACS tables for those regions, their towns, and New Haven County.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gnh_regions</span> <span class="op">&lt;-</span> <span class="va">regions</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Greater New Haven"</span>, <span class="st">"New Haven Inner Ring"</span>, <span class="st">"New Haven Outer Ring"</span><span class="op">)</span><span class="op">]</span>
@@ -177,9 +177,9 @@
 <span class="co">#&gt; <span style="color: #BCBCBC;">10</span> <span style="color: #BB0000;">NA</span>         East Rock        B01003_0…     <span style="text-decoration: underline;">8</span>625  <span style="text-decoration: underline;">1</span>154 4_ne… 09    New H…  <span style="text-decoration: underline;">2</span>019</span>
 <span class="co">#&gt; <span style="color: #949494;"># … with 16 more rows</span></span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="aggregating-and-analyzing-data">Aggregating and analyzing data<a class="anchor" aria-label="anchor" href="#aggregating-and-analyzing-data"></a>
-</h1>
+<div class="section level2">
+<h2 id="aggregating-and-analyzing-data">Aggregating and analyzing data<a class="anchor" aria-label="anchor" href="#aggregating-and-analyzing-data"></a>
+</h2>
 <p>The total population data is very straightforward, as it only has one variable, <code>B01003_001</code>. The tibble returned has the GEOID, except for custom geographies like regions; the name of each geography, including the names of each region; the variable codes; estimates; margins of error at the default 90% confidence level; the geographic level, numbered in order of decreasing size; and the counties of the towns.</p>
 <p>The race and ethnicity table will require some calculations, using the brilliantly-titled <a href="https://github.com/camille-s/camiller" class="external-link"><code>camiller</code> package</a>:</p>
 <ul>
@@ -245,9 +245,9 @@
 <span class="co">#&gt; <span style="color: #BCBCBC;">17</span> 4_towns    West Haven           Owner occupied    <span style="text-decoration: underline;">10</span>867 0.546</span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">18</span> 4_towns    Woodbridge           Owner occupied     <span style="text-decoration: underline;">2</span>552 0.881</span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="visual-sketches">Visual sketches<a class="anchor" aria-label="anchor" href="#visual-sketches"></a>
-</h1>
+<div class="section level2">
+<h2 id="visual-sketches">Visual sketches<a class="anchor" aria-label="anchor" href="#visual-sketches"></a>
+</h2>
 <p><code><a href="../reference/geo_level_plot.html">geo_level_plot()</a></code> gives a quick visual overview of the homeownership rates, highlighting town-level values.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">homeownership</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
@@ -269,9 +269,9 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">.</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">name</span> <span class="op">==</span> <span class="st">"New Haven"</span><span class="op">)</span>, fill <span class="op">=</span> <span class="cn">NA</span>, color <span class="op">=</span> <span class="st">"black"</span>, size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span></code></pre></div>
 <p><img src="basic-workflow_files/figure-html/quick_map2-1.png" width="1050"></p>
 </div>
-<div class="section level1">
-<h1 id="batch-output">Batch output<a class="anchor" aria-label="anchor" href="#batch-output"></a>
-</h1>
+<div class="section level2">
+<h2 id="batch-output">Batch output<a class="anchor" aria-label="anchor" href="#batch-output"></a>
+</h2>
 <p>Say as part of a pipeline, you need to do some calculations, write different sections of a data frame to CSV files to pass along to a colleague or refer to later, and then continue on to some more calculations. <code><a href="../reference/batch_csv_dump.html">batch_csv_dump()</a></code> takes either a list of data frames or a data frame plus a column to split by, and writes out a set of CSV files, then lets you move along to the next step in your pipeline.</p>
 <p>For example, I need to pull a table of populations by age group for several regions of Connecticut. I don’t need to split populations by gender, so I’ll add up male and female populations for each age group. I don’t actually need to more detailed age groups now, but I need to stash them in files for later, so I’ll aggregate, write a bunch of files, and then aggregate into broader age groups that I need for my current work.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -296,12 +296,12 @@
   <span class="fu">camiller</span><span class="fu">::</span><span class="fu"><a href="https://camille-s.github.io/camiller/reference/add_grps.html" class="external-link">add_grps</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ages0_4 <span class="op">=</span> <span class="fl">1</span>, ages5_17 <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, ages0_17 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, ages18_24 <span class="op">=</span> <span class="fl">5</span><span class="op">:</span><span class="fl">8</span>, ages0_24 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span>, group <span class="op">=</span> <span class="va">age</span>, estimate <span class="op">=</span> <span class="va">estimate</span>, moe <span class="op">=</span> <span class="va">moe</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">name</span>, <span class="va">age</span><span class="op">)</span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="employment-trends">Employment trends<a class="anchor" aria-label="anchor" href="#employment-trends"></a>
-</h1>
 <div class="section level2">
-<h2 id="quarterly-workforce-indicators">Quarterly Workforce Indicators<a class="anchor" aria-label="anchor" href="#quarterly-workforce-indicators"></a>
+<h2 id="employment-trends">Employment trends<a class="anchor" aria-label="anchor" href="#employment-trends"></a>
 </h2>
+<div class="section level3">
+<h3 id="quarterly-workforce-indicators">Quarterly Workforce Indicators<a class="anchor" aria-label="anchor" href="#quarterly-workforce-indicators"></a>
+</h3>
 <p>I’m also interested in learning about employment by industry over the past several years. <code><a href="../reference/qwi_industry.html">qwi_industry()</a></code> fetches county-level data by industry over time, either quarterly or annually. Here I’ll look at annual averages of all industries for New Haven County and Connecticut over the past 16 years. I’m filtering out the industry code “00”, which is the counts for all industries.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">nhc_employment</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qwi_industry.html">qwi_industry</a></span><span class="op">(</span><span class="fl">2002</span><span class="op">:</span><span class="fl">2018</span>, counties <span class="op">=</span> <span class="st">"009"</span>, annual <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
@@ -367,9 +367,9 @@
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">location</span><span class="op">)</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span></code></pre></div>
 <p>Now we have a visual that shows that in a few industries, wages have climbed over the past several years, but in many industries, wages haven’t increased except by inflation.</p>
 </div>
-<div class="section level2">
-<h2 id="local-area-unemployment-statistics">Local Area Unemployment Statistics<a class="anchor" aria-label="anchor" href="#local-area-unemployment-statistics"></a>
-</h2>
+<div class="section level3">
+<h3 id="local-area-unemployment-statistics">Local Area Unemployment Statistics<a class="anchor" aria-label="anchor" href="#local-area-unemployment-statistics"></a>
+</h3>
 <p>To look at unemployment rates over time, I can use <code><a href="../reference/laus_trend.html">laus_trend()</a></code>. The LAUS covers smaller geographies than the QWI, so <code><a href="../reference/laus_trend.html">laus_trend()</a></code> is set up to find data by a combination of state, counties, or towns. The LAUS API returns monthly data on labor force counts, employment counts, unemployed counts, and unemployment rate; <code><a href="../reference/laus_trend.html">laus_trend()</a></code> lets you specify which of these measures to fetch.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">unemployment</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/laus_trend.html">laus_trend</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"New Haven"</span>, <span class="st">"New Haven County"</span>, <span class="st">"Connecticut"</span><span class="op">)</span>, startyear <span class="op">=</span> <span class="fl">2000</span>, endyear <span class="op">=</span> <span class="fl">2018</span>, measures <span class="op">=</span> <span class="st">"unemployment rate"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
@@ -400,9 +400,9 @@
 <span class="co">#&gt; `geom_smooth()` using formula 'y ~ x'</span></code></pre></div>
 <p><img src="basic-workflow_files/figure-html/laus-1.png" width="1050"></p>
 </div>
-<div class="section level2">
-<h2 id="adding-a-logo">Adding a logo<a class="anchor" aria-label="anchor" href="#adding-a-logo"></a>
-</h2>
+<div class="section level3">
+<h3 id="adding-a-logo">Adding a logo<a class="anchor" aria-label="anchor" href="#adding-a-logo"></a>
+</h3>
 <p>DataHaven’s logo is saved as an SVG file inside this package. (Folks at other orgs who fork this, feel free to replace with your own logo.) <code>add_logo</code> tacks on a logo, either that default, or another image or <code>ggplot</code> grob, making it easier to create distribution-ready plots (which this one is not, tbh).</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/add_logo.html">add_logo</a></span><span class="op">(</span><span class="va">unemp_plot</span>, position <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span>
@@ -429,7 +429,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>

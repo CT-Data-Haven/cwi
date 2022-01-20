@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.4</span>
       </span>
     </div>
 
@@ -125,17 +125,17 @@
 </ul>
 </li>
 </ul>
-<div class="section level1">
-<h1 id="sf">
+<div class="section level2">
+<h2 id="sf">
 <code>sf</code><a class="anchor" aria-label="anchor" href="#sf"></a>
-</h1>
+</h2>
 <p><code>sf</code> objects are easy to plot either out of the box with <code><a href="https://r-spatial.github.io/sf/reference/plot.html" class="external-link">sf::plot.sf()</a></code>, or with <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> as of <code>ggplot2</code> version 3.0.0. Use with <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code> means a <code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf()</a></code> can be overlayed on a basemap from <code>ggmap</code>, as is done in the neighborhood examples.</p>
 <p><code>sf</code> is well-documented, and uses <code>dplyr</code>-type functions to allow for mutating, filtering, summarizing, joining, and most other data wrangling functions. See the <code>sf</code> vignettes for help getting started: <code>vignette(package = "sf")</code>.</p>
 <p><code>sf</code> data frames look and act like other data frames, but with shape information attached.</p>
 </div>
-<div class="section level1">
-<h1 id="statewide">Statewide<a class="anchor" aria-label="anchor" href="#statewide"></a>
-</h1>
+<div class="section level2">
+<h2 id="statewide">Statewide<a class="anchor" aria-label="anchor" href="#statewide"></a>
+</h2>
 <p>A basic plot of <code><a href="../reference/town_sf.html">cwi::town_sf</a></code>, with some <code>ggplot</code> aesthetics set, graticule lines turned off with <code>coord_sf(ndiscr = F)</code>, and a blank theme.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">town_sf</span><span class="op">)</span> <span class="op">+</span>
@@ -167,9 +167,9 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Connecticut tracts"</span><span class="op">)</span></code></pre></div>
 <p><img src="shapefiles_files/figure-html/tracts-1.png" width="1050"></p>
 </div>
-<div class="section level1">
-<h1 id="neighborhoods">Neighborhoods<a class="anchor" aria-label="anchor" href="#neighborhoods"></a>
-</h1>
+<div class="section level2">
+<h2 id="neighborhoods">Neighborhoods<a class="anchor" aria-label="anchor" href="#neighborhoods"></a>
+</h2>
 <p>Neighborhood shapes were made at DataHaven by splitting or grouping census tracts into neighborhood areas as defined by each city’s government. In some cases, boundaries were slightly adjusted to fit tracts. Small neighborhoods may be grouped together for analysis. See documentation of these at <code><a href="../reference/neighborhood_shapes.html">cwi::neighborhood_shapes</a></code> and crosswalk of tracts to neighborhoods at <code><a href="../reference/neighborhood_tracts.html">cwi::neighborhood_tracts</a></code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"New Haven"</span> <span class="op">=</span> <span class="va">new_haven_sf</span>, Stamford <span class="op">=</span> <span class="va">stamford_sf</span>, 
@@ -203,7 +203,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
