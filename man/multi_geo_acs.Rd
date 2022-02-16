@@ -22,7 +22,8 @@ multi_geo_acs(
   weight = weight,
   survey = c("acs5", "acs1"),
   verbose = TRUE,
-  key = NULL
+  key = NULL,
+  sleep = 0
 )
 }
 \arguments{
@@ -61,6 +62,8 @@ multi_geo_acs(
 \item{verbose}{Logical: whether to print summary of geographies included. Defaults \code{TRUE}.}
 
 \item{key}{String: Census API key. If \code{NULL} (default), takes the value from \code{Sys.getenv("CENSUS_API_KEY")}.}
+
+\item{sleep}{Number of seconds, if any, to sleep before each API call. This might help with the Census API's tendency to crash, but for many geographies, it could add a sizable about of time. Probably don't add more than a few seconds.}
 }
 \value{
 A tibble with GEOID, name, variable code, estimate, moe, geography level, state, and year, as applicable, for the chosen ACS table.

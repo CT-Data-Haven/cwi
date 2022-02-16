@@ -22,6 +22,7 @@
 #' @param weight Bare column name of weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults `weight` to match the neighborhood lookup datasets.
 #' @param verbose Logical: whether to print summary of geographies included. Defaults `TRUE`.
 #' @param key String: Census API key. If `NULL` (default), takes the value from `Sys.getenv("CENSUS_API_KEY")`.
+#' @param sleep Number of seconds, if any, to sleep before each API call. This might help with the Census API's tendency to crash, but for many geographies, it could add a sizable about of time. Probably don't add more than a few seconds.
 #' @return A tibble with GEOID, name, variable code, estimate, moe, geography level, state, and year, as applicable, for the chosen ACS table.
 #' @seealso [tidycensus::census_api_key()], [tidycensus::get_acs()]
 #' @examples
@@ -40,7 +41,7 @@
 #'
 #' }
 #' @export
-multi_geo_acs <- function(table, year = 2019, towns = "all", regions = NULL, counties = "all", state = "09", neighborhoods = NULL, tracts = NULL, blockgroups = NULL, msa = FALSE, us = FALSE, new_england = TRUE, name = name, geoid = geoid, weight = weight, survey = c("acs5", "acs1"), verbose = TRUE, key = NULL) {
+multi_geo_acs <- function(table, year = 2019, towns = "all", regions = NULL, counties = "all", state = "09", neighborhoods = NULL, tracts = NULL, blockgroups = NULL, msa = FALSE, us = FALSE, new_england = TRUE, name = name, geoid = geoid, weight = weight, survey = c("acs5", "acs1"), verbose = TRUE, key = NULL, sleep = 0) {
   # check key
   if (is.null(key)) {
     key <- Sys.getenv("CENSUS_API_KEY")
@@ -108,48 +109,48 @@ multi_geo_acs <- function(table, year = 2019, towns = "all", regions = NULL, cou
     if (!identical(blockgroups, "all") & !all(fips_nchar == 12)) {
       warning(stringr::str_glue("FIPS codes for block groups should have 12 digits, not {fips_nchar[1]}. Block groups will likely be dropped."))
     }
-    fetch[["blockgroups"]] <- acs_blockgroups(table, year, blockgroups, counties, st, survey, key)
+    fetch[["blockgroups"]] <- acs_blockgroups(table, year, blockgroups, counties, st, survey, key, sleep)
   }
   if (!is.null(tracts)) {
     fips_nchar <- nchar(tracts)
     if (!identical(tracts, "all") & !all(fips_nchar == 11)) {
       warning(stringr::str_glue("FIPS codes for tracts should have 11 digits, not {fips_nchar[1]}. Tracts will likely be dropped."))
     }
-    fetch[["tracts"]] <- acs_tracts(table, year, tracts, counties, st, survey, key)
+    fetch[["tracts"]] <- acs_tracts(table, year, tracts, counties, st, survey, key, sleep)
   }
 
   if (!is.null(neighborhoods)) {
     fips_nchar <- nchar(dplyr::pull(neighborhoods, {{ geoid }}))
     if (all(fips_nchar == 11)) {
       message("Assuming neighborhood GEOIDs are for tracts")
-      fetch[["neighborhoods"]] <- acs_nhood(table, year, neighborhoods, counties, state, survey, name, geoid, weight, key, is_tract = TRUE)
+      fetch[["neighborhoods"]] <- acs_nhood(table, year, neighborhoods, counties, state, survey, name, geoid, weight, key, is_tract = TRUE, sleep)
     } else if (all(fips_nchar == 12)) {
       message("Assuming neighborhood GEOIDs are for block groups")
-      fetch[["neighborhoods"]] <- acs_nhood(table, year, neighborhoods, counties, state, survey, name, geoid, weight, key, is_tract = FALSE)
+      fetch[["neighborhoods"]] <- acs_nhood(table, year, neighborhoods, counties, state, survey, name, geoid, weight, key, is_tract = FALSE, sleep)
     } else {
       message("The GEOIDs to create neighborhoods seem to be incorrect, so neighborhoods are being skipped. Check that they are either tracts or block groups.")
     }
   }
 
   if (!is.null(towns)) {
-    fetch[["towns"]] <- acs_towns(table, year, towns, counties, st, survey, key)
+    fetch[["towns"]] <- acs_towns(table, year, towns, counties, st, survey, key, sleep)
   }
   if (!is.null(regions)) {
-    fetch[["regions"]] <- acs_regions(table, year, regions, st, survey, key)
+    fetch[["regions"]] <- acs_regions(table, year, regions, st, survey, key, sleep)
   }
   if (!is.null(counties)) {
-    fetch[["counties"]] <- acs_counties(table, year, counties, st, survey, key)
+    fetch[["counties"]] <- acs_counties(table, year, counties, st, survey, key, sleep)
   }
 
-  fetch[["state"]] <- acs_state(table, year, st, survey, key)
+  fetch[["state"]] <- acs_state(table, year, st, survey, key, sleep)
 
   if (msa) {
     if (year < 2015) warning("Heads up: OMB changed MSA boundaries around 2015. These might not match the ones you're expecting.")
-    fetch[["msa"]] <- acs_msa(table, year, new_england, survey, key)
+    fetch[["msa"]] <- acs_msa(table, year, new_england, survey, key, sleep)
   }
 
   if (us) {
-    fetch[["us"]] <- suppressMessages(tidycensus::get_acs(geography = "us", table = table, year = year, survey = survey, key = key))
+    fetch[["us"]] <- suppressMessages(tidycensus::get_acs(geography = "us", table = table, year = year, survey = survey, key = key), sleep)
   }
 
   # take the names of non-null items in fetch, reverse the order (i.e. largest geo to smallest),

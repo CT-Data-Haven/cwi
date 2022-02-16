@@ -70,7 +70,7 @@ make_headings <- function(.data, col) {
   # takes data after mark_questions, makes tiered headings e.g. h1 = age, h2 = 18-34
   hdrs <- dplyr::filter(.data, is.na({{ col }}))
   hdrs <- janitor::remove_empty(hdrs, which = "cols")
-  hdrs <- head(hdrs, 2)
+  hdrs <- utils::head(hdrs, 2)
   hdrs <- dplyr::mutate(hdrs, h = paste0("h", dplyr::row_number()))
   hdrs <- dplyr::select(hdrs, -code, -question, -q_number)
   hdrs <- tidyr::pivot_longer(hdrs, cols = -h, names_to = "column")

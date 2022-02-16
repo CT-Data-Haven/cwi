@@ -64,7 +64,7 @@ cws <- xtab2df(xtab_in)
 
 cws %>%
   filter(code == "Q8") %>%
-  head()
+  utils::head()
 ```
 
 ## Combining demographic groups
