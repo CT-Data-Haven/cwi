@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
       </span>
     </div>
 
@@ -154,16 +154,16 @@
 
 <span class="va">cws</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">code</span> <span class="op">==</span> <span class="st">"Q8"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span>
+  <span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 6</span></span>
-<span class="co">#&gt;   code  question                           category     group     response value</span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Q8    Do you have access to a car when … Connecticut  Connecti… Very of…  0.85</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Q8    Do you have access to a car when … Greater New… Greater … Very of…  0.82</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Q8    Do you have access to a car when … Gender       M         Very of…  0.83</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Q8    Do you have access to a car when … Gender       F         Very of…  0.82</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Q8    Do you have access to a car when … Age          18-34     Very of…  0.75</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Q8    Do you have access to a car when … Age          35-49     Very of…  0.88</span></code></pre></div>
+<span class="co">#&gt;   code  question                                   category group response value</span>
+<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Q8    Do you have access to a car when you need… Connect… Conn… Very of…  0.85</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Q8    Do you have access to a car when you need… Greater… Grea… Very of…  0.82</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Q8    Do you have access to a car when you need… Gender   M     Very of…  0.83</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Q8    Do you have access to a car when you need… Gender   F     Very of…  0.82</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Q8    Do you have access to a car when you need… Age      18-34 Very of…  0.75</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Q8    Do you have access to a car when you need… Age      35-49 Very of…  0.88</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="combining-demographic-groups">Combining demographic groups<a class="anchor" aria-label="anchor" href="#combining-demographic-groups"></a>
@@ -230,18 +230,18 @@
 <code class="sourceCode R"><span class="va">cws</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">code</span> <span class="op">==</span> <span class="st">"Q1"</span>, <span class="va">category</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Greater New Haven"</span>, <span class="st">"Gender"</span>, <span class="st">"Age"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 28 × 6</span></span>
-<span class="co">#&gt;    code  question                        category      group      response value</span>
-<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Q1    Are you satisfied with the cit… Greater New … Greater N… Yes       0.82</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Q1    Are you satisfied with the cit… Gender        M          Yes       0.8 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Q1    Are you satisfied with the cit… Gender        F          Yes       0.84</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Q1    Are you satisfied with the cit… Age           18-34      Yes       0.85</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Q1    Are you satisfied with the cit… Age           35-49      Yes       0.77</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Q1    Are you satisfied with the cit… Age           50-64      Yes       0.83</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Q1    Are you satisfied with the cit… Age           65+        Yes       0.86</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Q1    Are you satisfied with the cit… Greater New … Greater N… No        0.17</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Q1    Are you satisfied with the cit… Gender        M          No        0.18</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Q1    Are you satisfied with the cit… Gender        F          No        0.15</span>
+<span class="co">#&gt;    code  question                                  category group response value</span>
+<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Q1    Are you satisfied with the city or area … Greater… Grea… Yes       0.82</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Q1    Are you satisfied with the city or area … Gender   M     Yes       0.8 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Q1    Are you satisfied with the city or area … Gender   F     Yes       0.84</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Q1    Are you satisfied with the city or area … Age      18-34 Yes       0.85</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Q1    Are you satisfied with the city or area … Age      35-49 Yes       0.77</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Q1    Are you satisfied with the city or area … Age      50-64 Yes       0.83</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Q1    Are you satisfied with the city or area … Age      65+   Yes       0.86</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Q1    Are you satisfied with the city or area … Greater… Grea… No        0.17</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Q1    Are you satisfied with the city or area … Gender   M     No        0.18</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Q1    Are you satisfied with the city or area … Gender   F     No        0.15</span>
 <span class="co">#&gt; <span style="color: #949494;"># … with 18 more rows</span></span></code></pre></div>
 <p>Without nonanswers (using <code>sub_nonanswers</code> defaults of “Don’t know” &amp; “Refused”):</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -249,22 +249,22 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">code</span> <span class="op">==</span> <span class="st">"Q1"</span>, <span class="va">category</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Greater New Haven"</span>, <span class="st">"Gender"</span>, <span class="st">"Age"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/sub_nonanswers.html">sub_nonanswers</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 14 × 6</span></span>
-<span class="co">#&gt;    code  question                        category      group      response value</span>
-<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Q1    Are you satisfied with the cit… Greater New … Greater N… Yes      0.828</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Q1    Are you satisfied with the cit… Greater New … Greater N… No       0.172</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Q1    Are you satisfied with the cit… Gender        M          Yes      0.808</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Q1    Are you satisfied with the cit… Gender        M          No       0.182</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Q1    Are you satisfied with the cit… Gender        F          Yes      0.848</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Q1    Are you satisfied with the cit… Gender        F          No       0.152</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Q1    Are you satisfied with the cit… Age           18-34      Yes      0.859</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Q1    Are you satisfied with the cit… Age           18-34      No       0.141</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Q1    Are you satisfied with the cit… Age           35-49      Yes      0.778</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Q1    Are you satisfied with the cit… Age           35-49      No       0.222</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">11</span> Q1    Are you satisfied with the cit… Age           50-64      Yes      0.838</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">12</span> Q1    Are you satisfied with the cit… Age           50-64      No       0.162</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">13</span> Q1    Are you satisfied with the cit… Age           65+        Yes      0.869</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">14</span> Q1    Are you satisfied with the cit… Age           65+        No       0.131</span></code></pre></div>
+<span class="co">#&gt;    code  question                                  category group response value</span>
+<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Q1    Are you satisfied with the city or area … Greater… Grea… Yes      0.828</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Q1    Are you satisfied with the city or area … Greater… Grea… No       0.172</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Q1    Are you satisfied with the city or area … Gender   M     Yes      0.808</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Q1    Are you satisfied with the city or area … Gender   M     No       0.182</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Q1    Are you satisfied with the city or area … Gender   F     Yes      0.848</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Q1    Are you satisfied with the city or area … Gender   F     No       0.152</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Q1    Are you satisfied with the city or area … Age      18-34 Yes      0.859</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Q1    Are you satisfied with the city or area … Age      18-34 No       0.141</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Q1    Are you satisfied with the city or area … Age      35-49 Yes      0.778</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Q1    Are you satisfied with the city or area … Age      35-49 No       0.222</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">11</span> Q1    Are you satisfied with the city or area … Age      50-64 Yes      0.838</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">12</span> Q1    Are you satisfied with the city or area … Age      50-64 No       0.162</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">13</span> Q1    Are you satisfied with the city or area … Age      65+   Yes      0.869</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">14</span> Q1    Are you satisfied with the city or area … Age      65+   No       0.131</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="case-study">Case study<a class="anchor" aria-label="anchor" href="#case-study"></a>
@@ -302,19 +302,20 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">response</span>, <span class="st">"(Don't know|Refused)"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">code</span>, <span class="va">question</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>responses <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">response</span>, collapse <span class="op">=</span> <span class="st">", "</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; `summarise()` has grouped output by 'code'. You can override using the `.groups` argument.</span>
+<span class="co">#&gt; `summarise()` has grouped output by 'code'. You can override using the</span>
+<span class="co">#&gt; `.groups` argument.</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 8 × 3</span></span>
 <span class="co">#&gt; <span style="color: #949494;"># Groups:   code [8]</span></span>
-<span class="co">#&gt;   code  question                              responses                         </span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                             </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Q1    Are you satisfied with the city or a… Yes, No                           </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Q2    As a place to live, is the city or a… Much better, Somewhat better, Abo…</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Q3A   How responsive local government is t… Excellent, Good, Fair, Poor       </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Q40   Have you smoked at least 100 cigaret… Yes, No                           </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Q41   (If smoked 100 cigarettes) Do you cu… Every day, Some days, Not at all,…</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Q64   Have there been times in the past 12… Yes, No                           </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Q73   (If attacked in the past 12 months) … Yes, No                           </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">8</span> Q8    Do you have access to a car when you… Very often, Fairly often, Sometim…</span></code></pre></div>
+<span class="co">#&gt;   code  question                                                       responses</span>
+<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Q1    Are you satisfied with the city or area where you live?        Yes, No  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Q2    As a place to live, is the city or area where you live gettin… Much bet…</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Q3A   How responsive local government is to the needs of residents   Excellen…</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Q40   Have you smoked at least 100 cigarettes in your entire life? … Yes, No  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Q41   (If smoked 100 cigarettes) Do you currently smoke cigarettes … Every da…</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Q64   Have there been times in the past 12 months when you did not … Yes, No  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Q73   (If attacked in the past 12 months) Were you physically injur… Yes, No  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">8</span> Q8    Do you have access to a car when you need it? Would you say y… Very oft…</span></code></pre></div>
 <p>A common use is to show multiple related indicators side by side in a table or chart. Here I’m prepping to show both the question about neighborhood satisfaction (yes / no) and the responsiveness of local government (combined excellent &amp; good).</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">govt</span> <span class="op">&lt;-</span> <span class="va">cws</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
@@ -335,7 +336,8 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/sub_nonanswers.html">sub_nonanswers</a></span><span class="op">(</span>nons <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Don't know enough about it in order to say"</span>, <span class="st">"Refused"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">response</span> <span class="op">==</span> <span class="st">"excellent_good"</span><span class="op">)</span>
-<span class="co">#&gt; `summarise()` has grouped output by 'code', 'question', 'category', 'group'. You can override using the `.groups` argument.</span>
+<span class="co">#&gt; `summarise()` has grouped output by 'code', 'question', 'category', 'group'.</span>
+<span class="co">#&gt; You can override using the `.groups` argument.</span>
 
 <span class="va">cws_out</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span>.id <span class="op">=</span> <span class="st">"indicator"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>

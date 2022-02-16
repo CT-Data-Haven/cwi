@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
       </span>
     </div>
 
@@ -90,7 +90,8 @@
   weight <span class="op">=</span> <span class="va">weight</span>,
   survey <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"acs5"</span>, <span class="st">"acs1"</span><span class="op">)</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
-  key <span class="op">=</span> <span class="cn">NULL</span>
+  key <span class="op">=</span> <span class="cn">NULL</span>,
+  sleep <span class="op">=</span> <span class="fl">0</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -132,6 +133,8 @@
 <dd><p>Logical: whether to print summary of geographies included. Defaults <code>TRUE</code>.</p></dd>
 <dt>key</dt>
 <dd><p>String: Census API key. If <code>NULL</code> (default), takes the value from <code>Sys.getenv("CENSUS_API_KEY")</code>.</p></dd>
+<dt>sleep</dt>
+<dd><p>Number of seconds, if any, to sleep before each API call. This might help with the Census API's tendency to crash, but for many geographies, it could add a sizable about of time. Probably don't add more than a few seconds.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
