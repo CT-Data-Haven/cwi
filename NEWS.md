@@ -1,3 +1,6 @@
+# cwi 0.4.5
+* Add sleep argument to `multi_geo_acs` for dealing with API crashes.
+
 # cwi 0.4.4
 * Add handling for reading crosstab weights placed in headers alongside data rather than in a separate table (e.g. for 2021).
 
