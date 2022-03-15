@@ -17,10 +17,10 @@
 #' @import assertthat
 #' @import classInt
 jenks <- function(x, n = 5, true_jenks = FALSE, labels = NULL, ...) {
-  assertthat::assert_that(is.numeric(x), msg = "x must be numeric")
-  assertthat::assert_that(n > 1, msg = "n must be 2 or more")
-  assertthat::assert_that(n < length(x), msg = "n must be less than the number of values to cut")
-  assertthat::validate_that(n < length(unique(x)), msg = "n should be less than the number of unique values to cut\nBreaks might not be meaningful")
+  if (!is.numeric(x)) cli::cli_abort("{.var x} must be numeric.")
+  if (n < 2) cli::cli_abort("{.var n} must be 2 or more.")
+  if (n >= length(x)) cli::cli_abort("{.var n} must be less than the number of values to cut.")
+  if (n >= length(unique(x))) cli::cli_warn(c("{.var n} should be less than the number of unique values to cut.", "Breaks might not be meaningful."))
   if (true_jenks) {
     brks <- unique(classInt::classIntervals(x, n = n, style = "jenks")$brk)
   } else {

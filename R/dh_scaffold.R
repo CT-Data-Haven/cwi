@@ -50,34 +50,41 @@ dh_scaffold <- function(dir = ".",
   all_dirs <- tibble::lst(input_data, output_data, fetch_data, analysis, prep_scripts, plots, format_tables, drafts, utils)
   dirs <- purrr::set_names(c(names(all_dirs[unlist(all_dirs)]), purrr::compact(addl)))
   if (utils) names(dirs)[names(dirs) == "utils"] <- "_utils"
-  does_dir_exist <- dirs %>%
-    purrr::map_chr(~file.path(dir, .)) %>%
-    purrr::map_lgl(dir.exists)
+  does_dir_exist <- purrr::map_chr(dirs, ~file.path(dir, .))
+  does_dir_exist <- purrr::map_lgl(does_dir_exist, dir.exists)
+  n_exist <- sum(does_dir_exist)
+  n_create <- sum(!does_dir_exist)
 
   # don't overwrite
-  message("The following directories already exist and will NOT be overwritten:")
-  cat(paste("*", dirs[does_dir_exist]), sep = "\n")
-  cat("\n")
+  if (n_exist > 0) {
+    cli::cli_alert_info("The following directories already exist and will NOT be overwritten:")
+    cli::cli_ul(sprintf("{.file %s}", dirs[does_dir_exist]))
+  }
 
   # check that okay to write new dirs
-  message("The following new directories will be created:")
-  cat(paste("*", dirs[!does_dir_exist]), sep = "\n")
-  cat("\n")
+  if (n_create > 0) {
+    cli::cli_alert_info("The following new directories will be created:")
+    cli::cli_ul(sprintf("{.file %s}", dirs[!does_dir_exist]))
 
-  message("Okay to proceed?")
-  ok <- menu(c("Yes, write directories", "No, cancel"))
+    cli::cli_rule()
+    cli::cli_text("Okay to proceed?")
+    ok <- menu(c("Yes, write directories", "No, cancel"))
 
-  if (ok == 1) {
-    purrr::walk(dirs[!does_dir_exist], function(d) {
-      path <- file.path(dir, d)
-      dir.create(path)
-      message(sprintf("Writing %s", path))
-      if (gitblank) {
-        g_path <- file.path(path, ".gitblank")
-        file.create(g_path)
-      }
-    })
+    if (ok == 1) {
+      purrr::walk(dirs[!does_dir_exist], function(d) {
+        path <- file.path(dir, d)
+        dir.create(path)
+        cli::cli_alert("Writing {.file path}")
+        if (gitblank) {
+          g_path <- file.path(path, ".gitblank")
+          file.create(g_path)
+        }
+      })
+    } else {
+      cli::cli_alert_danger("Aborting; nothing new will be written.")
+    }
   } else {
-    message("Aborting; nothing new will be written.")
+    cli::cli_alert_info("No new directories need to be written.")
   }
+
 }

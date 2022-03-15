@@ -14,7 +14,7 @@
 batch_csv_dump <- function(.data, split_by, path = ".", base_name = NULL, bind = FALSE, verbose = TRUE) {
   # if data is a data frame, split it. Otherwise treat as list
  if (is.data.frame(.data) & missing(split_by)) {
-    stop("Please supply either a list of data frames, or a column to split data by.")
+    cli::cli_abort("Please supply either a list of data frames, or a column to split data by.")
   }
   if (is.data.frame(.data)) {
     data_list <- split(.data, dplyr::select(.data, {{ split_by }}))
@@ -23,19 +23,19 @@ batch_csv_dump <- function(.data, split_by, path = ".", base_name = NULL, bind =
   }
 
   if (!dir.exists(path)) {
-    warning("Path ", path, " does not exist. Defaulting to current working directory.")
+    cli::cli_warn("Path {.file path} does not exist. Defaulting to current working directory.")
     path <- "."
   }
 
   out <- data_list %>%
     purrr::iwalk(function(df, name) {
-      filename <- paste(c(base_name, name), collapse = "_") %>%
-        stringr::str_replace_all("\\s+", "_") %>%
-        paste0(".csv")
+      filename <- paste(base_name, name, sep = "_")
+      filename <- stringr::str_replace_all(filename, "\\s+", "_")
+      filename <- paste(filename, "csv", sep = ".")
       filepath <- file.path(path, filename)
       write.csv(df, file = filepath, row.names = FALSE)
 
-      if (verbose) message("Writing ", filepath)
+      if (verbose) cli::cli_alert("Writing {.file filepath}")
     })
   if (bind) {
     out <- dplyr::bind_rows(out)

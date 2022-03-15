@@ -48,7 +48,7 @@ gnh_regions <- regions[c("Greater New Haven", "New Haven Inner Ring", "New Haven
 
 gnh_data <- map(table_nums, 
     ~multi_geo_acs(table = ., year = yr, towns = regions$`Greater New Haven`,
-                   regions = gnh_regions, counties = "New Haven", state = "09"))
+                   regions = gnh_regions, counties = "New Haven", state = "09", sleep = 1))
 
 gnh_data$total_pop
 ```
@@ -107,7 +107,7 @@ homeownership %>%
 
 ```{r quick_map1}
 tenure_map <- homeownership %>%
-  filter(level == "4_towns") %>%
+  filter(level == "4_town") %>%
   acs_quick_map(value = share, level = "town", color = "black", size = 0.4, 
                 title = "Homeownership, Greater New Haven", palette = "BuPu")
 
@@ -175,14 +175,14 @@ Next, say I want to look at the industries that were largest in New Haven county
 ```{r qwi2}
 top2018 <- employment %>%
   filter(year == 2018, county == "009") %>%
-  top_n(8, Emp) %>%
+  top_n(8, emp) %>%
   pull(industry)
 top2018
 
 employment %>%
   filter(industry %in% top2018) %>%
   mutate(label = stringr::str_sub(label, 1, 25)) %>%
-  mutate(Emp_1k = Emp / 1000) %>%
+  mutate(Emp_1k = emp / 1000) %>%
   ggplot(aes(x = year, y = Emp_1k, color = label)) +
     geom_line() +
     labs(x = "Year", y = "Employees (thousands)", title = "Employment by industry", 

@@ -20,14 +20,16 @@ library(cwi)
 library(dplyr)
 ```
 
+## New variables
+
 The 2019 ACS included [reengineering of a few tables](https://www.census.gov/programs-surveys/acs/technical-documentation/table-and-geography-changes/2019/5-year.html), and a few new additions. Some are clarifications of phrasing to both questions and tables, such as time leaving home for work. More substantial are the changes in how family structure has been phrased to be more inclusive of same-sex and unmarried couples--see the most recent [working paper](https://www.census.gov/content/census/en/library/working-papers/2017/demo/SEHSD-WP2017-28.html) on this.
 
 This is just a quick check of what's new or changed.
 
 ```{r}
-acs18 <- cwi:::clean_acs_vars(2018) %>%
+acs18 <- cwi:::clean_acs_vars(2018, "acs5") %>%
   mutate(table_num = stringr::str_extract(name, "^[A-Z]\\d+[A-Z]*"))
-acs19 <- cwi:::clean_acs_vars(2019) %>%
+acs19 <- cwi:::clean_acs_vars(2019, "acs5") %>%
   mutate(table_num = stringr::str_extract(name, "^[A-Z]\\d+[A-Z]*"))
 
 tbl18 <- distinct(acs18, concept, table_num) %>%
@@ -43,27 +45,19 @@ tbl_changes <- left_join(tbl19, tbl18, by = "table_num", suffix = c("19", "18"))
 knitr::kable(tbl_changes)
 ```
 
-Variables in the tables related to gender & family structure:
+## Variables in the tables related to gender & family structure:
 
-```{r results="asis"}
+```{r message=FALSE, warning=FALSE, results='asis'}
 tbl_changes %>%
   filter(grepl("(HOUSEHOLD|SPOUSE)", concept19)) %>%
   inner_join(acs19, by = "table_num") %>%
-  select(table_num, concept, name, label) %>%
-  tidyr::unite(table, table_num, concept) %>%
-  tidyr::separate_rows(label, sep = "!!") %>%
-  group_by(name) %>%
-  mutate(row2 = paste0("x", row_number())) %>%
-  tidyr::pivot_wider(names_from = row2, values_from = label) %>%
-  split(.$table) %>%
-  purrr::map(select, name, starts_with("x")) %>%
-  purrr::map(janitor::remove_empty, "cols") %>%
-  # purrr::map(knitr::kable) %>%
-  purrr::iwalk(function(tbl, ind) {
-    print(sprintf("**%s**", tbl))
-    print(knitr::kable(tbl))
-  })
+  split(list(.$table_num, .$concept), drop = TRUE) %>%
+  purrr::map(separate_acs) %>%
+  purrr::map(select, variable = name, matches("^x\\d+")) %>%
+  purrr::map(knitr::kable)
 ```
+
+
 
 
 

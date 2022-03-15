@@ -44,17 +44,19 @@ Imports:
     camiller (>= 0.2.0),
     readr,
     tidycensus,
-    tidyselect
+    tidyselect,
+    cli
 Suggests: 
     knitr,
     sf,
     lubridate,
     scales,
     rmarkdown,
-    testthat,
+    testthat (>= 3.0.0),
     showtext,
     R.utils
 Remotes: 
     camille-s/camiller
 VignetteBuilder:
     knitr
+Config/testthat/edition: 3

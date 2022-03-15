@@ -24,6 +24,9 @@ knitr::opts_chunk$set(
 library(dplyr)
 library(ggplot2)
 library(cwi)
+if (require(sf)) {
+  sf::sf_use_s2(FALSE)
+}
 ```
 
 `cwi` ships with several shapefiles in [`sf`](https://r-spatial.github.io/sf/) (simple features) format. These include:

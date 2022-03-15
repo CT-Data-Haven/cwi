@@ -4,10 +4,10 @@
 \alias{town_names}
 \title{Clean up town names as returned from ACS}
 \usage{
-town_names(.data, name_col)
+town_names(data, name_col)
 }
 \arguments{
-\item{.data}{A data frame}
+\item{data}{A data frame}
 
 \item{name_col}{Bare column name of town names}
 }
