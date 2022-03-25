@@ -1,4 +1,4 @@
-laus_prep <- function(series_df, startyear, endyear, key) {
+laus_prep <- function(series_df, startyear, endyear, verbose, key) {
   key <- check_bls_key(key)
   if (is.logical(key) && !key) {
     cli::cli_abort("Must supply an API key. See the docs on where to store it.",
@@ -15,7 +15,7 @@ laus_prep <- function(series_df, startyear, endyear, key) {
 
   # make api query
   base_url <- "https://api.bls.gov/publicAPI/v2/timeseries/data"
-  params <- make_laus_query(series_df$series, years, key)
+  params <- make_laus_query(series_df$series, years, verbose, key)
   params <- purrr::map(params, function(p) list(url = base_url, body = p))
   params
 }
@@ -41,7 +41,7 @@ make_laus_series <- function(names, state, measures) {
   all_codes
 }
 
-make_laus_query <- function(series, years, key) {
+make_laus_query <- function(series, years, verbose, key) {
   if (length(series) == 1) series <- I(series)
   purrr::map(years, function(yr) {
     startyear <- min(yr); endyear <- max(yr)
@@ -50,6 +50,7 @@ make_laus_query <- function(series, years, key) {
          endyear = endyear,
          annualaverage = FALSE,
          calculations = FALSE,
+         catalog = verbose,
          registrationKey = key)
     # jsonlite::toJSON(p, auto_unbox = TRUE)
   })
@@ -77,22 +78,15 @@ check_laus_names <- function(state, names) {
 }
 
 #' @export
-laus_trend <- function(names = NULL, startyear, endyear, state = "09", measures = "all", annual = FALSE, key = NULL) {
+laus_trend <- function(names = NULL, startyear, endyear, state = "09", measures = "all", annual = FALSE, verbose = TRUE, key = NULL) {
   # if names null, use all in state
   # names <- check_laus_names(state, names)
 
   # check measures
   series <- make_laus_series(names, state, measures)
-  query <- laus_prep(series, startyear, endyear, key)
-  agent <- httr::user_agent("cwi")
-  fetch <- purrr::map(query, function(q) {
-    httr::POST(q$url, body = q$body, encode = "json", agent, httr::timeout(10))
-  })
-  fetch <- purrr::map(fetch, httr::content, as = "text", encoding = "utf-8")
-  fetch <- purrr::map(fetch, jsonlite::fromJSON)
-  fetch <- purrr::map(fetch, purrr::pluck, "Results", "series")
-  fetch <- purrr::map_dfr(fetch, dplyr::as_tibble)
-  fetch <- tidyr::unnest(fetch, data)
+  query <- laus_prep(series, startyear, endyear, verbose, key)
+
+  fetch <- fetch_bls(query, verbose)
 
   laus <- dplyr::left_join(series, fetch, by = c("series" = "seriesID"))
   laus$date <- lubridate::ym(paste(laus$year, laus$periodName))

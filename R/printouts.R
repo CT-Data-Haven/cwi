@@ -3,6 +3,7 @@ bold_hdr <- function(place_name, place_type) {
   sprintf("{.strong %s:} %s", place_type, paste(place_name, collapse = ", "))
 }
 
+######## CENSUS: ACS + DECENNIAL ----
 geo_printout <- function(neighborhoods, tracts, blockgroups, towns, regions, counties, all_counties, drop_counties, state, msa, us, new_england, nhood_type) {
   geos <- tibble::lst(neighborhoods, tracts, blockgroups, towns, regions, counties, state)
   if (drop_counties) {
@@ -60,3 +61,22 @@ table_printout <- function(table, concept, year) {
 }
 
 
+######## BLS ----
+bls_series_printout <- function(fetch) {
+  catalog <- fetch[["catalog"]]
+  series_title <- catalog[["series_title"]]
+  series_title <- gsub("\\:.+$", "", series_title)
+  series_title <- unique(series_title)
+  series_title <- paste(series_title, collapse = ", ")
+
+  survey <- unique(catalog[["survey_name"]])
+
+  if (grepl("seasonal", series_title)) {
+    season <- NULL
+  } else {
+    season <- unique(catalog[["seasonality"]])
+  }
+
+  cli::cli_h1("{survey}")
+  cli::cli_ul(c(series_title, season))
+}
