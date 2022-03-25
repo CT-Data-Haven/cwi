@@ -6,7 +6,7 @@ laus_prep <- function(series_df, startyear, endyear, key) {
   }
 
   max_yrs <- 20
-  years <- seq(startyear, endyear)
+  years <- seq(startyear, endyear, by = 1)
   if (length(years) >= max_yrs) {
     cli::cli_alert_info("The API can only get {max_yrs} years of data at once; making multiple calls, but this might take a little longer.")
   }
@@ -45,7 +45,7 @@ make_laus_query <- function(series, years, key) {
   if (length(series) == 1) series <- I(series)
   purrr::map(years, function(yr) {
     startyear <- min(yr); endyear <- max(yr)
-    p <- list(seriesid = series,
+    list(seriesid = series,
          startyear = startyear,
          endyear = endyear,
          annualaverage = FALSE,
@@ -76,6 +76,7 @@ check_laus_names <- function(state, names) {
   codes
 }
 
+#' @export
 laus_trend <- function(names = NULL, startyear, endyear, state = "09", measures = "all", annual = FALSE, key = NULL) {
   # if names null, use all in state
   # names <- check_laus_names(state, names)
@@ -85,12 +86,12 @@ laus_trend <- function(names = NULL, startyear, endyear, state = "09", measures 
   query <- laus_prep(series, startyear, endyear, key)
   agent <- httr::user_agent("cwi")
   fetch <- purrr::map(query, function(q) {
-    httr::POST(q$url, body = q$body, encode = "json", agent, httr::timeout(8))
+    httr::POST(q$url, body = q$body, encode = "json", agent, httr::timeout(10))
   })
   fetch <- purrr::map(fetch, httr::content, as = "text", encoding = "utf-8")
   fetch <- purrr::map(fetch, jsonlite::fromJSON)
   fetch <- purrr::map(fetch, purrr::pluck, "Results", "series")
-  fetch <- purrr::map_df(fetch, dplyr::as_tibble)
+  fetch <- purrr::map_dfr(fetch, dplyr::as_tibble)
   fetch <- tidyr::unnest(fetch, data)
 
   laus <- dplyr::left_join(series, fetch, by = c("series" = "seriesID"))
