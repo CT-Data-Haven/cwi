@@ -9,6 +9,23 @@ all_xt <- function(.fun, args = NULL) {
     purrr::imap(~R.utils::doCall(.fcn = .fun, path = .x, year = .y, args = args))
 }
 
-multi_test <- function(src = "acs", table = "B01003", year = 2019, towns = "all", regions = NULL, counties = "all", state = "09", neighborhoods = NULL, tracts = NULL, blockgroups = NULL, msa = FALSE, us = FALSE, new_england = TRUE, nhood_name = name, nhood_geoid = geoid, dataset = "acs5", verbose = TRUE, key = NULL) {
-  multi_geo_prep(src, table, year, towns, regions, counties, state, neighborhoods, tracts, blockgroups, msa, us, new_england, {{nhood_name}}, {{nhood_geoid}}, dataset, verbose, key)
+multi_test <- function(src = "acs",
+                       table = "B01003",
+                       year = 2019,
+                       towns = "all",
+                       regions = NULL,
+                       counties = "all",
+                       state = "09",
+                       neighborhoods = NULL,
+                       tracts = NULL,
+                       blockgroups = NULL,
+                       msa = FALSE,
+                       us = FALSE,
+                       new_england = TRUE,
+                       nhood_name = name,
+                       nhood_geoid = geoid,
+                       dataset = "acs5",
+                       verbose = TRUE,
+                       key = NULL) {
+  multi_geo_prep(src, table, year, towns, regions, counties, state, neighborhoods, tracts, blockgroups, msa, us, new_england, {{ nhood_name }}, {{ nhood_geoid }}, dataset, verbose, key)
 }

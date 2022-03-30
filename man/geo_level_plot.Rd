@@ -5,7 +5,7 @@
 \title{Quickly make a \code{ggplot} to view data by geographic level}
 \usage{
 geo_level_plot(
-  .data,
+  data,
   name = name,
   value = value,
   level = level,
@@ -18,8 +18,6 @@ geo_level_plot(
 )
 }
 \arguments{
-\item{.data}{A data frame to use for plotting.}
-
 \item{name}{Bare column name containing names, i.e. independent variable.}
 
 \item{value}{Bare column name containing values, i.e. dependent variable.}
@@ -37,6 +35,8 @@ geo_level_plot(
 \item{light_gray}{String giving the named gray color for the second lowest geography; defaults \code{"gray60"}.}
 
 \item{...}{Any additional parameters to pass to the underlying geom function.}
+
+\item{.data}{A data frame to use for plotting.}
 }
 \value{
 A ggplot

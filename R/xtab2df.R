@@ -36,7 +36,7 @@ mark_questions <- function(.data, col, pattern) {
   marked <- dplyr::filter(marked, !is_question & !is_code)
   marked <- dplyr::select(marked, -q)
   marked <- dplyr::left_join(marked, codes, by = "q_number")
-  marked <- dplyr::select(marked, code, q_number, question = q, dplyr::everything(), -count_valid, -is_question, -is_code, -is_leadin, -rl)
+  marked <- dplyr::select(marked, code, q_number, question = q, tidyselect::everything(), -count_valid, -is_question, -is_code, -is_leadin, -rl)
 }
 
 

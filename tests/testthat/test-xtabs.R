@@ -39,6 +39,11 @@ test_that("read_xtabs successfully passes to xtab2df", {
   expect_mapequal(xts_no_process_args, xts_process_args)
 })
 
+test_that("read_xtabs print parameters when passing to xtab2df", {
+  expect_message(read_xtabs(demo_xt(2018), process = TRUE), "parameters")
+  expect_output(read_xtabs(demo_xt(2015), process = TRUE), "\\=")
+})
+
 test_that("xtab2df properly matches categories & groups", {
   hdrs1 <- tibble::enframe(list(
     Connecticut = "Connecticut", Bridgeport = "Bridgeport",

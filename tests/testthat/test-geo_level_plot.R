@@ -6,8 +6,8 @@ test_that("geo_level_plot checks for valid plot types", {
                    value = rnorm(10),
                    level = sample(LETTERS[1:3], 10, replace = TRUE)
                    )
-  expect_is(geo_level_plot(df), "ggplot")
-  expect_is(geo_level_plot(df, dark_gray = "pink"), "ggplot")
+  expect_s3_class(geo_level_plot(df), "gg")
+  expect_s3_class(geo_level_plot(df, dark_gray = "pink"), "gg")
   expect_error(geo_level_plot(df, type = "boxplot"))
 })
 
@@ -16,5 +16,5 @@ test_that("geo_level_plot handles tidyeval", {
                    pop = rnorm(10),
                    geo_lvl = sample(LETTERS[1:3], 10, replace = TRUE)
   )
-  expect_is(geo_level_plot(df, name = location, value = pop, level = geo_lvl), "ggplot")
+  expect_s3_class(geo_level_plot(df, name = location, value = pop, level = geo_lvl), "gg")
 })

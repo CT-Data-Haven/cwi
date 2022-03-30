@@ -5,7 +5,7 @@
 \title{Remove non-answers and rescale percentage values}
 \usage{
 sub_nonanswers(
-  .data,
+  data,
   response = response,
   value = value,
   nons = c("Don't know", "Refused"),
@@ -13,7 +13,7 @@ sub_nonanswers(
 )
 }
 \arguments{
-\item{.data}{A data frame}
+\item{data}{A data frame}
 
 \item{response}{Bare column name of where responses are found, including
 those considered to be non-answers. Default: response}

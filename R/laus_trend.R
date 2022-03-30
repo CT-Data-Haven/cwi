@@ -1,4 +1,40 @@
-laus_prep <- function(series_df, startyear, endyear, verbose, key) {
+#' Fetch local area unemployment statistics (LAUS) data over time
+#'
+#' Fetch monthly LAUS data for a list of locations over a given time period, modeled after `blscrapeR::bls_api`. Requires a BLS API key.
+#' @param names A character vector of place names to look up, either towns and/or counties.
+#' @param startyear Numeric; first year of range
+#' @param endyear Numeric; last year of range
+#' @param state A string: either name or two-digit FIPS code of a US state. Required; defaults `"09"` (Connecticut).
+#' @param measures A character vector of measures, containing any combination of `"unemployment rate"`, `"unemployment"`, `"employment"`, or `"labor force"`, or `"all"` (the default) as shorthand for all of the above.
+#' @param annual Logical: whether to include annual averages along with monthly data. Defaults `FALSE`.
+#' @param verbose Logical: if `TRUE` (default), this will print overview information about the series being used, as returned by the API.
+#' @param key A string giving the BLS API key. If `NULL` (the default), will take the value in `Sys.getenv("BLS_KEY")`.
+#' @return A data frame, slightly cleaned up from what the API returns.
+#' @examples
+#' \dontrun{
+#' laus_trend(c("Connecticut", "New Haven", "Hamden"), 2014, 2017, annual = TRUE)
+#' }
+#' @export
+laus_trend <- function(names = NULL, startyear, endyear, state = "09", measures = "all", annual = FALSE, verbose = TRUE, key = NULL) {
+  # check measures
+  series <- make_laus_series(names, state, measures)
+  query <- laus_prep(series, startyear, endyear, annual, verbose, key)
+
+  fetch <- fetch_bls(query, verbose)
+
+  laus <- dplyr::left_join(series, fetch, by = c("series" = "seriesID"))
+  laus$date <- as.Date(paste(laus$year, laus$periodName, "01"), format = "%Y %B %d")
+  laus$measure_text <- forcats::fct_relabel(laus$measure_text, function(x) gsub("\\W", "_", x))
+  laus <- dplyr::mutate(laus, dplyr::across(c(year, value), as.numeric))
+  laus <- dplyr::arrange(laus, date)
+  laus <- dplyr::select(laus, state_code, area, measure_text, periodName, year, date, value)
+  laus <- tidyr::pivot_wider(laus, names_from = measure_text, values_from = value)
+
+  laus
+}
+
+
+laus_prep <- function(series_df, startyear, endyear, annual, verbose, key) {
   key <- check_bls_key(key)
   if (is.logical(key) && !key) {
     cli::cli_abort("Must supply an API key. See the docs on where to store it.",
@@ -15,7 +51,7 @@ laus_prep <- function(series_df, startyear, endyear, verbose, key) {
 
   # make api query
   base_url <- "https://api.bls.gov/publicAPI/v2/timeseries/data"
-  params <- make_laus_query(series_df$series, years, verbose, key)
+  params <- make_laus_query(series_df$series, years, annual, verbose, key)
   params <- purrr::map(params, function(p) list(url = base_url, body = p))
   params
 }
@@ -29,11 +65,22 @@ make_laus_series <- function(names, state, measures) {
                    call = parent.frame())
   }
 
-  # check names--if null, use all in state
+  # check state, convert / copy to fips
+  if (is.null(state) | length(state) > 1) {
+    cli::cli_abort("Must supply a single state by name, abbreviation, or FIPS code.",
+                   call = parent.frame())
+  }
   state_fips <- get_state_fips(state)
+
+  # check names--if null, use all in state
   locs <- check_laus_names(state_fips, names)
-  if (nrow(locs) < 1) {
-    cli::cli_abort("No locations were found.")
+  if (nrow(locs) < length(names)) {
+    if (nrow(locs) < 1) {
+      cli::cli_abort("No locations were found. Double check your state and locations.")
+    } else {
+      missing_locs <- setdiff(names, locs[["area"]])
+      cli::cli_warn("No results were found for {.val {missing_locs}}. Double check your spelling.")
+    }
   }
 
   all_codes <- merge(locs, measures, by = NULL)
@@ -41,14 +88,14 @@ make_laus_series <- function(names, state, measures) {
   all_codes
 }
 
-make_laus_query <- function(series, years, verbose, key) {
+make_laus_query <- function(series, years, annual, verbose, key) {
   if (length(series) == 1) series <- I(series)
   purrr::map(years, function(yr) {
     startyear <- min(yr); endyear <- max(yr)
     list(seriesid = series,
          startyear = startyear,
          endyear = endyear,
-         annualaverage = FALSE,
+         annualaverage = annual,
          calculations = FALSE,
          catalog = verbose,
          registrationKey = key)
@@ -77,61 +124,5 @@ check_laus_names <- function(state, names) {
   codes
 }
 
-#' @export
-laus_trend <- function(names = NULL, startyear, endyear, state = "09", measures = "all", annual = FALSE, verbose = TRUE, key = NULL) {
-  # if names null, use all in state
-  # names <- check_laus_names(state, names)
 
-  # check measures
-  series <- make_laus_series(names, state, measures)
-  query <- laus_prep(series, startyear, endyear, verbose, key)
 
-  fetch <- fetch_bls(query, verbose)
-
-  laus <- dplyr::left_join(series, fetch, by = c("series" = "seriesID"))
-  laus$date <- lubridate::ym(paste(laus$year, laus$periodName))
-  laus$measure_text <- forcats::fct_relabel(laus$measure_text, function(x) gsub("\\W", "_", x))
-  laus <- dplyr::mutate(laus, dplyr::across(c(year, value), as.numeric))
-  laus <- dplyr::arrange(laus, date, type, measure_code)
-  laus <- dplyr::select(laus, type, state_code, area, measure_text, date, year, value)
-  laus <- tidyr::pivot_wider(laus, names_from = measure_text, values_from = value)
-
-  if (annual) {
-  # add unemployment, employment, labor force, civilian noninstitutional population
-  # calculate unemployment rate, employment-population ratio, labor force participation rate
-    laus <- calc_annual_laus(laus)
-  }
-  laus
-}
-
-calc_annual_laus <- function(laus) {
-  meas <- names(laus)
-  laus <- dplyr::group_by(laus, type, state_code, area, year)
-  laus <- dplyr::summarise(laus, dplyr::across(tidyselect::any_of(c("unemployment", "employment", "labor_force", "civilian_noninstitutional_population")), sum))
-  laus <- dplyr::ungroup(laus)
-  if ("unemployment_rate" %in% meas) {
-    if (!all(c("unemployment", "labor_force") %in% meas)) {
-      cli::cli_warn(c("Annual unemployment rate can't be calculated without including the unemployment and labor force measures.",
-                      "i" = "Adjust the {.var measures} argument, or use {.val all} to get all measures."))
-    } else {
-      laus$unemployment_rate <- laus$unemployment / laus$labor_force
-    }
-  }
-  if ("employment_population_ratio" %in% meas) {
-    if (!all(c("employment", "civilian_noninstitutional_population") %in% meas)) {
-      cli::cli_warn(c("Annual employment-population ratio can't be calculated without including the employment and population measures.",
-                      "i" = "Adjust the {.var measures} argument, or use {.val all} to get all measures."))
-    } else {
-      laus$employment_population_ratio <- laus$employment / laus$civilian_noninstitutional_population
-    }
-  }
-  if ("labor_force_participation_rate" %in% meas) {
-    if (!all(c("labor_force", "civilian_noninstitutional_population") %in% meas)) {
-      cli::cli_warn(c("Annual labor force participation rate can't be calculated without including labor force and population measures.",
-                      "i" = "Adjust the {.var measures} argument, or use {.val all} to get all measures."))
-    } else {
-      laus$labor_force_participation_rate <- laus$labor_force / laus$civilian_noninstitutional_population
-    }
-  }
-  laus
-}

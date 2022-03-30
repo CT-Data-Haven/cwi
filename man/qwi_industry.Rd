@@ -7,10 +7,11 @@
 qwi_industry(
   years,
   industries = naics_codes[["industry"]],
-  counties = NULL,
   state = "09",
-  annual = TRUE,
-  key = Sys.getenv("CENSUS_API_KEY")
+  counties = NULL,
+  annual = FALSE,
+  key = NULL,
+  retry = 5
 )
 }
 \arguments{
@@ -18,13 +19,13 @@ qwi_industry(
 
 \item{industries}{A character vector of NAICS industry codes; default is the 20 sectors plus "All industries" from the dataset \code{naics_codes}.}
 
-\item{counties}{A character vector of county FIPS codes, or \code{"*"} for all counties (the default). If \code{NULL}, will return data just at the state level.}
+\item{state}{A string of length 1 representing a state's FIPS code, name, or two-letter abbreviation; defaults to \code{"09"} for Connecticut}
 
-\item{state}{A string of a state FIPS code; defaults to \code{"09"} for Connecticut}
+\item{counties}{A character vector of county FIPS codes, or \code{"all"} for all counties (the default). If \code{NULL}, will return data just at the state level.}
 
-\item{annual}{Logical, whether to return annual averages (default) or quarterly data.}
+\item{annual}{Logical, whether to return annual averages or quarterly data (default) .}
 
-\item{key}{A Census API key. Defaults to the value at \code{"CENSUS_API_KEY"} in your \code{.Renviron} file, as set by \code{tidycensus::census_api_key()}.}
+\item{key}{A Census API key. If \code{NULL}, defaults to the environmental variable \code{"CENSUS_API_KEY"}, as set by \code{tidycensus::census_api_key()}.}
 }
 \value{
 A data frame / tibble

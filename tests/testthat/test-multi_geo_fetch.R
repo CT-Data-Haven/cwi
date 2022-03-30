@@ -18,7 +18,7 @@ test_that("multi_geo_* validates counties by name or FIPS", {
 
 test_that("multi_geo_* suppresses messages from get_* if requested", {
   expect_silent(multi_test(verbose = FALSE))
-  expect_message(multi_test(verbose = TRUE))
+  expect_message(multi_test(verbose = TRUE), "Table B01003: TOTAL POPULATION")
 })
 
 test_that("multi_geo_acs handles 1-year surveys", {
@@ -49,4 +49,10 @@ test_that("multi_geo_* handles passing args to tidycensus::get_*", {
   skip_on_ci()
   with_sf <- multi_geo_acs("B01003", geometry = TRUE)
   expect_s3_class(with_sf, "sf")
+})
+
+test_that("multi_geo_* handles missing columns", {
+  # if no towns are included, there won't be a county column--should be able to deal without error
+  skip_on_ci()
+  expect_s3_class(multi_geo_acs(table = "B01003", towns = NULL, survey = "acs1", year = 2016, sleep = 2), "data.frame")
 })

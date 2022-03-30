@@ -117,6 +117,9 @@ xt_params <- function(args) {
   from_def <- defaults[!names(defaults) %in% names(args)][-1]
   params <- c(from_def, args)
   params <- params[names(defaults)[-1]]
-  param_str <- paste(names(params), params, sep = " = ", collapse = ", ")
-  message("xtab2df is being called on the data with the parameters ", param_str)
+  param_str <- paste(names(params), params, sep = " = ")
+  cli::cli_alert_info("xtab2df is being called on the data with the following parameters")
+  # can't use anything glue-based--tries to parse regex
+  cli::cat_bullet(param_str)
+  cat("\n")
 }

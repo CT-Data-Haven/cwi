@@ -3,7 +3,7 @@
 #' This is a convenience function for removing what might be
 #' considered non-answers ("don't know", "refused", etc.) and rescaling the
 #' remaining values to add to 1.0.
-#' @param .data A data frame
+#' @param data A data frame
 #' @param response Bare column name of where responses are found, including
 #' those considered to be non-answers. Default: response
 #' @param value Bare column name of values, Default: value
@@ -24,44 +24,39 @@
 #' @export
 #' @rdname sub_nonanswers
 
-sub_nonanswers <- function(.data, response = response, value = value, nons = c("Don't know", "Refused"), factor_response = TRUE) {
+sub_nonanswers <- function(data, response = response, value = value, nons = c("Don't know", "Refused"), factor_response = TRUE) {
   # warn if any nons aren't actually in the data
-  response_vals <- .data %>%
-    dplyr::pull({{ response }}) %>%
-    unique()
+  response_vals <- unique(dplyr::pull(data, {{ response }}))
   xtra_nons <- setdiff(nons, response_vals)
+
   if (length(xtra_nons) > 0) {
-    warning("Your value of 'nons' contains responses not found in the data:\n",
-            paste(xtra_nons, collapse = ", "), " not found.")
+    cli::cli_alert_warning("Your value of {.var nons} contains responses not found in the data: {.val {xtra_nons}} not found.")
   }
 
-  if (any(dplyr::pull(.data, {{ value }}) > 1.0)) {
-    warning("Your data contains values greater than 1.0. This function is designed for percentage data, so you'll probably get values that don't actually make sense.")
+  if (any(dplyr::pull(data, {{ value }}) > 1.0)) {
+    cli::cli_alert_warning("Your data contains values greater than 1.0. This function is designed for percentage data, so you'll probably get values that don't actually make sense.")
   }
+
   # add up values of nonanswers, use 1 - sum(nons) as denom
-  responses <- response_vals %>%
-    setdiff(nons) %>%
-    rlang::syms()
+  # responses = real answers, i.e. not nons
+  responses <- rlang::syms(setdiff(response_vals, nons))
+  grps <- dplyr::groups(data)
 
-  grps <- dplyr::groups(.data)
+  wide <- dplyr::ungroup(data)
+  wide <- tidyr::pivot_wider(wide, names_from = {{ response }}, values_from = {{ value }})
+  non_sum <- rowSums(dplyr::select(wide, dplyr::any_of(nons)))
+  wide$non_sum <- non_sum
+  wide <- dplyr::mutate(wide, dplyr::across(c(!!!responses), function(x) x / (1 - non_sum)))
+  wide <- dplyr::select(wide, -non_sum, -dplyr::any_of(nons))
 
-  wide <- .data %>%
-    dplyr::ungroup() %>%
-    tidyr::pivot_wider(names_from = {{ response }}, values_from = {{ value }})
+  out <- tidyr::pivot_longer(wide, cols = c(!!!responses),
+                             names_to = rlang::as_label(rlang::enquo(response)),
+                             values_to = rlang::as_label(rlang::enquo(value)))
+  out <- dplyr::group_by(out, !!!grps)
 
-  non_sum <- wide %>%
-    dplyr::select(dplyr::any_of(nons)) %>%
-    rowSums()
-  out <- wide %>%
-    dplyr::mutate(non_sum = non_sum)
-  out <- out %>%
-    dplyr::mutate(dplyr::across(c(!!!responses), ~. / (1 - non_sum)))
-  out <- out %>%
-    dplyr::select(-non_sum, -dplyr::any_of(nons)) %>%
-    tidyr::pivot_longer(c(!!!responses),
-                        names_to = rlang::as_string(quote(response)), values_to = rlang::as_string(quote(value))) %>%
-    dplyr::group_by(!!!grps)
   if (factor_response) {
-    dplyr::mutate(out, dplyr::across({{ response }}, forcats::as_factor))
+    out <- dplyr::mutate(out, dplyr::across({{ response }}, forcats::as_factor))
   }
+
+  out
 }

@@ -1,6 +1,6 @@
 #' @title Separate labels given to ACS data
 #' @description This is a quick wrapper around `tidyr::separate` written to match the standard formatting used for ACS variable labels. These generally take the form e.g. "Total!!Male!!5 to 9 years". This function will separate values by `"!!"` and optionally drop the resulting "Total" column, which is generally constant for the entire data frame.
-#' @param .data A data frame such as returned by `cwi::multi_geo_acs` or `tidycensus::get_acs`.
+#' @param data A data frame such as returned by `cwi::multi_geo_acs` or `tidycensus::get_acs`.
 #' @param col Bare column name where ACS labels are. Default: label
 #' @param into Character vector of names of new variables. If `NULL` (the default), names will be assigned as "x1", "x2," etc. If you don't want to include the Total column, this character vector only needs to include the groups other than Total (see examples).
 #' @param sep Character: separator between columns. Default: '!!'
@@ -32,10 +32,10 @@
 #' }
 #' @export
 #' @seealso tidyr::separate
-separate_acs <- function(.data, col = label, into = NULL, sep = "!!", drop_total = FALSE, ...) {
+separate_acs <- function(data, col = label, into = NULL, sep = "!!", drop_total = FALSE, ...) {
   # if into is null, create names x1, x2, etc
   if (is.null(into)) {
-    ncol <- max(lengths(strsplit(.data[[rlang::as_label(rlang::enquo(col))]], split = sep)))
+    ncol <- max(lengths(strsplit(data[[rlang::as_label(rlang::enquo(col))]], split = sep)))
     if (drop_total) {
       into <- c(NA, paste0("x", 1:(ncol - 1)))
     } else {
@@ -50,5 +50,5 @@ separate_acs <- function(.data, col = label, into = NULL, sep = "!!", drop_total
     }
   }
 
-  tidyr::separate(.data, col = {{ col }}, into = into, sep = sep, ...)
+  tidyr::separate(data, col = {{ col }}, into = into, sep = sep, ...)
 }

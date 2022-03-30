@@ -1,118 +1,4 @@
-multi_geo_prep <- function(src,
-                           table, year, towns, regions,
-                           counties, state, neighborhoods,
-                           tracts, blockgroups, msa,
-                           us, new_england,
-                           nhood_name, nhood_geoid,
-                           dataset, verbose, key) {
-  ## ERROR & META HANDLING ----
-  # check dataset
-  NCHAR_TRACT <- 11; NCHAR_BG <- 12
 
-  # check key
-  key <- check_census_key(key)
-  if (is.logical(key) && !key) {
-    cli::cli_abort("Must supply an API key. See the docs on where to store it.",
-                   call = parent.frame())
-  }
-
-  # check valid table / year / dataset
-  # available functions will return false if not found
-  tbl_title <- table_available(src, table, year, dataset)
-
-  if (is.logical(tbl_title) && !tbl_title) {
-    if (src == "decennial") {
-      digits_msg <- "Note that decennial table numbers might need to be padded with zeroes."
-    } else {
-      digits_msg <- NULL
-    }
-    msg <- rlang::set_names(c(sprintf("Try looking through the corresponding {.var %s_vars} dataset", src), digits_msg), "i")
-    cli::cli_abort(c("Table {table} for {year} {dataset} is not available in the API.",
-                     msg),
-                   call = parent.frame())
-  }
-
-  # check state, convert / copy to fips
-  if (is.null(state) | length(state) > 1) {
-    cli::cli_abort("Must supply a single state by name, abbreviation, or FIPS code.",
-                   call = parent.frame())
-  }
-  state_fips <- get_state_fips(state)
-  if (is.null(state_fips)) {
-    cli::cli_abort("{state} is not a valid state name, abbreviation, or FIPS code.",
-                   call = parent.frame())
-  }
-
-  # validate county names, convert to 5-digit fips
-  drop_counties <- is.null(counties)
-  counties_fips <- get_county_fips(state_fips, counties)
-  xw <- county_x_state(state_fips, counties_fips)
-
-  # check number of characters in fips codes
-  if (!check_fips_nchar(tracts, NCHAR_TRACT)) {
-    cli::cli_warn("FIPS codes for tracts should have {NCHAR_TRACT} digits, not {nchar(tracts)[1]}; tracts will be dropped.")
-    tracts <- NULL
-  }
-  if (!check_fips_nchar(blockgroups, NCHAR_BG)) {
-    cli::cli_warn("FIPS codes for block groups should have {NCHAR_BG} digits, not {nchar(blockgroups)[1]}; block groups will be dropped.")
-    tracts <- NULL
-  }
-
-  # are neighborhood fips for tracts or bgs?
-  if (!is.null(neighborhoods)) {
-    nhood_valid_fips <- nhood_fips_type(dplyr::pull(neighborhoods, {{ nhood_geoid }} ),
-                                        list(tracts = NCHAR_TRACT, block_groups = NCHAR_BG))
-    nhood_is_tract <- nhood_valid_fips[["tracts"]]
-
-    valid <- any(unlist(nhood_valid_fips))
-    if (!valid) {
-      cli::cli_alert_warning("FIPS codes for neighborhoods didn't match either tracts or block groups; neighborhoods will be dropped.")
-      neighborhoods <- NULL
-      nhood_valid_fips <- NULL
-      nhood_is_tract <- NULL
-    }
-  } else {
-    nhood_valid_fips <- NULL
-    nhood_is_tract <- NULL
-  }
-
-
-  ## PRINTOUTS ----
-  if (verbose) {
-    # printable list of all geographies
-    if (is.null(neighborhoods)) {
-      nhood_names <- NULL
-    } else {
-      nhood_names <- unique(dplyr::pull(neighborhoods, {{ nhood_name }}))
-    }
-    all_counties <- identical(counties, "all")
-    geos_to_print <- list(
-      blockgroups = blockgroups,
-      tracts = tracts,
-      neighborhoods = nhood_names,
-      towns = towns,
-      regions = names(regions),
-      counties = xw$county,
-      all_counties = all_counties,
-      drop_counties = drop_counties,
-      state = state,
-      msa = msa,
-      us = us,
-      new_england = new_england,
-      nhood_type = nhood_valid_fips
-    )
-    # print title
-    rlang::exec(table_printout, !!!tbl_title)
-    # print geographies
-    rlang::exec(geo_printout, !!!geos_to_print)
-  }
-
-  # return state fips, county fips, nhood is tract--others handled okay by acs/dec functions
-  params <- list(state_fips = state_fips,
-                 counties_fips = counties_fips,
-                 drop_counties = drop_counties,
-                 nhood_is_tract = nhood_is_tract)
-}
 
 ###############################################################################
 ######## ACS CALLS ----
@@ -246,7 +132,7 @@ multi_geo_acs <- function(table, year = 2019, towns = "all", regions = NULL,
   fetch_df <- janitor::clean_names(fetch_df)
   fetch_df$year <- year
   fetch_df$level <- as.factor(fetch_df$level)
-  fetch_df <- dplyr::select(fetch_df, tidyselect::all_of(c("year", "level", "state", "county", "geoid")),
+  fetch_df <- dplyr::select(fetch_df, tidyselect::any_of(c("year", "level", "state", "county", "geoid")),
                             tidyselect::everything())
   fetch_df
 }
@@ -377,4 +263,120 @@ multi_geo_decennial <- function(table, year = 2010, towns = "all", regions = NUL
   fetch_df
 }
 
+############ PREP
 
+multi_geo_prep <- function(src,
+                           table, year, towns, regions,
+                           counties, state, neighborhoods,
+                           tracts, blockgroups, msa,
+                           us, new_england,
+                           nhood_name, nhood_geoid,
+                           dataset, verbose, key) {
+  ## ERROR & META HANDLING ----
+  # check dataset
+  NCHAR_TRACT <- 11; NCHAR_BG <- 12
+
+  # check key
+  key <- check_census_key(key)
+  if (is.logical(key) && !key) {
+    cli::cli_abort("Must supply an API key. See the docs on where to store it.",
+                   call = parent.frame())
+  }
+
+  # check valid table / year / dataset
+  # available functions will return false if not found
+  tbl_title <- table_available(src, table, year, dataset)
+
+  if (is.logical(tbl_title) && !tbl_title) {
+    if (src == "decennial") {
+      digits_msg <- "Note that decennial table numbers might need to be padded with zeroes."
+    } else {
+      digits_msg <- NULL
+    }
+    # msg <- rlang::set_names(c(sprintf("Try looking through the corresponding {.var %s_vars} dataset", src), digits_msg), "i")
+    cli::cli_abort(c("Table {table} for {year} {dataset} is not available in the API.",
+                     "i" = "Try calling {.fn tidycensus::load_variables} to see what variables are available."),
+                   call = parent.frame())
+  }
+
+  # check state, convert / copy to fips
+  if (is.null(state) | length(state) > 1) {
+    cli::cli_abort("Must supply a single state by name, abbreviation, or FIPS code.",
+                   call = parent.frame())
+  }
+  state_fips <- get_state_fips(state)
+  if (is.null(state_fips)) {
+    cli::cli_abort("{state} is not a valid state name, abbreviation, or FIPS code.",
+                   call = parent.frame())
+  }
+
+  # validate county names, convert to 5-digit fips
+  drop_counties <- is.null(counties)
+  counties_fips <- get_county_fips(state_fips, counties)
+  xw <- county_x_state(state_fips, counties_fips)
+
+  # check number of characters in fips codes
+  if (!check_fips_nchar(tracts, NCHAR_TRACT)) {
+    cli::cli_warn("FIPS codes for tracts should have {NCHAR_TRACT} digits, not {nchar(tracts)[1]}; tracts will be dropped.")
+    tracts <- NULL
+  }
+  if (!check_fips_nchar(blockgroups, NCHAR_BG)) {
+    cli::cli_warn("FIPS codes for block groups should have {NCHAR_BG} digits, not {nchar(blockgroups)[1]}; block groups will be dropped.")
+    tracts <- NULL
+  }
+
+  # are neighborhood fips for tracts or bgs?
+  if (!is.null(neighborhoods)) {
+    nhood_valid_fips <- nhood_fips_type(dplyr::pull(neighborhoods, {{ nhood_geoid }} ),
+                                        list(tracts = NCHAR_TRACT, block_groups = NCHAR_BG))
+    nhood_is_tract <- nhood_valid_fips[["tracts"]]
+
+    valid <- any(unlist(nhood_valid_fips))
+    if (!valid) {
+      cli::cli_alert_warning("FIPS codes for neighborhoods didn't match either tracts or block groups; neighborhoods will be dropped.")
+      neighborhoods <- NULL
+      nhood_valid_fips <- NULL
+      nhood_is_tract <- NULL
+    }
+  } else {
+    nhood_valid_fips <- NULL
+    nhood_is_tract <- NULL
+  }
+
+
+  ## PRINTOUTS ----
+  if (verbose) {
+    # printable list of all geographies
+    if (is.null(neighborhoods)) {
+      nhood_names <- NULL
+    } else {
+      nhood_names <- unique(dplyr::pull(neighborhoods, {{ nhood_name }}))
+    }
+    all_counties <- identical(counties, "all")
+    geos_to_print <- list(
+      blockgroups = blockgroups,
+      tracts = tracts,
+      neighborhoods = nhood_names,
+      towns = towns,
+      regions = names(regions),
+      counties = xw$county,
+      all_counties = all_counties,
+      drop_counties = drop_counties,
+      state = state,
+      msa = msa,
+      us = us,
+      new_england = new_england,
+      nhood_type = nhood_valid_fips
+    )
+    # print title
+    rlang::exec(table_printout, !!!tbl_title)
+    # print geographies
+    rlang::exec(geo_printout, !!!geos_to_print)
+  }
+
+  # return state fips, county fips, nhood is tract--others handled okay by acs/dec functions
+  params <- list(state_fips = state_fips,
+                 counties_fips = counties_fips,
+                 drop_counties = drop_counties,
+                 nhood_is_tract = nhood_is_tract)
+}

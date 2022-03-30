@@ -10,7 +10,7 @@ test_that("add_logo with url as logo returns ggplot", {
   logo <- "https://raw.githubusercontent.com/CT-Data-Haven/cwi/main/inst/extdata/25th_logo.png"
   p_out <- add_logo(p, logo)
 
-  expect_true("gg" %in% class(p_out))
+  expect_s3_class(p_out, "gg")
 })
 
 test_that("add_logo with img as logo returns ggplot", {
@@ -22,7 +22,7 @@ test_that("add_logo with img as logo returns ggplot", {
   logo <- system.file("extdata/logo.svg", package = "cwi")
   p_out <- add_logo(p, logo)
 
-  expect_true("gg" %in% class(p_out))
+  expect_s3_class(p_out, "gg")
 })
 
 test_that("add_logo with null as logo returns ggplot", {
@@ -33,5 +33,5 @@ test_that("add_logo with null as logo returns ggplot", {
     ggplot2::geom_col()
   p_out <- add_logo(p)
 
-  expect_true("gg" %in% class(p_out))
+  expect_s3_class(p_out, "gg")
 })

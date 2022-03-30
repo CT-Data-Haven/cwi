@@ -1,15 +1,21 @@
 library(cwi)
 library(testthat)
 
-test_that("adj_inflation checks for required columns", {
-  skip_on_ci()
+test_that("adj_inflation checks for API key", {
+  wages <- data.frame(year = 2015:2019, wage = 100)
+  expect_error(adj_inflation(wages, value = wage, year = year, key = ""))
+})
 
-  wages <- data.frame(
-      year = 2010:2016,
-      wage = c(50000, 51000, 52000, 53000, 54000, 55000, 54000)
-  )
-  expect_error(adj_inflation(wages, year = year), "are required")
-  expect_error(adj_inflation(wages, value = wage), "are required")
+test_that("adj_inflation checks column names", {
+  # skip_on_ci() # okay bc it errors before making api call
+
+  wages <- data.frame(year = 2015:2019, wage = 100)
+  wage2 <- dplyr::rename(wages, y = year)
+  expect_error(adj_inflation(wages, year = year) )
+  expect_error(adj_inflation(wages, value = wage))
+
+  skip_on_ci()
+  expect_s3_class(adj_inflation(wage2, value = wage, year = y), "data.frame")
 })
 
 test_that("adj_inflation correctly calculates adjusted amounts", {
@@ -34,4 +40,23 @@ test_that("adj_inflation handles base_year outside year range", {
   wages <- data.frame(year = 1990:1999, wage = 100)
 
   expect_equal(nrow(adj_inflation(wages, value = wage, year = year, base_year = 2016)), 10)
+})
+
+test_that("adj_inflation prints table header", {
+  skip_on_ci()
+
+  wages <- data.frame(year = 2015:2019, wage = 100)
+
+  expect_message(adj_inflation(wages, wage, year, verbose = TRUE), "-- CPI ")
+  expect_silent(dummy <- adj_inflation(wages, wage, year, verbose = FALSE))
+})
+
+test_that("adj_inflation handles series", {
+  wages <- data.frame(year = 2015:2019, wage = 100)
+  expect_error(adj_inflation(wages, year = year, value = wage, series = "xxxx"))
+
+  skip_on_ci()
+
+  expect_s3_class(adj_inflation(wages, year = year, value = wage), "data.frame")
+  expect_s3_class(adj_inflation(wages, year = year, value = wage, series = "CUUR0000AA0"), "data.frame")
 })

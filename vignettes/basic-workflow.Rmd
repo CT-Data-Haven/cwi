@@ -86,10 +86,9 @@ homeownership <- gnh_data$tenure %>%
   label_acs(year = yr) %>%
   separate(label, into = c("total", "tenure"), sep = "!!", fill = "left") %>%
   select(level, name, tenure, estimate) %>%
-  filter(tenure != "Renter occupied") %>%
   group_by(level, name) %>%
   calc_shares(group = tenure, denom = "Total") %>%
-  filter(!is.na(share))
+  filter(tenure == "Owner occupied")
 
 homeownership
 ```
@@ -155,7 +154,7 @@ acs %>%
 
 ## Quarterly Workforce Indicators
 
-I'm also interested in learning about employment by industry over the past several years. `qwi_industry()` fetches county-level data by industry over time, either quarterly or annually. Here I'll look at annual averages of all industries for New Haven County and Connecticut over the past 16 years. I'm filtering out the industry code "00", which is the counts for all industries.
+I'm also interested in learning about employment by industry over the past several years. `qwi_industry()` fetches county-level data by industry over time, either quarterly or annually. Here I'll look at annual averages of all industries for New Haven County and Connecticut over the past 16 years. I'm filtering out the industry code "00", which is the counts for all industries. 
 
 
 ```{r qwi1}
@@ -219,9 +218,8 @@ To look at unemployment rates over time, I can use `laus_trend()`. The LAUS cove
 
 ```{r laus}
 unemployment <- laus_trend(c("New Haven", "New Haven County", "Connecticut"), startyear = 2000, endyear = 2018, measures = "unemployment rate") %>%
-  mutate(date = paste(year, periodName, "01", sep = "-") %>% lubridate::ymd()) %>%
-  mutate(value = value / 100) %>%
-  select(area, date, value)
+  mutate(unemployment_rate = unemployment_rate / 100) %>%
+  select(area, date, value = unemployment_rate)
 
 unemployment
 

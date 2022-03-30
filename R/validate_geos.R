@@ -15,6 +15,9 @@ county_x_state <- function(st, counties) {
 
 get_state_fips <- function(state) {
   xw <- dplyr::distinct(tidycensus::fips_codes, state, state_code, state_name)
+  if (grepl("^\\d$", state)) {
+    state <- as.numeric(state)
+  }
   if (is.numeric(state)) {
     unpad <- state
     state <- sprintf("%02d", state)

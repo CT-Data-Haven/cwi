@@ -29,7 +29,7 @@ test_that("batch_csv_dump output is same as input", {
   expect_equal(batch_csv_dump(split_df, path = tempdir()), split_df)
 })
 
-test_that("batch_csv_dump warns of missing path", {
+test_that("batch_csv_dump errors missing path", {
   set.seed(123)
   df <- data.frame(
     name = sample(letters, 20, replace = FALSE),
@@ -37,10 +37,7 @@ test_that("batch_csv_dump warns of missing path", {
     value = rnorm(20)
   )
 
-  # will write to working directory, so delete files after
-  fns <- paste(LETTERS[1:5], "csv", sep = ".")
-  expect_warning(batch_csv_dump(df, split_by = region, path = "dummy"))
-  on.exit(purrr::walk(fns, file.remove), add = TRUE)
+  expect_error(batch_csv_dump(df, split_by = region, path = "dummy"))
 })
 
 test_that("batch_csv_dump prints messages if verbose", {

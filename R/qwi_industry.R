@@ -145,14 +145,18 @@ qwi_industry <- function(years, industries = naics_codes[["industry"]],
   fetch <- dplyr::as_tibble(fetch)
   fetch <- dplyr::select(fetch,
                          year, quarter, state, tidyselect::any_of("county"), industry,
-                         dplyr::everything())
+                         tidyselect::everything())
   fetch <- janitor::clean_names(fetch)
-  # if annual
 
+  # if annual
   if (annual) {
     fetch <- dplyr::group_by(fetch, year, state, dplyr::across(tidyselect::any_of("county")), industry)
     fetch <- dplyr::summarise(fetch, emp = mean(emp), payroll = sum(payroll))
     fetch <- dplyr::ungroup(fetch)
+  } else {
+    # make dates from quarters
+    fetch$date <- as.Date(paste(fetch$year, (fetch$quarter - 1) * 3 + 1, "01"), format = "%Y %m %d")
+    fetch <- dplyr::select(fetch, year, quarter, date, tidyselect::everything())
   }
   fetch
 }

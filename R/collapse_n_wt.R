@@ -3,7 +3,7 @@
 #' This is just a quick wrapper for a common, tedious task of
 #' collapsing several demographic groups, such as income brackets, into
 #' larger groups and taking a weighted mean based on a set of survey weights.
-#' @param .data A data frame, such as returned by [cwi::xtab2df()] joined with
+#' @param data A data frame, such as returned by [cwi::xtab2df()] joined with
 #' survey weights as returned by [cwi::read_weights()]. The default
 #' column names here match those returned by `xtab2df` (`group`, `value`) and
 #' `read_weights` (`weight`).
@@ -40,25 +40,20 @@
 #' @export
 #' @rdname collapse_n_wt
 #' @seealso [cwi::xtab2df()], [cwi::read_weights()], [forcats::fct_collapse()]
-collapse_n_wt <- function(.data, ..., .lvls, .group = group, .value = value, .weight = weight, .fill_wts = FALSE, .digits = NULL) {
+collapse_n_wt <- function(data, ..., .lvls, .group = group, .value = value, .weight = weight, .fill_wts = FALSE, .digits = NULL) {
   group_cols <- quos(...)
-  to_wt <- .data %>%
-    dplyr::ungroup() %>%
-    dplyr::mutate({{ .group }} := forcats::fct_collapse({{ .group }}, !!!.lvls)) %>%
-    dplyr::group_by(dplyr::across(!!!group_cols))
+  to_wt <- dplyr::ungroup(data)
+  to_wt <- dplyr::mutate(to_wt, dplyr::across({{ .group }}, forcats::fct_collapse, !!!.lvls))
+  to_wt <- dplyr::group_by(to_wt, dplyr::across(!!!group_cols))
 
   if (.fill_wts) {
-    message("HEADS UP: Missing values in your weights column are being filled in. Make sure this is intentional!")
-    # to_wt <- tidyr::replace_na(to_wt, list({{ .weight }} := 1))
-    to_wt <- to_wt %>%
-      dplyr::mutate({{ .weight }} := tidyr::replace_na({{ .weight }}, 1))
+    cli::cli_alert_info("Missing values in your weights column are being filled in. Make sure this is intentional!")
+    to_wt <- dplyr::mutate(to_wt, dplyr::across({{ .weight }}, tidyr::replace_na, 1))
   }
-  out <- to_wt %>%
-    dplyr::summarise({{ .value }} := stats::weighted.mean({{ .value }}, w = {{ .weight }}))
+  out <- dplyr::summarise(to_wt, {{ .value }} := stats::weighted.mean({{ .value }}, w = {{ .weight }}))
 
   if (is.numeric(.digits)) {
-    out <- out %>%
-      dplyr::mutate({{ .value }} := round({{ .value }}, digits = .digits))
+    out <- dplyr::mutate(out, {{ .value }} := round({{ .value }}, digits = .digits))
   }
   dplyr::ungroup(out)
 }

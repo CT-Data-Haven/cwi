@@ -5,7 +5,7 @@
 \title{Collapse survey groups and get weighted means}
 \usage{
 collapse_n_wt(
-  .data,
+  data,
   ...,
   .lvls,
   .group = group,
@@ -16,7 +16,7 @@ collapse_n_wt(
 )
 }
 \arguments{
-\item{.data}{A data frame, such as returned by \code{\link[=xtab2df]{xtab2df()}} joined with
+\item{data}{A data frame, such as returned by \code{\link[=xtab2df]{xtab2df()}} joined with
 survey weights as returned by \code{\link[=read_weights]{read_weights()}}. The default
 column names here match those returned by \code{xtab2df} (\code{group}, \code{value}) and
 \code{read_weights} (\code{weight}).}

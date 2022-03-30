@@ -74,7 +74,7 @@ dh_scaffold <- function(dir = ".",
       purrr::walk(dirs[!does_dir_exist], function(d) {
         path <- file.path(dir, d)
         dir.create(path)
-        cli::cli_alert("Writing {.file path}")
+        cli::cli_alert("Writing {.file {path}}")
         if (gitblank) {
           g_path <- file.path(path, ".gitblank")
           file.create(g_path)

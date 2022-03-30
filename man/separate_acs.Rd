@@ -5,7 +5,7 @@
 \title{Separate labels given to ACS data}
 \usage{
 separate_acs(
-  .data,
+  data,
   col = label,
   into = NULL,
   sep = "!!",
@@ -14,7 +14,7 @@ separate_acs(
 )
 }
 \arguments{
-\item{.data}{A data frame such as returned by \code{cwi::multi_geo_acs} or \code{tidycensus::get_acs}.}
+\item{data}{A data frame such as returned by \code{cwi::multi_geo_acs} or \code{tidycensus::get_acs}.}
 
 \item{col}{Bare column name where ACS labels are. Default: label}
 

@@ -41,7 +41,7 @@ theme_clean <- function(...) {
 }
 ```
 
-This is a quick look at using the crosstab-related functions being finished up for what will likely be `cwi` v.0.2.0. There are 3 test files of crosstabs that ship with this package for internal testing and illustration. This vignette recreates the data in the `cws_demo` dataset. 
+This is a quick look at using the crosstab-related functions that were expanded upon to make the `dcws` package. There are 3 test files of crosstabs that ship with this package for internal testing and illustration. This vignette recreates the data in the `cws_demo` dataset. 
 
 ![Screenshot of DCWS crosstabs spreadsheet](../man/figures/xtab-screenshot.png "Screenshot of DCWS crosstabs spreadsheet")
 
@@ -151,7 +151,7 @@ Note that different questions have different response values. In general, it's b
 cws %>%
   distinct(code, question, response) %>%
   filter(!stringr::str_detect(response, "(Don't know|Refused)")) %>%
-  group_by(code, question) %>%
+  group_by(question = stringr::str_trunc(question, width = 100)) %>%
   summarise(responses = paste(response, collapse = ", "))
 ```
 

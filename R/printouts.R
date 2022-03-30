@@ -51,7 +51,8 @@ geo_printout <- function(neighborhoods, tracts, blockgroups, towns, regions, cou
   if (!is.null(nhood_type)) {
     # should only eval true for one item in list, although i guess theoretically that might be wrong...
     nhood_type <- purrr::keep(nhood_type, isTRUE)
-    message(cli::format_message(c("i" = "Assuming that neighborhood GEOIDs are for {names(nhood_type)}.")))
+    # message(cli::format_message(c("i" = "Assuming that neighborhood GEOIDs are for {names(nhood_type)}.")))
+    cli::cli_alert_info("Assuming that neighborhood GEOIDs are for {names(nhood_type)}.")
   }
 }
 
