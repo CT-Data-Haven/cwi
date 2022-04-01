@@ -26,7 +26,7 @@ reference:
 - title: Functions - analyzing and plotting
   desc: Functions to analyze or quickly plot data
   contents:
-  - 'acs_quick_map'
+  - 'quick_map'
   - 'adj_inflation'
   - 'geo_level_plot'
   - 'label_acs'

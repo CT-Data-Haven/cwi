@@ -12,6 +12,7 @@
 ## Breaking changes
 
 * I've never liked the levels for the `multi_geo_*` functions--I don't really remember why I made these plural, but they're now singular. So a column that would have been e.g. "1\_state", "2\_counties", "3\_towns" will now be "1\_state", "2\_county", "3\_town". This might break filtering you've done by level. 
+* Renamed one function: `acs_quick_map` --> `quick_map`
 
 ## To do
 
