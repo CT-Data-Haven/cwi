@@ -7,6 +7,8 @@
 
 [![check-release](https://github.com/CT-Data-Haven/cwi/actions/workflows/check-release.yaml/badge.svg)](https://github.com/CT-Data-Haven/cwi/actions/workflows/check-release.yaml)
 [![pkgdown](https://github.com/CT-Data-Haven/cwi/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/CT-Data-Haven/cwi/actions/workflows/pkgdown.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/CT-Data-Haven/cwi/branch/main/graph/badge.svg)](https://app.codecov.io/gh/CT-Data-Haven/cwi?branch=main)
 <!-- badges: end -->
 
 The original goal of `cwi` was to get data, primarily the Census ACS,
