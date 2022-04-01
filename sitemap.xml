@@ -34,9 +34,6 @@
     <loc>https://CT-Data-Haven.github.io/cwi/news/index.html</loc>
   </url>
   <url>
-    <loc>https://CT-Data-Haven.github.io/cwi/reference/acs_quick_map.html</loc>
-  </url>
-  <url>
     <loc>https://CT-Data-Haven.github.io/cwi/reference/acs_vars19.html</loc>
   </url>
   <url>
@@ -115,7 +112,13 @@
     <loc>https://CT-Data-Haven.github.io/cwi/reference/neighborhood_tracts.html</loc>
   </url>
   <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/reference/occ_codes.html</loc>
+  </url>
+  <url>
     <loc>https://CT-Data-Haven.github.io/cwi/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/reference/quick_map.html</loc>
   </url>
   <url>
     <loc>https://CT-Data-Haven.github.io/cwi/reference/qwi_industry.html</loc>

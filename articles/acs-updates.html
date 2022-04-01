@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -50,7 +50,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -91,7 +91,7 @@
 
       
 
-      </header><script src="acs-updates_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>ACS updates</h1>
@@ -104,6 +104,9 @@
 
     
     
+<div class="section level2">
+<h2 id="new-variables">New variables<a class="anchor" aria-label="anchor" href="#new-variables"></a>
+</h2>
 <p>The 2019 ACS included <a href="https://www.census.gov/programs-surveys/acs/technical-documentation/table-and-geography-changes/2019/5-year.html" class="external-link">reengineering of a few tables</a>, and a few new additions. Some are clarifications of phrasing to both questions and tables, such as time leaving home for work. More substantial are the changes in how family structure has been phrased to be more inclusive of same-sex and unmarried couples–see the most recent <a href="https://www.census.gov/content/census/en/library/working-papers/2017/demo/SEHSD-WP2017-28.html" class="external-link">working paper</a> on this.</p>
 <p>This is just a quick check of what’s new or changed.</p>
 <table class="table">
@@ -200,11 +203,11 @@
 </tr>
 </tbody>
 </table>
-<p>Variables in the tables related to gender &amp; family structure:</p>
-<p>[1] “<strong>c("B11008_001", "B11008_002", "B11008_003", "B11008_004", "B11008_005", "B11008_006", "B11008_007", "B11008_008")</strong>”<br>
-[2] “<strong>c("Total", "Total", "Total", "Total", "Total", "Total", "Total", "Total")</strong>”<br>
-[3] “<strong>c(NA, "Cohabiting couple household", "Cohabiting couple household", "Cohabiting couple household", "Cohabiting couple household", "Cohabiting couple household", "Cohabiting couple household", "Not a cohabiting couple household")</strong>”<br>
-[4] “<strong>c(NA, NA, "With own children of the householder under 18 years", "With own children of the householder under 18 years", "With own children of the householder under 18 years", "With own children of the householder under 18 years", "With no own children of the householder under 18 years", NA)</strong>” [5] “<strong>c(NA, NA, NA, "Under 6 years only", "Under 6 years and 6 to 17 years", "6 to 17 years only", NA, NA)</strong>”</p>
+</div>
+<div class="section level2">
+<h2 id="variables-in-the-tables-related-to-gender-family-structure">Variables in the tables related to gender &amp; family structure:<a class="anchor" aria-label="anchor" href="#variables-in-the-tables-related-to-gender-family-structure"></a>
+</h2>
+<p>$<code>B11008.COHABITING COUPLE HOUSEHOLDS BY PRESENCE AND AGE OF OWN CHILDREN UNDER 18 YEARS</code></p>
 <table class="table">
 <colgroup>
 <col width="7%">
@@ -214,7 +217,7 @@
 <col width="23%">
 </colgroup>
 <thead><tr class="header">
-<th align="left">name</th>
+<th align="left">variable</th>
 <th align="left">x1</th>
 <th align="left">x2</th>
 <th align="left">x3</th>
@@ -279,10 +282,7 @@
 </tr>
 </tbody>
 </table>
-<p>[1] “<strong>c("B11009_001", "B11009_002", "B11009_003", "B11009_004", "B11009_005", "B11009_006", "B11009_007", "B11009_008", "B11009_009", "B11009_010", "B11009_011", "B11009_012")</strong>”<br>
-[2] “<strong>c("Total", "Total", "Total", "Total", "Total", "Total", "Total", "Total", "Total", "Total", "Total", "Total")</strong>”<br>
-[3] “<strong>c(NA, "Married couple households", "Married couple households", "Married couple households", "Married couple households", "Married couple households", "Cohabiting couple households", "Cohabiting couple households", "Cohabiting couple households", "Cohabiting couple households", "Cohabiting couple households", "All other households")</strong>” [4] “<strong>c(NA, NA, "Opposite-sex", "Same-sex", "Same-sex", "Same-sex", NA, "Opposite-sex", "Same-sex", "Same-sex", "Same-sex", NA)</strong>”<br>
-[5] “<strong>c(NA, NA, NA, NA, "Male householder and male spouse", "Female householder and female spouse", NA, NA, NA, "Male householder and male partner", "Female householder and female partner", NA)</strong>”</p>
+<p>$<code>B11009.COUPLED HOUSEHOLDS BY TYPE</code></p>
 <table class="table">
 <colgroup>
 <col width="11%">
@@ -292,7 +292,7 @@
 <col width="39%">
 </colgroup>
 <thead><tr class="header">
-<th align="left">name</th>
+<th align="left">variable</th>
 <th align="left">x1</th>
 <th align="left">x2</th>
 <th align="left">x3</th>
@@ -385,9 +385,7 @@
 </tr>
 </tbody>
 </table>
-<p>[1] “<strong>c("B11012_001", "B11012_002", "B11012_003", "B11012_004", "B11012_005", "B11012_006", "B11012_007", "B11012_008", "B11012_009", "B11012_010", "B11012_011", "B11012_012", "B11012_013", "B11012_014", "B11012_015", "B11012_016", "B11012_017")</strong>”<br>
-[2] “<strong>c("Total", "Total", "Total", "Total", "Total", "Total", "Total", "Total", "Total", "Total", "Total", "Total", "Total", "Total", "Total", "Total", "Total")</strong>”<br>
-[3] “<strong>c(NA, "Married-couple household", "Married-couple household", "Married-couple household", "Cohabiting couple household", "Cohabiting couple household", "Cohabiting couple household", "Female householder, no spouse or partner present", "Female householder, no spouse or partner present", "Female householder, no spouse or partner present", "Female householder, no spouse or partner present", "Female householder, no spouse or partner present", "Male householder, no spouse or partner present", "Male householder, no spouse or partner present", "Male householder, no spouse or partner present", "Male householder, no spouse or partner present", "Male householder, no spouse or partner present")</strong>” [4] “<strong>c(NA, NA, "With own children under 18 years", "With no own children under 18 years", NA, "With own children of the householder under 18 years", "With no own children of the householder under 18 years", NA, "Living alone", "With own children under 18 years", "With relatives, no own children under 18 years", "With only nonrelatives present", NA, "Living alone", "With own children under 18 years", "With relatives, no own children under 18 years", "With only nonrelatives present")</strong>”</p>
+<p>$<code>B11012.HOUSEHOLDS BY TYPE</code></p>
 <table class="table">
 <colgroup>
 <col width="9%">
@@ -396,7 +394,7 @@
 <col width="45%">
 </colgroup>
 <thead><tr class="header">
-<th align="left">name</th>
+<th align="left">variable</th>
 <th align="left">x1</th>
 <th align="left">x2</th>
 <th align="left">x3</th>
@@ -506,9 +504,7 @@
 </tr>
 </tbody>
 </table>
-<p>[1] “<strong>c("B13004_001", "B13004_002", "B13004_003", "B13004_004", "B13004_005", "B13004_006", "B13004_007", "B13004_008", "B13004_009")</strong>”<br>
-[2] “<strong>c("Total", "Total", "Total", "Total", "Total", "Total", "Total", "Total", "Total")</strong>”<br>
-[3] “<strong>c(NA, "Women who had a birth in the past 12 months", "Women who had a birth in the past 12 months", "Women who had a birth in the past 12 months", "Women who had a birth in the past 12 months", "Women who did not have a birth in the past 12 months", "Women who did not have a birth in the past 12 months", "Women who did not have a birth in the past 12 months", "Women who did not have a birth in the past 12 months")</strong>” [4] “<strong>c(NA, NA, "Has a spouse present", "Partner in an unmarried partner household", "Other living arrangement", NA, "Has a spouse present", "Partner in an unmarried partner household", "Other living arrangement")</strong>”</p>
+<p>$<code>B13004.WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY PRESENCE OF SPOUSE OR UNMARRIED PARTNER</code></p>
 <table class="table">
 <colgroup>
 <col width="9%">
@@ -517,7 +513,7 @@
 <col width="37%">
 </colgroup>
 <thead><tr class="header">
-<th align="left">name</th>
+<th align="left">variable</th>
 <th align="left">x1</th>
 <th align="left">x2</th>
 <th align="left">x3</th>
@@ -580,10 +576,13 @@
 </tbody>
 </table>
 </div>
+  </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-      </div>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
 
 </div>
 

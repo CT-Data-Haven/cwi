@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -73,33 +73,39 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">laus_trend</span><span class="op">(</span>
-  <span class="va">names</span>,
+  names <span class="op">=</span> <span class="cn">NULL</span>,
   <span class="va">startyear</span>,
   <span class="va">endyear</span>,
+  state <span class="op">=</span> <span class="st">"09"</span>,
   measures <span class="op">=</span> <span class="st">"all"</span>,
   annual <span class="op">=</span> <span class="cn">FALSE</span>,
-  key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"BLS_KEY"</span><span class="op">)</span>
+  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
+  key <span class="op">=</span> <span class="cn">NULL</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>names</dt>
-<dd><p>A character vector of place names to look up: as of now, this is limited to Connecticut, and its counties and towns.</p></dd>
+<dd><p>A character vector of place names to look up, either towns and/or counties.</p></dd>
 <dt>startyear</dt>
 <dd><p>Numeric; first year of range</p></dd>
 <dt>endyear</dt>
 <dd><p>Numeric; last year of range</p></dd>
+<dt>state</dt>
+<dd><p>A string: either name or two-digit FIPS code of a US state. Required; defaults <code>"09"</code> (Connecticut).</p></dd>
 <dt>measures</dt>
 <dd><p>A character vector of measures, containing any combination of <code>"unemployment rate"</code>, <code>"unemployment"</code>, <code>"employment"</code>, or <code>"labor force"</code>, or <code>"all"</code> (the default) as shorthand for all of the above.</p></dd>
 <dt>annual</dt>
 <dd><p>Logical: whether to include annual averages along with monthly data. Defaults <code>FALSE</code>.</p></dd>
+<dt>verbose</dt>
+<dd><p>Logical: if <code>TRUE</code> (default), this will print overview information about the series being used, as returned by the API.</p></dd>
 <dt>key</dt>
-<dd><p>A string giving the BLS API key. Defaults to the value in <code>Sys.getenv("BLS_KEY")</code>.</p></dd>
+<dd><p>A string giving the BLS API key. If <code>NULL</code> (the default), will take the value in <code>Sys.getenv("BLS_KEY")</code>.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data frame / tibble with columns for the measure, area, year, month number and name, value, series ID, and footnotes returned from the API.</p>
+    <p>A data frame, slightly cleaned up from what the API returns.</p>
     </div>
 
     <div id="ref-examples">

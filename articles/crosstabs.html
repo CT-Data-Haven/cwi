@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -50,7 +50,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -91,7 +91,7 @@
 
       
 
-      </header><script src="crosstabs_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Working with Community Wellbeing Survey crosstabs</h1>
@@ -122,7 +122,7 @@
         axis.ticks <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
         <span class="va">...</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
-<p>This is a quick look at using the crosstab-related functions being finished up for what will likely be <code>cwi</code> v.0.2.0. There are 3 test files of crosstabs that ship with this package for internal testing and illustration. This vignette recreates the data in the <code>cws_demo</code> dataset.</p>
+<p>This is a quick look at using the crosstab-related functions that were expanded upon to make the <code>dcws</code> package. There are 3 test files of crosstabs that ship with this package for internal testing and illustration. This vignette recreates the data in the <code>cws_demo</code> dataset.</p>
 <div class="figure">
 <img src="../reference/figures/xtab-screenshot.png" title="Screenshot of DCWS crosstabs spreadsheet" alt=""><p class="caption">Screenshot of DCWS crosstabs spreadsheet</p>
 </div>
@@ -300,22 +300,19 @@
 <code class="sourceCode R"><span class="va">cws</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">code</span>, <span class="va">question</span>, <span class="va">response</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">response</span>, <span class="st">"(Don't know|Refused)"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">code</span>, <span class="va">question</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span>question <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_trunc.html" class="external-link">str_trunc</a></span><span class="op">(</span><span class="va">question</span>, width <span class="op">=</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>responses <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">response</span>, collapse <span class="op">=</span> <span class="st">", "</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; `summarise()` has grouped output by 'code'. You can override using the</span>
-<span class="co">#&gt; `.groups` argument.</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 8 × 3</span></span>
-<span class="co">#&gt; <span style="color: #949494;"># Groups:   code [8]</span></span>
-<span class="co">#&gt;   code  question                                                       responses</span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Q1    Are you satisfied with the city or area where you live?        Yes, No  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Q2    As a place to live, is the city or area where you live gettin… Much bet…</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Q3A   How responsive local government is to the needs of residents   Excellen…</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Q40   Have you smoked at least 100 cigarettes in your entire life? … Yes, No  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Q41   (If smoked 100 cigarettes) Do you currently smoke cigarettes … Every da…</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Q64   Have there been times in the past 12 months when you did not … Yes, No  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Q73   (If attacked in the past 12 months) Were you physically injur… Yes, No  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">8</span> Q8    Do you have access to a car when you need it? Would you say y… Very oft…</span></code></pre></div>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 8 × 2</span></span>
+<span class="co">#&gt;   question                                                             responses</span>
+<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> (If attacked in the past 12 months) Were you physically injured in … Yes, No  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> (If smoked 100 cigarettes) Do you currently smoke cigarettes every … Every da…</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Are you satisfied with the city or area where you live?              Yes, No  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> As a place to live, is the city or area where you live getting much… Much bet…</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Do you have access to a car when you need it? Would you say you hav… Very oft…</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Have there been times in the past 12 months when you did not have e… Yes, No  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Have you smoked at least 100 cigarettes in your entire life? [100 c… Yes, No  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">8</span> How responsive local government is to the needs of residents         Excellen…</span></code></pre></div>
 <p>A common use is to show multiple related indicators side by side in a table or chart. Here I’m prepping to show both the question about neighborhood satisfaction (yes / no) and the responsiveness of local government (combined excellent &amp; good).</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">govt</span> <span class="op">&lt;-</span> <span class="va">cws</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>

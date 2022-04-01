@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -63,7 +63,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Fetch a decennial census table with multiple geography levels</h1>
-    <small class="dont-index">Source: <a href="https://github.com/CT-Data-Haven/cwi/blob/HEAD/R/multi_geo_decennial.R" class="external-link"><code>R/multi_geo_decennial.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/CT-Data-Haven/cwi/blob/HEAD/R/multi_geo_fetch.R" class="external-link"><code>R/multi_geo_fetch.R</code></a></small>
     <div class="hidden name"><code>multi_geo_decennial.Rd</code></div>
     </div>
 
@@ -81,12 +81,18 @@
   state <span class="op">=</span> <span class="st">"09"</span>,
   neighborhoods <span class="op">=</span> <span class="cn">NULL</span>,
   tracts <span class="op">=</span> <span class="cn">NULL</span>,
-  name <span class="op">=</span> <span class="va">name</span>,
-  geoid <span class="op">=</span> <span class="va">geoid</span>,
-  weight <span class="op">=</span> <span class="va">weight</span>,
+  blockgroups <span class="op">=</span> <span class="cn">NULL</span>,
+  msa <span class="op">=</span> <span class="cn">FALSE</span>,
+  us <span class="op">=</span> <span class="cn">FALSE</span>,
+  new_england <span class="op">=</span> <span class="cn">TRUE</span>,
+  nhood_name <span class="op">=</span> <span class="va">name</span>,
+  nhood_geoid <span class="op">=</span> <span class="va">geoid</span>,
+  nhood_weight <span class="op">=</span> <span class="va">weight</span>,
   sumfile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sf1"</span>, <span class="st">"sf3"</span><span class="op">)</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
-  key <span class="op">=</span> <span class="cn">NULL</span>
+  key <span class="op">=</span> <span class="cn">NULL</span>,
+  sleep <span class="op">=</span> <span class="fl">0</span>,
+  <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -108,18 +114,30 @@
 <dd><p>A data frame with columns for neighborhood name, GEOID of tracts, and weight, e.g. share of each tract assigned to a neighborhood. If included, weighted sums will be returned for neighborhoods. Unlike <code>multi_geo_acs</code>, this doesn't take block groups.</p></dd>
 <dt>tracts</dt>
 <dd><p>A character vector of 11-digit FIPS codes of tracts to include, or <code>"all"</code> for all tracts optionally filtered by county. Defaults <code>NULL</code>.</p></dd>
-<dt>name</dt>
+<dt>blockgroups</dt>
+<dd><p>A character vector of 12-digit FIPS codes of block groups to include, or <code>"all"</code> for all block groups optionally filtered by county. Defaults <code>NULL</code>.</p></dd>
+<dt>msa</dt>
+<dd><p>Logical: whether to fetch New England states' metropolitan statistical areas. Defaults <code>FALSE</code>.</p></dd>
+<dt>us</dt>
+<dd><p>Logical: whether to fetch US-level table. Defaults <code>FALSE</code>.</p></dd>
+<dt>new_england</dt>
+<dd><p>Logical: if <code>TRUE</code> (the default), limits metro areas to just New England states.</p></dd>
+<dt>nhood_name</dt>
 <dd><p>Bare column name of neighborhood names. Only relevant if a neighborhood weight table is being used. Defaults <code>name</code> to match the neighborhood lookup datasets.</p></dd>
-<dt>geoid</dt>
+<dt>nhood_geoid</dt>
 <dd><p>Bare column name of neighborhood tract GEOIDs. Only relevant if a neighborhood weight table is being used. Defaults <code>geoid</code> to match the neighborhood lookup datasets.</p></dd>
-<dt>weight</dt>
+<dt>nhood_weight</dt>
 <dd><p>Bare column name of weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults <code>weight</code> to match the neighborhood lookup datasets.</p></dd>
 <dt>sumfile</dt>
-<dd><p>A string giving the summary file to pull from. Defaults <code>"sf1"</code>; in some rare cases, <code>"sf3"</code> may be appropriate.</p></dd>
+<dd><p>A string giving the summary file to pull from. Defaults <code>"sf1"</code>, which is much more common than <code>"sf3"</code>.</p></dd>
 <dt>verbose</dt>
 <dd><p>Logical: whether to print summary of geographies included. Defaults <code>TRUE</code>.</p></dd>
 <dt>key</dt>
 <dd><p>String: Census API key. If <code>NULL</code> (default), takes the value from <code>Sys.getenv("CENSUS_API_KEY")</code>.</p></dd>
+<dt>sleep</dt>
+<dd><p>Number of seconds, if any, to sleep before each API call. This might help with the Census API's tendency to crash, but for many geographies, it could add a sizable about of time. Probably don't add more than a few seconds.</p></dd>
+<dt>...</dt>
+<dd><p>Additional arguments to pass on to <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html" class="external-link">tidycensus::get_acs</a></code></p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

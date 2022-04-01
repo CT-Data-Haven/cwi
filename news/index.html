@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -66,6 +66,28 @@
       <small>Source: <a href="https://github.com/CT-Data-Haven/cwi/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.0.0" id="cwi-100">cwi 1.0.0<a class="anchor" aria-label="anchor" href="#cwi-100"></a></h2>
+<p><strong>Major exciting overhaul!</strong> This was the first time I felt like enough of this package is flexible and well thought out to consider it a real release. A lot of the changes are under the hood–I split a lot of functions into slimmed-down main “caller” functions and multiple task-focused “helper” functions, making it easier to maintain the package, add or modify features, and use the same code for multiple tasks.</p>
+<div class="section level3">
+<h3 id="user-facing-updates-1-0-0">User-facing updates<a class="anchor" aria-label="anchor" href="#user-facing-updates-1-0-0"></a></h3>
+<ul><li>Moved from base messages to <code>cli</code> for cleaner and clearer messaging (printouts on what fetch functions are getting, limitations to function calls, etc)</li>
+<li>Better handling of Census API calls to better deal with how very often their servers are busted</li>
+<li>Metadata: several behind-the-scenes datasets that set limits of functions’ API calls are now expanded to not just be limited to Connecticut–includes <code>qwi_industry</code> and <code>laus_trend</code>.</li>
+<li>Added a table of occupation codes for main occupation groups</li>
+<li>Better documentation for many functions</li>
+</ul></div>
+<div class="section level3">
+<h3 id="breaking-changes-1-0-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-1-0-0"></a></h3>
+<ul><li>I’ve never liked the levels for the <code>multi_geo_*</code> functions–I don’t really remember why I made these plural, but they’re now singular. So a column that would have been e.g. “1_state”, “2_counties”, “3_towns” will now be “1_state”, “2_county”, “3_town”. This might break filtering you’ve done by level.</li>
+<li>Renamed one function: <code>acs_quick_map</code> –&gt; <code>quick_map</code>
+</li>
+</ul></div>
+<div class="section level3">
+<h3 id="to-do-1-0-0">To do<a class="anchor" aria-label="anchor" href="#to-do-1-0-0"></a></h3>
+<ul><li>Update to 2020 ACS and Decennial defaults</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.4.5" id="cwi-045">cwi 0.4.5<a class="anchor" aria-label="anchor" href="#cwi-045"></a></h2>
 <ul><li>Add sleep argument to <code>multi_geo_acs</code> for dealing with API crashes.</li>

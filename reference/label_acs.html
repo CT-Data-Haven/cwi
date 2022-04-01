@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -63,7 +63,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Quickly add the labels of ACS variables</h1>
-    <small class="dont-index">Source: <a href="https://github.com/CT-Data-Haven/cwi/blob/HEAD/R/label_acs.R" class="external-link"><code>R/label_acs.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/CT-Data-Haven/cwi/blob/HEAD/R/label_census.R" class="external-link"><code>R/label_census.R</code></a></small>
     <div class="hidden name"><code>label_acs.Rd</code></div>
     </div>
 
@@ -72,12 +72,12 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">label_acs</span><span class="op">(</span><span class="va">df</span>, year <span class="op">=</span> <span class="fl">2019</span>, survey <span class="op">=</span> <span class="st">"acs5"</span>, variable <span class="op">=</span> <span class="va">variable</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">label_acs</span><span class="op">(</span><span class="va">data</span>, year <span class="op">=</span> <span class="fl">2019</span>, survey <span class="op">=</span> <span class="st">"acs5"</span>, variable <span class="op">=</span> <span class="va">variable</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>df</dt>
+    <dl><dt>data</dt>
 <dd><p>A data frame/tibble.</p></dd>
 <dt>year</dt>
 <dd><p>The endyear of ACS data; defaults 2019.</p></dd>
