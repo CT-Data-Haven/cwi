@@ -1,3 +1,22 @@
+# cwi 1.0.0
+
+**Major exciting overhaul!** This was the first time I felt like enough of this package is flexible and well thought out to consider it a real release. A lot of the changes are under the hood--I split a lot of functions into slimmed-down main "caller" functions and multiple task-focused "helper" functions, making it easier to maintain the package, add or modify features, and use the same code for multiple tasks.
+
+## User-facing updates
+
+* Moved from base messages to `cli` for cleaner and clearer messaging (printouts on what fetch functions are getting, limitations to function calls, etc)
+* Better handling of Census API calls to better deal with how very often their servers are busted
+* Metadata: several behind-the-scenes datasets that set limits of functions' API calls are now expanded to not just be limited to Connecticut--includes `qwi_industry` and `laus_trend`.
+* Better documentation for many functions
+
+## Breaking changes
+
+* I've never liked the levels for the `multi_geo_*` functions--I don't really remember why I made these plural, but they're now singular. So a column that would have been e.g. "1\_state", "2\_counties", "3\_towns" will now be "1\_state", "2\_county", "3\_town". This might break filtering you've done by level. 
+
+## To do
+
+* Update to 2020 ACS and Decennial defaults
+
 # cwi 0.4.5
 * Add sleep argument to `multi_geo_acs` for dealing with API crashes.
 
