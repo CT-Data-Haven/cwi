@@ -5,16 +5,17 @@
 
 <!-- badges: start -->
 
-[![R build
-status](https://github.com/CT-Data-Haven/cwi/workflows/pkgdown/badge.svg)](https://github.com/CT-Data-Haven/cwi/actions?workflow=pkgdown)
+[![check-release](https://github.com/CT-Data-Haven/cwi/actions/workflows/check-release.yaml/badge.svg)](https://github.com/CT-Data-Haven/cwi/actions/workflows/check-release.yaml)
+[![pkgdown](https://github.com/CT-Data-Haven/cwi/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/CT-Data-Haven/cwi/actions/workflows/pkgdown.yaml)
 <!-- badges: end -->
 
-The goal of `cwi` is to get data, primarily the Census ACS, fetched,
-aggregated, and analyzed for [DataHaven’s 2019 Community Index
+The original goal of `cwi` was to get data, primarily the Census ACS,
+fetched, aggregated, and analyzed for [DataHaven’s 2019 Community Index
 reports](http://ctdatahaven.org/reports/greater-new-haven-community-index).
-This includes functions to speed up and standardize analysis for
-multiple staff people, preview trends and patterns we’ll need to write
-about, and get data in more layperson-friendly formats.
+It’s now evolved to support more of our day-to-day work—and now we’re on
+the 2022 reports! This includes functions to speed up and standardize
+analysis for multiple staff people, preview trends and patterns we’ll
+need to write about, and get data in more layperson-friendly formats.
 
 It pairs well with many functions from Camille’s brilliantly-named
 [`camiller`](https://github.com/camille-s/camiller) package.
