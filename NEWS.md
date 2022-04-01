@@ -7,6 +7,7 @@
 * Moved from base messages to `cli` for cleaner and clearer messaging (printouts on what fetch functions are getting, limitations to function calls, etc)
 * Better handling of Census API calls to better deal with how very often their servers are busted
 * Metadata: several behind-the-scenes datasets that set limits of functions' API calls are now expanded to not just be limited to Connecticut--includes `qwi_industry` and `laus_trend`.
+* Added a table of occupation codes for main occupation groups
 * Better documentation for many functions
 
 ## Breaking changes

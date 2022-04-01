@@ -26,11 +26,11 @@ reference:
 - title: Functions - analyzing and plotting
   desc: Functions to analyze or quickly plot data
   contents:
-  - 'quick_map'
   - 'adj_inflation'
   - 'geo_level_plot'
   - 'label_acs'
   - 'label_decennial'
+  - 'quick_map'
 
 - title: Datasets
   desc: Reference datasets, lookup tables, and crosswalks
@@ -46,6 +46,7 @@ reference:
   - 'msa'
   - 'naics_codes'
   - 'neighborhood_tracts'
+  - 'occ_codes'
   - 'regions'
   - 'school_dists'
   - 'tract2town'
