@@ -44,6 +44,7 @@ quick_map <- function(data, name = name, value = value, level = c("town", "neigh
     shape_name <- "town_sf"
     shape <- cwi::town_sf
   }
+  data <- dplyr::ungroup(data)
   data <- dplyr::mutate(data, dplyr::across({{ name }}, as.character))
   shape <- dplyr::mutate(shape, name = as.character(name))
   shape <- dplyr::inner_join(shape, data, by = stats::setNames(name_lbl, "name"))

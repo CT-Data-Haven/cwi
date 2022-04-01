@@ -5,10 +5,12 @@
 #   dplyr::mutate(area = stringr::str_extract(area_text, "^([A-Z][a-z]+\\s?)+") %>% stringr::str_trim()) %>%
 #   dplyr::select(type = area_type_code, area, code = area_code)
 
+# bls updated the measures listed--for now, filter to the original 4
+laus_measures <- readr::read_tsv("https://download.bls.gov/pub/time.series/la/la.measure") %>%
+  dplyr::filter(measure_code %in% c("03", "04", "05", "06"))
 
-laus_measures <- readr::read_tsv("https://download.bls.gov/pub/time.series/la/la.measure")
-
-usethis::use_data(laus_measures, overwrite = TRUE)
+# make this internal
+# usethis::use_data(laus_measures, overwrite = TRUE)
 
 laus_codes <- readr::read_tsv("https://download.bls.gov/pub/time.series/la/la.area") %>%
   dplyr::mutate(state_code = substr(area_code, 3, 4)) %>%

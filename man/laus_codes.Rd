@@ -5,11 +5,12 @@
 \alias{laus_codes}
 \title{LAUS area codes}
 \format{
-A data frame with 178 rows and 3 variables:
+A data frame with 6625 rows and 4 variables:
 \describe{
 \item{type}{Area type code}
+\item{state_code}{Two-digit state FIPS code}
 \item{area}{Area name}
-\item{code}{Area code}
+\item{area_code}{Area code}
 }
 }
 \source{
@@ -19,6 +20,6 @@ This is a filtered and cleaned version of a file downloaded from \href{https://d
 laus_codes
 }
 \description{
-A dataset of area types and codes for Connecticut, as used for the Local Area Unemployment Statistics. These are needed to put together series names, like those used to make API calls in \code{qwi_industry}.
+A dataset of area types and codes for states, counties, and towns across the US, as used for the Local Area Unemployment Statistics. These are needed to put together series names, like those used to make API calls in \code{qwi_industry}. This used to be filtered just for Connecticut.
 }
 \keyword{datasets}

@@ -1,7 +1,5 @@
 #' @title Read crosstab data and weights
 #' @description
-#' `r lifecycle::badge("experimental")`
-#'
 #' These two functions facilitate reading in Excel
 #' spreadsheets of crosstabs generated from SPSS. Note that they're likely
 #' only useful for working with the DataHaven Community Wellbeing Survey.
@@ -47,7 +45,7 @@ read_xtabs <- function(path, name_prefix = "x", marker = "Nature of the [Ss]ampl
   if (as.numeric(year) == 2015) {
     data <- camiller::filter_after(data, grepl("Samp[le]+ Size", {{ first_col }}))
   }
-  data <- dplyr::filter(data, !stringr::str_detect({{ first_col }}, total_patt) | is.na({{ first_col }}))
+  data <- dplyr::filter(data, !stringr::str_detect({{ first_col }}, total_patt()) | is.na({{ first_col }}))
   if (!is.null(marker)) {
     data <- camiller::filter_until(data, grepl(marker, {{ first_col }}))
   }
@@ -71,7 +69,7 @@ read_weights <- function(path, marker = "Nature of the [Ss]ample") {
     data <- camiller::filter_after(data, grepl(marker, data[[1]]))
     wts <- read_wt_tbl(data)
   } else {
-    data <- camiller::filter_until(data, grepl(total_patt, dplyr::lag(data[[1]])))
+    data <- camiller::filter_until(data, grepl(total_patt(), dplyr::lag(data[[1]])))
     data <- dplyr::select(data, -1)
     data <- janitor::remove_empty(data, which = "rows")
     wts <- read_wt_hdr(data)
@@ -80,7 +78,11 @@ read_weights <- function(path, marker = "Nature of the [Ss]ample") {
   wts
 }
 
-total_patt <- "(Weighted [Tt]otal|^Total\\:$)"
+
+#################### HELPERS ##########################################
+total_patt <- function() {
+  "(Weighted [Tt]otal|^Total\\:$)"
+}
 
 read_xtabs_ <- function(path, name_prefix) {
   out <- readxl::read_excel(path, col_names = FALSE, .name_repair = make.names)

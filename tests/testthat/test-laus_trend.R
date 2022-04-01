@@ -11,9 +11,9 @@ test_that("laus_trend checks for API key", {
 test_that("laus_trend checks possible measures & accepts keyword 'all'", {
   skip_on_ci()
 
-  expect_error(laus_trend("New Haven", 2012, 2016, measures = "jobs"), "valid options")
+  expect_error(laus_trend("New Haven", 2012, 2016, measures = "jobs"))
 
-  laus <- laus_trend("New Haven", 2016, 2016, measures = "all", annual = F)
+  laus <- laus_trend("New Haven", 2016, 2016, measures = "all", annual = FALSE)
   expect_true(all(c("unemployment_rate", "unemployment", "employment", "labor_force") %in% names(laus)))
 })
 
@@ -35,8 +35,8 @@ test_that("laus_trend validates geographies", {
 
 test_that("laus_trend handles more than 20 years okay", {
   skip_on_ci()
-  expect_message(laus_trend("New Haven", 1990, 2016, measures = "employment"), "multiple calls")
-  expect_equal(nrow(laus_trend("New Haven", 1990, 2016, measures = "employment", annual = FALSE)), 27 * 12)
+  expect_message(laus <- laus_trend("New Haven", 1990, 2016, measures = "employment", annual = FALSE), "multiple calls")
+  expect_equal(nrow(laus), 27 * 12)
 })
 
 test_that("laus_trend prints table header", {
@@ -54,4 +54,13 @@ test_that("laus_trend handles annual vs monthly data", {
   expect_equal(nrow(monthly), 12)
   expect_equal(nrow(annual), 13)
   expect_true("Annual" %in% annual$periodName)
+  expect_false("Annual" %in% monthly$periodName)
+})
+
+test_that("laus_trend handles more than 50 series", {
+  skip_on_ci()
+
+  srs <- laus_codes %>% dplyr::filter(state_code == "09")
+  laus <- laus_trend(names = NULL, 2015, 2015, measures = "employment", annual = FALSE)
+  expect_equal(nrow(laus), nrow(srs) * 12)
 })

@@ -1,7 +1,7 @@
 #' Quickly make a `ggplot` to view data by geographic level
 #'
 #' This is a quick way to make a bar chart, a Cleveland dotplot, or a histogram from a set of data, filled by geographic level.
-#' @param .data A data frame to use for plotting.
+#' @param data A data frame to use for plotting.
 #' @param name Bare column name containing names, i.e. independent variable.
 #' @param value Bare column name containing values, i.e. dependent variable.
 #' @param level Bare column name containing geographic levels for fill.

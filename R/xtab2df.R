@@ -1,3 +1,60 @@
+#' @title Extract survey data and descriptions from crosstabs into a tidy data frame
+#' @description
+#' Like `read_xtab` & `read_weights`, this is a bespoke function
+#' to make it easier to extract data from the DataHaven Community Wellbeing
+#' Survey. Applications to other crosstabs are probably limited unless their
+#' formatting is largely the same. After reading a crosstab excel file, `xtab2df`
+#' extracts the question codes (e.g. Q4A), question text, categories, and
+#' demographic groups, and joins those descriptions with survey responses and
+#' values, making it ready for analysis.
+#' @param .data A data frame as returned from `read_xtab`.
+#' @param col The bare column name of where to find question codes and text.
+#' Default: x1, based on names assigned by `read_xtab`
+#' @param code_pattern String: regex pattern denoting how to find cells that
+#' contain only a question code, such as "Q10", "Q4B", or "ASTHMA". This is
+#' pretty finicky, so you probably don't want to change it.
+#' Default: `"^[A-Z\\d_]{2,20}$"`
+#' @return A data frame with the following columns:
+#' * code (if questions have codes in crosstabs)
+#' * q_number (if questions don't have codes in crosstabs, assigned in order they occur)
+#' * question
+#' * category (e.g. age, gender)
+#' * group (e.g. 18–34, male)
+#' * response
+#' * value
+#' @examples
+#' if(interactive()){
+#'   xtab <- read_xtabs(system.file("extdata/test_xtab2018.xlsx", package = "cwi"))
+#'   xtab2df(xtab)
+#'  }
+#' @export
+#' @rdname xtab2df
+#' @seealso [cwi::read_xtabs()]
+xtab2df <- function(.data, col = x1, code_pattern = "^[A-Z\\d_]{2,20}$") {
+  # generally only includes first 2 hierarchy levels
+  hier <- c("category", "group", "subgroup")
+
+  marked <- mark_questions(.data, col = {{ col }}, pattern = code_pattern)
+  headings <- make_headings(marked, {{ col }})
+
+  # get just data rows, attach headings (gender, age, etc)
+  out <- dplyr::filter(marked, !is.na({{ col }}))
+  out <- tidyr::pivot_longer(out, cols = -c(code, q_number, question, {{ col }}), names_to = "column")
+  out <- dplyr::left_join(out, headings, by = "column")
+  out <- dplyr::select(out, code, q_number, question, dplyr::matches("^h\\d+"), response = {{ col }}, value)
+  out <- dplyr::rename_with(out, ~hier[seq_along(.)], dplyr::matches("^h\\d+"))
+  out <- dplyr::mutate(out, value = readr::parse_number(value))
+  out <- dplyr::filter(out, !is.na(value))
+
+  if (any(nchar(out$code) > 0)) {
+    dplyr::select(out, -q_number)
+  } else {
+    dplyr::select(out, -code)
+  }
+}
+
+
+#################### HELPERS ##########################################
 rleid <- function(x, default = TRUE) {
   cumsum(x != dplyr::lag(x, default = default))
 }
@@ -79,61 +136,4 @@ make_headings <- function(.data, col) {
   hdrs <- dplyr::mutate(hdrs, h1 = dplyr::coalesce(!!!dplyr::select(hdrs, dplyr::matches("^h\\d+"))))
 }
 
-# export
-#' @title Extract survey data and descriptions from crosstabs into a tidy data frame
-#' @description
-#' `r lifecycle::badge("experimental")`
-#'
-#' Like `read_xtab` & `read_weights`, this is a bespoke function
-#' to make it easier to extract data from the DataHaven Community Wellbeing
-#' Survey. Applications to other crosstabs are probably limited unless their
-#' formatting is largely the same. After reading a crosstab excel file, `xtab2df`
-#' extracts the question codes (e.g. Q4A), question text, categories, and
-#' demographic groups, and joins those descriptions with survey responses and
-#' values, making it ready for analysis.
-#' @param .data A data frame as returned from `read_xtab`.
-#' @param col The bare column name of where to find question codes and text.
-#' Default: x1, based on names assigned by `read_xtab`
-#' @param code_pattern String: regex pattern denoting how to find cells that
-#' contain only a question code, such as "Q10", "Q4B", or "ASTHMA". This is
-#' pretty finicky, so you probably don't want to change it.
-#' Default: `"^[A-Z\\d_]{2,20}$"`
-#' @return A data frame with the following columns:
-#' * code (if questions have codes in crosstabs)
-#' * q_number (if questions don't have codes in crosstabs, assigned in order they occur)
-#' * question
-#' * category (e.g. age, gender)
-#' * group (e.g. 18–34, male)
-#' * response
-#' * value
-#' @examples
-#' if(interactive()){
-#'   xtab <- read_xtabs(system.file("extdata/test_xtab2018.xlsx", package = "cwi"))
-#'   xtab2df(xtab)
-#'  }
-#' @export
-#' @rdname xtab2df
-#' @seealso [cwi::read_xtabs()]
-#'
-xtab2df <- function(.data, col = x1, code_pattern = "^[A-Z\\d_]{2,20}$") {
-  # generally only includes first 2 hierarchy levels
-  hier <- c("category", "group", "subgroup")
 
-  marked <- mark_questions(.data, col = {{ col }}, pattern = code_pattern)
-  headings <- make_headings(marked, {{ col }})
-
-  # get just data rows, attach headings (gender, age, etc)
-  out <- dplyr::filter(marked, !is.na({{ col }}))
-  out <- tidyr::pivot_longer(out, cols = -c(code, q_number, question, {{ col }}), names_to = "column")
-  out <- dplyr::left_join(out, headings, by = "column")
-  out <- dplyr::select(out, code, q_number, question, dplyr::matches("^h\\d+"), response = {{ col }}, value)
-  out <- dplyr::rename_with(out, ~hier[seq_along(.)], dplyr::matches("^h\\d+"))
-  out <- dplyr::mutate(out, value = readr::parse_number(value))
-  out <- dplyr::filter(out, !is.na(value))
-
-  if (any(nchar(out$code) > 0)) {
-    dplyr::select(out, -q_number)
-  } else {
-    dplyr::select(out, -code)
-  }
-}

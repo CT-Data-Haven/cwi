@@ -52,6 +52,12 @@ multi_geo_acs(
 
 \item{new_england}{Logical: if \code{TRUE} (the default), limits metro areas to just New England states.}
 
+\item{nhood_name}{Bare column name of neighborhood names. Only relevant if a neighborhood weight table is being used. Defaults \code{name} to match the neighborhood lookup datasets.}
+
+\item{nhood_geoid}{Bare column name of neighborhood GEOIDs, either tracts or block groups. Only relevant if a neighborhood weight table is being used. Defaults \code{geoid} to match the neighborhood lookup datasets.}
+
+\item{nhood_weight}{Bare column name of weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults \code{weight} to match the neighborhood lookup datasets.}
+
 \item{survey}{A string: which ACS estimate to use. Defaults to 5-year (\code{"acs5"}), but can also be 1-year (\code{"acs1"}).}
 
 \item{verbose}{Logical: whether to print summary of geographies included. Defaults \code{TRUE}.}
@@ -61,12 +67,6 @@ multi_geo_acs(
 \item{sleep}{Number of seconds, if any, to sleep before each API call. This might help with the Census API's tendency to crash, but for many geographies, it could add a sizable about of time. Probably don't add more than a few seconds.}
 
 \item{...}{Additional arguments to pass on to \code{tidycensus::get_acs}}
-
-\item{name}{Bare column name of neighborhood names. Only relevant if a neighborhood weight table is being used. Defaults \code{name} to match the neighborhood lookup datasets.}
-
-\item{geoid}{Bare column name of neighborhood GEOIDs, either tracts or block groups. Only relevant if a neighborhood weight table is being used. Defaults \code{geoid} to match the neighborhood lookup datasets.}
-
-\item{weight}{Bare column name of weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults \code{weight} to match the neighborhood lookup datasets.}
 }
 \value{
 A tibble with GEOID, name, variable code, estimate, moe, geography level, state, and year, as applicable, for the chosen ACS table.

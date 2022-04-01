@@ -14,7 +14,8 @@ qwi_avail <- rvest::read_html("https://ledextract.ces.census.gov/loading_status.
   dplyr::inner_join(dplyr::distinct(tidycensus::fips_codes, state, state_code), by = "state") %>%
   dplyr::select(state_code, start_year = start_quarter, end_year = end_quarter)
 
-usethis::use_data(qwi_avail, overwrite = TRUE)
+# make internal
+# usethis::use_data(qwi_avail, overwrite = TRUE)
 
 
 # OCCUPATION CODES -- OCC (CENSUS) & SOC (BLS)

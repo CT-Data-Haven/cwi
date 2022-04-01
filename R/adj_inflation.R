@@ -51,6 +51,7 @@ adj_inflation <- function(data, value, year, base_year = 2019, verbose = TRUE, k
   adjusted
 }
 
+#################### HELPERS ##########################################
 cpi_prep <- function(series, startyear, endyear, catalog, key) {
   key <- check_bls_key(key)
   if (is.logical(key) && !key) {

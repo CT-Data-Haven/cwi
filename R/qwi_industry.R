@@ -1,3 +1,71 @@
+#' Get employment counts and total payroll over time
+#'
+#' This gets data from the Quarterly Workforce Indicators (QWI) via the Census API. It's an alternative to `censusapi` that fetches a set of variables (employees and payroll) but makes a somewhat more dynamic API call. The API returns a maximum of 10 years of data; calling this function with more than 10 years will require multiple API calls, which takes a little longer.
+#'
+#' Note that when looking at data quarterly, the payroll reported will be for that quarter, not the yearly payroll that you may be more accustomed to. As of November 2021, payroll data seems to be missing from the database; even the QWI Explorer app just turns up empty.
+#' @param years A numeric vector of one or more years for which to get data
+#' @param industries A character vector of NAICS industry codes; default is the 20 sectors plus "All industries" from the dataset `naics_codes`.
+#' @param state A string of length 1 representing a state's FIPS code, name, or two-letter abbreviation; defaults to `"09"` for Connecticut
+#' @param counties A character vector of county FIPS codes, or `"all"` for all counties (the default). If `NULL`, will return data just at the state level.
+#' @param annual Logical, whether to return annual averages or quarterly data (default) .
+#' @param key A Census API key. If `NULL`, defaults to the environmental variable `"CENSUS_API_KEY"`, as set by `tidycensus::census_api_key()`.
+#' @param retry The number of times to retry the API call(s), since the server this comes from can be a bit finicky.
+#' @return A data frame / tibble
+#' @examples
+#' \dontrun{
+#' qwi_industry(2012:2017, industries = c("23", "62"), counties = "009")
+#' }
+#' @export
+qwi_industry <- function(years, industries = naics_codes[["industry"]],
+                         state = "09", counties = NULL,
+                         annual = FALSE, key = NULL, retry = 5) {
+  urls <- qwi_prep(years = years,
+                   industries = industries,
+                   state = state,
+                   counties = counties,
+                   key = key)
+  agent <- httr::user_agent("cwi")
+
+  fetch <- purrr::imap(urls, function(u, i) {
+    # httr::GET(u, agent)
+    resp <- httr::RETRY("GET", u, agent, times = retry) # census is really playing games
+    if (httr::http_error(resp)) {
+      cli::cli_abort(c("An error occurred in making one or more API calls.",
+                       "x" = httr::http_status(resp)[["message"]]),
+                     call = parent.frame(n = 3))
+    }
+    resp
+  })
+  fetch <- purrr::map(fetch, httr::content, as = "text")
+  fetch <- purrr::map(fetch, jsonlite::fromJSON)
+  fetch <- purrr::map(fetch, function(mtx) {
+    colnames(mtx) <- mtx[1, ]
+    mtx[-1, ]
+  })
+  fetch <- purrr::map(fetch, as.data.frame)
+  fetch <- dplyr::bind_rows(fetch)
+  fetch <- dplyr::mutate(fetch, dplyr::across(c(quarter, Emp, Payroll, year), as.numeric))
+  fetch <- dplyr::as_tibble(fetch)
+  fetch <- dplyr::select(fetch,
+                         year, quarter, state, tidyselect::any_of("county"), industry,
+                         tidyselect::everything())
+  fetch <- janitor::clean_names(fetch)
+
+  # if annual
+  if (annual) {
+    fetch <- dplyr::group_by(fetch, year, state, dplyr::across(tidyselect::any_of("county")), industry)
+    fetch <- dplyr::summarise(fetch, emp = mean(emp), payroll = sum(payroll))
+    fetch <- dplyr::ungroup(fetch)
+  } else {
+    # make dates from quarters
+    fetch$date <- as.Date(paste(fetch$year, (fetch$quarter - 1) * 3 + 1, "01"), format = "%Y %m %d")
+    fetch <- dplyr::select(fetch, year, quarter, date, tidyselect::everything())
+  }
+  fetch
+}
+
+
+#################### HELPERS ##########################################
 qwi_prep <- function(years, industries, state, counties, key) {
   # uses a weird way to estimate number of records, crashes if too many
   # so if getting counties, do one at a time
@@ -23,7 +91,7 @@ qwi_prep <- function(years, industries, state, counties, key) {
   # get available years for state
   # will throw error--not the best place for that
   max_yrs <- 10
-  years <- check_avail_years(years, state_fips, qwi_avail, max_yrs)
+  years <- check_avail_qwi(years, state_fips, max_yrs)
 
   # build GET params
   base_url <- "https://api.census.gov/data/timeseries/qwi/se"
@@ -35,10 +103,10 @@ qwi_prep <- function(years, industries, state, counties, key) {
   urls
 }
 
-check_avail_years <- function(yrs_asked, state_fips, lookup, api_len) {
+check_avail_qwi <- function(yrs_asked, state_fips, api_len) {
   # adjust column names if necessary, altho state_code name comes from tidycensus
   asked_range <- range(yrs_asked)
-  yrs_avail <- as.list(lookup[lookup$state_code == state_fips, ])
+  yrs_avail <- as.list(qwi_avail[qwi_avail$state_code == state_fips, ])
   avail_range <- seq(from = yrs_avail$start_year, to = yrs_avail$end_year)
   unavail <- setdiff(yrs_asked, avail_range)
   if (!any(yrs_asked %in% avail_range)) {
@@ -94,70 +162,5 @@ make_qwi_query <- function(years, industries, state, counties, key) {
   })
 
   purrr::flatten(params)
-}
-
-#' Get employees counts and total payroll over time
-#'
-#' This gets data from the Quarterly Workforce Indicators (QWI) via the Census API. It's an alternative to `censusapi` that fetches a set of variables (employees and payroll) but makes a somewhat more dynamic API call. The API returns a maximum of 10 years of data; calling this function with more than 10 years will require multiple API calls, which takes a little longer.
-#'
-#' Note that when looking at data quarterly, the payroll reported will be for that quarter, not the yearly payroll that you may be more accustomed to. As of November 2021, payroll data seems to be missing from the database; even the QWI Explorer app just turns up empty.
-#' @param years A numeric vector of one or more years for which to get data
-#' @param industries A character vector of NAICS industry codes; default is the 20 sectors plus "All industries" from the dataset `naics_codes`.
-#' @param state A string of length 1 representing a state's FIPS code, name, or two-letter abbreviation; defaults to `"09"` for Connecticut
-#' @param counties A character vector of county FIPS codes, or `"all"` for all counties (the default). If `NULL`, will return data just at the state level.
-#' @param annual Logical, whether to return annual averages or quarterly data (default) .
-#' @param key A Census API key. If `NULL`, defaults to the environmental variable `"CENSUS_API_KEY"`, as set by `tidycensus::census_api_key()`.
-#' @return A data frame / tibble
-#' @examples
-#' \dontrun{
-#' qwi_industry(2012:2017, industries = c("23", "62"), counties = "009")
-#' }
-#' @export
-qwi_industry <- function(years, industries = naics_codes[["industry"]],
-                         state = "09", counties = NULL,
-                         annual = FALSE, key = NULL, retry = 5) {
-  urls <- qwi_prep(years = years,
-                   industries = industries,
-                   state = state,
-                   counties = counties,
-                   key = key)
-  agent <- httr::user_agent("cwi")
-
-  fetch <- purrr::imap(urls, function(u, i) {
-    # httr::GET(u, agent)
-    resp <- httr::RETRY("GET", u, agent, times = retry) # census is really playing games
-    if (httr::http_error(resp)) {
-      cli::cli_abort(c("An error occurred in making one or more API calls.",
-                       "x" = httr::http_status(resp)[["message"]]),
-                     call = parent.frame(n = 3))
-    }
-    resp
-  })
-  fetch <- purrr::map(fetch, httr::content, as = "text")
-  fetch <- purrr::map(fetch, jsonlite::fromJSON)
-  fetch <- purrr::map(fetch, function(mtx) {
-    colnames(mtx) <- mtx[1, ]
-    mtx[-1, ]
-  })
-  fetch <- purrr::map(fetch, as.data.frame)
-  fetch <- dplyr::bind_rows(fetch)
-  fetch <- dplyr::mutate(fetch, dplyr::across(c(quarter, Emp, Payroll, year), as.numeric))
-  fetch <- dplyr::as_tibble(fetch)
-  fetch <- dplyr::select(fetch,
-                         year, quarter, state, tidyselect::any_of("county"), industry,
-                         tidyselect::everything())
-  fetch <- janitor::clean_names(fetch)
-
-  # if annual
-  if (annual) {
-    fetch <- dplyr::group_by(fetch, year, state, dplyr::across(tidyselect::any_of("county")), industry)
-    fetch <- dplyr::summarise(fetch, emp = mean(emp), payroll = sum(payroll))
-    fetch <- dplyr::ungroup(fetch)
-  } else {
-    # make dates from quarters
-    fetch$date <- as.Date(paste(fetch$year, (fetch$quarter - 1) * 3 + 1, "01"), format = "%Y %m %d")
-    fetch <- dplyr::select(fetch, year, quarter, date, tidyselect::everything())
-  }
-  fetch
 }
 

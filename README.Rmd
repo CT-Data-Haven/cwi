@@ -37,7 +37,7 @@ devtools::install_github("CT-Data-Haven/cwi")
 
 This package relies heavily on:
 
-* The [`tidyverse`](http://tidyverse.org/) packages, namely `magrittr`, `dplyr`, `tidyr`, `purrr`, `stringr`, `forcats`, and `ggplot2` (version >= 3.0.0) (so basically *all* the tidyverse)
+* The [`tidyverse`](http://tidyverse.org/) packages, namely `magrittr`, `dplyr`, `tidyr`, `purrr`, `stringr`, `forcats`, and `ggplot2` (version >= 3.0.0) (so a lot the tidyverse)
 * `rlang` and `tidyselect` for non-standard evaluation in many functions
 * `tidycensus` for actually getting all the Census data
 * `sf` isn't required but it's encouraged
@@ -47,7 +47,7 @@ This package relies heavily on:
 `cwi` ships with several datasets and shapefiles. These include:
 
 * Shapes (as `sf` objects) of towns, tracts, and city neighborhoods for New Haven, Hartford, Bridgeport, and Stamford
-* Common ACS table numbers—hopefully decreases time spent prowling around [FactFinder](https://factfinder.census.gov)
+* Common ACS table numbers—hopefully decreases time spent prowling around [the Census Bureau site](https://data.census.gov)
 * Definitions of neighborhoods by tract or block group, and of regions by town
 
 ## Sources
@@ -58,8 +58,8 @@ This package contains functions to make it easier and more reproducible to fetch
 * [Decennial Census](https://www.census.gov/programs-surveys/decennial-census.html) (US Census Bureau)
 * [Quarterly Workforce Indicators](https://lehd.ces.census.gov/) (US Census Bureau Center for Economic Studies)
 * [Local Area Unemployment Statistics](https://www.bls.gov/lau/) (Bureau of Labor Statistics)
+* [DataHaven's Community Wellbeing Survey](https://ctdatahaven.org/reports/datahaven-community-wellbeing-survey)
 
-More to come (as of 7/17/2018) may include simplifications of working with [LEHD Origin-Destination Employment Statistics](https://lehd.ces.census.gov/data/) (LODES) and ACS public use microdata samples (PUMS) via [IPUMS](https://usa.ipums.org/usa/).
 
 ## Example
 

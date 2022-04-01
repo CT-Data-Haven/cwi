@@ -1,7 +1,3 @@
-
-
-###############################################################################
-######## ACS CALLS ----
 #' Fetch an ACS table with multiple geography levels
 #'
 #' Fetch a data table from the ACS via `tidycensus` with your choice of geographies at multiple levels. For geographies made of aggregates, i.e. neighborhoods made of tracts or regions made of towns, the returned table will have estimates summed and margins of error calculated for the whole area.
@@ -14,16 +10,16 @@
 #' @param regions A named list of regions with their town names (defaults `NULL`).
 #' @param counties A character vector of names of counties to include; `"all"` (default) for all counties in the state; or `NULL` to not fetch county-level table.
 #' @param state A string: either name or two-digit FIPS code of a US state. Required; defaults `"09"` (Connecticut).
+#' @param neighborhoods A data frame with columns for neighborhood name, GEOID of either tracts or block groups, and weight, e.g. share of each tract assigned to a neighborhood. If included, weighted sums and MOEs will be returned for neighborhoods. Try to match the formatting of the [built-in neighborhood tables][neighborhood_tracts].
 #' @param tracts A character vector of 11-digit FIPS codes of tracts to include, or `"all"` for all tracts optionally filtered by county. Defaults `NULL`.
 #' @param blockgroups A character vector of 12-digit FIPS codes of block groups to include, or `"all"` for all block groups optionally filtered by county. Defaults `NULL`.
 #' @param msa Logical: whether to fetch New England states' metropolitan statistical areas. Defaults `FALSE`.
 #' @param us Logical: whether to fetch US-level table. Defaults `FALSE`.
 #' @param new_england Logical: if `TRUE` (the default), limits metro areas to just New England states.
+#' @param nhood_name Bare column name of neighborhood names. Only relevant if a neighborhood weight table is being used. Defaults `name` to match the neighborhood lookup datasets.
+#' @param nhood_geoid Bare column name of neighborhood GEOIDs, either tracts or block groups. Only relevant if a neighborhood weight table is being used. Defaults `geoid` to match the neighborhood lookup datasets.
+#' @param nhood_weight Bare column name of weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults `weight` to match the neighborhood lookup datasets.
 #' @param survey A string: which ACS estimate to use. Defaults to 5-year (`"acs5"`), but can also be 1-year (`"acs1"`).
-#' @param neighborhoods A data frame with columns for neighborhood name, GEOID of either tracts or block groups, and weight, e.g. share of each tract assigned to a neighborhood. If included, weighted sums and MOEs will be returned for neighborhoods. Try to match the formatting of the [built-in neighborhood tables][neighborhood_tracts].
-#' @param name Bare column name of neighborhood names. Only relevant if a neighborhood weight table is being used. Defaults `name` to match the neighborhood lookup datasets.
-#' @param geoid Bare column name of neighborhood GEOIDs, either tracts or block groups. Only relevant if a neighborhood weight table is being used. Defaults `geoid` to match the neighborhood lookup datasets.
-#' @param weight Bare column name of weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults `weight` to match the neighborhood lookup datasets.
 #' @param verbose Logical: whether to print summary of geographies included. Defaults `TRUE`.
 #' @param key String: Census API key. If `NULL` (default), takes the value from `Sys.getenv("CENSUS_API_KEY")`.
 #' @param sleep Number of seconds, if any, to sleep before each API call. This might help with the Census API's tendency to crash, but for many geographies, it could add a sizable about of time. Probably don't add more than a few seconds.
@@ -137,8 +133,6 @@ multi_geo_acs <- function(table, year = 2019, towns = "all", regions = NULL,
   fetch_df
 }
 
-###############################################################################
-######## DECENNIAL CALLS ----
 #' Fetch a decennial census table with multiple geography levels
 #'
 #' Fetch a data table from the decennial census via `tidycensus` with your choice of geographies at multiple levels. For geographies made of aggregates, i.e. neighborhoods made of tracts or regions made of towns, the returned table will have estimates summed and margins of error calculated for the whole area.
@@ -153,12 +147,16 @@ multi_geo_acs <- function(table, year = 2019, towns = "all", regions = NULL,
 #' @param regions A named list of regions with their town names (defaults `NULL`).
 #' @param counties A character vector of counties to include; `"all"` (default) for all counties in the state; or `NULL` to not fetch county-level table.
 #' @param state A string: either name or two-digit FIPS code of a US state. Required; defaults `"09"` (Connecticut).
-#' @param tracts A character vector of 11-digit FIPS codes of tracts to include, or `"all"` for all tracts optionally filtered by county. Defaults `NULL`.
-#' @param sumfile A string giving the summary file to pull from. Defaults `"sf1"`; in some rare cases, `"sf3"` may be appropriate.
 #' @param neighborhoods A data frame with columns for neighborhood name, GEOID of tracts, and weight, e.g. share of each tract assigned to a neighborhood. If included, weighted sums will be returned for neighborhoods. Unlike `multi_geo_acs`, this doesn't take block groups.
-#' @param name Bare column name of neighborhood names. Only relevant if a neighborhood weight table is being used. Defaults `name` to match the neighborhood lookup datasets.
-#' @param geoid Bare column name of neighborhood tract GEOIDs. Only relevant if a neighborhood weight table is being used. Defaults `geoid` to match the neighborhood lookup datasets.
-#' @param weight Bare column name of weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults `weight` to match the neighborhood lookup datasets.
+#' @param tracts A character vector of 11-digit FIPS codes of tracts to include, or `"all"` for all tracts optionally filtered by county. Defaults `NULL`.
+#' @param blockgroups A character vector of 12-digit FIPS codes of block groups to include, or `"all"` for all block groups optionally filtered by county. Defaults `NULL`.
+#' @param msa Logical: whether to fetch New England states' metropolitan statistical areas. Defaults `FALSE`.
+#' @param us Logical: whether to fetch US-level table. Defaults `FALSE`.
+#' @param new_england Logical: if `TRUE` (the default), limits metro areas to just New England states.
+#' @param nhood_name Bare column name of neighborhood names. Only relevant if a neighborhood weight table is being used. Defaults `name` to match the neighborhood lookup datasets.
+#' @param nhood_geoid Bare column name of neighborhood tract GEOIDs. Only relevant if a neighborhood weight table is being used. Defaults `geoid` to match the neighborhood lookup datasets.
+#' @param nhood_weight Bare column name of weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults `weight` to match the neighborhood lookup datasets.
+#' @param sumfile A string giving the summary file to pull from. Defaults `"sf1"`, which is much more common than `"sf3"`.
 #' @param verbose Logical: whether to print summary of geographies included. Defaults `TRUE`.
 #' @param key String: Census API key. If `NULL` (default), takes the value from `Sys.getenv("CENSUS_API_KEY")`.
 #' @param sleep Number of seconds, if any, to sleep before each API call. This might help with the Census API's tendency to crash, but for many geographies, it could add a sizable about of time. Probably don't add more than a few seconds.

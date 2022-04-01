@@ -1,7 +1,7 @@
 #' Write a list of data frames to CSV and keep it movin'
 #'
 #' This function takes either a list of data frames, or a data frame and a column to split by, and writes them all to CSV files. It then returns the list of data frames, optionally row-binded back together. It fits neatly in the middle of a longer piped workflow.
-#' @param .data A data frame or a list of data frames
+#' @param data A data frame or a list of data frames
 #' @param split_by Bare column name of variable to split by. If `data` is a list, this is unnecessary and will be ignored.
 #' @param path String giving a path at which to save files; defaults to current working directory.
 #' @param base_name Optional string to be prepended to all file names.
@@ -9,7 +9,6 @@
 #' @param verbose Logical: whether to print files' paths and names as they're written. Defaults `TRUE`.
 #' @return Either a list of data frames (in case of `bind = FALSE`) or a single data frame (in case of `bind = TRUE`).
 #'
-#' @importFrom utils write.csv
 #' @export
 batch_csv_dump <- function(data, split_by, path = ".", base_name = NULL, bind = FALSE, verbose = TRUE) {
   # if data is a data frame, split it. Otherwise treat as list
@@ -29,7 +28,7 @@ batch_csv_dump <- function(data, split_by, path = ".", base_name = NULL, bind = 
     filename <- stringr::str_replace_all(filename, "\\s+", "_")
     filename <- paste(filename, "csv", sep = ".")
     filepath <- file.path(path, filename)
-    write.csv(df, file = filepath, row.names = FALSE)
+    utils::write.csv(df, file = filepath, row.names = FALSE)
     if (verbose) cli::cli_li("Writing {.file {filepath}}")
   })
   cli::cli_end()

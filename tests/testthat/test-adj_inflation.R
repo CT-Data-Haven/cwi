@@ -50,13 +50,3 @@ test_that("adj_inflation prints table header", {
   expect_message(adj_inflation(wages, wage, year, verbose = TRUE), "-- CPI ")
   expect_silent(dummy <- adj_inflation(wages, wage, year, verbose = FALSE))
 })
-
-test_that("adj_inflation handles series", {
-  wages <- data.frame(year = 2015:2019, wage = 100)
-  expect_error(adj_inflation(wages, year = year, value = wage, series = "xxxx"))
-
-  skip_on_ci()
-
-  expect_s3_class(adj_inflation(wages, year = year, value = wage), "data.frame")
-  expect_s3_class(adj_inflation(wages, year = year, value = wage, series = "CUUR0000AA0"), "data.frame")
-})

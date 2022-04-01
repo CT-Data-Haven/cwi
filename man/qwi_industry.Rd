@@ -2,7 +2,7 @@
 % Please edit documentation in R/qwi_industry.R
 \name{qwi_industry}
 \alias{qwi_industry}
-\title{Get employees counts and total payroll over time}
+\title{Get employment counts and total payroll over time}
 \usage{
 qwi_industry(
   years,
@@ -26,6 +26,8 @@ qwi_industry(
 \item{annual}{Logical, whether to return annual averages or quarterly data (default) .}
 
 \item{key}{A Census API key. If \code{NULL}, defaults to the environmental variable \code{"CENSUS_API_KEY"}, as set by \code{tidycensus::census_api_key()}.}
+
+\item{retry}{The number of times to retry the API call(s), since the server this comes from can be a bit finicky.}
 }
 \value{
 A data frame / tibble

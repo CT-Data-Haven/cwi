@@ -107,7 +107,7 @@ homeownership %>%
 ```{r quick_map1}
 tenure_map <- homeownership %>%
   filter(level == "4_town") %>%
-  acs_quick_map(value = share, level = "town", color = "black", size = 0.4, 
+  quick_map(value = share, level = "town", color = "black", size = 0.4, 
                 title = "Homeownership, Greater New Haven", palette = "BuPu")
 
 tenure_map

@@ -30,8 +30,6 @@ A data frame with the following columns:
 }
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-
 Like \code{read_xtab} & \code{read_weights}, this is a bespoke function
 to make it easier to extract data from the DataHaven Community Wellbeing
 Survey. Applications to other crosstabs are probably limited unless their

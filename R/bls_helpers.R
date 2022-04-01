@@ -1,8 +1,10 @@
+# takes query as a list, verbose as logical
 fetch_bls <- function(query, verbose) {
   # query is a list of api body
   # send POST with retry
   # if verbose, print heading
   # return df of seriesID, data
+  # only gets 50 series at a time--relevant for laus with many locations
   agent <- httr::user_agent("cwi")
 
   fetch <- purrr::map(query, function(q) {

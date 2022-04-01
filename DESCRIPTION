@@ -23,7 +23,6 @@ Depends:
     R (>= 4.0.0)
 Imports: 
     classInt,
-    curl,
     dplyr,
     forcats,
     ggplot2,

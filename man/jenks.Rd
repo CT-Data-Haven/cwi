@@ -15,7 +15,7 @@ jenks(x, n = 5, true_jenks = FALSE, labels = NULL, ...)
 
 \item{labels}{A string vector to be used as bin labels, Default: NULL}
 
-\item{...}{Additional arguments passed on to \code{cut}}
+\item{...}{Additional arguments passed on to \code{\link[base:cut]{base::cut}}}
 }
 \value{
 A factor of the same length as x
@@ -30,5 +30,5 @@ into \code{n} number of breaks using the Jenks/Fisher algorithms. The algorithm(
  jenks(values, n = 4)
 }
 \seealso{
-classInt::classIntervals
+\code{\link[classInt:classIntervals]{classInt::classIntervals}}
 }
