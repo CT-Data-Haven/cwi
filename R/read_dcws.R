@@ -21,6 +21,7 @@
 #' what the crosstab data looks like, so you don't accidentally lose some
 #' questions or important description. As a sanity check, you'll see a message
 #' listing the parameters used in the `xtab2df` call.
+#' @param verbose Logical: if `process` is true, should parameters being passed to `xtab2df` be printed? Defaults to `TRUE` to encourage you to double check that you're passing arguments intentionally.
 #' @param ... Additional arguments passed on to `xtab2df` if `process = TRUE`.
 #' @return A data frame. For `read_xtabs`, there will be one column per
 #' demographic/geographic group included, plus one for the questions & answers.
@@ -39,7 +40,7 @@
 #' @export
 #' @rdname read_xtabs
 #' @seealso [cwi::xtab2df()]
-read_xtabs <- function(path, name_prefix = "x", marker = "Nature of the [Ss]ample", year = 2018, process = FALSE, ...) {
+read_xtabs <- function(path, name_prefix = "x", marker = "Nature of the [Ss]ample", year = 2018, process = FALSE, verbose = TRUE, ...) {
   data <- read_xtabs_(path, name_prefix)
   first_col <- rlang::sym(names(data)[1])
   if (as.numeric(year) == 2015) {
@@ -50,7 +51,9 @@ read_xtabs <- function(path, name_prefix = "x", marker = "Nature of the [Ss]ampl
     data <- camiller::filter_until(data, grepl(marker, {{ first_col }}))
   }
   if (process) {
-    xt_params(list(col = first_col, ...))
+    if (verbose) {
+      xt_params(list(col = first_col, ...))
+    }
     xtab2df(data, col = {{ first_col }}, ...)
   } else {
     data
@@ -119,9 +122,10 @@ xt_params <- function(args) {
   from_def <- defaults[!names(defaults) %in% names(args)][-1]
   params <- c(from_def, args)
   params <- params[names(defaults)[-1]]
+  params[["code_pattern"]] <- gsub("\\{", "{{", params[["code_pattern"]])
+  params[["code_pattern"]] <- gsub("\\}", "}}", params[["code_pattern"]])
   param_str <- paste(names(params), params, sep = " = ")
-  cli::cli_alert_info("xtab2df is being called on the data with the following parameters")
-  # can't use anything glue-based--tries to parse regex
-  cli::cat_bullet(param_str)
-  cat("\n")
+  # param_str <- stats::setNames(param_str, rep_len("*", length(param_str)))
+  cli::cli_alert_info("xtab2df is being called on the data with the following parameters:")
+  purrr::walk(param_str, cli::cli_alert)
 }
