@@ -75,7 +75,7 @@ read_weights <- function(path, marker = "Nature of the [Ss]ample") {
     data <- camiller::filter_until(data, grepl(total_patt(), dplyr::lag(data[[1]])))
     data <- dplyr::select(data, -1)
     data <- janitor::remove_empty(data, which = "rows")
-    wts <- read_wt_hdr(data)
+    wts <- read_wt_hdr(data, scale = TRUE)
   }
 
   wts
@@ -102,7 +102,7 @@ read_wt_tbl <- function(data, marker) {
   out
 }
 
-read_wt_hdr <- function(data) {
+read_wt_hdr <- function(data, scale) {
   out <- t(data)
   out <- as.data.frame(out)
   names(out) <- c("category", "group", "weight")
@@ -110,7 +110,9 @@ read_wt_hdr <- function(data) {
   out <- dplyr::filter(out, !is.na(category))
   out$weight <- as.numeric(out$weight)
   out <- dplyr::group_by(out, category)
-  out <- dplyr::mutate(out, weight = round(weight / sum(weight), digits = 3))
+
+  if (scale) out <- dplyr::mutate(out, weight = round(weight / sum(weight), digits = 3))
+
   out <- dplyr::ungroup(out)
   out <- dplyr::select(out, -category)
   out

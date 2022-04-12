@@ -11,6 +11,7 @@ read_xtabs(
   marker = "Nature of the [Ss]ample",
   year = 2018,
   process = FALSE,
+  verbose = TRUE,
   ...
 )
 
@@ -39,6 +40,8 @@ ready for analysis. This is \emph{only} recommended if you already know for sure
 what the crosstab data looks like, so you don't accidentally lose some
 questions or important description. As a sanity check, you'll see a message
 listing the parameters used in the \code{xtab2df} call.}
+
+\item{verbose}{Logical: if \code{process} is true, should parameters being passed to \code{xtab2df} be printed? Defaults to \code{TRUE} to encourage you to double check that you're passing arguments intentionally.}
 
 \item{...}{Additional arguments passed on to \code{xtab2df} if \code{process = TRUE}.}
 }
