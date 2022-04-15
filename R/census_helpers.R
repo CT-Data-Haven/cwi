@@ -97,14 +97,22 @@ census_state <- function(src, table, year, state, dataset, key, sleep, ...) {
 
 ## REGIONS ----
 # fetch all towns, then filter by region & aggregate
-census_regions <- function(src, table, year, regions, state, dataset, key, sleep, ...) {
+# needs name of estimate/value column
+census_regions <- function(src, table, year, regions, state, value, dataset, key, sleep, ...) {
   Sys.sleep(sleep)
   region_df <- tibble::enframe(regions, value = "town")
   region_df <- tidyr::unnest(region_df, town)
   fetch <- census_towns(src, table, year, "all", "all", state, dataset, key, 0, ...)
   fetch <- dplyr::inner_join(fetch, region_df, by = c("NAME" = "town"))
   fetch <- dplyr::group_by(fetch, state, NAME = name, variable)
-  fetch <- dplyr::summarise(fetch, estimate = sum(estimate), moe = round(tidycensus::moe_sum(moe, estimate)))
+  if ("moe" %in% names(fetch)) {
+    fetch <- dplyr::summarise(fetch,
+                              dplyr::across({{ value }}, sum),
+                              moe = round(tidycensus::moe_sum(moe, {{ value }})))
+  } else {
+    fetch <- dplyr::summarise(fetch,
+                              dplyr::across({{ value }}, sum))
+  }
   fetch <- dplyr::ungroup(fetch)
   fetch
 }
@@ -112,7 +120,8 @@ census_regions <- function(src, table, year, regions, state, dataset, key, sleep
 ## NEIGHBORHOODS ----
 # fetch tracts or bgs, then filter by nhood table & aggregate
 # let counties be independent of neighborhoods
-census_nhood <- function(src, table, year, nhood_data, state, name, geoid, weight, is_tract, dataset, key, sleep, ...) {
+# needs name of estimate/value column
+census_nhood <- function(src, table, year, nhood_data, state, name, geoid, weight, is_tract, value, dataset, key, sleep, ...) {
   Sys.sleep(sleep)
   if (is_tract) {
     fetch <- census_tracts(src, table, year, "all", "all", state, dataset, key, 0, ...)
@@ -121,8 +130,14 @@ census_nhood <- function(src, table, year, nhood_data, state, name, geoid, weigh
   }
   fetch <- dplyr::inner_join(nhood_data, fetch, by = stats::setNames("GEOID", rlang::as_label(rlang::enquo(geoid))))
   fetch <- dplyr::group_by(fetch, state, county, {{ name }}, variable)
-  fetch <- dplyr::summarise(fetch, estimate = round(sum(estimate * {{ weight }})),
-                            moe = round(tidycensus::moe_sum(moe, estimate * {{ weight }})))
+  if ("moe" %in% names(fetch)) {
+    fetch <- dplyr::summarise(fetch,
+                              dplyr::across({{ value }}, function(x) round(sum({{ value }} * {{ weight }}))),
+                              moe = round(tidycensus::moe_sum(moe, {{ value }} * {{ weight }})))
+  } else {
+    fetch <- dplyr::summarise(fetch,
+                              dplyr::across({{ value }}, function(x) round(sum({{ value }} * {{ weight }}))))
+  }
   fetch <- dplyr::ungroup(fetch)
   fetch
 }

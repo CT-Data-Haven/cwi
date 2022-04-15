@@ -89,7 +89,7 @@ multi_geo_acs <- function(table, year = 2019, towns = "all", regions = NULL,
 
   # neighborhoods: nhood data frame, nhood columns
   if (!is.null(neighborhoods)) {
-    fetch[["neighborhood"]] <- census_nhood("acs", table, year, neighborhoods, state_fips, {{nhood_name}}, {{nhood_geoid}}, {{nhood_weight}}, nhood_is_tract, survey, key, sleep, ...)
+    fetch[["neighborhood"]] <- census_nhood("acs", table, year, neighborhoods, state_fips, {{nhood_name}}, {{nhood_geoid}}, {{nhood_weight}}, nhood_is_tract, estimate, survey, key, sleep, ...)
   }
 
   # towns: towns, county
@@ -99,7 +99,7 @@ multi_geo_acs <- function(table, year = 2019, towns = "all", regions = NULL,
 
   # regions: region-town list
   if (!is.null(regions)){
-    fetch[["region"]] <- census_regions("acs", table, year, regions, state_fips, survey, key, sleep, ...)
+    fetch[["region"]] <- census_regions("acs", table, year, regions, state_fips, estimate, survey, key, sleep, ...)
   }
 
   # counties
@@ -124,8 +124,8 @@ multi_geo_acs <- function(table, year = 2019, towns = "all", regions = NULL,
   # take names of non-null items, reverse order
   fetch <- rev(fetch)
   fetch <- rlang::set_names(fetch, function(nm) paste(seq_along(fetch), nm, sep = "_"))
+  fetch <- purrr::map(fetch, janitor::clean_names)
   fetch_df <- dplyr::bind_rows(fetch, .id = "level")
-  fetch_df <- janitor::clean_names(fetch_df)
   fetch_df$year <- year
   fetch_df$level <- as.factor(fetch_df$level)
   fetch_df <- dplyr::select(fetch_df, tidyselect::any_of(c("year", "level", "state", "county", "geoid")),
@@ -217,7 +217,7 @@ multi_geo_decennial <- function(table, year = 2010, towns = "all", regions = NUL
 
   # neighborhoods: nhood data frame, nhood columns
   if (!is.null(neighborhoods)) {
-    fetch[["neighborhood"]] <- census_nhood("decennial", table, year, neighborhoods, state_fips, {{nhood_name}}, {{nhood_geoid}}, {{nhood_weight}}, nhood_is_tract, sumfile, key, sleep, ...)
+    fetch[["neighborhood"]] <- census_nhood("decennial", table, year, neighborhoods, state_fips, {{nhood_name}}, {{nhood_geoid}}, {{nhood_weight}}, nhood_is_tract, value, sumfile, key, sleep, ...)
   }
 
   # towns: towns, county
@@ -227,7 +227,7 @@ multi_geo_decennial <- function(table, year = 2010, towns = "all", regions = NUL
 
   # regions: region-town list
   if (!is.null(regions)){
-    fetch[["region"]] <- census_regions("decennial", table, year, regions, state_fips, sumfile, key, sleep, ...)
+    fetch[["region"]] <- census_regions("decennial", table, year, regions, state_fips, value, sumfile, key, sleep, ...)
   }
 
   # counties
@@ -252,8 +252,8 @@ multi_geo_decennial <- function(table, year = 2010, towns = "all", regions = NUL
   # take names of non-null items, reverse order
   fetch <- rev(fetch)
   fetch <- rlang::set_names(fetch, function(nm) paste(seq_along(fetch), nm, sep = "_"))
+  fetch <- purrr::map(fetch, janitor::clean_names)
   fetch_df <- dplyr::bind_rows(fetch, .id = "level")
-  fetch_df <- janitor::clean_names(fetch_df)
   fetch_df$year <- year
   fetch_df$level <- as.factor(fetch_df$level)
   fetch_df <- dplyr::select(fetch_df, tidyselect::all_of(c("year", "level", "state", "county", "geoid")),

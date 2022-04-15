@@ -45,6 +45,15 @@ test_that("multi_geo_* handles neighborhood geoids", {
   expect_silent(multi_test(neighborhoods = dummy_nhood_nm, nhood_geoid = fips, verbose = FALSE))
 })
 
+test_that("multi_geo_* handles neighborhood names", {
+  # previously was returning name, name_2 columns
+  skip_on_ci()
+  acs_df <- multi_geo_acs("B01003", year = 2019, neighborhoods = new_haven_tracts19)
+  dec_df <- multi_geo_decennial("P001", year = 2010, neighborhoods = new_haven_tracts19)
+  expect_false(any(grepl("\\d", names(acs_df))))
+  expect_false(any(grepl("\\d", names(dec_df))))
+})
+
 test_that("multi_geo_* handles passing args to tidycensus::get_*", {
   skip_on_ci()
   with_sf <- multi_geo_acs("B01003", geometry = TRUE)
