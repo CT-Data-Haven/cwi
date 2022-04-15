@@ -1,6 +1,6 @@
 #' Fetch an ACS table with multiple geography levels
 #'
-#' Fetch a data table from the ACS via `tidycensus` with your choice of geographies at multiple levels. For geographies made of aggregates, i.e. neighborhoods made of tracts or regions made of towns, the returned table will have estimates summed and margins of error calculated for the whole area.
+#' Fetch a data table from the ACS via `tidycensus` with your choice of geographies at multiple levels. For geographies made of aggregates, i.e. neighborhoods made of tracts or regions made of towns, the returned table will have estimates summed and margins of error calculated for the whole area. Any geographic levels that are null will be excluded.
 #'
 #' This function essentially calls `tidycensus::get_acs()` multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying `tidycensus::get_acs()` requires a Census API key. As is the case with other `tidycensus` functions, `multi_geo_acs` assumes this key is stored as `CENSUS_API_KEY` in your `.Renviron`. See [tidycensus::census_api_key()] for installation.
 #'
@@ -13,6 +13,7 @@
 #' @param neighborhoods A data frame with columns for neighborhood name, GEOID of either tracts or block groups, and weight, e.g. share of each tract assigned to a neighborhood. If included, weighted sums and MOEs will be returned for neighborhoods. Try to match the formatting of the [built-in neighborhood tables][neighborhood_tracts].
 #' @param tracts A character vector of 11-digit FIPS codes of tracts to include, or `"all"` for all tracts optionally filtered by county. Defaults `NULL`.
 #' @param blockgroups A character vector of 12-digit FIPS codes of block groups to include, or `"all"` for all block groups optionally filtered by county. Defaults `NULL`.
+#' @param pumas A character vector of 7-digit FIPS codes of public use microdata areas (PUMAs) to include, or `"all"` for all PUMAs optionally filtered by county. It's up to you to filter out any redundancies--some large towns are standalone PUMAs, as are some sparsely-population counties. Defaults `NULL`.
 #' @param msa Logical: whether to fetch New England states' metropolitan statistical areas. Defaults `FALSE`.
 #' @param us Logical: whether to fetch US-level table. Defaults `FALSE`.
 #' @param new_england Logical: if `TRUE` (the default), limits metro areas to just New England states.
@@ -44,7 +45,8 @@
 #' @export
 multi_geo_acs <- function(table, year = 2019, towns = "all", regions = NULL,
                           counties = "all", state = "09", neighborhoods = NULL,
-                          tracts = NULL, blockgroups = NULL, msa = FALSE,
+                          tracts = NULL, blockgroups = NULL,
+                          pumas = NULL, msa = FALSE,
                           us = FALSE, new_england = TRUE,
                           nhood_name = name, nhood_geoid = geoid, nhood_weight = weight,
                           survey = c("acs5", "acs1"),
@@ -63,6 +65,7 @@ multi_geo_acs <- function(table, year = 2019, towns = "all", regions = NULL,
                            neighborhoods = neighborhoods,
                            tracts = tracts,
                            blockgroups = blockgroups,
+                           pumas = pumas,
                            msa = msa,
                            us = us,
                            new_england = new_england,
@@ -72,7 +75,9 @@ multi_geo_acs <- function(table, year = 2019, towns = "all", regions = NULL,
                            key = key)
 
   ## at this point, tables, geos, etc have been validated
-  state_fips <- params$state_fips; counties_fips <- params$counties_fips; nhood_is_tract <- params$nhood_is_tract
+  state_fips <- params$state_fips
+  counties_fips <- params$counties_fips
+  nhood_is_tract <- params$nhood_is_tract
 
   ## FETCH STUFF ----
   fetch <- list()
@@ -95,6 +100,11 @@ multi_geo_acs <- function(table, year = 2019, towns = "all", regions = NULL,
   # towns: towns, county
   if (!is.null(towns)) {
     fetch[["town"]] <- census_towns("acs", table, year, towns, counties_fips, state_fips, survey, key, sleep, ...)
+  }
+
+  # pumas
+  if (!is.null(pumas)) {
+    fetch[["puma"]] <- census_pumas("acs", table, year, pumas, counties_fips, state_fips, survey, key, sleep, ...)
   }
 
   # regions: region-town list
@@ -135,7 +145,7 @@ multi_geo_acs <- function(table, year = 2019, towns = "all", regions = NULL,
 
 #' Fetch a decennial census table with multiple geography levels
 #'
-#' Fetch a data table from the decennial census via `tidycensus` with your choice of geographies at multiple levels. For geographies made of aggregates, i.e. neighborhoods made of tracts or regions made of towns, the returned table will have estimates summed and margins of error calculated for the whole area.
+#' Fetch a data table from the decennial census via `tidycensus` with your choice of geographies at multiple levels. For geographies made of aggregates, i.e. neighborhoods made of tracts or regions made of towns, the returned table will have estimates summed for the whole area. Any geographic levels that are null will be excluded.
 #'
 #' This function essentially calls `tidycensus::get_decennial()` multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying `tidycensus::get_decennial()` requires a Census API key. As is the case with other `tidycensus` functions, `multi_geo_decennial` assumes this key is stored as `CENSUS_API_KEY` in your `.Renviron`. See [tidycensus::census_api_key()] for installation.
 #'
@@ -191,6 +201,7 @@ multi_geo_decennial <- function(table, year = 2010, towns = "all", regions = NUL
                            neighborhoods = neighborhoods,
                            tracts = tracts,
                            blockgroups = blockgroups,
+                           pumas = NULL, # not available for decennial
                            msa = msa,
                            us = us,
                            new_england = new_england,
@@ -200,7 +211,9 @@ multi_geo_decennial <- function(table, year = 2010, towns = "all", regions = NUL
                            key = key)
 
   ## at this point, tables, geos, etc have been validated
-  state_fips <- params$state_fips; counties_fips <- params$counties_fips; nhood_is_tract <- params$nhood_is_tract
+  state_fips <- params$state_fips
+  counties_fips <- params$counties_fips
+  nhood_is_tract <- params$nhood_is_tract
 
   ## FETCH STUFF ----
   fetch <- list()
@@ -266,13 +279,14 @@ multi_geo_decennial <- function(table, year = 2010, towns = "all", regions = NUL
 multi_geo_prep <- function(src,
                            table, year, towns, regions,
                            counties, state, neighborhoods,
-                           tracts, blockgroups, msa,
+                           tracts, blockgroups,
+                           pumas, msa,
                            us, new_england,
                            nhood_name, nhood_geoid,
                            dataset, verbose, key) {
   ## ERROR & META HANDLING ----
   # check dataset
-  NCHAR_TRACT <- 11; NCHAR_BG <- 12
+  NCHAR_TRACT <- 11; NCHAR_BG <- 12; NCHAR_PUMA <- 7
 
   # check key
   key <- check_census_key(key)
@@ -320,7 +334,11 @@ multi_geo_prep <- function(src,
   }
   if (!check_fips_nchar(blockgroups, NCHAR_BG)) {
     cli::cli_warn("FIPS codes for block groups should have {NCHAR_BG} digits, not {nchar(blockgroups)[1]}; block groups will be dropped.")
-    tracts <- NULL
+    blockgroups <- NULL
+  }
+  if (!check_fips_nchar(pumas, NCHAR_PUMA)) {
+    cli::cli_warn("FIPS codes for PUMAs should have {NCHAR_PUMA} digits, not {nchar(pumas)[1]}; PUMAs will be dropped.")
+    pumas <- NULL
   }
 
   # are neighborhood fips for tracts or bgs?
@@ -357,6 +375,7 @@ multi_geo_prep <- function(src,
       neighborhoods = nhood_names,
       towns = towns,
       regions = names(regions),
+      pumas = pumas,
       counties = xw$county,
       all_counties = all_counties,
       drop_counties = drop_counties,

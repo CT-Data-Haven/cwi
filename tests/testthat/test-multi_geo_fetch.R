@@ -16,6 +16,16 @@ test_that("multi_geo_* validates counties by name or FIPS", {
   expect_warning(multi_test(state = "09", counties = c("002")))
 })
 
+test_that("multi_geo_* validates tract, block group, and PUMA FIPS codes", {
+  expect_message(multi_test(pumas = "all"), "PUMAs")
+  expect_message(multi_test(pumas = "all", counties = "New Haven"), "PUMAs in New Haven County")
+  expect_warning(multi_test(pumas = c("09001", "09002")))
+  expect_message(multi_test(tracts = "all"), "tracts")
+  expect_warning(multi_test(tracts = c("09001", "09002")))
+  expect_message(multi_test(blockgroups = "all"), "groups")
+  expect_warning(multi_test(blockgroups = c("09001", "09002")))
+})
+
 test_that("multi_geo_* suppresses messages from get_* if requested", {
   expect_silent(multi_test(verbose = FALSE))
   expect_message(multi_test(verbose = TRUE), "Table B01003: TOTAL POPULATION")

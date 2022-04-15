@@ -19,6 +19,7 @@ multi_test <- function(src = "acs",
                        neighborhoods = NULL,
                        tracts = NULL,
                        blockgroups = NULL,
+                       pumas = NULL,
                        msa = FALSE,
                        us = FALSE,
                        new_england = TRUE,
@@ -27,5 +28,5 @@ multi_test <- function(src = "acs",
                        dataset = "acs5",
                        verbose = TRUE,
                        key = NULL) {
-  multi_geo_prep(src, table, year, towns, regions, counties, state, neighborhoods, tracts, blockgroups, msa, us, new_england, {{ nhood_name }}, {{ nhood_geoid }}, dataset, verbose, key)
+  multi_geo_prep(src, table, year, towns, regions, counties, state, neighborhoods, tracts, blockgroups, pumas, msa, us, new_england, {{ nhood_name }}, {{ nhood_geoid }}, dataset, verbose, key)
 }

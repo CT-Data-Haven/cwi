@@ -157,6 +157,26 @@ census_msa <- function(src, table, year, new_england, dataset, key, sleep, ...) 
   fetch
 }
 
+## PUMAs ----
+# fetch all in state, then filter like tracts (only available for ACS)
+census_pumas <- function(src, table, year, pumas, counties, state, dataset, key, sleep, ...) {
+  Sys.sleep(sleep)
+
+  fetch <- wrap_census(src, geography = "public use microdata area", table = table, year = year, state = state, dataset = dataset, key = key, ...)
+
+  if (identical(pumas, "all")) {
+    xw <- county_x_state(state, counties)
+  } else {
+    xw <- county_x_state(state, "all")
+    fetch <- dplyr::filter(fetch, GEOID %in% pumas)
+  }
+  fetch$county_geoid <- substr(fetch$GEOID, 1, 5)
+  fetch <- dplyr::inner_join(fetch, xw, by = "county_geoid")
+  fetch$county_geoid <- NULL
+  fetch$NAME <- fetch$GEOID
+  fetch
+}
+
 ## US ----
 # fetch
 census_us <- function(src, table, year, dataset, key, sleep, ...) {

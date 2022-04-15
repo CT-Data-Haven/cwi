@@ -4,13 +4,13 @@ bold_hdr <- function(place_name, place_type) {
 }
 
 ######## CENSUS: ACS + DECENNIAL ----
-geo_printout <- function(neighborhoods, tracts, blockgroups, towns, regions, counties, all_counties, drop_counties, state, msa, us, new_england, nhood_type) {
-  geos <- tibble::lst(neighborhoods, tracts, blockgroups, towns, regions, counties, state)
+geo_printout <- function(neighborhoods, tracts, blockgroups, towns, regions, pumas, counties, all_counties, drop_counties, state, msa, us, new_england, nhood_type) {
+  geos <- tibble::lst(neighborhoods, tracts, blockgroups, towns, regions, pumas, counties, state)
   if (drop_counties) {
     geos$counties <- NULL
   }
   # basically writing own imap_at
-  subgeos <- c("neighborhoods", "tracts", "blockgroups", "towns")
+  subgeos <- c("neighborhoods", "tracts", "blockgroups", "towns", "pumas")
   geos[subgeos] <- purrr::map(subgeos, function(geo_hdr) {
     geo <- geos[[geo_hdr]]
     if (is.null(geo)) {
@@ -45,6 +45,7 @@ geo_printout <- function(neighborhoods, tracts, blockgroups, towns, regions, cou
   }
   geos <- purrr::compact(geos)
   geos <- purrr::imap(geos, bold_hdr)
+  geos <- purrr::map(geos, stringr::str_replace_all, "(?<!\\{)(P|p)uma", "PUMA")
   cli::cli_ul(items = geos, .close = TRUE)
 
   # alert about using tracts for nhoods
