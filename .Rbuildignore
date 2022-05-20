@@ -16,3 +16,5 @@
 ^\.github$
 ^\.covrignore$
 ^codecov\.yml$
+^Makefile$
+.vscode

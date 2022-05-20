@@ -6,7 +6,7 @@
 \alias{cwi-package}
 \title{cwi: Prep for DataHaven's Community Wellbeing Index}
 \description{
-\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
 This is a collection of functions for collecting and analyzing Census data and other sources to write the 2019 Community Wellbeing Index reports. It also contains reference tables for local geographies—neighborhoods, regions, etc—and commonly used ACS table numbers.
 }

@@ -3,9 +3,7 @@
 \docType{data}
 \name{gnh_tenure}
 \alias{gnh_tenure}
-\title{ACS demo data - tenure
-
-This is a table of housing tenure data for Greater New Haven obtained with multi_geo_acs, to be used in testing and examples.}
+\title{ACS demo data - tenure}
 \format{
 A data frame with 45 rows and 5 variables:
 \describe{
@@ -20,8 +18,6 @@ A data frame with 45 rows and 5 variables:
 gnh_tenure
 }
 \description{
-ACS demo data - tenure
-
-This is a table of housing tenure data for Greater New Haven obtained with multi_geo_acs, to be used in testing and examples.
+This is a table of housing tenure data for Greater New Haven obtained with \code{multi_geo_acs}, to be used in testing and examples.
 }
 \keyword{datasets}

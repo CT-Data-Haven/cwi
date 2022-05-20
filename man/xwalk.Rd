@@ -21,12 +21,12 @@ A data frame with 67465 rows and 11 variables:
 }
 }
 \source{
-This is a filtered, cleaned, and pared down version of a file downloaded from \href{https://lehd.ces.census.gov/data/lodes/LODES7/ct/}{LEHD}, plus some spatial joins of TIGER shapefiles.
+TIGER shapefiles
 }
 \usage{
 xwalk
 }
 \description{
-A shortened version of the CT crosswalk file from the LEHD/LODES files, to translate between geographies in Connecticut.
+A crosswalk between geographies in Connecticut, built off of TIGER shapefiles.
 }
 \keyword{datasets}

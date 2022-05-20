@@ -11,13 +11,13 @@ vignette: >
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
-	fig.height = 4,
-	fig.width = 7,
-	message = TRUE,
-	warning = FALSE,
-	collapse = TRUE,
-	comment = "#>",
-	dpi = 150
+  fig.height = 3,
+  fig.width = 6,
+  message = TRUE,
+  warning = FALSE,
+  collapse = TRUE,
+  comment = "#>",
+  dpi = 150
 )
 ```
 
@@ -29,21 +29,23 @@ library(cwi)
 # tiny theme of a few cleaned up arguments
 theme_clean <- function(...) {
   theme_gray() +
-    theme(strip.placement = "outside",
-        strip.text.y.left = element_text(angle = 0, hjust = 0),
-        strip.text = element_text(face = "bold"),
-        panel.grid = element_blank(),
-        panel.background = element_blank(),
-        plot.title.position = "plot",
-        plot.title = element_text(size = rel(1.1)),
-        axis.ticks = element_blank(),
-        ...)
+    theme(
+      strip.placement = "outside",
+      strip.text.y.left = element_text(angle = 0, hjust = 0),
+      strip.text = element_text(face = "bold"),
+      panel.grid = element_blank(),
+      panel.background = element_blank(),
+      plot.title.position = "plot",
+      plot.title = element_text(size = rel(1.1)),
+      axis.ticks = element_blank(),
+      ...
+    )
 }
 ```
 
 This is a quick look at using the crosstab-related functions that were expanded upon to make the `dcws` package. There are 3 test files of crosstabs that ship with this package for internal testing and illustration. This vignette recreates the data in the `cws_demo` dataset. 
 
-![Screenshot of DCWS crosstabs spreadsheet](../man/figures/xtab-screenshot.png "Screenshot of DCWS crosstabs spreadsheet")
+![Screenshot of DCWS crosstabs spreadsheet](../man/figures/xtab-screenshot.png "Screenshot of DCWS crosstabs spreadsheet"){ width=100% }
 
 ## Reading data
 
@@ -77,10 +79,10 @@ wts_in
 
 wts <- wts_in %>%
   mutate(group = group %>%
-           str_replace("(?<=\\d) to (?=[\\$\\d])", "-") %>%
-           str_replace_all(",000", "K") %>%
-           str_replace("Less than (?=\\$)", "<") %>%
-           str_replace(" or more", "+")) 
+    str_replace("(?<=\\d) to (?=[\\$\\d])", "-") %>%
+    str_replace_all(",000", "K") %>%
+    str_replace("Less than (?=\\$)", "<") %>%
+    str_replace(" or more", "+"))
 
 income_lvls <- list(
   "<$30K" = c("<$15K", "$15K-$30K"),
@@ -119,7 +121,7 @@ cws %>%
 
 For many questions, what you probably want to report out or display is the share of people who answered yes, or the combination of "strongly agree" & "somewhat agree".
 
-```{r chart}
+```{r chart, out.width="100%"}
 library(ggplot2)
 
 cws %>%
@@ -127,11 +129,12 @@ cws %>%
   sub_nonanswers() %>%
   filter(response == "Yes") %>%
   mutate(across(category:group, forcats::as_factor),
-         group = group %>%
-           forcats::fct_recode(Men = "M", Women = "F") %>%
-           forcats::fct_relabel(str_replace, "(^\\b)(?=\\d+)", "Ages "),
-         category = forcats::fct_recode(category, Total = "Greater New Haven"),
-         lbl = scales::percent(value, accuracy = 1)) %>%
+    group = group %>%
+      forcats::fct_recode(Men = "M", Women = "F") %>%
+      forcats::fct_relabel(str_replace, "(^\\b)(?=\\d+)", "Ages "),
+    category = forcats::fct_recode(category, Total = "Greater New Haven"),
+    lbl = scales::percent(value, accuracy = 1)
+  ) %>%
   ggplot(aes(x = forcats::fct_rev(group), y = value)) +
   geom_col(width = 0.8, fill = "#047e87") +
   geom_text(aes(label = lbl), hjust = 1, nudge_y = -0.01, fontface = "bold", color = "white") +
@@ -139,10 +142,12 @@ cws %>%
   coord_flip() +
   facet_grid(rows = vars(category), scales = "free_y", space = "free_y", switch = "y") +
   theme_clean() +
-  labs(x = NULL, y = NULL, 
-       title = "Neighborhood satisfaction is high across age and gender",
-       subtitle = "Share of adults satisfied with area, Greater New Haven, 2015",
-       caption = "Source: 2015 DataHaven Community Wellbeing Survey")
+  labs(
+    x = NULL, y = NULL,
+    title = "Neighborhood satisfaction is high across age and gender",
+    subtitle = "Share of adults satisfied with area, Greater New Haven, 2015",
+    caption = "Source: 2015 DataHaven Community Wellbeing Survey"
+  )
 ```
 
 Note that different questions have different response values. In general, it's better to work with each question separately; easy and safe ways to do this are to make separate data frames for different questions (e.g. with `dplyr::filter`), or by splitting (e.g. with `split(data$question)`) and iterating with `lapply` or `purrr::map` before binding or joining back together.
@@ -157,7 +162,7 @@ cws %>%
 
 A common use is to show multiple related indicators side by side in a table or chart. Here I'm prepping to show both the question about neighborhood satisfaction (yes / no) and the responsiveness of local government (combined excellent & good).
 
-```{r govt_chart}
+```{r govt_chart, out.width="100%", fig.height=5}
 govt <- cws %>%
   mutate(across(c(category, group), forcats::as_factor)) %>%
   filter(code %in% c("Q1", "Q3A")) %>%
@@ -171,7 +176,7 @@ cws_out[["satisfied_with_area"]] <- govt$Q1 %>%
 
 cws_out[["local_govt_is_responsive"]] <- govt$Q3A %>%
   mutate(response = forcats::as_factor(response) %>%
-           forcats::fct_collapse(excellent_good = c("Excellent", "Good"))) %>%
+    forcats::fct_collapse(excellent_good = c("Excellent", "Good"))) %>%
   group_by(across(-value)) %>%
   summarise(value = sum(value)) %>%
   sub_nonanswers(nons = c("Don't know enough about it in order to say", "Refused")) %>%
@@ -179,12 +184,14 @@ cws_out[["local_govt_is_responsive"]] <- govt$Q3A %>%
 
 cws_out %>%
   bind_rows(.id = "indicator") %>%
-  mutate(group = group %>%
-           forcats::fct_relabel(str_replace, "(^\\b)(?=\\d+)", "Ages ") %>%
-           forcats::fct_recode(Black = "Black/Afr Amer"),
-         category = ifelse(as.character(category) == as.character(group), "Total", as.character(category)) %>% forcats::as_factor(),
-         lbl = scales::percent(value, accuracy = 1),
-         indicator = camiller::clean_titles(indicator)) %>%
+  mutate(
+    group = group %>%
+      forcats::fct_relabel(str_replace, "(^\\b)(?=\\d+)", "Ages ") %>%
+      forcats::fct_recode(Black = "Black/Afr Amer"),
+    category = ifelse(as.character(category) == as.character(group), "Total", as.character(category)) %>% forcats::as_factor(),
+    lbl = scales::percent(value, accuracy = 1),
+    indicator = camiller::clean_titles(indicator)
+  ) %>%
   filter(category %in% c("Total", "Age", "Race/Ethnicity")) %>%
   ggplot(aes(x = forcats::fct_rev(group), y = value)) +
   geom_col(width = 0.8, fill = "#047e87") +
@@ -193,10 +200,12 @@ cws_out %>%
   coord_flip() +
   facet_grid(rows = vars(category), cols = vars(indicator), scales = "free", space = "free_y", switch = "y") +
   theme_clean() +
-  labs(x = NULL, y = NULL,
-       title = "Neighborhood satisfaction is high, even when government\nfeels unresponsive",
-       subtitle = "Share of adults, Greater New Haven, 2015",
-       caption = "Source: 2015 DataHaven Community Wellbeing Survey")
+  labs(
+    x = NULL, y = NULL,
+    title = "Neighborhood satisfaction is high, even when government\nfeels unresponsive",
+    subtitle = "Share of adults, Greater New Haven, 2015",
+    caption = "Source: 2015 DataHaven Community Wellbeing Survey"
+  )
 ```
 
 

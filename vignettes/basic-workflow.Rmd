@@ -9,13 +9,13 @@ vignette: >
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
-	fig.height = 4,
-	fig.width = 7,
-	message = TRUE,
-	warning = FALSE,
-	collapse = TRUE,
-	comment = "#>",
-	dpi = 150
+  fig.height = 3,
+  fig.width = 6,
+  message = TRUE,
+  warning = FALSE,
+  collapse = TRUE,
+  comment = "#>",
+  dpi = 150
 )
 ```
 
@@ -31,9 +31,9 @@ library(cwi)
 The tables I'm working with are `B01003`, total population; `B03002`, race and Latino ethnicity; and `B25003`, housing tenure. It's easiest to save these in a named list, then map over the list calling `multi_geo_acs()` for each table number.
 
 ```{r tbls}
-yr <- 2019
+yr <- 2020
 table_nums <- list(
-  total_pop = "B01003", 
+  total_pop = "B01003",
   race = "B03002",
   tenure = "B25003"
 )
@@ -46,9 +46,10 @@ I'm pulling out the entries in the `cwi` dataset `cwi::regions` (a list) to only
 ```{r acs1, message=FALSE}
 gnh_regions <- regions[c("Greater New Haven", "New Haven Inner Ring", "New Haven Outer Ring")]
 
-gnh_data <- map(table_nums, 
-    ~multi_geo_acs(table = ., year = yr, towns = regions$`Greater New Haven`,
-                   regions = gnh_regions, counties = "New Haven", state = "09", sleep = 1))
+gnh_data <- map(table_nums, multi_geo_acs,
+  year = yr, towns = regions$`Greater New Haven`,
+  regions = gnh_regions, counties = "New Haven", state = "09", sleep = 1
+)
 
 gnh_data$total_pop
 ```
@@ -56,7 +57,10 @@ gnh_data$total_pop
 Neighborhoods with corresponding tracts or block groups are included for 4 cities (see `neighborhood_tracts`). Pass those to get neighborhood-level aggregates.
 
 ```{r acs2}
-multi_geo_acs("B01003", towns = "New Haven", counties = "New Haven", neighborhoods = new_haven_tracts)
+multi_geo_acs("B01003",
+  towns = "New Haven", counties = "New Haven",
+  neighborhoods = new_haven_tracts
+)
 ```
 
 
@@ -73,7 +77,7 @@ The race and ethnicity table will require some calculations, using the brilliant
 
 ```{r calc}
 gnh_data$race %>%
-  label_acs(year = yr) %>% 
+  label_acs(year = yr) %>%
   group_by(level, county, name) %>%
   add_grps(list(total = 1, white = 3, black = 4, latino = 12, other = 5:9), group = label) %>%
   calc_shares(group = label, denom = "total")
@@ -97,25 +101,27 @@ homeownership
 
 `geo_level_plot()` gives a quick visual overview of the homeownership rates, highlighting town-level values.
 
-```{r geo_plot}
-homeownership %>% 
+```{r geo_plot, out.width="100%"}
+homeownership %>%
   geo_level_plot(value = share, hilite = "darkslateblue", type = "point")
 ```
 
 `acs_quick_map()` gives a quick map sketch of the rates. This function uses the Jenks algorithm for making breaks with `jenks()`. This algorithm is well suited for visually displaying larger inequalities, but the number of breaks you give it won't necessarily be the number of breaks returned.This function lets us see whether there's a geographic distribution of this data with minimal work. 
 
-```{r quick_map1}
+```{r quick_map1, out.width="100%"}
 tenure_map <- homeownership %>%
   filter(level == "4_town") %>%
-  quick_map(value = share, level = "town", color = "black", size = 0.4, 
-                title = "Homeownership, Greater New Haven", palette = "BuPu")
+  quick_map(
+    value = share, level = "town", color = "black", size = 0.4,
+    title = "Homeownership, Greater New Haven", palette = "BuPu"
+  )
 
 tenure_map
 ```
 
 Since this returns a `ggplot` object with `sf` data, we can add additional `ggplot` functions, such as labeling, themes, or additional scales or geoms.
 
-```{r quick_map2, message=FALSE, warning=FALSE}
+```{r quick_map2, message=FALSE, warning=FALSE, out.width="100%"}
 tenure_map +
   labs(subtitle = "By town, 2019") +
   geom_sf(data = . %>% filter(name == "New Haven"), fill = NA, color = "black", size = 1.5)
@@ -128,25 +134,33 @@ Say as part of a pipeline, you need to do some calculations, write different sec
 For example, I need to pull a table of populations by age group for several regions of Connecticut. I don't need to split populations by gender, so I'll add up male and female populations for each age group. I don't actually need to more detailed age groups now, but I need to stash them in files for later, so I'll aggregate, write a bunch of files, and then aggregate into broader age groups that I need for my current work.
 
 ```{r batch, eval=FALSE, message=TRUE, warning=TRUE}
-new_haven_regions <- regions[c("Greater New Haven", "New Haven Inner Ring", 
-                             "New Haven Outer Ring", "Lower Naugatuck Valley", "Greater Waterbury")]
+new_haven_regions <- regions[c(
+  "Greater New Haven", "New Haven Inner Ring",
+  "New Haven Outer Ring", "Lower Naugatuck Valley",
+  "Greater Waterbury"
+)]
 
-acs <- multi_geo_acs(table = "B01001", year = yr, towns = NULL, regions = new_haven_regions, 
-              counties = c("New Haven County", "Fairfield County")) %>%
+age <- multi_geo_acs(
+  table = "B01001", year = yr, towns = NULL,
+  regions = new_haven_regions,
+  counties = c("New Haven County", "Fairfield County")
+) %>%
   label_acs(year = yr) %>%
   # shortcut around tidyr::separate
   separate_acs(into = c("sex", "age"), drop_total = TRUE) %>%
   filter(!is.na(age)) %>%
   mutate(age = forcats::as_factor(age)) %>%
   group_by(name, level, age) %>%
-  summarise(estimate = sum(estimate), moe = tidycensus::moe_sum(moe, estimate) %>% round()) %>%
+  summarise(estimate = sum(estimate)) %>%
   ungroup()
 
-acs %>%
+age %>%
   split(.$name) %>%
   batch_csv_dump(base_name = "pop_by_age", bind = TRUE, verbose = TRUE) %>%
   group_by(level, name) %>%
-  camiller::add_grps(list(ages0_4 = 1, ages5_17 = 2:4, ages0_17 = 1:4, ages18_24 = 5:8, ages0_24 = 1:8), group = age, estimate = estimate, moe = moe) %>%
+  camiller::add_grps(list(ages00_04 = 1, ages05_17 = 2:4, ages00_17 = 1:4),
+    group = age, value = estimate
+  ) %>%
   arrange(level, name, age)
 ```
 
@@ -171,7 +185,7 @@ employment
 
 Next, say I want to look at the industries that were largest in New Haven county in 2018, and see how those have changed both for the county and statewide over this time period. I'll filter `employment`, get the industries with the largest numbers of employees, then filter `employment` for just those industries and plot it.
 
-```{r qwi2}
+```{r qwi2, out.width="100%"}
 top2018 <- employment %>%
   filter(year == 2018, county == "009") %>%
   top_n(8, emp) %>%
@@ -183,11 +197,13 @@ employment %>%
   mutate(label = stringr::str_sub(label, 1, 25)) %>%
   mutate(Emp_1k = emp / 1000) %>%
   ggplot(aes(x = year, y = Emp_1k, color = label)) +
-    geom_line() +
-    labs(x = "Year", y = "Employees (thousands)", title = "Employment by industry", 
-         subtitle = "Connecticut and New Haven County, 2002-2018", color = "Industry") +
-    theme_minimal() +
-    facet_wrap(vars(location), scales = "free_y")
+  geom_line() +
+  labs(
+    x = "Year", y = "Employees (thousands)", title = "Employment by industry",
+    subtitle = "Connecticut and New Haven County, 2002-2018", color = "Industry"
+  ) +
+  theme_minimal() +
+  facet_wrap(vars(location), scales = "free_y")
 ```
 
 **Update 11/2021:** The QWI API was broken for a little while. It's up again, but all the payroll data is missing. This code should still be valid if it ever gets returned.
@@ -202,12 +218,15 @@ employment %>%
   adj_inflation(value = avg_wage, base_year = 2018, year = year) %>%
   mutate(adj_wage_1k = round(adj_avg_wage / 1000)) %>%
   ggplot(aes(x = year, y = adj_wage_1k, color = label)) +
-    geom_line() +
-    scale_y_continuous(labels = scales::dollar) +
-    labs(x = "Year", y = "Average annual wages (thousands)", title = "Average annual wages by industry (adjusted to 2018 dollars)", 
-         subtitle = "Connecticut and New Haven County, 2002-2018", color = "Industry") +
-    theme_minimal() +
-    facet_wrap(vars(location), scales = "free_y")
+  geom_line() +
+  scale_y_continuous(labels = scales::dollar) +
+  labs(
+    x = "Year", y = "Average annual wages (thousands)",
+    title = "Average annual wages by industry (adjusted to 2018 dollars)",
+    subtitle = "Connecticut and New Haven County, 2002-2018", color = "Industry"
+  ) +
+  theme_minimal() +
+  facet_wrap(vars(location), scales = "free_y")
 ```
 
 Now we have a visual that shows that in a few industries, wages have climbed over the past several years, but in many industries, wages haven't increased except by inflation.
@@ -216,8 +235,10 @@ Now we have a visual that shows that in a few industries, wages have climbed ove
 
 To look at unemployment rates over time, I can use `laus_trend()`. The LAUS covers smaller geographies than the QWI, so `laus_trend()` is set up to find data by a combination of state, counties, or towns. The LAUS API returns monthly data on labor force counts, employment counts, unemployed counts, and unemployment rate; `laus_trend()` lets you specify which of these measures to fetch.
 
-```{r laus}
-unemployment <- laus_trend(c("New Haven", "New Haven County", "Connecticut"), startyear = 2000, endyear = 2018, measures = "unemployment rate") %>%
+```{r laus, out.width="100%"}
+unemployment <- laus_trend(c("New Haven", "New Haven County", "Connecticut"),
+  startyear = 2000, endyear = 2018, measures = "unemployment rate"
+) %>%
   mutate(unemployment_rate = unemployment_rate / 100) %>%
   select(area, date, value = unemployment_rate)
 
@@ -233,7 +254,7 @@ unemp_plot
 
 DataHaven's logo is saved as an SVG file inside this package. (Folks at other orgs who fork this, feel free to replace with your own logo.) `add_logo` tacks on a logo, either that default, or another image or `ggplot` grob, making it easier to create distribution-ready plots (which this one is not, tbh).
 
-```{r logo}
+```{r logo, out.width="100%"}
 add_logo(unemp_plot, position = "right")
 ```
 

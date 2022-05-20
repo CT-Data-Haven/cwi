@@ -20,6 +20,6 @@ tract_sf
 tract_sf19
 }
 \description{
-Data frame of Connecticut tracts with \code{sf} geometries. This was updated in Nov. 2021 assuming the 2020 ACS data would be out in December. Because it is now delayed, I've added back in a 2019 version temporarily.
+Data frame of Connecticut tracts with \code{sf} geometries. \code{tract_sf19} is the 2019 version, should you need an older shapefile.
 }
 \keyword{datasets}

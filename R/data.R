@@ -1,17 +1,17 @@
-#' Variable labels from the 2019 ACS
+#' Variable labels from the 2020 ACS
 #'
-#' Dataset of ACS variable labels, loaded from `tidycensus::load_variables()` for 2019 and cleaned up slightly.
+#' Dataset of ACS variable labels, loaded from `tidycensus::load_variables()` for 2020 and cleaned up slightly.
 #'
 #' This dataset is updated and renamed accordingly with each annual ACS release.
 #'
-#' @format A data frame with 27039 rows and 3 variables:
+#' @format A data frame with 27850 rows and 3 variables:
 #' \describe{
 #'   \item{name}{Variable code, where first 6 characters are the table number and last 3 digits are the variable number}
 #'   \item{label}{Readable label of each variable}
 #'   \item{concept}{Table name}
 #' }
 #' @source US Census Bureau via `tidycensus`
-"acs_vars19"
+"acs_vars20"
 
 
 #' Variable labels from the 2010 Decennial Census
@@ -50,13 +50,13 @@
 #'
 #' A reference dataset of all the metropolitan statistical areas (MSAs) in the US, marked with whether they're in a New England state.
 #'
-#' @format A data frame with 389 rows and 3 variables:
+#' @format A data frame with 392 rows and 3 variables:
 #' \describe{
-#'   \item{GEOID}{GEOID/FIPS code}
+#'   \item{geoid}{GEOID/FIPS code}
 #'   \item{name}{Name of MSA}
 #'   \item{region}{String: whether MSA is inside or outside of New England}
 #' }
-#' @source US Census Bureau via `tidycensus`. Note that these are 2015 MSA definitions.
+#' @source US Census Bureau via `tidycensus`. Note that these are as of 2020.
 "msa"
 
 
@@ -64,7 +64,7 @@
 #'
 #' Datasets of neighborhoods for New Haven, Hartford/West Hartford, Stamford, and Bridgeport. Some tracts cross between more than one neighborhood; use `weight` column for aggregating values such as populations. Previously this included a block group version for New Haven, which I've removed; I'm also renaming `nhv_tracts` to `new_haven_tracts` for consistency.
 #'
-#' These were updated in Nov. 2021, assuming the 2020 ACS would be coming out at the beginning of December...which it didn't. Until it does come out, there will be 2019 versions of weight tables with names ending in `"19"`; after that, those will be deleted.
+#' These were updated to 2020 tract definitions. There are still 2019 versions of weight tables with names ending in `"19"`; for the time being, those will stick around for use with pre-2020 data.
 #'
 #' @format A data frame
 #' \describe{
@@ -207,7 +207,7 @@ NULL
 
 #' CT crosswalk
 #'
-#' A shortened version of the CT crosswalk file from the LEHD/LODES files, to translate between geographies in Connecticut.
+#' A crosswalk between geographies in Connecticut, built off of TIGER shapefiles.
 #'
 #' @format A data frame with 67465 rows and 11 variables:
 #' \describe{
@@ -223,7 +223,7 @@ NULL
 #'   \item{puma}{PUMA name}
 #'   \item{puma_fips}{PUMA FIPS code}
 #' }
-#' @source This is a filtered, cleaned, and pared down version of a file downloaded from [LEHD](https://lehd.ces.census.gov/data/lodes/LODES7/ct/), plus some spatial joins of TIGER shapefiles.
+#' @source TIGER shapefiles
 "xwalk"
 
 
@@ -231,12 +231,11 @@ NULL
 #'
 #' A version of `cwi::xwalk` that only contains tracts and town names, and is deduplicated for tracts that span multiple towns.
 #'
-#' @format A data frame with 830 rows and 2 variables:
+#' @format A data frame with 879 rows and 2 variables:
 #' \describe{
 #'   \item{tract}{Tract FIPS code}
 #'   \item{town}{Town name}
 #' }
-#' @source This is a filtered, cleaned, and pared down version of a file downloaded from [LEHD](https://lehd.ces.census.gov/data/lodes/LODES7/ct/).
 "tract2town"
 
 
@@ -271,9 +270,9 @@ NULL
 "cws_demo"
 
 
-#' @title ACS demo data - tenure
+#' ACS demo data - tenure
 #'
-#' This is a table of housing tenure data for Greater New Haven obtained with multi_geo_acs, to be used in testing and examples.
+#' This is a table of housing tenure data for Greater New Haven obtained with `multi_geo_acs`, to be used in testing and examples.
 #'
 #' @format A data frame with 45 rows and 5 variables:
 #' \describe{

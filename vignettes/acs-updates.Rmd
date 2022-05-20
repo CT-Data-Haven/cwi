@@ -10,15 +10,45 @@ vignette: >
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
-	echo = FALSE,
-	message = FALSE,
-	warning = FALSE,
-	collapse = TRUE,
-	comment = "#>"
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  collapse = TRUE,
+  comment = "#>"
 )
 library(cwi)
 library(dplyr)
+library(purrr)
 ```
+
+# 2020 ACS
+
+```{r}
+yrs <- rlang::set_names(2019:2020)
+acs <- map(yrs, cwi:::clean_acs_vars, "acs5") %>%
+  map(mutate, table_num = stringr::str_extract(name, "^[A-Z]\\d+[A-Z]*"))
+
+tbls <- acs %>%
+  map(distinct, concept, table_num) %>%
+  map(mutate, concept = stringr::str_replace_all(concept, "20\\d{2}", "20xx"))
+
+bind_rows(tbls, .id = "year") %>%
+  tidyr::pivot_wider(names_from = year, values_from = c(concept), names_glue = "{.value}_{year}")
+
+map(tbls, ~ paste("Number of rows:", nrow(.)))
+```
+
+```{r}
+reduce(tbls, full_join, by = "table_num", suffix = substr(names(tbls), 3, 4)) %>%
+  filter(concept19 != concept20 | is.na(concept19) | is.na(concept20)) %>%
+  knitr::kable()
+```
+
+Not a lot new in the 2020 ACS.
+
+----
+
+# 2019 ACS
 
 ## New variables
 

@@ -76,7 +76,7 @@ library(cwi)
 ```{r fetch, message=TRUE, warning=FALSE}
 tenure <- multi_geo_acs(
   table = basic_table_nums$tenure,
-  year = 2019,
+  year = 2020,
   regions = regions[c("Greater New Haven", "New Haven Inner Ring", "New Haven Outer Ring")],
   counties = "New Haven",
   towns = regions[["Greater New Haven"]],
@@ -88,18 +88,18 @@ tenure
 
 ```{r homeownership_rates}
 homeownership <- tenure %>%
-  label_acs() %>%
-  group_by(level, name) %>%
-  mutate(share = estimate / estimate[1]) %>% # or use camiller::calc_shares
-  filter(stringr::str_detect(label, "Owner")) %>%
-  select(level, name, share)
+  label_acs(year = 2020) %>%
+  dplyr::group_by(level, name) %>%
+  camiller::calc_shares(group = label, denom = "Total") %>%
+  dplyr::filter(stringr::str_detect(label, "Owner")) %>%
+  dplyr::select(level, name, share)
 
 homeownership
 ```
 
 ```{r geo_plot}
 geo_level_plot(homeownership, value = share, hilite = "#EA7FA2", 
-               title = "Homeownership in Greater New Haven, 2019")
+               title = "Homeownership in Greater New Haven, 2020")
 ```
 
 See more detail in the vignette: `vignette("basic-workflow")`.

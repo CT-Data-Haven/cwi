@@ -5,15 +5,15 @@
 \alias{msa}
 \title{Names and GEOIDs of regional MSAs}
 \format{
-A data frame with 389 rows and 3 variables:
+A data frame with 392 rows and 3 variables:
 \describe{
-\item{GEOID}{GEOID/FIPS code}
+\item{geoid}{GEOID/FIPS code}
 \item{name}{Name of MSA}
 \item{region}{String: whether MSA is inside or outside of New England}
 }
 }
 \source{
-US Census Bureau via \code{tidycensus}. Note that these are 2015 MSA definitions.
+US Census Bureau via \code{tidycensus}. Note that these are as of 2020.
 }
 \usage{
 msa

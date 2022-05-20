@@ -6,7 +6,7 @@
 \usage{
 multi_geo_acs(
   table,
-  year = 2019,
+  year = 2020,
   towns = "all",
   regions = NULL,
   counties = "all",
@@ -14,6 +14,7 @@ multi_geo_acs(
   neighborhoods = NULL,
   tracts = NULL,
   blockgroups = NULL,
+  pumas = NULL,
   msa = FALSE,
   us = FALSE,
   new_england = TRUE,
@@ -30,7 +31,7 @@ multi_geo_acs(
 \arguments{
 \item{table}{A string giving the ACS table number.}
 
-\item{year}{The year of the ACS table; currently defaults 2019 (most recent available).}
+\item{year}{The year of the ACS table; currently defaults 2020 (most recent available).}
 
 \item{towns}{A character vector of names of towns to include; \code{"all"} (default) for all towns optionally filtered by county; or \code{NULL} to not fetch town-level table.}
 
@@ -45,6 +46,8 @@ multi_geo_acs(
 \item{tracts}{A character vector of 11-digit FIPS codes of tracts to include, or \code{"all"} for all tracts optionally filtered by county. Defaults \code{NULL}.}
 
 \item{blockgroups}{A character vector of 12-digit FIPS codes of block groups to include, or \code{"all"} for all block groups optionally filtered by county. Defaults \code{NULL}.}
+
+\item{pumas}{A character vector of 7-digit FIPS codes of public use microdata areas (PUMAs) to include, or \code{"all"} for all PUMAs optionally filtered by county. It's up to you to filter out any redundancies--some large towns are standalone PUMAs, as are some sparsely-population counties. Defaults \code{NULL}.}
 
 \item{msa}{Logical: whether to fetch New England states' metropolitan statistical areas. Defaults \code{FALSE}.}
 
@@ -72,7 +75,7 @@ multi_geo_acs(
 A tibble with GEOID, name, variable code, estimate, moe, geography level, state, and year, as applicable, for the chosen ACS table.
 }
 \description{
-Fetch a data table from the ACS via \code{tidycensus} with your choice of geographies at multiple levels. For geographies made of aggregates, i.e. neighborhoods made of tracts or regions made of towns, the returned table will have estimates summed and margins of error calculated for the whole area.
+Fetch a data table from the ACS via \code{tidycensus} with your choice of geographies at multiple levels. For geographies made of aggregates, i.e. neighborhoods made of tracts or regions made of towns, the returned table will have estimates summed and margins of error calculated for the whole area. Any geographic levels that are null will be excluded.
 }
 \details{
 This function essentially calls \code{tidycensus::get_acs()} multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying \code{tidycensus::get_acs()} requires a Census API key. As is the case with other \code{tidycensus} functions, \code{multi_geo_acs} assumes this key is stored as \code{CENSUS_API_KEY} in your \code{.Renviron}. See \code{\link[tidycensus:census_api_key]{tidycensus::census_api_key()}} for installation.

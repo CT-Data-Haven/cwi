@@ -1,6 +1,6 @@
 gnh_tenure <- multi_geo_acs(basic_table_nums$tenure, towns = regions$`Greater New Haven`,
-              counties = NULL, regions = regions["Greater New Haven"]) %>%
-  label_acs() %>%
+              counties = NULL, regions = regions["Greater New Haven"], year = 2020, verbose = FALSE) %>%
+  label_acs(year = 2020) %>%
   dplyr::mutate(tenure = forcats::as_factor(label) %>%
                   forcats::fct_relabel(stringr::str_remove, "^\\w+\\!{2}") %>%
                   forcats::fct_relabel(stringr::str_replace_all, "\\s", "_") %>%

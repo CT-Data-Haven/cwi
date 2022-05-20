@@ -5,4 +5,4 @@ regions <- split(not_split, not_split$region) %>%
   purrr::map(dplyr::pull, town) %>%
   purrr::map(sort)
 
-usethis::use_data(regions, overwrite = T)
+usethis::use_data(regions, overwrite = TRUE)
