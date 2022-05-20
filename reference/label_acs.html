@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -68,11 +68,11 @@
     </div>
 
     <div class="ref-description">
-    <p><code><a href="https://walker-data.com/tidycensus/reference/get_acs.html" class="external-link">tidycensus::get_acs</a></code> returns an ACS table with its variable codes, which can be joined with <code><a href="acs_vars19.html">cwi::acs_vars19</a></code> to get readable labels. This function is just a quick wrapper around the common task of joining these two data frames.</p>
+    <p><code><a href="https://walker-data.com/tidycensus/reference/get_acs.html" class="external-link">tidycensus::get_acs</a></code> returns an ACS table with its variable codes, which can be joined with <code>cwi::acs_vars19</code> to get readable labels. This function is just a quick wrapper around the common task of joining these two data frames.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">label_acs</span><span class="op">(</span><span class="va">data</span>, year <span class="op">=</span> <span class="fl">2019</span>, survey <span class="op">=</span> <span class="st">"acs5"</span>, variable <span class="op">=</span> <span class="va">variable</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">label_acs</span><span class="op">(</span><span class="va">data</span>, year <span class="op">=</span> <span class="fl">2020</span>, survey <span class="op">=</span> <span class="st">"acs5"</span>, variable <span class="op">=</span> <span class="va">variable</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -80,7 +80,7 @@
     <dl><dt>data</dt>
 <dd><p>A data frame/tibble.</p></dd>
 <dt>year</dt>
-<dd><p>The endyear of ACS data; defaults 2019.</p></dd>
+<dd><p>The endyear of ACS data; defaults 2020.</p></dd>
 <dt>survey</dt>
 <dd><p>A string: which ACS estimate to use. Defaults to 5-year (<code>"acs5"</code>), but can also be 1-year (<code>"acs1"</code>) or 3-year (<code>"acs3"</code>), though both 1-year and 3-year have limited availability.</p></dd>
 <dt>variable</dt>
@@ -92,7 +92,7 @@
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><a href="acs_vars19.html">acs_vars19</a></p></div>
+    <div class="dont-index"><p><a href="acs_vars20.html">acs_vars20</a></p></div>
     </div>
 
   </div>
@@ -107,7 +107,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer></div>

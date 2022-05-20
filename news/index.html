@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -67,6 +67,12 @@
     </div>
 
     <div class="section level2">
+<h2 class="page-header" data-toc-text="1.1.0" id="cwi-110">cwi 1.1.0<a class="anchor" aria-label="anchor" href="#cwi-110"></a></h2>
+<p><strong>Some updates to 2020</strong></p>
+<ul><li>2020 ACS 5-year data are finally out, so <code>acs_vars19</code> has been replaced by <code>acs_vars20</code>, and <code>multi_geo_acs</code> now uses 2020 as the default. Some examples &amp; vignette code have been updated to match.</li>
+<li>Decennial census data <em>aren’t</em> out yet and won’t be for some time, so decennial-related things still default to 2010.</li>
+</ul></div>
+    <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.0" id="cwi-100">cwi 1.0.0<a class="anchor" aria-label="anchor" href="#cwi-100"></a></h2>
 <p><strong>Major exciting overhaul!</strong> This was the first time I felt like enough of this package is flexible and well thought out to consider it a real release. A lot of the changes are under the hood–I split a lot of functions into slimmed-down main “caller” functions and multiple task-focused “helper” functions, making it easier to maintain the package, add or modify features, and use the same code for multiple tasks.</p>
 <div class="section level3">
@@ -85,17 +91,14 @@
 </ul></div>
 <div class="section level3">
 <h3 id="to-do-1-0-0">To do<a class="anchor" aria-label="anchor" href="#to-do-1-0-0"></a></h3>
-<ul><li>Update to 2020 ACS and Decennial defaults</li>
-</ul></div>
+<ul><li>Update to 2020 ACS and Decennial defaults</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.4.5" id="cwi-045">cwi 0.4.5<a class="anchor" aria-label="anchor" href="#cwi-045"></a></h2>
-<ul><li>Add sleep argument to <code>multi_geo_acs</code> for dealing with API crashes.</li>
-</ul></div>
+<ul><li>Add sleep argument to <code>multi_geo_acs</code> for dealing with API crashes.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.4.4" id="cwi-044">cwi 0.4.4<a class="anchor" aria-label="anchor" href="#cwi-044"></a></h2>
-<ul><li>Add handling for reading crosstab weights placed in headers alongside data rather than in a separate table (e.g. for 2021).</li>
-</ul></div>
+<ul><li>Add handling for reading crosstab weights placed in headers alongside data rather than in a separate table (e.g. for 2021).</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.4.3" id="cwi-043">cwi 0.4.3<a class="anchor" aria-label="anchor" href="#cwi-043"></a></h2>
 <ul><li>Import <code><a href="https://camille-s.github.io/camiller/reference/calc_shares.html" class="external-link">camiller::calc_shares</a></code>
@@ -117,13 +120,10 @@
 <ul><li>Rewrote neighborhood weights with the 2020 redistricting block boundaries. Dropped the block group table that was only done for New Haven, and changed the name of <code>nhv_tracts</code> to <code>new_haven_tracts</code> to match those for other cities.</li>
 <li>QWI API is working again, but payroll data is missing from their database.</li>
 </ul></div>
-    <div class="section level2">
-<h2 class="page-header" data-toc-text="0.3.2" id="cwi-032">cwi 0.3.2<a class="anchor" aria-label="anchor" href="#cwi-032"></a></h2>
-</div>
+    <div class="section level2"><h2 class="page-header" data-toc-text="0.3.2" id="cwi-032">cwi 0.3.2<a class="anchor" aria-label="anchor" href="#cwi-032"></a></h2></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.1" id="cwi-031">cwi 0.3.1<a class="anchor" aria-label="anchor" href="#cwi-031"></a></h2>
-<ul><li>Minor behind-the-scenes updates</li>
-</ul></div>
+<ul><li>Minor behind-the-scenes updates</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.0" id="cwi-030">cwi 0.3.0<a class="anchor" aria-label="anchor" href="#cwi-030"></a></h2>
 <ul><li>QWI example in the basic workflow vignette is currently turned off, because the Census QWI API has been down for at least a few days now. Will turn it back on when the API is (hopefully) back online.</li>
@@ -137,14 +137,11 @@
 <li>Bug fixes in <code>sub_nonanswers</code>, <code>xwalk</code>
 </li>
 </ul></div>
-    <div class="section level2">
-<h2 class="page-header" data-toc-text="0.1.3" id="cwi-013">cwi 0.1.3<a class="anchor" aria-label="anchor" href="#cwi-013"></a></h2>
-</div>
+    <div class="section level2"><h2 class="page-header" data-toc-text="0.1.3" id="cwi-013">cwi 0.1.3<a class="anchor" aria-label="anchor" href="#cwi-013"></a></h2></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.2" id="cwi-012">cwi 0.1.2<a class="anchor" aria-label="anchor" href="#cwi-012"></a></h2>
 <ul><li>
-<code>multi_geo_acs</code> &amp; <code>multi_geo_decennial</code> call <code><a href="https://rdrr.io/pkg/janitor/man/clean_names.html" class="external-link">janitor::clean_names</a></code> before returning. This keeps columns aligned properly if neighborhoods are included.</li>
-</ul></div>
+<code>multi_geo_acs</code> &amp; <code>multi_geo_decennial</code> call <code><a href="https://rdrr.io/pkg/janitor/man/clean_names.html" class="external-link">janitor::clean_names</a></code> before returning. This keeps columns aligned properly if neighborhoods are included.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.1" id="cwi-011">cwi 0.1.1<a class="anchor" aria-label="anchor" href="#cwi-011"></a></h2>
 <ul><li>Expanded <code>xwalk</code> data to include more geographic levels.</li>
@@ -176,7 +173,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer></div>

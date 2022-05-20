@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -105,8 +105,70 @@
     
     
 <div class="section level2">
-<h2 id="new-variables">New variables<a class="anchor" aria-label="anchor" href="#new-variables"></a>
+<h2 id="acs">2020 ACS<a class="anchor" aria-label="anchor" href="#acs"></a>
 </h2>
+<pre><code><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1,140 × 3</span></span>
+<span class="co">#&gt;    table_num concept_2019                                           concept_2020</span>
+<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> B01001    SEX BY AGE                                             SEX BY AGE  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> B01001A   SEX BY AGE (WHITE ALONE)                               SEX BY AGE …</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> B01001B   SEX BY AGE (BLACK OR AFRICAN AMERICAN ALONE)           SEX BY AGE …</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> B01001C   SEX BY AGE (AMERICAN INDIAN AND ALASKA NATIVE ALONE)   SEX BY AGE …</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> B01001D   SEX BY AGE (ASIAN ALONE)                               SEX BY AGE …</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> B01001E   SEX BY AGE (NATIVE HAWAIIAN AND OTHER PACIFIC ISLANDE… SEX BY AGE …</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> B01001F   SEX BY AGE (SOME OTHER RACE ALONE)                     SEX BY AGE …</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> B01001G   SEX BY AGE (TWO OR MORE RACES)                         SEX BY AGE …</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> B01001H   SEX BY AGE (WHITE ALONE, NOT HISPANIC OR LATINO)       SEX BY AGE …</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> B01001I   SEX BY AGE (HISPANIC OR LATINO)                        SEX BY AGE …</span>
+<span class="co">#&gt; <span style="color: #949494;"># … with 1,130 more rows</span></span>
+<span class="co">#&gt; $`2019`</span>
+<span class="co">#&gt; [1] "Number of rows: 1136"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $`2020`</span>
+<span class="co">#&gt; [1] "Number of rows: 1140"</span></code></pre>
+<table class="table">
+<colgroup>
+<col width="9%">
+<col width="9%">
+<col width="80%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">concept19</th>
+<th align="left">table_num</th>
+<th align="left">concept20</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="left">B24134</td>
+<td align="left">DETAILED INDUSTRY FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER</td>
+</tr>
+<tr class="even">
+<td align="left">NA</td>
+<td align="left">B24135</td>
+<td align="left">DETAILED INDUSTRY FOR THE CIVILIAN EMPLOYED MALE POPULATION 16 YEARS AND OVER</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="left">B24136</td>
+<td align="left">DETAILED INDUSTRY FOR THE CIVILIAN EMPLOYED FEMALE POPULATION 16 YEARS AND OVER</td>
+</tr>
+<tr class="even">
+<td align="left">NA</td>
+<td align="left">B28012</td>
+<td align="left">AGE AND ENROLLMENT STATUS BY COMPUTER OWNERSHIP AND INTERNET SUBSCRIPTION STATUS</td>
+</tr>
+</tbody>
+</table>
+<p>Not a lot new in the 2020 ACS.</p>
+<hr>
+</div>
+<div class="section level2">
+<h2 id="acs-1">2019 ACS<a class="anchor" aria-label="anchor" href="#acs-1"></a>
+</h2>
+<div class="section level3">
+<h3 id="new-variables">New variables<a class="anchor" aria-label="anchor" href="#new-variables"></a>
+</h3>
 <p>The 2019 ACS included <a href="https://www.census.gov/programs-surveys/acs/technical-documentation/table-and-geography-changes/2019/5-year.html" class="external-link">reengineering of a few tables</a>, and a few new additions. Some are clarifications of phrasing to both questions and tables, such as time leaving home for work. More substantial are the changes in how family structure has been phrased to be more inclusive of same-sex and unmarried couples–see the most recent <a href="https://www.census.gov/content/census/en/library/working-papers/2017/demo/SEHSD-WP2017-28.html" class="external-link">working paper</a> on this.</p>
 <p>This is just a quick check of what’s new or changed.</p>
 <table class="table">
@@ -204,9 +266,9 @@
 </tbody>
 </table>
 </div>
-<div class="section level2">
-<h2 id="variables-in-the-tables-related-to-gender-family-structure">Variables in the tables related to gender &amp; family structure:<a class="anchor" aria-label="anchor" href="#variables-in-the-tables-related-to-gender-family-structure"></a>
-</h2>
+<div class="section level3">
+<h3 id="variables-in-the-tables-related-to-gender-family-structure">Variables in the tables related to gender &amp; family structure:<a class="anchor" aria-label="anchor" href="#variables-in-the-tables-related-to-gender-family-structure"></a>
+</h3>
 <p>$<code>B11008.COHABITING COUPLE HOUSEHOLDS BY PRESENCE AND AGE OF OWN CHILDREN UNDER 18 YEARS</code></p>
 <table class="table">
 <colgroup>
@@ -576,6 +638,7 @@
 </tbody>
 </table>
 </div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -595,7 +658,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer>
