@@ -7,66 +7,66 @@ template:
     bootswatch: yeti
 
 reference:
-- title: Functions - fetching
-  desc: Functions to fetch data from APIs
-  contents:
-  - 'laus_trend'
-  - 'multi_geo_acs'
-  - 'multi_geo_decennial'
-  - 'qwi_industry'
+  - title: Functions - fetching
+    desc: Functions to fetch data from APIs
+    contents:
+      - "laus_trend"
+      - "multi_geo_acs"
+      - "multi_geo_decennial"
+      - "qwi_industry"
 
-- title: Functions - survey & crosstabs
-  desc: Functions to read, clean, and analyze DataHaven Community Wellbeing Survey crosstabs
-  contents:
-  - 'collapse_n_wt'
-  - 'read_xtabs'
-  - 'sub_nonanswers'
-  - 'xtab2df'
+  - title: Functions - survey & crosstabs
+    desc: Functions to read, clean, and analyze DataHaven Community Wellbeing Survey crosstabs
+    contents:
+      - "collapse_n_wt"
+      - "read_xtabs"
+      - "sub_nonanswers"
+      - "xtab2df"
 
-- title: Functions - analyzing and plotting
-  desc: Functions to analyze or quickly plot data
-  contents:
-  - 'adj_inflation'
-  - 'geo_level_plot'
-  - 'label_acs'
-  - 'label_decennial'
-  - 'quick_map'
+  - title: Functions - analyzing and plotting
+    desc: Functions to analyze or quickly plot data
+    contents:
+      - "adj_inflation"
+      - "geo_level_plot"
+      - "label_acs"
+      - "label_decennial"
+      - "quick_map"
 
-- title: Datasets
-  desc: Reference datasets, lookup tables, and crosswalks
-  contents:
-  - 'acs_vars19'
-  - 'basic_table_nums'
-  - 'ct5_clusters'
-  - 'cws_demo'
-  - 'decennial_vars10'
-  - 'ext_table_nums'
-  - 'gnh_tenure'
-  - 'laus_codes'
-  - 'msa'
-  - 'naics_codes'
-  - 'neighborhood_tracts'
-  - 'occ_codes'
-  - 'regions'
-  - 'school_dists'
-  - 'tract2town'
-  - 'village2town'
-  - 'xwalk'
-  - 'zip2town'
+  - title: Datasets
+    desc: Reference datasets, lookup tables, and crosswalks
+    contents:
+      - "acs_vars20"
+      - "basic_table_nums"
+      - "ct5_clusters"
+      - "cws_demo"
+      - "decennial_vars10"
+      - "ext_table_nums"
+      - "gnh_tenure"
+      - "laus_codes"
+      - "msa"
+      - "naics_codes"
+      - "neighborhood_tracts"
+      - "occ_codes"
+      - "regions"
+      - "school_dists"
+      - "tract2town"
+      - "village2town"
+      - "xwalk"
+      - "zip2town"
 
-- title: Shapefiles
-  desc: Shapefiles in `sf` format
-  contents:
-  - 'neighborhood_shapes'
-  - 'town_sf'
-  - 'tract_sf'
+  - title: Shapefiles
+    desc: Shapefiles in `sf` format
+    contents:
+      - "neighborhood_shapes"
+      - "town_sf"
+      - "tract_sf"
 
-- title: Misc. / utilities
-  desc: Miscellaneous functions
-  contents:
-  - 'add_logo'
-  - 'batch_csv_dump'
-  - 'dh_scaffold'
-  - 'jenks'
-  - 'town_names'
-  - 'separate_acs'
+  - title: Misc. / utilities
+    desc: Miscellaneous functions
+    contents:
+      - "add_logo"
+      - "batch_csv_dump"
+      - "dh_scaffold"
+      - "jenks"
+      - "town_names"
+      - "separate_acs"
