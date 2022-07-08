@@ -75,3 +75,10 @@ test_that("multi_geo_* handles missing columns", {
   skip_on_ci()
   expect_s3_class(multi_geo_acs(table = "B01003", towns = NULL, survey = "acs1", year = 2016, sleep = 2), "data.frame")
 })
+
+test_that("multi_geo_* handles New England, other MSAs", {
+  # filtering for NE broke because of making names lowercase
+  skip_on_ci()
+  expect_s3_class(multi_geo_acs(table = "B01003", msa = TRUE, new_england = FALSE), "data.frame")
+  expect_s3_class(multi_geo_acs(table = "B01003", msa = TRUE, new_england = TRUE), "data.frame")
+})

@@ -152,7 +152,7 @@ census_msa <- function(src, table, year, new_england, dataset, key, sleep, ...) 
   fetch <- wrap_census(src, geography = "metropolitan statistical area/micropolitan statistical area", table = table, year = year, state = NULL, dataset = dataset, key = key, ...)
   if (new_england) {
     ne_msa <- dplyr::filter(cwi::msa, region == "New England")
-    fetch <- dplyr::semi_join(fetch, ne_msa, by = "GEOID")
+    fetch <- dplyr::semi_join(fetch, ne_msa, by = c("GEOID" = "geoid"))
   }
   fetch
 }
