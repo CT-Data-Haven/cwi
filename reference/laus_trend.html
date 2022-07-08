@@ -72,47 +72,64 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">laus_trend</span><span class="op">(</span>
-  names <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">startyear</span>,
-  <span class="va">endyear</span>,
-  state <span class="op">=</span> <span class="st">"09"</span>,
-  measures <span class="op">=</span> <span class="st">"all"</span>,
-  annual <span class="op">=</span> <span class="cn">FALSE</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
-  key <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">laus_trend</span><span class="op">(</span></span>
+<span>  names <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">startyear</span>,</span>
+<span>  <span class="va">endyear</span>,</span>
+<span>  state <span class="op">=</span> <span class="st">"09"</span>,</span>
+<span>  measures <span class="op">=</span> <span class="st">"all"</span>,</span>
+<span>  annual <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  key <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>names</dt>
 <dd><p>A character vector of place names to look up, either towns and/or counties.</p></dd>
+
+
 <dt>startyear</dt>
 <dd><p>Numeric; first year of range</p></dd>
+
+
 <dt>endyear</dt>
 <dd><p>Numeric; last year of range</p></dd>
+
+
 <dt>state</dt>
 <dd><p>A string: either name or two-digit FIPS code of a US state. Required; defaults <code>"09"</code> (Connecticut).</p></dd>
+
+
 <dt>measures</dt>
 <dd><p>A character vector of measures, containing any combination of <code>"unemployment rate"</code>, <code>"unemployment"</code>, <code>"employment"</code>, or <code>"labor force"</code>, or <code>"all"</code> (the default) as shorthand for all of the above.</p></dd>
+
+
 <dt>annual</dt>
 <dd><p>Logical: whether to include annual averages along with monthly data. Defaults <code>FALSE</code>.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Logical: if <code>TRUE</code> (default), this will print overview information about the series being used, as returned by the API.</p></dd>
+
+
 <dt>key</dt>
 <dd><p>A string giving the BLS API key. If <code>NULL</code> (the default), will take the value in <code>Sys.getenv("BLS_KEY")</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data frame, slightly cleaned up from what the API returns.</p>
+    
+
+<p>A data frame, slightly cleaned up from what the API returns.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="fu">laus_trend</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Connecticut"</span>, <span class="st">"New Haven"</span>, <span class="st">"Hamden"</span><span class="op">)</span>, <span class="fl">2014</span>, <span class="fl">2017</span>, annual <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="fu">laus_trend</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Connecticut"</span>, <span class="st">"New Haven"</span>, <span class="st">"Hamden"</span><span class="op">)</span>, <span class="fl">2014</span>, <span class="fl">2017</span>, annual <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -127,7 +144,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

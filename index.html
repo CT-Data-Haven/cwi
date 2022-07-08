@@ -108,8 +108,8 @@
 </h2>
 <p>You can install this package from <a href="https://github.com/CT-Data-Haven/cwi" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"CT-Data-Haven/cwi"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"CT-Data-Haven/cwi"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="dependencies">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies"></a>
@@ -157,75 +157,75 @@
 </h2>
 <p>Here’s an example of getting a big table to calculate homeownership rates across many geographies at once:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/CT-Data-Haven/cwi" class="external-link">cwi</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/CT-Data-Haven/cwi" class="external-link">cwi</a></span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tenure</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/multi_geo_acs.html">multi_geo_acs</a></span><span class="op">(</span>
-  table <span class="op">=</span> <span class="va">basic_table_nums</span><span class="op">$</span><span class="va">tenure</span>,
-  year <span class="op">=</span> <span class="fl">2020</span>,
-  regions <span class="op">=</span> <span class="va">regions</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Greater New Haven"</span>, <span class="st">"New Haven Inner Ring"</span>, <span class="st">"New Haven Outer Ring"</span><span class="op">)</span><span class="op">]</span>,
-  counties <span class="op">=</span> <span class="st">"New Haven"</span>,
-  towns <span class="op">=</span> <span class="va">regions</span><span class="op">[[</span><span class="st">"Greater New Haven"</span><span class="op">]</span><span class="op">]</span>,
-  us <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ── Table B25003: TENURE, 2020 ──────────────────────────────────────────────────</span>
-<span class="co">#&gt; • Towns: Bethany, Branford, East Haven, Guilford, Hamden, Madison, Milford, New</span>
-<span class="co">#&gt; Haven, North Branford, North Haven, Orange, West Haven, Woodbridge</span>
-<span class="co">#&gt; • Regions: Greater New Haven, New Haven Inner Ring, New Haven Outer Ring</span>
-<span class="co">#&gt; • Counties: New Haven County</span>
-<span class="co">#&gt; • State: 09</span>
-<span class="co">#&gt; • US: Yes</span>
-<span class="va">tenure</span>
-<span class="co">#&gt; # A tibble: 57 × 9</span>
-<span class="co">#&gt;     year level    state       county geoid name         variable estimate    moe</span>
-<span class="co">#&gt;    &lt;dbl&gt; &lt;fct&gt;    &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt;  1  2020 1_us     &lt;NA&gt;        &lt;NA&gt;   1     United Stat… B25003_…   1.22e8 211970</span>
-<span class="co">#&gt;  2  2020 1_us     &lt;NA&gt;        &lt;NA&gt;   1     United Stat… B25003_…   7.88e7 342600</span>
-<span class="co">#&gt;  3  2020 1_us     &lt;NA&gt;        &lt;NA&gt;   1     United Stat… B25003_…   4.36e7 134985</span>
-<span class="co">#&gt;  4  2020 2_state  &lt;NA&gt;        &lt;NA&gt;   09    Connecticut  B25003_…   1.39e6   3268</span>
-<span class="co">#&gt;  5  2020 2_state  &lt;NA&gt;        &lt;NA&gt;   09    Connecticut  B25003_…   9.15e5   5015</span>
-<span class="co">#&gt;  6  2020 2_state  &lt;NA&gt;        &lt;NA&gt;   09    Connecticut  B25003_…   4.70e5   4548</span>
-<span class="co">#&gt;  7  2020 3_county Connecticut &lt;NA&gt;   09009 New Haven C… B25003_…   3.33e5   1647</span>
-<span class="co">#&gt;  8  2020 3_county Connecticut &lt;NA&gt;   09009 New Haven C… B25003_…   2.07e5   2123</span>
-<span class="co">#&gt;  9  2020 3_county Connecticut &lt;NA&gt;   09009 New Haven C… B25003_…   1.26e5   2225</span>
-<span class="co">#&gt; 10  2020 4_region Connecticut &lt;NA&gt;   &lt;NA&gt;  Greater New… B25003_…   1.76e5   1834</span>
-<span class="co">#&gt; # … with 47 more rows</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">tenure</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/multi_geo_acs.html">multi_geo_acs</a></span><span class="op">(</span></span>
+<span>  table <span class="op">=</span> <span class="va">basic_table_nums</span><span class="op">$</span><span class="va">tenure</span>,</span>
+<span>  year <span class="op">=</span> <span class="fl">2020</span>,</span>
+<span>  regions <span class="op">=</span> <span class="va">regions</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Greater New Haven"</span>, <span class="st">"New Haven Inner Ring"</span>, <span class="st">"New Haven Outer Ring"</span><span class="op">)</span><span class="op">]</span>,</span>
+<span>  counties <span class="op">=</span> <span class="st">"New Haven"</span>,</span>
+<span>  towns <span class="op">=</span> <span class="va">regions</span><span class="op">[[</span><span class="st">"Greater New Haven"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>  us <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Table B25003: TENURE, 2020 ──────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; • Towns: Bethany, Branford, East Haven, Guilford, Hamden, Madison, Milford, New</span></span>
+<span><span class="co">#&gt; Haven, North Branford, North Haven, Orange, West Haven, Woodbridge</span></span>
+<span><span class="co">#&gt; • Regions: Greater New Haven, New Haven Inner Ring, New Haven Outer Ring</span></span>
+<span><span class="co">#&gt; • Counties: New Haven County</span></span>
+<span><span class="co">#&gt; • State: 09</span></span>
+<span><span class="co">#&gt; • US: Yes</span></span>
+<span><span class="va">tenure</span></span>
+<span><span class="co">#&gt; # A tibble: 57 × 9</span></span>
+<span><span class="co">#&gt;     year level    state       county geoid name         variable estimate    moe</span></span>
+<span><span class="co">#&gt;    &lt;dbl&gt; &lt;fct&gt;    &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1  2020 1_us     &lt;NA&gt;        &lt;NA&gt;   1     United Stat… B25003_…   1.22e8 211970</span></span>
+<span><span class="co">#&gt;  2  2020 1_us     &lt;NA&gt;        &lt;NA&gt;   1     United Stat… B25003_…   7.88e7 342600</span></span>
+<span><span class="co">#&gt;  3  2020 1_us     &lt;NA&gt;        &lt;NA&gt;   1     United Stat… B25003_…   4.36e7 134985</span></span>
+<span><span class="co">#&gt;  4  2020 2_state  &lt;NA&gt;        &lt;NA&gt;   09    Connecticut  B25003_…   1.39e6   3268</span></span>
+<span><span class="co">#&gt;  5  2020 2_state  &lt;NA&gt;        &lt;NA&gt;   09    Connecticut  B25003_…   9.15e5   5015</span></span>
+<span><span class="co">#&gt;  6  2020 2_state  &lt;NA&gt;        &lt;NA&gt;   09    Connecticut  B25003_…   4.70e5   4548</span></span>
+<span><span class="co">#&gt;  7  2020 3_county Connecticut &lt;NA&gt;   09009 New Haven C… B25003_…   3.33e5   1647</span></span>
+<span><span class="co">#&gt;  8  2020 3_county Connecticut &lt;NA&gt;   09009 New Haven C… B25003_…   2.07e5   2123</span></span>
+<span><span class="co">#&gt;  9  2020 3_county Connecticut &lt;NA&gt;   09009 New Haven C… B25003_…   1.26e5   2225</span></span>
+<span><span class="co">#&gt; 10  2020 4_region Connecticut &lt;NA&gt;   &lt;NA&gt;  Greater New… B25003_…   1.76e5   1834</span></span>
+<span><span class="co">#&gt; # … with 47 more rows</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">homeownership</span> <span class="op">&lt;-</span> <span class="va">tenure</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="reference/label_acs.html">label_acs</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2020</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">name</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">camiller</span><span class="fu">::</span><span class="fu"><a href="https://camille-s.github.io/camiller/reference/calc_shares.html" class="external-link">calc_shares</a></span><span class="op">(</span>group <span class="op">=</span> <span class="va">label</span>, denom <span class="op">=</span> <span class="st">"Total"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">label</span>, <span class="st">"Owner"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">name</span>, <span class="va">share</span><span class="op">)</span>
-
-<span class="va">homeownership</span>
-<span class="co">#&gt; # A tibble: 19 × 3</span>
-<span class="co">#&gt; # Groups:   level, name [19]</span>
-<span class="co">#&gt;    level    name                 share</span>
-<span class="co">#&gt;    &lt;fct&gt;    &lt;chr&gt;                &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 1_us     United States        0.644</span>
-<span class="co">#&gt;  2 2_state  Connecticut          0.661</span>
-<span class="co">#&gt;  3 3_county New Haven County     0.621</span>
-<span class="co">#&gt;  4 4_region Greater New Haven    0.596</span>
-<span class="co">#&gt;  5 4_region New Haven Inner Ring 0.612</span>
-<span class="co">#&gt;  6 4_region New Haven Outer Ring 0.793</span>
-<span class="co">#&gt;  7 5_town   Bethany              0.917</span>
-<span class="co">#&gt;  8 5_town   Branford             0.655</span>
-<span class="co">#&gt;  9 5_town   East Haven           0.742</span>
-<span class="co">#&gt; 10 5_town   Guilford             0.86 </span>
-<span class="co">#&gt; 11 5_town   Hamden               0.637</span>
-<span class="co">#&gt; 12 5_town   Madison              0.862</span>
-<span class="co">#&gt; 13 5_town   Milford              0.745</span>
-<span class="co">#&gt; 14 5_town   New Haven            0.28 </span>
-<span class="co">#&gt; 15 5_town   North Branford       0.86 </span>
-<span class="co">#&gt; 16 5_town   North Haven          0.826</span>
-<span class="co">#&gt; 17 5_town   Orange               0.905</span>
-<span class="co">#&gt; 18 5_town   West Haven           0.514</span>
-<span class="co">#&gt; 19 5_town   Woodbridge           0.893</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">homeownership</span> <span class="op">&lt;-</span> <span class="va">tenure</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="reference/label_acs.html">label_acs</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2020</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">name</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">camiller</span><span class="fu">::</span><span class="fu"><a href="https://camille-s.github.io/camiller/reference/calc_shares.html" class="external-link">calc_shares</a></span><span class="op">(</span>group <span class="op">=</span> <span class="va">label</span>, denom <span class="op">=</span> <span class="st">"Total"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">label</span>, <span class="st">"Owner"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">name</span>, <span class="va">share</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">homeownership</span></span>
+<span><span class="co">#&gt; # A tibble: 19 × 3</span></span>
+<span><span class="co">#&gt; # Groups:   level, name [19]</span></span>
+<span><span class="co">#&gt;    level    name                 share</span></span>
+<span><span class="co">#&gt;    &lt;fct&gt;    &lt;chr&gt;                &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 1_us     United States        0.644</span></span>
+<span><span class="co">#&gt;  2 2_state  Connecticut          0.661</span></span>
+<span><span class="co">#&gt;  3 3_county New Haven County     0.621</span></span>
+<span><span class="co">#&gt;  4 4_region Greater New Haven    0.596</span></span>
+<span><span class="co">#&gt;  5 4_region New Haven Inner Ring 0.612</span></span>
+<span><span class="co">#&gt;  6 4_region New Haven Outer Ring 0.793</span></span>
+<span><span class="co">#&gt;  7 5_town   Bethany              0.917</span></span>
+<span><span class="co">#&gt;  8 5_town   Branford             0.655</span></span>
+<span><span class="co">#&gt;  9 5_town   East Haven           0.742</span></span>
+<span><span class="co">#&gt; 10 5_town   Guilford             0.86 </span></span>
+<span><span class="co">#&gt; 11 5_town   Hamden               0.637</span></span>
+<span><span class="co">#&gt; 12 5_town   Madison              0.862</span></span>
+<span><span class="co">#&gt; 13 5_town   Milford              0.745</span></span>
+<span><span class="co">#&gt; 14 5_town   New Haven            0.28 </span></span>
+<span><span class="co">#&gt; 15 5_town   North Branford       0.86 </span></span>
+<span><span class="co">#&gt; 16 5_town   North Haven          0.826</span></span>
+<span><span class="co">#&gt; 17 5_town   Orange               0.905</span></span>
+<span><span class="co">#&gt; 18 5_town   West Haven           0.514</span></span>
+<span><span class="co">#&gt; 19 5_town   Woodbridge           0.893</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/geo_level_plot.html">geo_level_plot</a></span><span class="op">(</span><span class="va">homeownership</span>, value <span class="op">=</span> <span class="va">share</span>, hilite <span class="op">=</span> <span class="st">"#EA7FA2"</span>, 
-               title <span class="op">=</span> <span class="st">"Homeownership in Greater New Haven, 2020"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/geo_level_plot.html">geo_level_plot</a></span><span class="op">(</span><span class="va">homeownership</span>, value <span class="op">=</span> <span class="va">share</span>, hilite <span class="op">=</span> <span class="st">"#EA7FA2"</span>, </span>
+<span>               title <span class="op">=</span> <span class="st">"Homeownership in Greater New Haven, 2020"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-geo_plot-1.png" width="100%"></p>
 <p>See more detail in the vignette: <code><a href="articles/basic-workflow.html">vignette("basic-workflow")</a></code>.</p>
 </div>
@@ -264,14 +264,7 @@
 </ul>
 </div>
 
-<div class="dev-status">
-<h2 data-toc-skip>Dev status</h2>
-<ul class="list-unstyled">
-<li><a href="https://github.com/CT-Data-Haven/cwi/actions/workflows/check-release.yaml" class="external-link"><img src="https://github.com/CT-Data-Haven/cwi/actions/workflows/check-release.yaml/badge.svg" alt="check-release"></a></li>
-<li><a href="https://github.com/CT-Data-Haven/cwi/actions/workflows/pkgdown.yaml" class="external-link"><img src="https://github.com/CT-Data-Haven/cwi/actions/workflows/pkgdown.yaml/badge.svg" alt="pkgdown"></a></li>
-<li><a href="https://app.codecov.io/gh/CT-Data-Haven/cwi?branch=main" class="external-link"><img src="https://codecov.io/gh/CT-Data-Haven/cwi/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
-</ul>
-</div>
+
 
   </div>
 </div>
@@ -284,7 +277,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer>

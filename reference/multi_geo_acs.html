@@ -72,79 +72,122 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">multi_geo_acs</span><span class="op">(</span>
-  <span class="va">table</span>,
-  year <span class="op">=</span> <span class="fl">2020</span>,
-  towns <span class="op">=</span> <span class="st">"all"</span>,
-  regions <span class="op">=</span> <span class="cn">NULL</span>,
-  counties <span class="op">=</span> <span class="st">"all"</span>,
-  state <span class="op">=</span> <span class="st">"09"</span>,
-  neighborhoods <span class="op">=</span> <span class="cn">NULL</span>,
-  tracts <span class="op">=</span> <span class="cn">NULL</span>,
-  blockgroups <span class="op">=</span> <span class="cn">NULL</span>,
-  pumas <span class="op">=</span> <span class="cn">NULL</span>,
-  msa <span class="op">=</span> <span class="cn">FALSE</span>,
-  us <span class="op">=</span> <span class="cn">FALSE</span>,
-  new_england <span class="op">=</span> <span class="cn">TRUE</span>,
-  nhood_name <span class="op">=</span> <span class="va">name</span>,
-  nhood_geoid <span class="op">=</span> <span class="va">geoid</span>,
-  nhood_weight <span class="op">=</span> <span class="va">weight</span>,
-  survey <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"acs5"</span>, <span class="st">"acs1"</span><span class="op">)</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
-  key <span class="op">=</span> <span class="cn">NULL</span>,
-  sleep <span class="op">=</span> <span class="fl">0</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">multi_geo_acs</span><span class="op">(</span></span>
+<span>  <span class="va">table</span>,</span>
+<span>  year <span class="op">=</span> <span class="fl">2020</span>,</span>
+<span>  towns <span class="op">=</span> <span class="st">"all"</span>,</span>
+<span>  regions <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  counties <span class="op">=</span> <span class="st">"all"</span>,</span>
+<span>  state <span class="op">=</span> <span class="st">"09"</span>,</span>
+<span>  neighborhoods <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  tracts <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  blockgroups <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  pumas <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  msa <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  us <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  new_england <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  nhood_name <span class="op">=</span> <span class="va">name</span>,</span>
+<span>  nhood_geoid <span class="op">=</span> <span class="va">geoid</span>,</span>
+<span>  nhood_weight <span class="op">=</span> <span class="va">weight</span>,</span>
+<span>  survey <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"acs5"</span>, <span class="st">"acs1"</span><span class="op">)</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  key <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  sleep <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>table</dt>
 <dd><p>A string giving the ACS table number.</p></dd>
+
+
 <dt>year</dt>
 <dd><p>The year of the ACS table; currently defaults 2020 (most recent available).</p></dd>
+
+
 <dt>towns</dt>
 <dd><p>A character vector of names of towns to include; <code>"all"</code> (default) for all towns optionally filtered by county; or <code>NULL</code> to not fetch town-level table.</p></dd>
+
+
 <dt>regions</dt>
 <dd><p>A named list of regions with their town names (defaults <code>NULL</code>).</p></dd>
+
+
 <dt>counties</dt>
 <dd><p>A character vector of names of counties to include; <code>"all"</code> (default) for all counties in the state; or <code>NULL</code> to not fetch county-level table.</p></dd>
+
+
 <dt>state</dt>
 <dd><p>A string: either name or two-digit FIPS code of a US state. Required; defaults <code>"09"</code> (Connecticut).</p></dd>
+
+
 <dt>neighborhoods</dt>
 <dd><p>A data frame with columns for neighborhood name, GEOID of either tracts or block groups, and weight, e.g. share of each tract assigned to a neighborhood. If included, weighted sums and MOEs will be returned for neighborhoods. Try to match the formatting of the <a href="neighborhood_tracts.html">built-in neighborhood tables</a>.</p></dd>
+
+
 <dt>tracts</dt>
 <dd><p>A character vector of 11-digit FIPS codes of tracts to include, or <code>"all"</code> for all tracts optionally filtered by county. Defaults <code>NULL</code>.</p></dd>
+
+
 <dt>blockgroups</dt>
 <dd><p>A character vector of 12-digit FIPS codes of block groups to include, or <code>"all"</code> for all block groups optionally filtered by county. Defaults <code>NULL</code>.</p></dd>
+
+
 <dt>pumas</dt>
 <dd><p>A character vector of 7-digit FIPS codes of public use microdata areas (PUMAs) to include, or <code>"all"</code> for all PUMAs optionally filtered by county. It's up to you to filter out any redundancies--some large towns are standalone PUMAs, as are some sparsely-population counties. Defaults <code>NULL</code>.</p></dd>
+
+
 <dt>msa</dt>
 <dd><p>Logical: whether to fetch New England states' metropolitan statistical areas. Defaults <code>FALSE</code>.</p></dd>
+
+
 <dt>us</dt>
 <dd><p>Logical: whether to fetch US-level table. Defaults <code>FALSE</code>.</p></dd>
+
+
 <dt>new_england</dt>
 <dd><p>Logical: if <code>TRUE</code> (the default), limits metro areas to just New England states.</p></dd>
+
+
 <dt>nhood_name</dt>
 <dd><p>Bare column name of neighborhood names. Only relevant if a neighborhood weight table is being used. Defaults <code>name</code> to match the neighborhood lookup datasets.</p></dd>
+
+
 <dt>nhood_geoid</dt>
 <dd><p>Bare column name of neighborhood GEOIDs, either tracts or block groups. Only relevant if a neighborhood weight table is being used. Defaults <code>geoid</code> to match the neighborhood lookup datasets.</p></dd>
+
+
 <dt>nhood_weight</dt>
 <dd><p>Bare column name of weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults <code>weight</code> to match the neighborhood lookup datasets.</p></dd>
+
+
 <dt>survey</dt>
 <dd><p>A string: which ACS estimate to use. Defaults to 5-year (<code>"acs5"</code>), but can also be 1-year (<code>"acs1"</code>).</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Logical: whether to print summary of geographies included. Defaults <code>TRUE</code>.</p></dd>
+
+
 <dt>key</dt>
 <dd><p>String: Census API key. If <code>NULL</code> (default), takes the value from <code>Sys.getenv("CENSUS_API_KEY")</code>.</p></dd>
+
+
 <dt>sleep</dt>
 <dd><p>Number of seconds, if any, to sleep before each API call. This might help with the Census API's tendency to crash, but for many geographies, it could add a sizable about of time. Probably don't add more than a few seconds.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional arguments to pass on to <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html" class="external-link">tidycensus::get_acs</a></code></p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A tibble with GEOID, name, variable code, estimate, moe, geography level, state, and year, as applicable, for the chosen ACS table.</p>
+    
+
+<p>A tibble with GEOID, name, variable code, estimate, moe, geography level, state, and year, as applicable, for the chosen ACS table.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -157,20 +200,20 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="fu">multi_geo_acs</span><span class="op">(</span><span class="st">"B01003"</span>, <span class="fl">2019</span>,</span>
-<span class="r-in">  towns <span class="op">=</span> <span class="st">"all"</span>,</span>
-<span class="r-in">  regions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>inner_ring <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hamden"</span>, <span class="st">"East Haven"</span>, <span class="st">"West Haven"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">  counties <span class="op">=</span> <span class="st">"New Haven County"</span>,</span>
-<span class="r-in">  tracts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">new_haven_tracts</span><span class="op">$</span><span class="va">geoid</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">multi_geo_acs</span><span class="op">(</span><span class="st">"B01003"</span>, <span class="fl">2018</span>,</span>
-<span class="r-in">  towns <span class="op">=</span> <span class="st">"Bridgeport"</span>,</span>
-<span class="r-in">  counties <span class="op">=</span> <span class="st">"Fairfield County"</span>,</span>
-<span class="r-in">  neighborhoods <span class="op">=</span> <span class="va">bridgeport_tracts</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="fu">multi_geo_acs</span><span class="op">(</span><span class="st">"B01003"</span>, <span class="fl">2019</span>,</span></span>
+<span class="r-in"><span>  towns <span class="op">=</span> <span class="st">"all"</span>,</span></span>
+<span class="r-in"><span>  regions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>inner_ring <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hamden"</span>, <span class="st">"East Haven"</span>, <span class="st">"West Haven"</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  counties <span class="op">=</span> <span class="st">"New Haven County"</span>,</span></span>
+<span class="r-in"><span>  tracts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">new_haven_tracts</span><span class="op">$</span><span class="va">geoid</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">multi_geo_acs</span><span class="op">(</span><span class="st">"B01003"</span>, <span class="fl">2018</span>,</span></span>
+<span class="r-in"><span>  towns <span class="op">=</span> <span class="st">"Bridgeport"</span>,</span></span>
+<span class="r-in"><span>  counties <span class="op">=</span> <span class="st">"Fairfield County"</span>,</span></span>
+<span class="r-in"><span>  neighborhoods <span class="op">=</span> <span class="va">bridgeport_tracts</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -185,7 +228,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

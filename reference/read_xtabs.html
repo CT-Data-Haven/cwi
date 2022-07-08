@@ -76,26 +76,30 @@ only useful for working with the DataHaven Community Wellbeing Survey.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">read_xtabs</span><span class="op">(</span>
-  <span class="va">path</span>,
-  name_prefix <span class="op">=</span> <span class="st">"x"</span>,
-  marker <span class="op">=</span> <span class="st">"Nature of the [Ss]ample"</span>,
-  year <span class="op">=</span> <span class="fl">2018</span>,
-  process <span class="op">=</span> <span class="cn">FALSE</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">read_weights</span><span class="op">(</span><span class="va">path</span>, marker <span class="op">=</span> <span class="st">"Nature of the [Ss]ample"</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_xtabs</span><span class="op">(</span></span>
+<span>  <span class="va">path</span>,</span>
+<span>  name_prefix <span class="op">=</span> <span class="st">"x"</span>,</span>
+<span>  marker <span class="op">=</span> <span class="st">"Nature of the [Ss]ample"</span>,</span>
+<span>  year <span class="op">=</span> <span class="fl">2018</span>,</span>
+<span>  process <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">read_weights</span><span class="op">(</span><span class="va">path</span>, marker <span class="op">=</span> <span class="st">"Nature of the [Ss]ample"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>path</dt>
 <dd><p>Path to an excel file</p></dd>
+
+
 <dt>name_prefix</dt>
 <dd><p>String used to create column names such as x1, x2, x3, ...,
 Default: 'x'</p></dd>
+
+
 <dt>marker</dt>
 <dd><p>String/regex pattern used to demarcate crosstabs from weight
 table. If <code>NULL</code>, it will be assumed that the file contains only crosstab
@@ -103,9 +107,13 @@ data <em>or</em> weights, and no filtering will be done. If <code>marker</code> 
 it's assumed that weights are in headers above the data, such as for 2021,
 in which case a different operation is done but the same weights table is
 returned. Default: <code>"Nature of the [Ss]ample"</code></p></dd>
+
+
 <dt>year</dt>
 <dd><p>Numeric. As of now, its main purpose is to add an extra filtering
 step to take out headers in the 2015 files. Default: 2018</p></dd>
+
+
 <dt>process</dt>
 <dd><p>Logical: if <code>FALSE</code> (the default), this will return the
 crosstab data to be processed, most likely by passing along to <code>xtab2df</code>. If
@@ -114,14 +122,21 @@ ready for analysis. This is <em>only</em> recommended if you already know for su
 what the crosstab data looks like, so you don't accidentally lose some
 questions or important description. As a sanity check, you'll see a message
 listing the parameters used in the <code>xtab2df</code> call.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Logical: if <code>process</code> is true, should parameters being passed to <code>xtab2df</code> be printed? Defaults to <code>TRUE</code> to encourage you to double check that you're passing arguments intentionally.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional arguments passed on to <code>xtab2df</code> if <code>process = TRUE</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data frame. For <code>read_xtabs</code>, there will be one column per
+    
+
+<p>A data frame. For <code>read_xtabs</code>, there will be one column per
 demographic/geographic group included, plus one for the questions &amp; answers.
 For <code>read_weights</code>, only 2 columns, one for demographic groups and one for
 their associated weights.</p>
@@ -133,15 +148,15 @@ their associated weights.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="va">xt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/test_xtab2018.xlsx"</span>, package <span class="op">=</span> <span class="st">"cwi"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu">read_weights</span><span class="op">(</span><span class="va">xt</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co"># returns a not-very-pretty data frame of the crosstabs to be processed</span></span>
-<span class="r-in">  <span class="fu">read_xtabs</span><span class="op">(</span><span class="va">xt</span><span class="op">)</span></span>
-<span class="r-in">  <span class="co"># returns a pretty data frame ready for analysis</span></span>
-<span class="r-in">  <span class="fu">read_xtabs</span><span class="op">(</span><span class="va">xt</span>, process <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">xt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/test_xtab2018.xlsx"</span>, package <span class="op">=</span> <span class="st">"cwi"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">read_weights</span><span class="op">(</span><span class="va">xt</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># returns a not-very-pretty data frame of the crosstabs to be processed</span></span></span>
+<span class="r-in"><span>  <span class="fu">read_xtabs</span><span class="op">(</span><span class="va">xt</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="co"># returns a pretty data frame ready for analysis</span></span></span>
+<span class="r-in"><span>  <span class="fu">read_xtabs</span><span class="op">(</span><span class="va">xt</span>, process <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -156,7 +171,7 @@ their associated weights.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

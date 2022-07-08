@@ -72,34 +72,47 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">batch_csv_dump</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">split_by</span>,
-  path <span class="op">=</span> <span class="st">"."</span>,
-  base_name <span class="op">=</span> <span class="cn">NULL</span>,
-  bind <span class="op">=</span> <span class="cn">FALSE</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">batch_csv_dump</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">split_by</span>,</span>
+<span>  path <span class="op">=</span> <span class="st">"."</span>,</span>
+<span>  base_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  bind <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>A data frame or a list of data frames</p></dd>
+
+
 <dt>split_by</dt>
 <dd><p>Bare column name of variable to split by. If <code>data</code> is a list, this is unnecessary and will be ignored.</p></dd>
+
+
 <dt>path</dt>
 <dd><p>String giving a path at which to save files; defaults to current working directory.</p></dd>
+
+
 <dt>base_name</dt>
 <dd><p>Optional string to be prepended to all file names.</p></dd>
+
+
 <dt>bind</dt>
 <dd><p>Logical: whether to row-bind list of data frames into a single data frame. Defaults <code>FALSE</code>, in which case a list of data frames is returned.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Logical: whether to print files' paths and names as they're written. Defaults <code>TRUE</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Either a list of data frames (in case of <code>bind = FALSE</code>) or a single data frame (in case of <code>bind = TRUE</code>).</p>
+    
+
+<p>Either a list of data frames (in case of <code>bind = FALSE</code>) or a single data frame (in case of <code>bind = TRUE</code>).</p>
     </div>
 
   </div>
@@ -114,7 +127,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

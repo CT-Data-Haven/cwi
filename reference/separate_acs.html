@@ -72,34 +72,47 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">separate_acs</span><span class="op">(</span>
-  <span class="va">data</span>,
-  col <span class="op">=</span> <span class="va">label</span>,
-  into <span class="op">=</span> <span class="cn">NULL</span>,
-  sep <span class="op">=</span> <span class="st">"!!"</span>,
-  drop_total <span class="op">=</span> <span class="cn">FALSE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">separate_acs</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  col <span class="op">=</span> <span class="va">label</span>,</span>
+<span>  into <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  sep <span class="op">=</span> <span class="st">"!!"</span>,</span>
+<span>  drop_total <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>A data frame such as returned by <code><a href="multi_geo_acs.html">cwi::multi_geo_acs</a></code> or <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html" class="external-link">tidycensus::get_acs</a></code>.</p></dd>
+
+
 <dt>col</dt>
 <dd><p>Bare column name where ACS labels are. Default: label</p></dd>
+
+
 <dt>into</dt>
 <dd><p>Character vector of names of new variables. If <code>NULL</code> (the default), names will be assigned as "x1", "x2," etc. If you don't want to include the Total column, this character vector only needs to include the groups other than Total (see examples).</p></dd>
+
+
 <dt>sep</dt>
 <dd><p>Character: separator between columns. Default: '!!'</p></dd>
+
+
 <dt>drop_total</dt>
 <dd><p>Logical, whether to include the "Total" column that comes from separating ACS data. Default: FALSE</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Any additional arguments to be passed on to <code><a href="https://tidyr.tidyverse.org/reference/separate.html" class="external-link">tidyr::separate</a></code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data frame</p>
+    
+
+<p>A data frame</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -108,28 +121,28 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
-<span class="r-in">   <span class="va">age</span> <span class="op">&lt;-</span> <span class="fu"><a href="multi_geo_acs.html">multi_geo_acs</a></span><span class="op">(</span><span class="st">"B01001"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">     <span class="fu"><a href="label_acs.html">label_acs</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">   <span class="co"># Default: allow automatic labeling, in this case x1, x2, x3</span></span>
-<span class="r-in">   <span class="fu">separate_acs</span><span class="op">(</span><span class="va">age</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">   <span class="co"># Drop Total column, use automatic labeling (x1 &amp; x2)</span></span>
-<span class="r-in">   <span class="fu">separate_acs</span><span class="op">(</span><span class="va">age</span>, drop_total <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">   <span class="co"># Keep Total column; assign names total, sex, age</span></span>
-<span class="r-in">   <span class="fu">separate_acs</span><span class="op">(</span><span class="va">age</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"total"</span>, <span class="st">"sex"</span>, <span class="st">"age"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">   <span class="co"># Drop Total column; only need to name sex &amp; age</span></span>
-<span class="r-in">   <span class="fu">separate_acs</span><span class="op">(</span><span class="va">age</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sex"</span>, <span class="st">"age"</span><span class="op">)</span>, drop_total <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">   <span class="co"># Carried over from tidyr::separate, using NA in place of the Total column</span></span>
-<span class="r-in">   <span class="co"># will also drop that column and yield the same as the previous example</span></span>
-<span class="r-in">   <span class="fu">separate_acs</span><span class="op">(</span><span class="va">age</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="st">"sex"</span>, <span class="st">"age"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"> <span class="op">}</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
+<span class="r-in"><span>   <span class="va">age</span> <span class="op">&lt;-</span> <span class="fu"><a href="multi_geo_acs.html">multi_geo_acs</a></span><span class="op">(</span><span class="st">"B01001"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>     <span class="fu"><a href="label_acs.html">label_acs</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>   <span class="co"># Default: allow automatic labeling, in this case x1, x2, x3</span></span></span>
+<span class="r-in"><span>   <span class="fu">separate_acs</span><span class="op">(</span><span class="va">age</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>   <span class="co"># Drop Total column, use automatic labeling (x1 &amp; x2)</span></span></span>
+<span class="r-in"><span>   <span class="fu">separate_acs</span><span class="op">(</span><span class="va">age</span>, drop_total <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>   <span class="co"># Keep Total column; assign names total, sex, age</span></span></span>
+<span class="r-in"><span>   <span class="fu">separate_acs</span><span class="op">(</span><span class="va">age</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"total"</span>, <span class="st">"sex"</span>, <span class="st">"age"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>   <span class="co"># Drop Total column; only need to name sex &amp; age</span></span></span>
+<span class="r-in"><span>   <span class="fu">separate_acs</span><span class="op">(</span><span class="va">age</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sex"</span>, <span class="st">"age"</span><span class="op">)</span>, drop_total <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>   <span class="co"># Carried over from tidyr::separate, using NA in place of the Total column</span></span></span>
+<span class="r-in"><span>   <span class="co"># will also drop that column and yield the same as the previous example</span></span></span>
+<span class="r-in"><span>   <span class="fu">separate_acs</span><span class="op">(</span><span class="va">age</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="st">"sex"</span>, <span class="st">"age"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span> <span class="op">}</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -144,7 +157,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

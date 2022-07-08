@@ -72,37 +72,52 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">qwi_industry</span><span class="op">(</span>
-  <span class="va">years</span>,
-  industries <span class="op">=</span> <span class="va">naics_codes</span><span class="op">[[</span><span class="st">"industry"</span><span class="op">]</span><span class="op">]</span>,
-  state <span class="op">=</span> <span class="st">"09"</span>,
-  counties <span class="op">=</span> <span class="cn">NULL</span>,
-  annual <span class="op">=</span> <span class="cn">FALSE</span>,
-  key <span class="op">=</span> <span class="cn">NULL</span>,
-  retry <span class="op">=</span> <span class="fl">5</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">qwi_industry</span><span class="op">(</span></span>
+<span>  <span class="va">years</span>,</span>
+<span>  industries <span class="op">=</span> <span class="va">naics_codes</span><span class="op">[[</span><span class="st">"industry"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>  state <span class="op">=</span> <span class="st">"09"</span>,</span>
+<span>  counties <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  annual <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  key <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  retry <span class="op">=</span> <span class="fl">5</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>years</dt>
 <dd><p>A numeric vector of one or more years for which to get data</p></dd>
+
+
 <dt>industries</dt>
 <dd><p>A character vector of NAICS industry codes; default is the 20 sectors plus "All industries" from the dataset <code>naics_codes</code>.</p></dd>
+
+
 <dt>state</dt>
 <dd><p>A string of length 1 representing a state's FIPS code, name, or two-letter abbreviation; defaults to <code>"09"</code> for Connecticut</p></dd>
+
+
 <dt>counties</dt>
 <dd><p>A character vector of county FIPS codes, or <code>"all"</code> for all counties (the default). If <code>NULL</code>, will return data just at the state level.</p></dd>
+
+
 <dt>annual</dt>
 <dd><p>Logical, whether to return annual averages or quarterly data (default) .</p></dd>
+
+
 <dt>key</dt>
 <dd><p>A Census API key. If <code>NULL</code>, defaults to the environmental variable <code>"CENSUS_API_KEY"</code>, as set by <code><a href="https://walker-data.com/tidycensus/reference/census_api_key.html" class="external-link">tidycensus::census_api_key()</a></code>.</p></dd>
+
+
 <dt>retry</dt>
 <dd><p>The number of times to retry the API call(s), since the server this comes from can be a bit finicky.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data frame / tibble</p>
+    
+
+<p>A data frame / tibble</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -111,9 +126,9 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="fu">qwi_industry</span><span class="op">(</span><span class="fl">2012</span><span class="op">:</span><span class="fl">2017</span>, industries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"23"</span>, <span class="st">"62"</span><span class="op">)</span>, counties <span class="op">=</span> <span class="st">"009"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="fu">qwi_industry</span><span class="op">(</span><span class="fl">2012</span><span class="op">:</span><span class="fl">2017</span>, industries <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"23"</span>, <span class="st">"62"</span><span class="op">)</span>, counties <span class="op">=</span> <span class="st">"009"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -128,7 +143,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

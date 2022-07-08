@@ -84,25 +84,32 @@ values, making it ready for analysis.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">xtab2df</span><span class="op">(</span><span class="va">.data</span>, col <span class="op">=</span> <span class="va">x1</span>, code_pattern <span class="op">=</span> <span class="st">"^[A-Z\\d_]{2,20}$"</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">xtab2df</span><span class="op">(</span><span class="va">.data</span>, col <span class="op">=</span> <span class="va">x1</span>, code_pattern <span class="op">=</span> <span class="st">"^[A-Z\\d_]{2,20}$"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>.data</dt>
 <dd><p>A data frame as returned from <code>read_xtab</code>.</p></dd>
+
+
 <dt>col</dt>
 <dd><p>The bare column name of where to find question codes and text.
 Default: x1, based on names assigned by <code>read_xtab</code></p></dd>
+
+
 <dt>code_pattern</dt>
 <dd><p>String: regex pattern denoting how to find cells that
 contain only a question code, such as "Q10", "Q4B", or "ASTHMA". This is
 pretty finicky, so you probably don't want to change it.
 Default: <code>"^[A-Z\\d_]{2,20}$"</code></p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data frame with the following columns:</p><ul><li><p>code (if questions have codes in crosstabs)</p></li>
+    
+
+<p>A data frame with the following columns:</p><ul><li><p>code (if questions have codes in crosstabs)</p></li>
 <li><p>q_number (if questions don't have codes in crosstabs, assigned in order they occur)</p></li>
 <li><p>question</p></li>
 <li><p>category (e.g. age, gender)</p></li>
@@ -117,10 +124,10 @@ Default: <code>"^[A-Z\\d_]{2,20}$"</code></p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
-<span class="r-in">  <span class="va">xtab</span> <span class="op">&lt;-</span> <span class="fu"><a href="read_xtabs.html">read_xtabs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/test_xtab2018.xlsx"</span>, package <span class="op">=</span> <span class="st">"cwi"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu">xtab2df</span><span class="op">(</span><span class="va">xtab</span><span class="op">)</span></span>
-<span class="r-in"> <span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">xtab</span> <span class="op">&lt;-</span> <span class="fu"><a href="read_xtabs.html">read_xtabs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/test_xtab2018.xlsx"</span>, package <span class="op">=</span> <span class="st">"cwi"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">xtab2df</span><span class="op">(</span><span class="va">xtab</span><span class="op">)</span></span></span>
+<span class="r-in"><span> <span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -135,7 +142,7 @@ Default: <code>"^[A-Z\\d_]{2,20}$"</code></p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

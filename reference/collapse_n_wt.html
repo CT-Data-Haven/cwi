@@ -76,16 +76,16 @@ larger groups and taking a weighted mean based on a set of survey weights.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">collapse_n_wt</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">...</span>,
-  <span class="va">.lvls</span>,
-  .group <span class="op">=</span> <span class="va">group</span>,
-  .value <span class="op">=</span> <span class="va">value</span>,
-  .weight <span class="op">=</span> <span class="va">weight</span>,
-  .fill_wts <span class="op">=</span> <span class="cn">FALSE</span>,
-  .digits <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">collapse_n_wt</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  <span class="va">.lvls</span>,</span>
+<span>  .group <span class="op">=</span> <span class="va">group</span>,</span>
+<span>  .value <span class="op">=</span> <span class="va">value</span>,</span>
+<span>  .weight <span class="op">=</span> <span class="va">weight</span>,</span>
+<span>  .fill_wts <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  .digits <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -95,21 +95,33 @@ larger groups and taking a weighted mean based on a set of survey weights.</p>
 survey weights as returned by <code><a href="read_xtabs.html">read_weights()</a></code>. The default
 column names here match those returned by <code>xtab2df</code> (<code>group</code>, <code>value</code>) and
 <code>read_weights</code> (<code>weight</code>).</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Bare column names to use for grouping, including the <code>.group</code> column,
 such as location, year, category, response, etc--probably everything except
 values and weights.</p></dd>
+
+
 <dt>.lvls</dt>
 <dd><p>A named list, where values are character vectors of smaller
 groups (e.g. <code>c("&lt;$15K", "$15K-$30K")</code>) and names are the groups those will
 be replaced by (e.g. <code>"&lt;$30K"</code>). This will be split into the arguments to
 <code><a href="https://forcats.tidyverse.org/reference/fct_collapse.html" class="external-link">forcats::fct_collapse()</a></code>.</p></dd>
+
+
 <dt>.group</dt>
 <dd><p>Bare column name of where groups should be found. Default: group</p></dd>
+
+
 <dt>.value</dt>
 <dd><p>Bare column name of where values should be found. Default: value</p></dd>
+
+
 <dt>.weight</dt>
 <dd><p>Bare column name of where group weights should be found. Default: weight</p></dd>
+
+
 <dt>.fill_wts</dt>
 <dd><p>Logical: if <code>TRUE</code>, missing weights will be filled in with 1,
 i.e. unweighted. This defaults to <code>FALSE</code>, because missing weights is a
@@ -117,13 +129,18 @@ useful way to find that there's a mismatch between the group labels in
 the data and those in the weights table, which is very often the case.
 Therefore, only set this to <code>TRUE</code> if you've already accounted for labeling
 discrepancies.</p></dd>
+
+
 <dt>.digits</dt>
 <dd><p>Numeric: if given, weighted means will be rounded to this
 number of digits. If <code>NULL</code> (the default), values are returned unrounded.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data frame with summarized values. The <code>.group</code> column will have
+    
+
+<p>A data frame with summarized values. The <code>.group</code> column will have
 the collapsed groups, and the <code>.value</code> column will have average values.</p>
     </div>
     <div id="see-also">
@@ -133,15 +150,15 @@ the collapsed groups, and the <code>.value</code> column will have average value
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># collapse income groups, such that &lt;$15K, $15K-$30K become &lt;$30K, etc</span></span>
-<span class="r-in"><span class="va">income_lvls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="st">"&lt;$30K"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"&lt;$15K"</span>, <span class="st">"$15K-$30K"</span><span class="op">)</span>,</span>
-<span class="r-in">  <span class="st">"$30K-$100K"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"$30K-$50K"</span>, <span class="st">"$50K-$75K"</span>, <span class="st">"$75K-$100K"</span><span class="op">)</span>,</span>
-<span class="r-in">  <span class="st">"$100K+"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"$100K-$200K"</span>, <span class="st">"$200K+"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="va">cws_demo</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">category</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Greater New Haven"</span>, <span class="st">"Income"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">collapse_n_wt</span><span class="op">(</span><span class="va">code</span><span class="op">:</span><span class="va">response</span>, .lvls <span class="op">=</span> <span class="va">income_lvls</span>, .digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># collapse income groups, such that &lt;$15K, $15K-$30K become &lt;$30K, etc</span></span></span>
+<span class="r-in"><span><span class="va">income_lvls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="st">"&lt;$30K"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"&lt;$15K"</span>, <span class="st">"$15K-$30K"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"$30K-$100K"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"$30K-$50K"</span>, <span class="st">"$50K-$75K"</span>, <span class="st">"$75K-$100K"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"$100K+"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"$100K-$200K"</span>, <span class="st">"$200K+"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">cws_demo</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">category</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Greater New Haven"</span>, <span class="st">"Income"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">collapse_n_wt</span><span class="op">(</span><span class="va">code</span><span class="op">:</span><span class="va">response</span>, .lvls <span class="op">=</span> <span class="va">income_lvls</span>, .digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 16 × 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    code  question                                  category group response value</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                     <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -175,7 +192,7 @@ the collapsed groups, and the <code>.value</code> column will have average value
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

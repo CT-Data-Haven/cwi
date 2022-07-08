@@ -72,46 +72,67 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">geo_level_plot</span><span class="op">(</span>
-  <span class="va">data</span>,
-  name <span class="op">=</span> <span class="va">name</span>,
-  value <span class="op">=</span> <span class="va">value</span>,
-  level <span class="op">=</span> <span class="va">level</span>,
-  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"col"</span>, <span class="st">"hist"</span>, <span class="st">"point"</span><span class="op">)</span>,
-  hilite <span class="op">=</span> <span class="st">"dodgerblue"</span>,
-  title <span class="op">=</span> <span class="cn">NULL</span>,
-  dark_gray <span class="op">=</span> <span class="st">"gray20"</span>,
-  light_gray <span class="op">=</span> <span class="st">"gray60"</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">geo_level_plot</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  name <span class="op">=</span> <span class="va">name</span>,</span>
+<span>  value <span class="op">=</span> <span class="va">value</span>,</span>
+<span>  level <span class="op">=</span> <span class="va">level</span>,</span>
+<span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"col"</span>, <span class="st">"hist"</span>, <span class="st">"point"</span><span class="op">)</span>,</span>
+<span>  hilite <span class="op">=</span> <span class="st">"dodgerblue"</span>,</span>
+<span>  title <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  dark_gray <span class="op">=</span> <span class="st">"gray20"</span>,</span>
+<span>  light_gray <span class="op">=</span> <span class="st">"gray60"</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>A data frame to use for plotting.</p></dd>
+
+
 <dt>name</dt>
 <dd><p>Bare column name containing names, i.e. independent variable.</p></dd>
+
+
 <dt>value</dt>
 <dd><p>Bare column name containing values, i.e. dependent variable.</p></dd>
+
+
 <dt>level</dt>
 <dd><p>Bare column name containing geographic levels for fill.</p></dd>
+
+
 <dt>type</dt>
 <dd><p>String: one of <code>"col"</code> (bar chart), <code>"point"</code> (dot plot), or <code>"hist"</code> (histogram); defaults <code>"col"</code>.</p></dd>
+
+
 <dt>hilite</dt>
 <dd><p>String giving the highlight color, used for the lowest geography present.</p></dd>
+
+
 <dt>title</dt>
 <dd><p>String giving the title, if desired, for the plot.</p></dd>
+
+
 <dt>dark_gray</dt>
 <dd><p>String giving the named gray color for the highest geography; defaults <code>"gray20"</code>.</p></dd>
+
+
 <dt>light_gray</dt>
 <dd><p>String giving the named gray color for the second lowest geography; defaults <code>"gray60"</code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Any additional parameters to pass to the underlying geom function.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A ggplot</p>
+    
+
+<p>A ggplot</p>
     </div>
 
   </div>
@@ -126,7 +147,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

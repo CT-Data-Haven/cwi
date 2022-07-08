@@ -72,61 +72,86 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">dh_scaffold</span><span class="op">(</span>
-  dir <span class="op">=</span> <span class="st">"."</span>,
-  input_data <span class="op">=</span> <span class="cn">TRUE</span>,
-  output_data <span class="op">=</span> <span class="cn">TRUE</span>,
-  fetch_data <span class="op">=</span> <span class="cn">TRUE</span>,
-  analysis <span class="op">=</span> <span class="cn">TRUE</span>,
-  prep_scripts <span class="op">=</span> <span class="cn">FALSE</span>,
-  plots <span class="op">=</span> <span class="cn">FALSE</span>,
-  format_tables <span class="op">=</span> <span class="cn">FALSE</span>,
-  drafts <span class="op">=</span> <span class="cn">FALSE</span>,
-  utils <span class="op">=</span> <span class="cn">TRUE</span>,
-  addl <span class="op">=</span> <span class="cn">NULL</span>,
-  gitblank <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">dh_scaffold</span><span class="op">(</span></span>
+<span>  dir <span class="op">=</span> <span class="st">"."</span>,</span>
+<span>  input_data <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  output_data <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  fetch_data <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  analysis <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  prep_scripts <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  plots <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  format_tables <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  drafts <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  utils <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  addl <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  gitblank <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>dir</dt>
 <dd><p>String: path to directory in which new files will be written. Default: '.'</p></dd>
+
+
 <dt>input_data</dt>
 <dd><p>Create a directory <code>input_data</code>. Default: TRUE.</p>
 <p>Standard use: data from some outside source to be analyzed in this project.</p></dd>
+
+
 <dt>output_data</dt>
 <dd><p>Create a directory <code>output_data</code>. Default: TRUE.</p>
 <p>Standard use: data written after analysis done in this project, generally in formats that can still be used for analysis and visualization (csv, rds) rather than formats for distribution (I usually add a folder <code>to_distro</code>) or to pass on to a client (xlsx). Nice spreadsheet outputs should go in <code>format_tables</code> or some other distribution-centered folder.</p></dd>
+
+
 <dt>fetch_data</dt>
 <dd><p>Create a directory <code>fetch_data</code>. Default: TRUE.</p>
 <p>Standard use: a place to dump data as it comes in from API calls, queries, batch file downloads, etc.</p></dd>
+
+
 <dt>analysis</dt>
 <dd><p>Create a directory <code>analysis</code>. Default: TRUE</p>
 <p>Standard use: main analysis scripts, both notebooks and .R scripts.</p></dd>
+
+
 <dt>prep_scripts</dt>
 <dd><p>Create a directory <code>prep_scripts</code>. Default: FALSE</p>
 <p>Standard use: scripts use to prep or reshape data or documents, e.g. creating formatted spreadsheets for a client, making metadata, prepping to post to data.world, formatting for a website, bulk rendering parameterized Rmarkdown documents.</p></dd>
+
+
 <dt>plots</dt>
 <dd><p>Create a directory <code>plots</code>. Default: FALSE</p>
 <p>Standard use: plots, either for in-house use or outside distribution.</p></dd>
+
+
 <dt>format_tables</dt>
 <dd><p>Create a directory <code>format_tables</code>. Default: FALSE</p>
 <p>Standard use: spreadsheets--probably written by a script in <code>prep_scripts</code>--to be shared with clients or collaborators. Think of these as being files appropriate for presentation or addenda to a report, not for doing further analysis.</p></dd>
+
+
 <dt>drafts</dt>
 <dd><p>Create a directory <code>drafts</code>. Default: FALSE</p>
 <p>Standard use: separating the more EDA-centered notebooks from notebooks used for drafting writing. Also a good place to keep files that have been edited in outside software (.docx, etc).</p></dd>
+
+
 <dt>utils</dt>
 <dd><p>Create a directory <code>utils</code>. Default: TRUE</p>
 <p>Standard use: utility scripts and miscellaneous files, e.g. logo images, snippets of data, lists of colors to use.</p></dd>
+
+
 <dt>addl</dt>
 <dd><p>A string vector of any additional directories to create. Default: NULL</p></dd>
+
+
 <dt>gitblank</dt>
 <dd><p>Logical: whether to write a blank placeholder file in each new directory to force git tracking, even without yet having folder contents. Default: TRUE. If FALSE, empty directories will <em>not</em> be tracked by git.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns nothing, but prints paths to newly created directories.</p>
+    
+
+<p>Returns nothing, but prints paths to newly created directories.</p>
     </div>
 
   </div>
@@ -141,7 +166,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>
