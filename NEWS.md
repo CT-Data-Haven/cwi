@@ -1,3 +1,7 @@
+# cwi 1.1.1
+
+**Bugfix:** occupational codes have larger groups and smaller groups. One larger group (Healthcare Practitioners and Technical Occupations) was mislabeled so it was marked as being under Education, Legal, Community Service, Arts, and Media Occupations.
+
 # cwi 1.1.0
 
 **Some updates to 2020**
