@@ -39,10 +39,12 @@ occ <- readxl::read_excel(occ_fn, sheet = 1, skip = 10, col_names = c("occ_code"
   dplyr::mutate(description = stringr::str_squish(description)) %>%
   dplyr::mutate(description = gsub("\\:$", "", description))
 
+# don't otherwise get classified as major groups
+standalone <- c("Healthcare Practitioners and Technical Occupations", "Military Specific Occupations")
 occ_codes <- occ %>%
   dplyr::left_join(top_occ, by = c("occ_code", "description")) %>%
   dplyr::filter(is_hdr) %>%
-  dplyr::mutate(is_subhdr = is.na(is_top) & (grepl("\\s\\-\\s", soc_code) | grepl("Military Specific", description))) %>%
+  dplyr::mutate(is_subhdr = is.na(is_top) & (grepl("\\s\\-\\s", soc_code) | description %in% standalone)) %>%
   dplyr::mutate(is_major_grp = tidyr::replace_na((is_top | is_subhdr), FALSE)) %>%
   dplyr::mutate(occ_group = ifelse(is_major_grp, description, NA_character_)) %>%
   dplyr::filter(description != "Management, Business, Science, and Arts Occupations") %>%
