@@ -19,7 +19,7 @@ larger groups and taking a weighted mean based on a set of survey weights."><met
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1</span>
       </span>
     </div>
 
@@ -160,24 +160,25 @@ the collapsed groups, and the <code>.value</code> column will have average value
 <span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">category</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Greater New Haven"</span>, <span class="st">"Income"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">collapse_n_wt</span><span class="op">(</span><span class="va">code</span><span class="op">:</span><span class="va">response</span>, .lvls <span class="op">=</span> <span class="va">income_lvls</span>, .digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 16 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    code  question                                  category group response value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                     <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Q1    Are you satisfied with the city or area … Greater… Grea… Yes       0.82</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Q1    Are you satisfied with the city or area … Greater… Grea… No        0.17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Q1    Are you satisfied with the city or area … Greater… Grea… Don't k…  0.01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Q1    Are you satisfied with the city or area … Greater… Grea… Refused   0   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Q1    Are you satisfied with the city or area … Income   &lt;$30K Yes       0.77</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Q1    Are you satisfied with the city or area … Income   &lt;$30K No        0.22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Q1    Are you satisfied with the city or area … Income   &lt;$30K Don't k…  0.01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Q1    Are you satisfied with the city or area … Income   &lt;$30K Refused   0   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Q1    Are you satisfied with the city or area … Income   $30K… Yes       0.83</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Q1    Are you satisfied with the city or area … Income   $30K… No        0.15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> Q1    Are you satisfied with the city or area … Income   $30K… Don't k…  0.01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> Q1    Are you satisfied with the city or area … Income   $30K… Refused   0   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> Q1    Are you satisfied with the city or area … Income   $100… Yes       0.85</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> Q1    Are you satisfied with the city or area … Income   $100… No        0.14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> Q1    Are you satisfied with the city or area … Income   $100… Don't k…  0.01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> Q1    Are you satisfied with the city or area … Income   $100… Refused   0   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    code  question                                    categ…¹ group respo…² value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                       <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Q1    Are you satisfied with the city or area wh… Greate… Grea… Yes      0.82</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Q1    Are you satisfied with the city or area wh… Greate… Grea… No       0.17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Q1    Are you satisfied with the city or area wh… Greate… Grea… Don't …  0.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Q1    Are you satisfied with the city or area wh… Greate… Grea… Refused  0   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Q1    Are you satisfied with the city or area wh… Income  &lt;$30K Yes      0.77</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Q1    Are you satisfied with the city or area wh… Income  &lt;$30K No       0.22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Q1    Are you satisfied with the city or area wh… Income  &lt;$30K Don't …  0.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Q1    Are you satisfied with the city or area wh… Income  &lt;$30K Refused  0   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Q1    Are you satisfied with the city or area wh… Income  $30K… Yes      0.83</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Q1    Are you satisfied with the city or area wh… Income  $30K… No       0.15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> Q1    Are you satisfied with the city or area wh… Income  $30K… Don't …  0.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> Q1    Are you satisfied with the city or area wh… Income  $30K… Refused  0   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> Q1    Are you satisfied with the city or area wh… Income  $100… Yes      0.85</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> Q1    Are you satisfied with the city or area wh… Income  $100… No       0.14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> Q1    Are you satisfied with the city or area wh… Income  $100… Don't …  0.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> Q1    Are you satisfied with the city or area wh… Income  $100… Refused  0   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with abbreviated variable names ¹​category, ²​response</span></span>
 </code></pre></div>
     </div>
   </div>
@@ -192,7 +193,7 @@ the collapsed groups, and the <code>.value</code> column will have average value
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
