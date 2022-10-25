@@ -31,24 +31,34 @@ top_occ <- readxl::read_excel(occ_fn, sheet = 1, range = "C4:C8", col_names = "d
   dplyr::mutate(is_top = TRUE)
 
 # headings list a range of codes in occ_codes
+# don't otherwise get classified as major groups
+# f'it, just doing this manually
+occ_grps <- c("Management, Business, and Financial Occupations",
+          "Computer, Engineering, and Science Occupations",
+          "Education, Legal, Community Service, Arts, and Media Occupations",
+          "Healthcare Practitioners and Technical Occupations",
+          "Service Occupations",
+          "Sales and Office Occupations",
+          "Natural Resources, Construction, and Maintenance Occupations",
+          "Production, Transportation, and Material Moving Occupations",
+          "Military Specific Occupations")
 occ <- readxl::read_excel(occ_fn, sheet = 1, skip = 10, col_names = c("occ_code", "soc_code", "description")) %>%
-  dplyr::mutate(is_hdr = grepl("\\-", occ_code)) %>%
   dplyr::filter(!grepl("Combines", soc_code),
                 !is.na(soc_code),
                 !is.na(occ_code)) %>%
   dplyr::mutate(description = stringr::str_squish(description)) %>%
-  dplyr::mutate(description = gsub("\\:$", "", description))
+  dplyr::mutate(description = gsub("\\:$", "", description)) %>%
+  dplyr::mutate(is_hdr = grepl("\\-", occ_code))
 
-# don't otherwise get classified as major groups
-standalone <- c("Healthcare Practitioners and Technical Occupations", "Military Specific Occupations")
 occ_codes <- occ %>%
   dplyr::left_join(top_occ, by = c("occ_code", "description")) %>%
   dplyr::filter(is_hdr) %>%
-  dplyr::mutate(is_subhdr = is.na(is_top) & (grepl("\\s\\-\\s", soc_code) | description %in% standalone)) %>%
-  dplyr::mutate(is_major_grp = tidyr::replace_na((is_top | is_subhdr), FALSE)) %>%
+  dplyr::mutate(is_major_grp = tidyr::replace_na((is_top | description %in% occ_grps), FALSE)) %>%
   dplyr::mutate(occ_group = ifelse(is_major_grp, description, NA_character_)) %>%
-  dplyr::filter(description != "Management, Business, Science, and Arts Occupations") %>%
   tidyr::fill(occ_group, .direction = "down") %>%
-  dplyr::select(is_major_grp, occ_group, occ_code, soc_code, description)
+  dplyr::select(is_major_grp, occ_group, occ_code, soc_code, description) %>%
+  dplyr::filter(description != "Management, Business, Science, and Arts Occupations") # this is really broad--want to separate these out
 
 usethis::use_data(occ_codes, overwrite = TRUE)
+
+
