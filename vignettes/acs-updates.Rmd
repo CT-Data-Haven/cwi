@@ -47,14 +47,14 @@ compare_yrs <- function(yr, ret = FALSE) {
 
 # 2021 ACS
 
-```{r}
+```{r results='asis'}
 compare_yrs(2021)
 ```
 
 
 # 2020 ACS
 
-```{r}
+```{r results='asis'}
 compare_yrs(2020)
 ```
 
@@ -71,7 +71,7 @@ The 2019 ACS included [reengineering of a few tables](https://www.census.gov/pro
 
 This is just a quick check of what's new or changed.
 
-```{r}
+```{r results='asis'}
 change19 <- compare_yrs(2019, ret = TRUE)
 ```
 
