@@ -21,28 +21,43 @@ library(dplyr)
 library(purrr)
 ```
 
+```{r}
+compare_yrs <- function(yr, ret = FALSE) {
+  yrs <- rlang::set_names(c(yr - 1, yr))
+  short_yrs <- rlang::set_names(substr(yrs, 3, 4), sprintf("%s$", seq_along(yrs)))
+  tbls <- purrr::map(yrs, cwi:::clean_acs_vars, "acs5")
+  tbls <- purrr::map(tbls, mutate, table_num = stringr::str_remove(name, "_.+$"))
+  tbls <- purrr::map(tbls, distinct, concept, table_num)
+  tbls <- purrr::map(tbls, mutate, concept = stringr::str_replace_all(concept, "20\\d{2}", "20xx"))
+  
+  purrr::map(tbls, ~paste("Number of rows:", nrow(.)))
+  
+  out <- purrr::reduce(tbls, dplyr::full_join, by = "table_num", suffix = as.character(c(1, 2)))
+  out <- dplyr::filter(out, concept1 != concept2 | is.na(concept1) | is.na(concept2))
+  out <- dplyr::rename_with(out, ~stringr::str_replace_all(., short_yrs), .cols = dplyr::matches("concept\\d"))
+  
+  print(knitr::kable(out))
+  
+  if (ret) {
+    return(out)
+  }
+}
+```
+
+
+# 2021 ACS
+
+```{r}
+compare_yrs(2021)
+```
+
+
 # 2020 ACS
 
 ```{r}
-yrs <- rlang::set_names(2019:2020)
-acs <- map(yrs, cwi:::clean_acs_vars, "acs5") %>%
-  map(mutate, table_num = stringr::str_extract(name, "^[A-Z]\\d+[A-Z]*"))
-
-tbls <- acs %>%
-  map(distinct, concept, table_num) %>%
-  map(mutate, concept = stringr::str_replace_all(concept, "20\\d{2}", "20xx"))
-
-bind_rows(tbls, .id = "year") %>%
-  tidyr::pivot_wider(names_from = year, values_from = c(concept), names_glue = "{.value}_{year}")
-
-map(tbls, ~ paste("Number of rows:", nrow(.)))
+compare_yrs(2020)
 ```
 
-```{r}
-reduce(tbls, full_join, by = "table_num", suffix = substr(names(tbls), 3, 4)) %>%
-  filter(concept19 != concept20 | is.na(concept19) | is.na(concept20)) %>%
-  knitr::kable()
-```
 
 Not a lot new in the 2020 ACS.
 
@@ -50,35 +65,22 @@ Not a lot new in the 2020 ACS.
 
 # 2019 ACS
 
-## New variables
+## New tables
 
 The 2019 ACS included [reengineering of a few tables](https://www.census.gov/programs-surveys/acs/technical-documentation/table-and-geography-changes/2019/5-year.html), and a few new additions. Some are clarifications of phrasing to both questions and tables, such as time leaving home for work. More substantial are the changes in how family structure has been phrased to be more inclusive of same-sex and unmarried couples--see the most recent [working paper](https://www.census.gov/content/census/en/library/working-papers/2017/demo/SEHSD-WP2017-28.html) on this.
 
 This is just a quick check of what's new or changed.
 
 ```{r}
-acs18 <- cwi:::clean_acs_vars(2018, "acs5") %>%
-  mutate(table_num = stringr::str_extract(name, "^[A-Z]\\d+[A-Z]*"))
-acs19 <- cwi:::clean_acs_vars(2019, "acs5") %>%
-  mutate(table_num = stringr::str_extract(name, "^[A-Z]\\d+[A-Z]*"))
-
-tbl18 <- distinct(acs18, concept, table_num) %>%
-  mutate(concept = stringr::str_replace_all(concept, "20\\d{2}", "20xx"))
-tbl19 <- distinct(acs19, concept, table_num) %>%
-  mutate(concept = stringr::str_replace_all(concept, "20\\d{2}", "20xx"))
-
-tbl_changes <- left_join(tbl19, tbl18, by = "table_num", suffix = c("19", "18")) %>%
-  filter(concept18 != concept19 | is.na(concept18)) %>%
-  mutate(new_in_2019 = ifelse(is.na(concept18), "x", "")) %>%
-  select(new_in_2019, table_num, everything())
-
-knitr::kable(tbl_changes)
+change19 <- compare_yrs(2019, ret = TRUE)
 ```
 
 ## Variables in the tables related to gender & family structure:
 
 ```{r message=FALSE, warning=FALSE, results='asis'}
-tbl_changes %>%
+acs19 <- cwi:::clean_acs_vars(2019, "acs5") %>%
+  mutate(table_num = stringr::str_remove(name, "_.+$"))
+change19 %>%
   filter(grepl("(HOUSEHOLD|SPOUSE)", concept19)) %>%
   inner_join(acs19, by = "table_num") %>%
   split(list(.$table_num, .$concept), drop = TRUE) %>%
