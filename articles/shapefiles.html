@@ -111,15 +111,18 @@
 <span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/s2.html" class="external-link">sf_use_s2</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p><code>cwi</code> ships with several shapefiles in <a href="https://r-spatial.github.io/sf/" class="external-link"><code>sf</code></a> (simple features) format. These include:</p>
+<p><code>cwi</code> ships with several shapefiles in <a href="https://r-spatial.github.io/sf/" class="external-link"><code>sf</code></a> (simple
+features) format. These include:</p>
 <ul>
-<li>Shapes straight from <a href="https://www.census.gov/geo/maps-data/data/tiger.html" class="external-link">TIGER</a> via <a href="https://github.com/walkerke/tigris" class="external-link"><code>tigris</code></a>:
+<li>Shapes straight from <a href="https://www.census.gov/geo/maps-data/data/tiger.html" class="external-link">TIGER</a>
+via <a href="https://github.com/walkerke/tigris" class="external-link"><code>tigris</code></a>:
 <ul>
 <li><code>town_sf</code></li>
 <li><code>tract_sf</code></li>
 </ul>
 </li>
-<li>Shapes put together at DataHaven based on official city neighborhood boundaries:
+<li>Shapes put together at DataHaven based on official city neighborhood
+boundaries:
 <ul>
 <li><code>bridgeport_sf</code></li>
 <li><code>hartford_sf</code></li>
@@ -132,14 +135,24 @@
 <h2 id="sf">
 <code>sf</code><a class="anchor" aria-label="anchor" href="#sf"></a>
 </h2>
-<p><code>sf</code> objects are easy to plot either out of the box with <code><a href="https://r-spatial.github.io/sf/reference/plot.html" class="external-link">sf::plot.sf()</a></code>, or with <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> as of <code>ggplot2</code> version 3.0.0. Use with <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code> means a <code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf()</a></code> can be overlayed on a basemap from <code>ggmap</code>, as is done in the neighborhood examples.</p>
-<p><code>sf</code> is well-documented, and uses <code>dplyr</code>-type functions to allow for mutating, filtering, summarizing, joining, and most other data wrangling functions. See the <code>sf</code> vignettes for help getting started: <code>vignette(package = "sf")</code>.</p>
-<p><code>sf</code> data frames look and act like other data frames, but with shape information attached.</p>
+<p><code>sf</code> objects are easy to plot either out of the box with
+<code><a href="https://r-spatial.github.io/sf/reference/plot.html" class="external-link">sf::plot.sf()</a></code>, or with <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> as of
+<code>ggplot2</code> version 3.0.0. Use with <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code> means
+a <code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf()</a></code> can be overlayed on a basemap from
+<code>ggmap</code>, as is done in the neighborhood examples.</p>
+<p><code>sf</code> is well-documented, and uses <code>dplyr</code>-type
+functions to allow for mutating, filtering, summarizing, joining, and
+most other data wrangling functions. See the <code>sf</code> vignettes
+for help getting started: <code>vignette(package = "sf")</code>.</p>
+<p><code>sf</code> data frames look and act like other data frames, but
+with shape information attached.</p>
 </div>
 <div class="section level2">
 <h2 id="statewide">Statewide<a class="anchor" aria-label="anchor" href="#statewide"></a>
 </h2>
-<p>A basic plot of <code><a href="../reference/town_sf.html">cwi::town_sf</a></code>, with some <code>ggplot</code> aesthetics set, graticule lines turned off with <code>coord_sf(ndiscr = F)</code>, and a blank theme.</p>
+<p>A basic plot of <code><a href="../reference/town_sf.html">cwi::town_sf</a></code>, with some
+<code>ggplot</code> aesthetics set, graticule lines turned off with
+<code>coord_sf(ndiscr = F)</code>, and a blank theme.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">town_sf</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"gray70"</span>, color <span class="op">=</span> <span class="st">"white"</span>, size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
@@ -147,7 +160,10 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Connecticut towns"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="shapefiles_files/figure-html/towns-1.png" width="100%"></p>
-<p>With some <code>dplyr</code> operations. For example, <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code> followed by <code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise()</a></code> conducts a union on each group’s geometries, using <code><a href="https://r-spatial.github.io/sf/reference/geos_combine.html" class="external-link">sf::st_union()</a></code> in its back-end.</p>
+<p>With some <code>dplyr</code> operations. For example,
+<code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code> followed by <code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise()</a></code> conducts a
+union on each group’s geometries, using <code><a href="https://r-spatial.github.io/sf/reference/geos_combine.html" class="external-link">sf::st_union()</a></code> in
+its back-end.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">town_sf</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">regions</span><span class="op">[[</span><span class="st">"Greater New Haven"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
@@ -160,10 +176,13 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Filtering and unioning shapes"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; although coordinates are longitude/latitude, st_union assumes that they are planar</span></span>
-<span><span class="co">#&gt; although coordinates are longitude/latitude, st_union assumes that they are planar</span></span></code></pre></div>
+<span><span class="co">#&gt; although coordinates are longitude/latitude, st_union assumes that they are</span></span>
+<span><span class="co">#&gt; planar</span></span>
+<span><span class="co">#&gt; although coordinates are longitude/latitude, st_union assumes that they are</span></span>
+<span><span class="co">#&gt; planar</span></span></code></pre></div>
 <p><img src="shapefiles_files/figure-html/town_regional-1.png" width="100%"></p>
-<p><code><a href="../reference/tract_sf.html">cwi::tract_sf</a></code>, a fairly large shape containing all tracts in the state, as of 2020 redistricting.</p>
+<p><code><a href="../reference/tract_sf.html">cwi::tract_sf</a></code>, a fairly large shape containing all
+tracts in the state, as of 2020 redistricting.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">tract_sf</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"gray70"</span>, color <span class="op">=</span> <span class="st">"white"</span>, size <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span></span>
@@ -175,7 +194,13 @@
 <div class="section level2">
 <h2 id="neighborhoods">Neighborhoods<a class="anchor" aria-label="anchor" href="#neighborhoods"></a>
 </h2>
-<p>Neighborhood shapes were made at DataHaven by splitting or grouping census tracts into neighborhood areas as defined by each city’s government. In some cases, boundaries were slightly adjusted to fit tracts. Small neighborhoods may be grouped together for analysis. See documentation of these at <code><a href="../reference/neighborhood_shapes.html">cwi::neighborhood_shapes</a></code> and crosswalk of tracts to neighborhoods at <code><a href="../reference/neighborhood_tracts.html">cwi::neighborhood_tracts</a></code>.</p>
+<p>Neighborhood shapes were made at DataHaven by splitting or grouping
+census tracts into neighborhood areas as defined by each city’s
+government. In some cases, boundaries were slightly adjusted to fit
+tracts. Small neighborhoods may be grouped together for analysis. See
+documentation of these at <code><a href="../reference/neighborhood_shapes.html">cwi::neighborhood_shapes</a></code> and
+crosswalk of tracts to neighborhoods at
+<code><a href="../reference/neighborhood_tracts.html">cwi::neighborhood_tracts</a></code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  <span class="st">"New Haven"</span> <span class="op">=</span> <span class="va">new_haven_sf</span>, Stamford <span class="op">=</span> <span class="va">stamford_sf</span>,</span>

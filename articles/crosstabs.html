@@ -94,7 +94,8 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Working with Community Wellbeing Survey crosstabs</h1>
+      <h1 data-toc-skip>Working with Community Wellbeing Survey
+crosstabs</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/CT-Data-Haven/cwi/blob/HEAD/vignettes/crosstabs.Rmd" class="external-link"><code>vignettes/crosstabs.Rmd</code></a></small>
@@ -124,14 +125,24 @@
 <span>      <span class="va">...</span></span>
 <span>    <span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p>This is a quick look at using the crosstab-related functions that were expanded upon to make the <code>dcws</code> package. There are 3 test files of crosstabs that ship with this package for internal testing and illustration. This vignette recreates the data in the <code>cws_demo</code> dataset.</p>
+<p>This is a quick look at using the crosstab-related functions that
+were expanded upon to make the <code>dcws</code> package. There are 3
+test files of crosstabs that ship with this package for internal testing
+and illustration. This vignette recreates the data in the
+<code>cws_demo</code> dataset.</p>
 <div class="figure">
 <img src="../reference/figures/xtab-screenshot.png" title="Screenshot of DCWS crosstabs spreadsheet" style="width:100.0%" alt=""><p class="caption">Screenshot of DCWS crosstabs spreadsheet</p>
 </div>
 <div class="section level2">
 <h2 id="reading-data">Reading data<a class="anchor" aria-label="anchor" href="#reading-data"></a>
 </h2>
-<p><code>read_xtabs</code> reads a crosstab file, but keeps it ugly—you can then transform it into a ready-for-analysis data frame with <code>xtab2df</code>. Below all the survey data, the file has a table of weights. It’s hard to know where that table might be and how to separate it from the data tables. <code>read_xtabs</code> reads until a marker that distinguishes between the data and the weights; <code>read_weights</code> reads everything below that marker.</p>
+<p><code>read_xtabs</code> reads a crosstab file, but keeps it ugly—you
+can then transform it into a ready-for-analysis data frame with
+<code>xtab2df</code>. Below all the survey data, the file has a table of
+weights. It’s hard to know where that table might be and how to separate
+it from the data tables. <code>read_xtabs</code> reads until a marker
+that distinguishes between the data and the weights;
+<code>read_weights</code> reads everything below that marker.</p>
 <p>The data for the first question looks like this:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">xtab_in</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_xtabs.html">read_xtabs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/test_xtab2015.xlsx"</span>, package <span class="op">=</span> <span class="st">"cwi"</span><span class="op">)</span>, year <span class="op">=</span> <span class="fl">2015</span><span class="op">)</span></span>
@@ -150,7 +161,9 @@
 <span><span class="co">#&gt; <span style="color: #949494;"># … with 13 more variables: x14 &lt;chr&gt;, x15 &lt;chr&gt;, x16 &lt;chr&gt;, x17 &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   x18 &lt;chr&gt;, x19 &lt;chr&gt;, x20 &lt;chr&gt;, x21 &lt;chr&gt;, x22 &lt;chr&gt;, x23 &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   x24 &lt;chr&gt;, x25 &lt;chr&gt;, x26 &lt;chr&gt;</span></span></span></code></pre></div>
-<p>Reshape the crosstabs into something you’d actually want to work with using <code>xtab2df</code>. That snippet from the first chunk now looks like this:</p>
+<p>Reshape the crosstabs into something you’d actually want to work with
+using <code>xtab2df</code>. That snippet from the first chunk now looks
+like this:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cws</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/xtab2df.html">xtab2df</a></span><span class="op">(</span><span class="va">xtab_in</span><span class="op">)</span></span>
 <span></span>
@@ -171,7 +184,13 @@
 <div class="section level2">
 <h2 id="combining-demographic-groups">Combining demographic groups<a class="anchor" aria-label="anchor" href="#combining-demographic-groups"></a>
 </h2>
-<p>Say we want to collapse those income brackets into just 3 groups. For that, use the weights table…and fix the group labels in the weights table to match the ones from the data (I’m only doing this for income, but education often needs reconciling as well). Obviously there won’t be weights for the total group; in doing weighted means, the easiest fix is to replace NAs with 1. (FYI, groups Yes and No correspond to the category of having children in the household.)</p>
+<p>Say we want to collapse those income brackets into just 3 groups. For
+that, use the weights table…and fix the group labels in the weights
+table to match the ones from the data (I’m only doing this for income,
+but education often needs reconciling as well). Obviously there won’t be
+weights for the total group; in doing weighted means, the easiest fix is
+to replace NAs with 1. (FYI, groups Yes and No correspond to the
+category of having children in the household.)</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">wts_in</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_xtabs.html">read_weights</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/test_xtab2015.xlsx"</span>, package <span class="op">=</span> <span class="st">"cwi"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">wts_in</span></span>
@@ -227,7 +246,12 @@
 <div class="section level2">
 <h2 id="rescaling">Rescaling<a class="anchor" aria-label="anchor" href="#rescaling"></a>
 </h2>
-<p>We generally want to remove non-answers (don’t know, refused) from the denominator, then rescale the response values. Usually those non-answers only account for 1 or 2 percentage points and don’t change values much, but occasionally they’re large enough to make a noticeable difference. For consistency, I always remove non-answers, even when they’re small.</p>
+<p>We generally want to remove non-answers (don’t know, refused) from
+the denominator, then rescale the response values. Usually those
+non-answers only account for 1 or 2 percentage points and don’t change
+values much, but occasionally they’re large enough to make a noticeable
+difference. For consistency, I always remove non-answers, even when
+they’re small.</p>
 <p>With non-answers:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cws</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
@@ -246,7 +270,8 @@
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Q1    Are you satisfied with the city or area wh… Gender  M     No       0.18</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Q1    Are you satisfied with the city or area wh… Gender  F     No       0.15</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with 18 more rows, and abbreviated variable names ¹​category, ²​response</span></span></span></code></pre></div>
-<p>Without nonanswers (using <code>sub_nonanswers</code> defaults of “Don’t know” &amp; “Refused”):</p>
+<p>Without nonanswers (using <code>sub_nonanswers</code> defaults of
+“Don’t know” &amp; “Refused”):</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cws</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">code</span> <span class="op">==</span> <span class="st">"Q1"</span>, <span class="va">category</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Greater New Haven"</span>, <span class="st">"Gender"</span>, <span class="st">"Age"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
@@ -273,7 +298,9 @@
 <div class="section level2">
 <h2 id="case-study">Case study<a class="anchor" aria-label="anchor" href="#case-study"></a>
 </h2>
-<p>For many questions, what you probably want to report out or display is the share of people who answered yes, or the combination of “strongly agree” &amp; “somewhat agree”.</p>
+<p>For many questions, what you probably want to report out or display
+is the share of people who answered yes, or the combination of “strongly
+agree” &amp; “somewhat agree”.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span></span>
@@ -302,7 +329,13 @@
 <span>    caption <span class="op">=</span> <span class="st">"Source: 2015 DataHaven Community Wellbeing Survey"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p><img src="crosstabs_files/figure-html/chart-1.png" width="100%"></p>
-<p>Note that different questions have different response values. In general, it’s better to work with each question separately; easy and safe ways to do this are to make separate data frames for different questions (e.g. with <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">dplyr::filter</a></code>), or by splitting (e.g. with <code>split(data$question)</code>) and iterating with <code>lapply</code> or <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">purrr::map</a></code> before binding or joining back together.</p>
+<p>Note that different questions have different response values. In
+general, it’s better to work with each question separately; easy and
+safe ways to do this are to make separate data frames for different
+questions (e.g. with <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">dplyr::filter</a></code>), or by splitting
+(e.g. with <code>split(data$question)</code>) and iterating with
+<code>lapply</code> or <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">purrr::map</a></code> before binding or joining
+back together.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cws</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">code</span>, <span class="va">question</span>, <span class="va">response</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
@@ -321,7 +354,10 @@
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Have you smoked at least 100 cigarettes in your entire life? [100 cig… Yes, No</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> How responsive local government is to the needs of residents           Excell…</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable name ¹​responses</span></span></span></code></pre></div>
-<p>A common use is to show multiple related indicators side by side in a table or chart. Here I’m prepping to show both the question about neighborhood satisfaction (yes / no) and the responsiveness of local government (combined excellent &amp; good).</p>
+<p>A common use is to show multiple related indicators side by side in a
+table or chart. Here I’m prepping to show both the question about
+neighborhood satisfaction (yes / no) and the responsiveness of local
+government (combined excellent &amp; good).</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">govt</span> <span class="op">&lt;-</span> <span class="va">cws</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">category</span>, <span class="va">group</span><span class="op">)</span>, <span class="fu">forcats</span><span class="fu">::</span><span class="va"><a href="https://forcats.tidyverse.org/reference/as_factor.html" class="external-link">as_factor</a></span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
