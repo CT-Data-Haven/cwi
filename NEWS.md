@@ -1,3 +1,8 @@
+# cwi 1.1.2
+
+- Start handling updated MSA definitions—not sure that any datasets actually use these yet
+- Add `rescale` option to `sub_nonanswers`—its default won't change any existing code
+
 # cwi 1.1.1
 
 **Bugfix:** occupational codes have larger groups and smaller groups. One larger group (Healthcare Practitioners and Technical Occupations) was mislabeled so it was marked as being under Education, Legal, Community Service, Arts, and Media Occupations.
