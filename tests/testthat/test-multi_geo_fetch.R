@@ -82,3 +82,11 @@ test_that("multi_geo_* handles New England, other MSAs", {
   expect_s3_class(multi_geo_acs(table = "B01003", msa = TRUE, new_england = FALSE), "data.frame")
   expect_s3_class(multi_geo_acs(table = "B01003", msa = TRUE, new_england = TRUE), "data.frame")
 })
+
+test_that("multi_geo_* handles MSA label change in 2021", {
+  # filtering for NE broke because of making names lowercase
+  skip_on_ci()
+  expect_s3_class(multi_geo_acs(table = "B01003", msa = TRUE, year = 2020), "data.frame")
+  expect_s3_class(multi_geo_acs(table = "B01003", msa = TRUE, year = 2021), "data.frame")
+})
+
