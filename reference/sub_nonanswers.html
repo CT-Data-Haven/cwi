@@ -81,7 +81,8 @@ remaining values to add to 1.0.</p>
 <span>  response <span class="op">=</span> <span class="va">response</span>,</span>
 <span>  value <span class="op">=</span> <span class="va">value</span>,</span>
 <span>  nons <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Don't know"</span>, <span class="st">"Refused"</span><span class="op">)</span>,</span>
-<span>  factor_response <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  factor_response <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  rescale <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -109,6 +110,10 @@ Default: c("Don't know", "Refused")</p></dd>
 <dd><p>Logical: if <code>TRUE</code> (default), returns response variable
 as a factor. This is likely a more useful way to handle response
 categories once non-answers have been removed.</p></dd>
+
+
+<dt>rescale</dt>
+<dd><p>Logical: if <code>TRUE</code>, values will be scaled based on their total. If <code>FALSE</code> (the default), values are scaled based on an assumption that all responses add to 1. In some cases, crosstabs with heavy rounding might not add up to 1 when they should, so rescaling helps handle that.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -141,7 +146,7 @@ fewer rows</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
