@@ -12,6 +12,7 @@
 #' @param factor_response Logical: if `TRUE` (default), returns response variable
 #' as a factor. This is likely a more useful way to handle response
 #' categories once non-answers have been removed.
+#' @param rescale Logical: if `TRUE`, values will be scaled based on their total. If `FALSE` (the default), values are scaled based on an assumption that all responses add to 1. In some cases, crosstabs with heavy rounding might not add up to 1 when they should, so rescaling helps handle that.
 #' @return A data frame with the same number of columns as the original, but
 #' fewer rows
 #' @examples
@@ -24,7 +25,7 @@
 #' @export
 #' @rdname sub_nonanswers
 
-sub_nonanswers <- function(data, response = response, value = value, nons = c("Don't know", "Refused"), factor_response = TRUE) {
+sub_nonanswers <- function(data, response = response, value = value, nons = c("Don't know", "Refused"), factor_response = TRUE, rescale = FALSE) {
   # warn if any nons aren't actually in the data
   response_vals <- unique(dplyr::pull(data, {{ response }}))
   xtra_nons <- setdiff(nons, response_vals)
@@ -44,9 +45,16 @@ sub_nonanswers <- function(data, response = response, value = value, nons = c("D
 
   wide <- dplyr::ungroup(data)
   wide <- tidyr::pivot_wider(wide, names_from = {{ response }}, values_from = {{ value }})
-  non_sum <- rowSums(dplyr::select(wide, dplyr::any_of(nons)))
-  wide$non_sum <- non_sum
-  wide <- dplyr::mutate(wide, dplyr::across(c(!!!responses), function(x) x / (1 - non_sum)))
+  # non_sum <- rowSums(dplyr::select(wide, dplyr::any_of(nons)))
+  wide$non_sum <- rowSums(dplyr::select(wide, dplyr::any_of(nons)))
+
+  if (rescale) {
+    total <- rowSums(dplyr::select(wide, dplyr::any_of(response_vals)))
+  } else {
+    total <- 1
+  }
+
+  wide <- dplyr::mutate(wide, dplyr::across(c(!!!responses), function(x) x / (total - non_sum)))
   wide <- dplyr::select(wide, -non_sum, -dplyr::any_of(nons))
 
   out <- tidyr::pivot_longer(wide, cols = c(!!!responses),

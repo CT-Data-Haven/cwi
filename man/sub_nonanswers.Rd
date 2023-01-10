@@ -9,7 +9,8 @@ sub_nonanswers(
   response = response,
   value = value,
   nons = c("Don't know", "Refused"),
-  factor_response = TRUE
+  factor_response = TRUE,
+  rescale = FALSE
 )
 }
 \arguments{
@@ -26,6 +27,8 @@ Default: c("Don't know", "Refused")}
 \item{factor_response}{Logical: if \code{TRUE} (default), returns response variable
 as a factor. This is likely a more useful way to handle response
 categories once non-answers have been removed.}
+
+\item{rescale}{Logical: if \code{TRUE}, values will be scaled based on their total. If \code{FALSE} (the default), values are scaled based on an assumption that all responses add to 1. In some cases, crosstabs with heavy rounding might not add up to 1 when they should, so rescaling helps handle that.}
 }
 \value{
 A data frame with the same number of columns as the original, but
