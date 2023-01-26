@@ -1,3 +1,7 @@
+# cwi 1.1.3
+
+- Add regional councils of governments to `regions` list. Connecticut adopted these in 2022 to replace counties. Definitions from CTOPM [here](https://data.ct.gov/Government/Regional-Councils-of-Governments-Boundaries/idnf-uwvz).
+
 # cwi 1.1.2
 
 - Start handling updated MSA definitions—not sure that any datasets actually use these yet
