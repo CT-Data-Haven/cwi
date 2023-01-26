@@ -5,10 +5,10 @@
 \alias{regions}
 \title{Regions of Connecticut}
 \format{
-A named list of vectors, where names give the names of regions and vectors give the names of towns making up each region.
+A named list of vectors, where names give the names of regions and vectors give the names of towns making up each region, including regional councils of governments.
 }
 \source{
-DataHaven internal
+DataHaven internal and CT OPM
 }
 \usage{
 regions
