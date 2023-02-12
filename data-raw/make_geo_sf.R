@@ -7,7 +7,7 @@ town_sf <- tigris::county_subdivisions(state = "09", cb = TRUE, class = "sf", ye
 
 new_haven_sf <- sf::st_read("https://gist.githubusercontent.com/camille-s/c8cfa583ef22105e90d53ceb299f1a7b/raw/fc087f30ddb2658a05fb5408f1e9d5276b8a433d/nhv.json") %>%
   dplyr::rename(name = neighborhood) %>%
-  dplyr::mutate(name = forcats::fct_recode(name, "Wooster Square" = "Wooster Square/Mill River")) %>%
+  dplyr::mutate(name = dplyr::recode(name, "Wooster Square/Mill River" = "Wooster Square")) %>%
   sf::st_transform(sf::st_crs(tract_sf))
 
 
