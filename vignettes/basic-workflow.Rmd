@@ -112,7 +112,7 @@ homeownership %>%
 tenure_map <- homeownership %>%
   filter(level == "4_town") %>%
   quick_map(
-    value = share, level = "town", color = "black", size = 0.4,
+    value = share, level = "town", color = "black", linewidth = 0.4,
     title = "Homeownership, Greater New Haven", palette = "BuPu"
   )
 
@@ -124,7 +124,7 @@ Since this returns a `ggplot` object with `sf` data, we can add additional `ggpl
 ```{r quick_map2, message=FALSE, warning=FALSE, out.width="100%"}
 tenure_map +
   labs(subtitle = "By town, 2019") +
-  geom_sf(data = . %>% filter(name == "New Haven"), fill = NA, color = "black", size = 1.5)
+  geom_sf(data = . %>% filter(name == "New Haven"), fill = NA, color = "black", linewidth = 1.5)
 ```
 
 # Batch output
@@ -246,7 +246,7 @@ unemployment
 
 unemp_plot <- ggplot(unemployment, aes(x = date, y = value, group = area, color = area)) +
   geom_line() +
-  geom_smooth(se = FALSE, method = "loess", size = 0.8)
+  geom_smooth(se = FALSE, method = "loess", linewidth = 0.8)
 unemp_plot
 ```
 
