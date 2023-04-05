@@ -20,7 +20,7 @@ multi_geo_decennial(
   nhood_name = name,
   nhood_geoid = geoid,
   nhood_weight = weight,
-  sumfile = c("sf1", "sf3"),
+  sumfile = c("sf1", "sf3", "pl"),
   verbose = TRUE,
   key = NULL,
   sleep = 0,
@@ -58,7 +58,7 @@ multi_geo_decennial(
 
 \item{nhood_weight}{Bare column name of weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults \code{weight} to match the neighborhood lookup datasets.}
 
-\item{sumfile}{A string giving the summary file to pull from. Defaults \code{"sf1"}, which is much more common than \code{"sf3"}.}
+\item{sumfile}{A string giving the summary file to pull from. Defaults \code{"sf1"}, which is much more common than \code{"sf3"}. Use \code{"pl"} for redistricting data, which is still all that's released for 2020.}
 
 \item{verbose}{Logical: whether to print summary of geographies included. Defaults \code{TRUE}.}
 

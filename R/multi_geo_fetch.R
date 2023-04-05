@@ -5,7 +5,7 @@
 #' This function essentially calls `tidycensus::get_acs()` multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying `tidycensus::get_acs()` requires a Census API key. As is the case with other `tidycensus` functions, `multi_geo_acs` assumes this key is stored as `CENSUS_API_KEY` in your `.Renviron`. See [tidycensus::census_api_key()] for installation.
 #'
 #' @param table A string giving the ACS table number.
-#' @param year The year of the ACS table; currently defaults 2020 (most recent available).
+#' @param year The year of the ACS table; currently defaults 2021 (most recent available).
 #' @param towns A character vector of names of towns to include; `"all"` (default) for all towns optionally filtered by county; or `NULL` to not fetch town-level table.
 #' @param regions A named list of regions with their town names (defaults `NULL`).
 #' @param counties A character vector of names of counties to include; `"all"` (default) for all counties in the state; or `NULL` to not fetch county-level table.
@@ -43,7 +43,7 @@
 #'
 #' }
 #' @export
-multi_geo_acs <- function(table, year = 2020, towns = "all", regions = NULL,
+multi_geo_acs <- function(table, year = 2021, towns = "all", regions = NULL,
                           counties = "all", state = "09", neighborhoods = NULL,
                           tracts = NULL, blockgroups = NULL,
                           pumas = NULL, msa = FALSE,
@@ -166,7 +166,7 @@ multi_geo_acs <- function(table, year = 2020, towns = "all", regions = NULL,
 #' @param nhood_name Bare column name of neighborhood names. Only relevant if a neighborhood weight table is being used. Defaults `name` to match the neighborhood lookup datasets.
 #' @param nhood_geoid Bare column name of neighborhood tract GEOIDs. Only relevant if a neighborhood weight table is being used. Defaults `geoid` to match the neighborhood lookup datasets.
 #' @param nhood_weight Bare column name of weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults `weight` to match the neighborhood lookup datasets.
-#' @param sumfile A string giving the summary file to pull from. Defaults `"sf1"`, which is much more common than `"sf3"`.
+#' @param sumfile A string giving the summary file to pull from. Defaults `"sf1"`, which is much more common than `"sf3"`. Use `"pl"` for redistricting data, which is still all that's released for 2020.
 #' @param verbose Logical: whether to print summary of geographies included. Defaults `TRUE`.
 #' @param key String: Census API key. If `NULL` (default), takes the value from `Sys.getenv("CENSUS_API_KEY")`.
 #' @param sleep Number of seconds, if any, to sleep before each API call. This might help with the Census API's tendency to crash, but for many geographies, it could add a sizable about of time. Probably don't add more than a few seconds.
@@ -186,7 +186,7 @@ multi_geo_decennial <- function(table, year = 2010, towns = "all", regions = NUL
                                 tracts = NULL, blockgroups = NULL, msa = FALSE,
                                 us = FALSE, new_england = TRUE,
                                 nhood_name = name, nhood_geoid = geoid, nhood_weight = weight,
-                                sumfile = c("sf1", "sf3"),
+                                sumfile = c("sf1", "sf3", "pl"),
                                 verbose = TRUE, key = NULL, sleep = 0, ...) {
   sumfile <- rlang::arg_match(sumfile)
 

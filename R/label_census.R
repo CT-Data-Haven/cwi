@@ -21,13 +21,13 @@ label_decennial <- function(data, year = 2010, sumfile = "sf1", variable = varia
 #'
 #' `tidycensus::get_acs` returns an ACS table with its variable codes, which can be joined with `cwi::acs_vars19` to get readable labels. This function is just a quick wrapper around the common task of joining these two data frames.
 #' @param data A data frame/tibble.
-#' @param year The endyear of ACS data; defaults 2020.
+#' @param year The endyear of ACS data; defaults 2021.
 #' @param survey A string: which ACS estimate to use. Defaults to 5-year (`"acs5"`), but can also be 1-year (`"acs1"`) or 3-year (`"acs3"`), though both 1-year and 3-year have limited availability.
 #' @param variable The bare column name of variable codes; defaults to `variable`, as returned by `tidycensus::get_acs`.
 #' @return A tibble
-#' @seealso [acs_vars20]
+#' @seealso [acs_vars21]
 #' @export
-label_acs <- function(data, year = 2020, survey = "acs5", variable = variable) {
+label_acs <- function(data, year = 2021, survey = "acs5", variable = variable) {
   variable_lbl <- rlang::as_label(rlang::enquo(variable))
   acs_vars <- clean_acs_vars(year = year, survey = survey)
   acs_vars <- dplyr::select(acs_vars, name, label)

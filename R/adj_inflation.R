@@ -9,7 +9,7 @@
 #' @param data A data frame containing monetary values by year.
 #' @param value Bare column name of monetary values; for safety, has no default.
 #' @param year Bare column name of years; for safety, has no default.
-#' @param base_year Year on which to base inflation amounts. Defaults to 2020, which corresponds to saying "... adjusted to 2020 dollars."
+#' @param base_year Year on which to base inflation amounts. Defaults to 2021, which corresponds to saying "... adjusted to 2021 dollars."
 #' @param verbose Logical: if `TRUE` (default), this will print overview information about the series being used, as returned by the API.
 #' @param key A string giving the BLS API key. If `NULL` (the default), will take the value in `Sys.getenv("BLS_KEY")`.
 #' @return A data frame with two additional columns: adjustment factors, and adjusted values. The adjusted values column is named based on the name supplied as `value`; e.g. if `value = avg_wage`, the adjusted column is named `adj_avg_wage`.
@@ -22,7 +22,7 @@
 #'   adj_inflation(wages, value = wage, year = fiscal_year, base_year = 2016)
 #' }
 #' @export
-adj_inflation <- function(data, value, year, base_year = 2020, verbose = TRUE, key = NULL) {
+adj_inflation <- function(data, value, year, base_year = 2021, verbose = TRUE, key = NULL) {
   if (missing(value) || missing(year)) {
     cli::cli_abort("Must supply column names for both value and year.")
   }
