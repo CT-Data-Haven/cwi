@@ -19,7 +19,7 @@ label_acs(data, year = 2021, survey = "acs5", variable = variable)
 A tibble
 }
 \description{
-\code{tidycensus::get_acs} returns an ACS table with its variable codes, which can be joined with \code{cwi::acs_vars19} to get readable labels. This function is just a quick wrapper around the common task of joining these two data frames.
+\code{tidycensus::get_acs} returns an ACS table with its variable codes, which can be joined with \verb{cwi::acs_vars*} to get readable labels. This function is just a quick wrapper around the common task of joining these two data frames.
 }
 \seealso{
 \link{acs_vars21}

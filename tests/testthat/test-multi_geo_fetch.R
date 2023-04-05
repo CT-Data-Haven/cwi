@@ -90,3 +90,7 @@ test_that("multi_geo_* handles MSA label change in 2021", {
   expect_s3_class(multi_geo_acs(table = "B01003", msa = TRUE, year = 2021), "data.frame")
 })
 
+test_that("multi_geo_decennial handles sf1, sf3, or pl", {
+  skip_on_ci()
+  expect_s3_class(multi_geo_decennial(table = "P3", year = 2020, sumfile = "pl"), "data.frame")
+})
