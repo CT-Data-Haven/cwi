@@ -35,7 +35,7 @@ reference:
   - title: Datasets
     desc: Reference datasets, lookup tables, and crosswalks
     contents:
-      - "acs_vars20"
+      - "acs_vars21"
       - "basic_table_nums"
       - "ct5_clusters"
       - "cws_demo"
