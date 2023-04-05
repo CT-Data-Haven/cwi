@@ -1,3 +1,9 @@
+# cwi 1.2.0
+
+- Update defaults to 2021 where applicable: `multi_geo_acs`, `adj_inflation` base year, `label_acs`.
+- Replace `acs_vars20` with `acs_vars21`.
+- `multi_geo_decennial` now takes `"pl"` as a possible value for summary file, since the full 2020 Decennial data still aren't out.
+
 # cwi 1.1.3
 
 - Add regional councils of governments to `regions` list. Connecticut adopted these in 2022 to replace counties. Definitions from CTOPM [here](https://data.ct.gov/Government/Regional-Councils-of-Governments-Boundaries/idnf-uwvz).
