@@ -75,7 +75,7 @@ quick_map <- function(data, name = name, value = value, level = c("town", "neigh
   p <- p + ggplot2::geom_sf(...)
   p <- p + ggplot2::scale_fill_brewer(palette = palette, drop = FALSE)
   p <- p + ggplot2::theme_minimal()
-  p <- p + ggplot2::coord_sf(ndiscr = FALSE)
+  # p <- p + ggplot2::coord_sf(ndiscr = FALSE)
   p <- p + ggplot2::labs(fill = value_lbl)
   if (!is.null(title)) p <- p + ggplot2::labs(title = title)
   p

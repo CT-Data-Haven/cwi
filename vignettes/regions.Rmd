@@ -21,7 +21,7 @@ library(ggplot2)
 theme_set(theme_void() + theme(plot.title = element_text(size = 11)))
 ```
 
-There are too many regions stored here now that the state is switching to COGs instead of counties. Here's a visual reference to them. Note that Greater Hartford and the Capitol Region COG are the same, as are Greater Bridgeport and Greater Bridgeport COG.
+There are too many regions stored here now that the state is switching to COGs instead of counties. Here's a visual reference to them. Note that Greater Hartford and the Capitol Region COG are the same, as are Greater Bridgeport and Connecticut Metro COG.
 
 
 
@@ -31,7 +31,7 @@ purrr::iwalk(cwi::regions, function(towns, reg) {
   p <- ggplot(sf, aes(fill = region)) +
     geom_sf(linewidth = 0.2, color = "gray10") +
     scale_fill_manual(values = c("TRUE" = "mediumorchid", "FALSE" = "gray90"), guide = "none") +
-    coord_sf(ndiscr = 0) +
+    # coord_sf(ndiscr = 0) +
     labs(title = reg)
   print(p)
 })

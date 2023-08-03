@@ -132,11 +132,11 @@ census_nhood <- function(src, table, year, nhood_data, state, name, geoid, weigh
   fetch <- dplyr::group_by(fetch, state, county, {{ name }}, variable)
   if ("moe" %in% names(fetch)) {
     fetch <- dplyr::summarise(fetch,
-                              dplyr::across({{ value }}, function(x) round(sum({{ value }} * {{ weight }}))),
+                              {{ value }} := round(sum({{ value }} * {{ weight }})),
                               moe = round(tidycensus::moe_sum(moe, {{ value }} * {{ weight }})))
   } else {
     fetch <- dplyr::summarise(fetch,
-                              dplyr::across({{ value }}, function(x) round(sum({{ value }} * {{ weight }}))))
+                              {{ value }} := round(sum({{ value }} * {{ weight }})))
   }
   fetch <- dplyr::ungroup(fetch)
   fetch
@@ -149,13 +149,7 @@ census_msa <- function(src, table, year, new_england, dataset, key, sleep, ...) 
   if (year < 2015) {
     cli::cli_inform("Note: OMB changed MSA boundaries around 2015. These might not match the ones you're expecting.")
   }
-  # labeling for MSA changed with 2021
-  if (year >= 2021) {
-    geo <- "metropolitan/micropolitan statistical area"
-  } else {
-    geo <- "metropolitan statistical area/micropolitan statistical area"
-  }
-  fetch <- wrap_census(src, geography = geo, table = table, year = year, state = NULL, dataset = dataset, key = key, ...)
+  fetch <- wrap_census(src, geography = "metropolitan statistical area/micropolitan statistical area", table = table, year = year, state = NULL, dataset = dataset, key = key, ...)
   if (new_england) {
     ne_msa <- dplyr::filter(cwi::msa, region == "New England")
     fetch <- dplyr::semi_join(fetch, ne_msa, by = c("GEOID" = "geoid"))

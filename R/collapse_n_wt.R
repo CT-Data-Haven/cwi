@@ -43,12 +43,12 @@
 collapse_n_wt <- function(data, ..., .lvls, .group = group, .value = value, .weight = weight, .fill_wts = FALSE, .digits = NULL) {
   group_cols <- quos(...)
   to_wt <- dplyr::ungroup(data)
-  to_wt <- dplyr::mutate(to_wt, dplyr::across({{ .group }}, forcats::fct_collapse, !!!.lvls))
+  to_wt <- dplyr::mutate(to_wt, dplyr::across({{ .group }}, ~forcats::fct_collapse(.x, !!!.lvls)))
   to_wt <- dplyr::group_by(to_wt, dplyr::across(!!!group_cols))
 
   if (.fill_wts) {
     cli::cli_alert_info("Missing values in your weights column are being filled in. Make sure this is intentional!")
-    to_wt <- dplyr::mutate(to_wt, dplyr::across({{ .weight }}, tidyr::replace_na, 1))
+    to_wt <- dplyr::mutate(to_wt, dplyr::across({{ .weight }}, ~tidyr::replace_na(.x, 1)))
   }
   out <- dplyr::summarise(to_wt, {{ .value }} := stats::weighted.mean({{ .value }}, w = {{ .weight }}))
 

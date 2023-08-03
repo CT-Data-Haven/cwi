@@ -27,7 +27,7 @@ geo_level_plot <- function(data, name = name, value = value, level = level, type
   pal <- c(paste0("gray", pal1), hilite)
 
   data <- dplyr::ungroup(data)
-  data <- dplyr::mutate(data, dplyr::across({{ name }}, forcats::fct_reorder, {{ value }}))
+  data <- dplyr::mutate(data, dplyr::across({{ name }}, ~forcats::fct_reorder(.x, {{ value }})))
 
   p <- ggplot2::ggplot(data, ggplot2::aes(fill = {{ level }}))
   p <- p + ggplot2::scale_fill_manual(values = pal)

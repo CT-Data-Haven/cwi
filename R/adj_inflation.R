@@ -47,7 +47,8 @@ adj_inflation <- function(data, value, year, base_year = 2021, verbose = TRUE, k
 
   adjusted <- dplyr::mutate(data, dplyr::across({{ year }}, as.numeric))
   adjusted <- dplyr::left_join(adjusted, cpi, by = stats::setNames("year", yr_lbl))
-  adjusted <- dplyr::mutate(adjusted, dplyr::across({{ value }}, list(adj = ~. / adj_factor), .names = "{.fn}_{.col}"))
+  adjusted <- dplyr::mutate(adjusted, )
+  adjusted <- dplyr::mutate(adjusted, dplyr::across({{ value }}, list(adj = ~ .x / adj_factor), .names = "{.fn}_{.col}"))
   adjusted
 }
 

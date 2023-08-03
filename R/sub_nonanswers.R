@@ -54,7 +54,7 @@ sub_nonanswers <- function(data, response = response, value = value, nons = c("D
     total <- 1
   }
 
-  wide <- dplyr::mutate(wide, dplyr::across(c(!!!responses), function(x) x / (total - non_sum)))
+  wide <- dplyr::mutate(wide, dplyr::across(c(!!!responses),  ~.x / (total - non_sum)))
   wide <- dplyr::select(wide, -non_sum, -dplyr::any_of(nons))
 
   out <- tidyr::pivot_longer(wide, cols = c(!!!responses),
