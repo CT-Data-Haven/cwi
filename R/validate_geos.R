@@ -61,7 +61,12 @@ get_county_fips <- function(state, counties) {
     if (length(mismatch) > 0) {
       cli::cli_warn("Some counties you requested didn't match for the state {state}: {mismatch}")
     }
+
     counties <- matches$county_geoid
+  }
+  # remove COGs
+  if (state == "09") {
+    counties <- stringr::str_subset(counties, "^090")
   }
   counties
 }

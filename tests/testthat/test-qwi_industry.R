@@ -7,7 +7,7 @@ test_that("qwi_industry handles county defaults", {
   expect_false("county" %in% names(by_state))
   by_county <- qwi_industry(2018, counties = "009")
   expect_true("county" %in% names(by_county))
-  all_county <- qwi_industry(2018, counties = "*")
+  all_county <- qwi_industry(2018, counties = "all")
   expect_equal(length(unique(all_county$county)), 8)
 })
 
