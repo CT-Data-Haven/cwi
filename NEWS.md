@@ -1,3 +1,7 @@
+# cwi 1.3.0
+
+- Add COGs to xwalk along with function for reconciling names 
+
 # cwi 1.2.0
 
 - Update defaults to 2021 where applicable: `multi_geo_acs`, `adj_inflation` base year, `label_acs`.
