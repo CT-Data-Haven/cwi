@@ -5,7 +5,7 @@
 \alias{xwalk}
 \title{CT crosswalk}
 \format{
-A data frame with 67465 rows and 11 variables:
+A data frame with 67465 rows and 13 variables:
 \describe{
 \item{block}{Block FIPS code}
 \item{block_grp}{Block group FIPS code}
@@ -14,6 +14,8 @@ A data frame with 67465 rows and 11 variables:
 \item{town_fips}{Town FIPS code}
 \item{county}{County name}
 \item{county_fips}{County FIPS code}
+\item{cog}{COG}
+\item{cog_fips}{COG FIPS code}
 \item{msa}{Metro/micropolitan area name}
 \item{msa_fips}{Metro/micropolitan area FIPS code}
 \item{puma}{PUMA name}
@@ -21,7 +23,7 @@ A data frame with 67465 rows and 11 variables:
 }
 }
 \source{
-TIGER shapefiles
+2020 and 2022 (for COGs) TIGER shapefiles
 }
 \usage{
 xwalk
