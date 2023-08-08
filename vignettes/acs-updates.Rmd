@@ -78,15 +78,16 @@ change19 <- compare_yrs(2019, ret = TRUE)
 ## Variables in the tables related to gender & family structure:
 
 ```{r message=FALSE, warning=FALSE, results='asis'}
-acs19 <- cwi:::clean_acs_vars(2019, "acs5") %>%
+acs19 <- cwi:::clean_acs_vars(2019, "acs5") |>
   mutate(table_num = stringr::str_remove(name, "_.+$"))
-change19 %>%
-  filter(grepl("(HOUSEHOLD|SPOUSE)", concept19)) %>%
-  inner_join(acs19, by = "table_num") %>%
-  split(list(.$table_num, .$concept), drop = TRUE) %>%
-  purrr::map(separate_acs) %>%
-  purrr::map(select, variable = name, matches("^x\\d+")) %>%
-  purrr::map(knitr::kable)
+change19 |>
+  filter(grepl("(HOUSEHOLD|SPOUSE)", concept19)) |>
+  inner_join(acs19, by = "table_num") |>
+  split(~table_num) |>
+  purrr::map(function(x) split(x, x$concept)) |>
+  purrr::map_depth(2, separate_acs) |>
+  purrr::map_depth(2, select, variable = name, matches("^x\\d+")) |>
+  purrr::map_depth(2, knitr::kable)
 ```
 
 

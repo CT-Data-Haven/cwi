@@ -9,9 +9,9 @@ test_that("read_xtabs: test the test setup", {
 
 # all_xt is a non-exported wrapper I wrote for the purposes of testing, see R/test_utils.R
 test_that("read_xtabs removes weighted total rows", {
-  has_wt_row <- all_xt(read_xtabs) %>%
-    purrr::map(dplyr::pull, x1) %>%
-    purrr::map(stringr::str_detect, "Weighted Total") %>%
+  has_wt_row <- all_xt(read_xtabs) |>
+    purrr::map(dplyr::pull, x1) |>
+    purrr::map(stringr::str_detect, "Weighted Total") |>
     purrr::map(any, na.rm = TRUE)
   purrr::walk(names(has_wt_row), function(yr) expect_false(has_wt_row[[!!yr]]))
 })
@@ -30,11 +30,11 @@ test_that("read_xtabs allows custom name prefixes", {
 })
 
 test_that("read_xtabs successfully passes to xtab2df", {
-  xts_no_process <- all_xt(read_xtabs) %>% purrr::map(xtab2df)
+  xts_no_process <- all_xt(read_xtabs) |> purrr::map(xtab2df)
   xts_process <- all_xt(read_xtabs, list(process = TRUE))
   expect_mapequal(xts_no_process, xts_process)
 
-  xts_no_process_args <- all_xt(read_xtabs, list(name_prefix = "v")) %>% purrr::map(xtab2df, col = v1)
+  xts_no_process_args <- all_xt(read_xtabs, list(name_prefix = "v")) |> purrr::map(xtab2df, col = v1)
   xts_process_args <- all_xt(read_xtabs, list(name_prefix = "v", process = TRUE))
   expect_mapequal(xts_no_process_args, xts_process_args)
 })

@@ -25,7 +25,7 @@ test_that("laus_trend validates geographies", {
   # invalid location--warn
   expect_warning(laus_trend(c("New Haven", "South Haven"), 2016, 2016))
   # null location
-  ct_locs <- laus_codes %>% dplyr::filter(state_code == "09") %>% nrow()
+  ct_locs <- laus_codes |> dplyr::filter(state_code == "09") |> nrow()
   ct_null <- laus_trend(names = NULL, 2016, 2016, state = "09")
   expect_equal(dplyr::n_distinct(ct_null$area), ct_locs)
   # state as abbr / name
@@ -60,7 +60,7 @@ test_that("laus_trend handles annual vs monthly data", {
 test_that("laus_trend handles more than 50 series", {
   skip_on_ci()
 
-  srs <- laus_codes %>% dplyr::filter(state_code == "09")
+  srs <- laus_codes |> dplyr::filter(state_code == "09")
   laus <- laus_trend(names = NULL, 2015, 2015, measures = "employment", annual = FALSE)
   expect_equal(nrow(laus), nrow(srs) * 12)
 })

@@ -35,8 +35,7 @@ This is a quick wrapper around \code{tidyr::separate} written to match the stand
 \examples{
 \dontrun{
 if(interactive()){
-   age <- multi_geo_acs("B01001") \%>\%
-     label_acs()
+   age <- label_acs(multi_geo_acs("B01001"))
 
    # Default: allow automatic labeling, in this case x1, x2, x3
    separate_acs(age)

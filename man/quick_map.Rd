@@ -44,9 +44,9 @@ This is a quick way to create a choropleth sketch of town-, neighborhood-, or tr
 \examples{
 \dontrun{
 tidycensus::get_acs(geography = "county subdivision",
-       variables = c(median_age = "B01002_001"), state = "09", county = "009") \%>\%
-  town_names(NAME) \%>\%
-  dplyr::filter(NAME \%in\% regions$`Greater New Haven`) \%>\%
+       variables = c(median_age = "B01002_001"), state = "09", county = "009") |>
+  town_names(NAME) |>
+  dplyr::filter(NAME \%in\% regions$`Greater New Haven`) |>
   quick_map(name = NAME, value = estimate, title = "Median age by town, 2017", n = 6)
 }
 }

@@ -209,7 +209,7 @@ NULL
 #'
 #' A crosswalk between geographies in Connecticut, built off of TIGER shapefiles.
 #'
-#' @format A data frame with 67465 rows and 11 variables:
+#' @format A data frame with 67465 rows and 13 variables:
 #' \describe{
 #'   \item{block}{Block FIPS code}
 #'   \item{block_grp}{Block group FIPS code}
@@ -218,12 +218,14 @@ NULL
 #'   \item{town_fips}{Town FIPS code}
 #'   \item{county}{County name}
 #'   \item{county_fips}{County FIPS code}
+#'   \item{cog}{COG}
+#'   \item{cog_fips}{COG FIPS code}
 #'   \item{msa}{Metro/micropolitan area name}
 #'   \item{msa_fips}{Metro/micropolitan area FIPS code}
 #'   \item{puma}{PUMA name}
 #'   \item{puma_fips}{PUMA FIPS code}
 #' }
-#' @source TIGER shapefiles
+#' @source 2020 and 2022 (for COGs) TIGER shapefiles
 "xwalk"
 
 

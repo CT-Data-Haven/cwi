@@ -36,42 +36,41 @@ devtools::install_github("CT-Data-Haven/cwi")
 
 This package relies heavily on:
 
--   The [`tidyverse`](http://tidyverse.org/) packages, namely
-    `magrittr`, `dplyr`, `tidyr`, `purrr`, `stringr`, `forcats`, and
-    `ggplot2` (version \>= 3.0.0) (so a lot the tidyverse)
--   `rlang` and `tidyselect` for non-standard evaluation in many
-    functions
--   `tidycensus` for actually getting all the Census data
--   `sf` isn’t required but it’s encouraged
+- The [`tidyverse`](http://tidyverse.org/) packages, namely `dplyr`,
+  `tidyr`, `purrr`, `stringr`, `forcats`, and `ggplot2` (version \>=
+  3.0.0) (so a lot the tidyverse)
+- `rlang` and `tidyselect` for non-standard evaluation in many functions
+- `tidycensus` for actually getting all the Census data
+- `sf` isn’t required but it’s encouraged
 
 ## Data
 
 `cwi` ships with several datasets and shapefiles. These include:
 
--   Shapes (as `sf` objects) of towns, tracts, and city neighborhoods
-    for New Haven, Hartford, Bridgeport, and Stamford
--   Common ACS table numbers—hopefully decreases time spent prowling
-    around [the Census Bureau site](https://data.census.gov)
--   Definitions of neighborhoods by tract or block group, and of regions
-    by town
+- Shapes (as `sf` objects) of towns, tracts, and city neighborhoods for
+  New Haven, Hartford, Bridgeport, and Stamford
+- Common ACS table numbers—hopefully decreases time spent prowling
+  around [the Census Bureau site](https://data.census.gov)
+- Definitions of neighborhoods by tract or block group, and of regions
+  by town
 
 ## Sources
 
 This package contains functions to make it easier and more reproducible
 to fetch and analyze data from:
 
--   [American Community
-    Survey](https://www.census.gov/programs-surveys/acs/) (US Census
-    Bureau)
--   [Decennial
-    Census](https://www.census.gov/programs-surveys/decennial-census.html)
-    (US Census Bureau)
--   [Quarterly Workforce Indicators](https://lehd.ces.census.gov/) (US
-    Census Bureau Center for Economic Studies)
--   [Local Area Unemployment Statistics](https://www.bls.gov/lau/)
-    (Bureau of Labor Statistics)
--   [DataHaven’s Community Wellbeing
-    Survey](https://ctdatahaven.org/reports/datahaven-community-wellbeing-survey)
+- [American Community
+  Survey](https://www.census.gov/programs-surveys/acs/) (US Census
+  Bureau)
+- [Decennial
+  Census](https://www.census.gov/programs-surveys/decennial-census.html)
+  (US Census Bureau)
+- [Quarterly Workforce Indicators](https://lehd.ces.census.gov/) (US
+  Census Bureau Center for Economic Studies)
+- [Local Area Unemployment Statistics](https://www.bls.gov/lau/) (Bureau
+  of Labor Statistics)
+- [DataHaven’s Community Wellbeing
+  Survey](https://ctdatahaven.org/reports/datahaven-community-wellbeing-survey)
 
 ## Example
 
@@ -114,15 +113,15 @@ tenure
 #>  8  2020 3_county Connecticut <NA>   09009 New Haven C… B25003_…   2.07e5   2123
 #>  9  2020 3_county Connecticut <NA>   09009 New Haven C… B25003_…   1.26e5   2225
 #> 10  2020 4_region Connecticut <NA>   <NA>  Greater New… B25003_…   1.76e5   1834
-#> # … with 47 more rows
+#> # ℹ 47 more rows
 ```
 
 ``` r
-homeownership <- tenure %>%
-  label_acs(year = 2020) %>%
-  dplyr::group_by(level, name) %>%
-  camiller::calc_shares(group = label, denom = "Total") %>%
-  dplyr::filter(stringr::str_detect(label, "Owner")) %>%
+homeownership <- tenure |>
+  label_acs(year = 2020) |>
+  dplyr::group_by(level, name) |>
+  camiller::calc_shares(group = label, denom = "Total") |>
+  dplyr::filter(stringr::str_detect(label, "Owner")) |>
   dplyr::select(level, name, share)
 
 homeownership

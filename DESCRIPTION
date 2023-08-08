@@ -29,7 +29,6 @@ Imports:
     httr,
     janitor,
     jsonlite,
-    magrittr,
     purrr,
     readxl,
     rlang,

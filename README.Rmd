@@ -40,7 +40,7 @@ devtools::install_github("CT-Data-Haven/cwi")
 
 This package relies heavily on:
 
-* The [`tidyverse`](http://tidyverse.org/) packages, namely `magrittr`, `dplyr`, `tidyr`, `purrr`, `stringr`, `forcats`, and `ggplot2` (version >= 3.0.0) (so a lot the tidyverse)
+* The [`tidyverse`](http://tidyverse.org/) packages, namely `dplyr`, `tidyr`, `purrr`, `stringr`, `forcats`, and `ggplot2` (version >= 3.0.0) (so a lot the tidyverse)
 * `rlang` and `tidyselect` for non-standard evaluation in many functions
 * `tidycensus` for actually getting all the Census data
 * `sf` isn't required but it's encouraged
@@ -87,11 +87,11 @@ tenure
 
 
 ```{r homeownership_rates}
-homeownership <- tenure %>%
-  label_acs(year = 2020) %>%
-  dplyr::group_by(level, name) %>%
-  camiller::calc_shares(group = label, denom = "Total") %>%
-  dplyr::filter(stringr::str_detect(label, "Owner")) %>%
+homeownership <- tenure |>
+  label_acs(year = 2020) |>
+  dplyr::group_by(level, name) |>
+  camiller::calc_shares(group = label, denom = "Total") |>
+  dplyr::filter(stringr::str_detect(label, "Owner")) |>
   dplyr::select(level, name, share)
 
 homeownership

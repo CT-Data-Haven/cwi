@@ -34,8 +34,8 @@
 #'   "$30K-$100K" = c("$30K-$50K", "$50K-$75K", "$75K-$100K"),
 #'   "$100K+" = c("$100K-$200K", "$200K+")
 #' )
-#' cws_demo %>%
-#'   dplyr::filter(category %in% c("Greater New Haven", "Income")) %>%
+#' cws_demo |>
+#'   dplyr::filter(category %in% c("Greater New Haven", "Income")) |>
 #'   collapse_n_wt(code:response, .lvls = income_lvls, .digits = 2)
 #' @export
 #' @rdname collapse_n_wt

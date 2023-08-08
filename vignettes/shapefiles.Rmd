@@ -63,10 +63,10 @@ ggplot(town_sf) +
 With some `dplyr` operations. For example, `group_by()` followed by `summarise()` conducts a union on each group's geometries, using `sf::st_union()` in its back-end.
 
 ```{r town_regional, out.width="100%"}
-town_sf %>%
-  filter(name %in% regions[["Greater New Haven"]]) %>%
-  group_by(area = ifelse(name == "New Haven", "New Haven", "New Haven suburbs")) %>%
-  summarise() %>%
+town_sf |>
+  filter(name %in% regions[["Greater New Haven"]]) |>
+  group_by(area = ifelse(name == "New Haven", "New Haven", "New Haven suburbs")) |>
+  summarise() |>
   ggplot() +
   geom_sf(aes(fill = area), color = "white") +
   scale_fill_manual(values = c("New Haven" = "mediumorchid", "New Haven suburbs" = "gray70")) +
@@ -90,7 +90,7 @@ Neighborhood shapes were made at DataHaven by splitting or grouping census tract
 list(
   "New Haven" = new_haven_sf, Stamford = stamford_sf,
   "Hartford/West Hartford" = hartford_sf, Bridgeport = bridgeport_sf
-) %>%
+) |>
   purrr::iwalk(function(shp, title) {
     p <- ggplot(shp) +
       geom_sf(color = "mediumorchid3", fill = "orchid3", alpha = 0.1) +

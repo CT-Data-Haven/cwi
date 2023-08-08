@@ -77,22 +77,22 @@ The race and ethnicity table will require some calculations, using the brilliant
 * `camiller::calc_shares()` then gives shares of each group's estimate over the `"total"` denominator.
 
 ```{r calc}
-gnh_data$race %>%
-  label_acs(year = yr) %>%
-  group_by(level, county, name) %>%
-  add_grps(list(total = 1, white = 3, black = 4, latino = 12, other = 5:9), group = label) %>%
+gnh_data$race |>
+  label_acs(year = yr) |>
+  group_by(level, county, name) |>
+  add_grps(list(total = 1, white = 3, black = 4, latino = 12, other = 5:9), group = label) |>
   calc_shares(group = label, denom = "total")
 ```
 
 With the tenure table, it's easiest to separate the labels by `"!!"`. Here the table can be wrangled into shares of households that are owner-occupied.
 
 ```{r sep}
-homeownership <- gnh_data$tenure %>%
-  label_acs(year = yr) %>%
-  separate(label, into = c("total", "tenure"), sep = "!!", fill = "left") %>%
-  select(level, name, tenure, estimate) %>%
-  group_by(level, name) %>%
-  calc_shares(group = tenure, denom = "Total") %>%
+homeownership <- gnh_data$tenure |>
+  label_acs(year = yr) |>
+  separate(label, into = c("total", "tenure"), sep = "!!", fill = "left") |>
+  select(level, name, tenure, estimate) |>
+  group_by(level, name) |>
+  calc_shares(group = tenure, denom = "Total") |>
   filter(tenure == "Owner occupied")
 
 homeownership
@@ -103,15 +103,15 @@ homeownership
 `geo_level_plot()` gives a quick visual overview of the homeownership rates, highlighting town-level values.
 
 ```{r geo_plot, out.width="100%"}
-homeownership %>%
+homeownership |>
   geo_level_plot(value = share, hilite = "darkslateblue", type = "point")
 ```
 
 `acs_quick_map()` gives a quick map sketch of the rates. This function uses the Jenks algorithm for making breaks with `jenks()`. This algorithm is well suited for visually displaying larger inequalities, but the number of breaks you give it won't necessarily be the number of breaks returned.This function lets us see whether there's a geographic distribution of this data with minimal work. 
 
 ```{r quick_map1, out.width="100%"}
-tenure_map <- homeownership %>%
-  filter(level == "4_town") %>%
+tenure_map <- homeownership |>
+  filter(level == "4_town") |>
   quick_map(
     value = share, level = "town", color = "black", linewidth = 0.4,
     title = "Homeownership, Greater New Haven", palette = "BuPu"
@@ -145,23 +145,23 @@ age <- multi_geo_acs(
   table = "B01001", year = yr, towns = NULL,
   regions = new_haven_regions,
   counties = c("New Haven County", "Fairfield County")
-) %>%
-  label_acs(year = yr) %>%
+) |>
+  label_acs(year = yr) |>
   # shortcut around tidyr::separate
-  separate_acs(into = c("sex", "age"), drop_total = TRUE) %>%
-  filter(!is.na(age)) %>%
-  mutate(age = forcats::as_factor(age)) %>%
-  group_by(name, level, age) %>%
-  summarise(estimate = sum(estimate)) %>%
+  separate_acs(into = c("sex", "age"), drop_total = TRUE) |>
+  filter(!is.na(age)) |>
+  mutate(age = forcats::as_factor(age)) |>
+  group_by(name, level, age) |>
+  summarise(estimate = sum(estimate)) |>
   ungroup()
 
-age %>%
-  split(.$name) %>%
-  batch_csv_dump(base_name = "pop_by_age", bind = TRUE, verbose = TRUE) %>%
-  group_by(level, name) %>%
+age |>
+  split(.$name) |>
+  batch_csv_dump(base_name = "pop_by_age", bind = TRUE, verbose = TRUE) |>
+  group_by(level, name) |>
   camiller::add_grps(list(ages00_04 = 1, ages05_17 = 2:4, ages00_17 = 1:4),
     group = age, value = estimate
-  ) %>%
+  ) |>
   arrange(level, name, age)
 ```
 
@@ -173,13 +173,13 @@ I'm also interested in learning about employment by industry over the past sever
 
 
 ```{r qwi1}
-nhc_employment <- qwi_industry(2002:2018, counties = "009", annual = TRUE) %>%
+nhc_employment <- qwi_industry(2002:2018, counties = "009", annual = TRUE) |>
   mutate(location = "New Haven County")
-ct_employment <- qwi_industry(2002:2018, annual = T) %>%
+ct_employment <- qwi_industry(2002:2018, annual = T) |>
   mutate(location = "Connecticut")
-employment <- bind_rows(nhc_employment, ct_employment) %>%
-  filter(industry != "00") %>%
-  inner_join(naics_codes %>% select(-ind_level), by = "industry")
+employment <- bind_rows(nhc_employment, ct_employment) |>
+  filter(industry != "00") |>
+  inner_join(naics_codes |> select(-ind_level), by = "industry")
 
 employment
 ```
@@ -187,16 +187,16 @@ employment
 Next, say I want to look at the industries that were largest in New Haven county in 2018, and see how those have changed both for the county and statewide over this time period. I'll filter `employment`, get the industries with the largest numbers of employees, then filter `employment` for just those industries and plot it.
 
 ```{r qwi2, out.width="100%"}
-top2018 <- employment %>%
-  filter(year == 2018, county == "009") %>%
-  top_n(8, emp) %>%
+top2018 <- employment |>
+  filter(year == 2018, county == "009") |>
+  top_n(8, emp) |>
   pull(industry)
 top2018
 
-employment %>%
-  filter(industry %in% top2018) %>%
-  mutate(label = stringr::str_sub(label, 1, 25)) %>%
-  mutate(Emp_1k = emp / 1000) %>%
+employment |>
+  filter(industry %in% top2018) |>
+  mutate(label = stringr::str_sub(label, 1, 25)) |>
+  mutate(Emp_1k = emp / 1000) |>
   ggplot(aes(x = year, y = Emp_1k, color = label)) +
   geom_line() +
   labs(
@@ -212,12 +212,12 @@ employment %>%
 If I'm interested in changes in wages over this period, I can use the `adj_inflation()` function. This takes a data frame, the name of the column containing dollar amounts, and a base year, then adds two columns for the inflation adjustment factor and the adjusted value.
 
 ```{r inflation, eval=FALSE, include=TRUE}
-employment %>%
-  filter(industry %in% top2018) %>%
-  mutate(label = stringr::str_sub(label, 1, 25)) %>%
-  mutate(avg_wage = Payroll / Emp) %>%
-  adj_inflation(value = avg_wage, base_year = 2018, year = year) %>%
-  mutate(adj_wage_1k = round(adj_avg_wage / 1000)) %>%
+employment |>
+  filter(industry %in% top2018) |>
+  mutate(label = stringr::str_sub(label, 1, 25)) |>
+  mutate(avg_wage = Payroll / Emp) |>
+  adj_inflation(value = avg_wage, base_year = 2018, year = year) |>
+  mutate(adj_wage_1k = round(adj_avg_wage / 1000)) |>
   ggplot(aes(x = year, y = adj_wage_1k, color = label)) +
   geom_line() +
   scale_y_continuous(labels = scales::dollar) +
@@ -239,8 +239,8 @@ To look at unemployment rates over time, I can use `laus_trend()`. The LAUS cove
 ```{r laus, out.width="100%"}
 unemployment <- laus_trend(c("New Haven", "New Haven County", "Connecticut"),
   startyear = 2000, endyear = 2018, measures = "unemployment rate"
-) %>%
-  mutate(unemployment_rate = unemployment_rate / 100) %>%
+) |>
+  mutate(unemployment_rate = unemployment_rate / 100) |>
   select(area, date, value = unemployment_rate)
 
 unemployment

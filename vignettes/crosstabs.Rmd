@@ -64,8 +64,8 @@ Reshape the crosstabs into something you'd actually want to work with using `xta
 ```{r xtab2df}
 cws <- xtab2df(xtab_in)
 
-cws %>%
-  filter(code == "Q8") %>%
+cws |>
+  filter(code == "Q8") |>
   utils::head()
 ```
 
@@ -77,11 +77,11 @@ Say we want to collapse those income brackets into just 3 groups. For that, use 
 wts_in <- read_weights(system.file("extdata/test_xtab2015.xlsx", package = "cwi"))
 wts_in
 
-wts <- wts_in %>%
-  mutate(group = group %>%
-    str_replace("(?<=\\d) to (?=[\\$\\d])", "-") %>%
-    str_replace_all(",000", "K") %>%
-    str_replace("Less than (?=\\$)", "<") %>%
+wts <- wts_in |>
+  mutate(group = group |>
+    str_replace("(?<=\\d) to (?=[\\$\\d])", "-") |>
+    str_replace_all(",000", "K") |>
+    str_replace("Less than (?=\\$)", "<") |>
     str_replace(" or more", "+"))
 
 income_lvls <- list(
@@ -90,11 +90,11 @@ income_lvls <- list(
   "$100K+" = c("$100K-$200K", "$200K+")
 )
 
-cws %>%
-  filter(code == "Q8", category %in% c("Greater New Haven", "Income")) %>%
-  left_join(wts, by = "group") %>%
-  mutate(across(category:response, forcats::as_factor)) %>%
-  tidyr::replace_na(list(weight = 1)) %>%
+cws |>
+  filter(code == "Q8", category %in% c("Greater New Haven", "Income")) |>
+  left_join(wts, by = "group") |>
+  mutate(across(category:response, forcats::as_factor)) |>
+  tidyr::replace_na(list(weight = 1)) |>
   collapse_n_wt(c(code, category:response), .lvls = income_lvls)
 ```
 
@@ -105,15 +105,15 @@ We generally want to remove non-answers (don't know, refused) from the denominat
 With non-answers:
 
 ```{r nons1}
-cws %>%
+cws |>
   filter(code == "Q1", category %in% c("Greater New Haven", "Gender", "Age"))
 ```
 
 Without nonanswers (using `sub_nonanswers` defaults of "Don't know" & "Refused"):
 
 ```{r nons2}
-cws %>%
-  filter(code == "Q1", category %in% c("Greater New Haven", "Gender", "Age")) %>%
+cws |>
+  filter(code == "Q1", category %in% c("Greater New Haven", "Gender", "Age")) |>
   sub_nonanswers()
 ```
 
@@ -124,17 +124,17 @@ For many questions, what you probably want to report out or display is the share
 ```{r chart, out.width="100%"}
 library(ggplot2)
 
-cws %>%
-  filter(code == "Q1", category %in% c("Greater New Haven", "Gender", "Age")) %>%
-  sub_nonanswers() %>%
-  filter(response == "Yes") %>%
+cws |>
+  filter(code == "Q1", category %in% c("Greater New Haven", "Gender", "Age")) |>
+  sub_nonanswers() |>
+  filter(response == "Yes") |>
   mutate(across(category:group, forcats::as_factor),
-    group = group %>%
-      forcats::fct_recode(Men = "M", Women = "F") %>%
+    group = group |>
+      forcats::fct_recode(Men = "M", Women = "F") |>
       forcats::fct_relabel(str_replace, "(^\\b)(?=\\d+)", "Ages "),
     category = forcats::fct_recode(category, Total = "Greater New Haven"),
     lbl = scales::percent(value, accuracy = 1)
-  ) %>%
+  ) |>
   ggplot(aes(x = forcats::fct_rev(group), y = value)) +
   geom_col(width = 0.8, fill = "#047e87") +
   geom_text(aes(label = lbl), hjust = 1, nudge_y = -0.01, fontface = "bold", color = "white") +
@@ -153,46 +153,46 @@ cws %>%
 Note that different questions have different response values. In general, it's better to work with each question separately; easy and safe ways to do this are to make separate data frames for different questions (e.g. with `dplyr::filter`), or by splitting (e.g. with `split(data$question)`) and iterating with `lapply` or `purrr::map` before binding or joining back together.
 
 ```{r responses}
-cws %>%
-  distinct(code, question, response) %>%
-  filter(!stringr::str_detect(response, "(Don't know|Refused)")) %>%
-  group_by(question = stringr::str_trunc(question, width = 100)) %>%
+cws |>
+  distinct(code, question, response) |>
+  filter(!stringr::str_detect(response, "(Don't know|Refused)")) |>
+  group_by(question = stringr::str_trunc(question, width = 100)) |>
   summarise(responses = paste(response, collapse = ", "))
 ```
 
 A common use is to show multiple related indicators side by side in a table or chart. Here I'm prepping to show both the question about neighborhood satisfaction (yes / no) and the responsiveness of local government (combined excellent & good).
 
 ```{r govt_chart, out.width="100%", fig.height=5}
-govt <- cws %>%
-  mutate(across(c(category, group), forcats::as_factor)) %>%
-  filter(code %in% c("Q1", "Q3A")) %>%
-  split(.$code)
+govt <- cws |>
+  mutate(across(c(category, group), forcats::as_factor)) |>
+  filter(code %in% c("Q1", "Q3A")) |>
+  split(~code)
 
 cws_out <- list()
 
-cws_out[["satisfied_with_area"]] <- govt$Q1 %>%
-  sub_nonanswers() %>%
+cws_out[["satisfied_with_area"]] <- govt$Q1 |>
+  sub_nonanswers() |>
   filter(response == "Yes")
 
-cws_out[["local_govt_is_responsive"]] <- govt$Q3A %>%
-  mutate(response = forcats::as_factor(response) %>%
-    forcats::fct_collapse(excellent_good = c("Excellent", "Good"))) %>%
-  group_by(across(-value)) %>%
-  summarise(value = sum(value)) %>%
-  sub_nonanswers(nons = c("Don't know enough about it in order to say", "Refused")) %>%
+cws_out[["local_govt_is_responsive"]] <- govt$Q3A |>
+  mutate(response = forcats::as_factor(response) |>
+    forcats::fct_collapse(excellent_good = c("Excellent", "Good"))) |>
+  group_by(across(-value)) |>
+  summarise(value = sum(value)) |>
+  sub_nonanswers(nons = c("Don't know enough about it in order to say", "Refused")) |>
   filter(response == "excellent_good")
 
-cws_out %>%
-  bind_rows(.id = "indicator") %>%
+cws_out |>
+  bind_rows(.id = "indicator") |>
   mutate(
-    group = group %>%
-      forcats::fct_relabel(str_replace, "(^\\b)(?=\\d+)", "Ages ") %>%
+    group = group |>
+      forcats::fct_relabel(str_replace, "(^\\b)(?=\\d+)", "Ages ") |>
       forcats::fct_recode(Black = "Black/Afr Amer"),
-    category = ifelse(as.character(category) == as.character(group), "Total", as.character(category)) %>% forcats::as_factor(),
+    category = ifelse(as.character(category) == as.character(group), "Total", as.character(category)) |> forcats::as_factor(),
     lbl = scales::percent(value, accuracy = 1),
     indicator = camiller::clean_titles(indicator)
-  ) %>%
-  filter(category %in% c("Total", "Age", "Race/Ethnicity")) %>%
+  ) |>
+  filter(category %in% c("Total", "Age", "Race/Ethnicity")) |>
   ggplot(aes(x = forcats::fct_rev(group), y = value)) +
   geom_col(width = 0.8, fill = "#047e87") +
   geom_text(aes(label = lbl), hjust = 1, nudge_y = -0.01, fontface = "bold", color = "white") +

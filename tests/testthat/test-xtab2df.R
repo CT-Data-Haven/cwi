@@ -7,10 +7,10 @@ test_that("xtab2df properly matches categories & groups", {
     Education = c("High school or less", "Some college or Associate's", "Bachelor's or higher"),
     Income = c("<$30K", "$30K-$75K", "$75K+"),
     "Children in HH" = c("No", "Yes")
-  ), name = "category", value = "group") %>%
+  ), name = "category", value = "group") |>
     tidyr::unnest(group)
-  hdrs2 <- read_xtabs(demo_xt(2018)) %>%
-    xtab2df() %>%
+  hdrs2 <- read_xtabs(demo_xt(2018)) |>
+    xtab2df() |>
     dplyr::distinct(category, group)
   expect_equal(hdrs1, hdrs2)
 })
