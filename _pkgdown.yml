@@ -67,6 +67,7 @@ reference:
       - "add_logo"
       - "batch_csv_dump"
       - "dh_scaffold"
+      - "fix_cog"
       - "jenks"
       - "town_names"
       - "separate_acs"
