@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.0</span>
       </span>
     </div>
 
@@ -120,7 +120,7 @@
 </h2>
 <p>This package relies heavily on:</p>
 <ul>
-<li>The <a href="http://tidyverse.org/" class="external-link"><code>tidyverse</code></a> packages, namely <code>magrittr</code>, <code>dplyr</code>, <code>tidyr</code>, <code>purrr</code>, <code>stringr</code>, <code>forcats</code>, and <code>ggplot2</code> (version &gt;= 3.0.0) (so a lot the tidyverse)</li>
+<li>The <a href="http://tidyverse.org/" class="external-link"><code>tidyverse</code></a> packages, namely <code>dplyr</code>, <code>tidyr</code>, <code>purrr</code>, <code>stringr</code>, <code>forcats</code>, and <code>ggplot2</code> (version &gt;= 3.0.0) (so a lot the tidyverse)</li>
 <li>
 <code>rlang</code> and <code>tidyselect</code> for non-standard evaluation in many functions</li>
 <li>
@@ -194,13 +194,13 @@
 <span><span class="co">#&gt;  8  2020 3_county Connecticut &lt;NA&gt;   09009 New Haven C… B25003_…   2.07e5   2123</span></span>
 <span><span class="co">#&gt;  9  2020 3_county Connecticut &lt;NA&gt;   09009 New Haven C… B25003_…   1.26e5   2225</span></span>
 <span><span class="co">#&gt; 10  2020 4_region Connecticut &lt;NA&gt;   &lt;NA&gt;  Greater New… B25003_…   1.76e5   1834</span></span>
-<span><span class="co">#&gt; # … with 47 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt; # ℹ 47 more rows</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">homeownership</span> <span class="op">&lt;-</span> <span class="va">tenure</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="reference/label_acs.html">label_acs</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2020</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">name</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">camiller</span><span class="fu">::</span><span class="fu"><a href="https://camille-s.github.io/camiller/reference/calc_shares.html" class="external-link">calc_shares</a></span><span class="op">(</span>group <span class="op">=</span> <span class="va">label</span>, denom <span class="op">=</span> <span class="st">"Total"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">label</span>, <span class="st">"Owner"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">homeownership</span> <span class="op">&lt;-</span> <span class="va">tenure</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/label_acs.html">label_acs</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2020</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">name</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">camiller</span><span class="fu">::</span><span class="fu"><a href="https://camille-s.github.io/camiller/reference/calc_shares.html" class="external-link">calc_shares</a></span><span class="op">(</span>group <span class="op">=</span> <span class="va">label</span>, denom <span class="op">=</span> <span class="st">"Total"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">label</span>, <span class="st">"Owner"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">name</span>, <span class="va">share</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">homeownership</span></span>
