@@ -152,7 +152,7 @@ multi_geo_acs <- function(table, year = 2021, towns = "all", regions = NULL,
 #' Be advised that decennial table numbers may change from year to year, so if you're looking at trends, check FactFinder or another source to make sure the tables have the same meaning. Setting `verbose = TRUE` is helpful for this as well.
 #'
 #' @param table A string giving the decennial census table number. These are generally formatted as one or more letters, 3 numbers, and optionally a letter.
-#' @param year The year of the census table; currently defaults 2010 (most recent decennial census).
+#' @param year The year of the census table; currently defaults 2020.
 #' @param towns A character vector of towns to include; `"all"` (default) for all towns optionally filtered by county; or `NULL` to not fetch town-level table.
 #' @param regions A named list of regions with their town names (defaults `NULL`).
 #' @param counties A character vector of counties to include; `"all"` (default) for all counties in the state; or `NULL` to not fetch county-level table.
@@ -166,7 +166,7 @@ multi_geo_acs <- function(table, year = 2021, towns = "all", regions = NULL,
 #' @param nhood_name Bare column name of neighborhood names. Only relevant if a neighborhood weight table is being used. Defaults `name` to match the neighborhood lookup datasets.
 #' @param nhood_geoid Bare column name of neighborhood tract GEOIDs. Only relevant if a neighborhood weight table is being used. Defaults `geoid` to match the neighborhood lookup datasets.
 #' @param nhood_weight Bare column name of weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults `weight` to match the neighborhood lookup datasets.
-#' @param sumfile A string giving the summary file to pull from. Defaults `"sf1"`, which is much more common than `"sf3"`. Use `"pl"` for redistricting data, which is still all that's released for 2020.
+#' @param sumfile A string giving the summary file to pull from. Note that codes have changed between 2010 and 2020. Now that default year is 2020, default sumfile is `"dhc"`. For 2010, should be either `"sf1"`, or less commonly `"sf3"`. Use `"pl"` for 2020 redistricting data.
 #' @param verbose Logical: whether to print summary of geographies included. Defaults `TRUE`.
 #' @param key String: Census API key. If `NULL` (default), takes the value from `Sys.getenv("CENSUS_API_KEY")`.
 #' @param sleep Number of seconds, if any, to sleep before each API call. This might help with the Census API's tendency to crash, but for many geographies, it could add a sizable about of time. Probably don't add more than a few seconds.
@@ -175,7 +175,7 @@ multi_geo_acs <- function(table, year = 2021, towns = "all", regions = NULL,
 #' @seealso [tidycensus::census_api_key()], [tidycensus::get_decennial()]
 #' @examples
 #' \dontrun{
-#' multi_geo_decennial("P001", 2010,
+#' multi_geo_decennial("P1", 2020, sumfile = "dhc",
 #'   towns = "all",
 #'   regions = list(inner_ring = c("Hamden", "East Haven", "West Haven")),
 #'   counties = "New Haven County")
@@ -186,7 +186,7 @@ multi_geo_decennial <- function(table, year = 2010, towns = "all", regions = NUL
                                 tracts = NULL, blockgroups = NULL, msa = FALSE,
                                 us = FALSE, new_england = TRUE,
                                 nhood_name = name, nhood_geoid = geoid, nhood_weight = weight,
-                                sumfile = c("sf1", "sf3", "pl"),
+                                sumfile = c("dhc", "sf1", "sf3", "pl"),
                                 verbose = TRUE, key = NULL, sleep = 0, ...) {
   sumfile <- rlang::arg_match(sumfile)
 
@@ -274,7 +274,7 @@ multi_geo_decennial <- function(table, year = 2010, towns = "all", regions = NUL
   fetch_df
 }
 
-############ PREP
+############ PREP ----
 
 multi_geo_prep <- function(src,
                            table, year, towns, regions,
@@ -297,8 +297,15 @@ multi_geo_prep <- function(src,
 
   # check valid table / year / dataset
   # available functions will return false if not found
-  tbl_title <- table_available(src, table, year, dataset)
+  dataset_title <- dataset_available(src, year, dataset)
 
+  if (is.logical(dataset_title) && !dataset_title) {
+    cli::cli_abort(c("Dataset {dataset} for year {year} is not available in the API.",
+                     "i" = "Check {.var cb_avail} to see what combinations of years and datasets are available."),
+                   call = parent.frame())
+  }
+
+  tbl_title <- table_available(src, table, year, dataset)
   if (is.logical(tbl_title) && !tbl_title) {
     if (src == "decennial") {
       digits_msg <- "Note that decennial table numbers might need to be padded with zeroes."

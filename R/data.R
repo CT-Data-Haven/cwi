@@ -14,18 +14,36 @@
 "acs_vars21"
 
 
-#' Variable labels from the 2010 Decennial Census
+#' Variable labels from the Decennial Census
 #'
-#' Dataset set Decennial Census variable labels, loaded from `tidycensus::load_variables()` and cleaned up slightly.
+#' Dataset of Decennial Census variable labels, loaded from `tidycensus::load_variables()` and cleaned up slightly. 2010 and 2020 versions are saved separately and have different variable code formats.
 #'
-#' @format A data frame with 3346 rows and 3 variables:
+#' @format A data frame with 8959 rows (2010) or 9067 rows (2020) and 3 variables:
 #' \describe{
-#'   \item{name}{Variable code, where first 1 to 3 letters and 3 to 4 digits are the table number, and remaining characters are the variable number}
+#'   \item{name}{Variable code containing the table number and variable number}
 #'   \item{label}{Readable label of each variable}
-#'   \item{concept}{Table name, including readable table number}
+#'   \item{concept}{Table name}
 #' }
 #' @source US Census Bureau via `tidycensus`
+"decennial_vars20"
+
+#' @rdname decennial_vars20
 "decennial_vars10"
+
+
+#' Tables available from the Census Bureau API
+#'
+#' Dataset of tables available from the Census Bureau's API, filtered to include just mainland decennial summary files and ACS detailed tables. Useful for verifying which summary files are available for different years, as some codes have changed (3-year ACS was sunset, decennial summary files are now all demographic & housing characteristics tables). Also used internally for checking calls to `multi_geo_acs` and `multi_geo_decennial`.
+#'
+#' @format A data frame with 45 rows and 3 variables:
+#' \describe{
+#'   \item{vintage}{Vintage year of dataset}
+#'   \item{program}{Program, either "acs" or "dec"}
+#'   \item{survey}{Survey/summary file}
+#'   \item{title}{Brief title, standardized}
+#' }
+#' @source [US Census Bureau API Discovery Tool](https://www.census.gov/data/developers/updates/new-discovery-tool.html)
+"cb_avail"
 
 
 #' Basic ACS table numbers

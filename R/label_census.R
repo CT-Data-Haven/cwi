@@ -1,15 +1,15 @@
 ############# LABEL DATA TABLES ----
 #' Quickly add the labels of decennial variables
 #'
-#' `tidycensus::get_decennial` returns a decennial data table with its variable codes, which can be joined with `cwi::decennial_vars10` to get readable labels. This function is just a quick wrapper around the common task of joining these two data frames.
+#' `tidycensus::get_decennial` returns a decennial data table with its variable codes, which can be joined with `cwi::decennial_vars20` to get readable labels. This function is just a quick wrapper around the common task of joining these two data frames.
 #' @param data A data frame/tibble.
-#' @param year The year of decennial census data; defaults 2010.
-#' @param sumfile A string: which summary file to use. Defaults to the 100 percent summary file (`"sf1"`), but can also be `"sf3"`.
+#' @param year The year of decennial census data; defaults 2020.
+#' @param sumfile A string: which summary file to use. Defaults to `"dhc"`, the code used for 2020. 2010 used summary files labeled `"sf1"` or `"sf3"`.
 #' @param variable The bare column name of variable codes; defaults to `variable`, as returned by `tidycensus::get_decennial`.
 #' @return A tibble
-#' @seealso [decennial_vars10]
+#' @seealso [decennial_vars20]
 #' @export
-label_decennial <- function(data, year = 2010, sumfile = "sf1", variable = variable) {
+label_decennial <- function(data, year = 2020, sumfile = "dhc", variable = variable) {
   variable_lbl <- rlang::as_label(rlang::enquo(variable))
   dec_vars <- clean_decennial_vars(year = year, sumfile = sumfile)
   dec_vars <- dplyr::select(dec_vars, name, label)
@@ -42,10 +42,17 @@ table_available <- function(src, tbl, year, dataset) {
   # regex used to extract table numbers
   if (src == "acs") {
     all_vars <- clean_acs_vars(year, dataset)
-    patt <- "^[BC]\\d+[[:upper:]]*(?=_)"
-  } else {
+    patt <- "^[BC]\\d+[A-Z]*(?=_)"
+  } else if (src == "decennial") {
     all_vars <- clean_decennial_vars(year, dataset)
-    patt <- "^(H|P|HCT|PCT|PCO)\\d{1,3}[A-Z]?" # switch from \\d{3} to deal with pl tables
+
+    if (year < 2020) {
+      patt <- "^(H|P|HCT|PCT|PCO)\\d{3}[A-Z]?"
+    } else {
+      patt <- "(^[A-Z0-9]+)"
+    }
+  } else {
+    return(FALSE)
   }
   all_vars$table <- stringr::str_extract(all_vars$name, patt)
   all_vars <- dplyr::distinct(all_vars, table, concept)
@@ -55,6 +62,17 @@ table_available <- function(src, tbl, year, dataset) {
     return(FALSE)
   } else {
     return(c(as.list(avail), list(year = year)))
+  }
+}
+dataset_available <- function(src, year, dataset) {
+  if (src == "decennial") {
+    src <- "dec"
+  }
+  avail <- cb_avail[cb_avail$vintage == year & cb_avail$program == src & cb_avail$survey == dataset, ]
+  if (nrow(avail) == 0) {
+    return(FALSE)
+  } else {
+    return(as.list(avail))
   }
 }
 

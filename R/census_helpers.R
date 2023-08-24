@@ -1,9 +1,19 @@
 ## UTILS ----
 wrap_census <- function(src, geography, table, year, state, dataset, key, ...) {
   if (src == "acs") {
-    suppressMessages(httr::with_config(httr::user_agent("cwi"), tidycensus::get_acs(geography = geography, table = table, year = year, state = state, survey = dataset, key = key, cache_table = TRUE, ...)))
+    suppressMessages(
+      httr::with_config(
+        httr::user_agent("cwi"),
+        tidycensus::get_acs(geography = geography, table = table, year = year, state = state, survey = dataset, key = key, cache_table = TRUE, ...)
+        )
+      )
   } else if (src == "decennial") {
-    suppressMessages(httr::with_config(httr::user_agent("cwi"), tidycensus::get_decennial(geography = geography, table = table, year = year, state = state, sumfile = dataset, key = key, cache_table = TRUE, ...)))
+    suppressMessages(
+      httr::with_config(
+        httr::user_agent("cwi"),
+        tidycensus::get_decennial(geography = geography, table = table, year = year, state = state, sumfile = dataset, key = key, cache_table = TRUE, ...)
+        )
+      )
   } else {
     return(NULL)
   }
