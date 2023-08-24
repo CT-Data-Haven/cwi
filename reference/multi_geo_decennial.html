@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.0</span>
       </span>
     </div>
 
@@ -91,7 +91,7 @@
 <span>  nhood_name <span class="op">=</span> <span class="va">name</span>,</span>
 <span>  nhood_geoid <span class="op">=</span> <span class="va">geoid</span>,</span>
 <span>  nhood_weight <span class="op">=</span> <span class="va">weight</span>,</span>
-<span>  sumfile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sf1"</span>, <span class="st">"sf3"</span>, <span class="st">"pl"</span><span class="op">)</span>,</span>
+<span>  sumfile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dhc"</span>, <span class="st">"sf1"</span>, <span class="st">"sf3"</span>, <span class="st">"pl"</span><span class="op">)</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  key <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  sleep <span class="op">=</span> <span class="fl">0</span>,</span>
@@ -106,7 +106,7 @@
 
 
 <dt>year</dt>
-<dd><p>The year of the census table; currently defaults 2010 (most recent decennial census).</p></dd>
+<dd><p>The year of the census table; currently defaults 2020.</p></dd>
 
 
 <dt>towns</dt>
@@ -162,7 +162,7 @@
 
 
 <dt>sumfile</dt>
-<dd><p>A string giving the summary file to pull from. Defaults <code>"sf1"</code>, which is much more common than <code>"sf3"</code>. Use <code>"pl"</code> for redistricting data, which is still all that's released for 2020.</p></dd>
+<dd><p>A string giving the summary file to pull from. Note that codes have changed between 2010 and 2020. Now that default year is 2020, default sumfile is <code>"dhc"</code>. For 2010, should be either <code>"sf1"</code>, or less commonly <code>"sf3"</code>. Use <code>"pl"</code> for 2020 redistricting data.</p></dd>
 
 
 <dt>verbose</dt>
@@ -200,7 +200,7 @@
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="fu">multi_geo_decennial</span><span class="op">(</span><span class="st">"P001"</span>, <span class="fl">2010</span>,</span></span>
+<span class="r-in"><span><span class="fu">multi_geo_decennial</span><span class="op">(</span><span class="st">"P1"</span>, <span class="fl">2020</span>, sumfile <span class="op">=</span> <span class="st">"dhc"</span>,</span></span>
 <span class="r-in"><span>  towns <span class="op">=</span> <span class="st">"all"</span>,</span></span>
 <span class="r-in"><span>  regions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>inner_ring <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hamden"</span>, <span class="st">"East Haven"</span>, <span class="st">"West Haven"</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  counties <span class="op">=</span> <span class="st">"New Haven County"</span><span class="op">)</span></span></span>

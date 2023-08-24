@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.0</span>
       </span>
     </div>
 
@@ -69,6 +69,16 @@
       <small>Source: <a href="https://github.com/CT-Data-Haven/cwi/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.4.0" id="cwi-140">cwi 1.4.0<a class="anchor" aria-label="anchor" href="#cwi-140"></a></h2>
+<ul><li>
+<strong>MINOR BREAKING CHANGE:</strong> <code>multi_geo_decennial</code> now defaults to 2020. Because the 2020 decennial uses a different summary file code from previous years, the default <code>sumfile</code> argument, if used with 2010, <em>will lead to an error.</em>
+</li>
+<li>2020 decennial variables are now available in <code>decennial_vars20</code>. The 2010 ones are still in <code>decennial_vars10</code>.</li>
+<li>A new data frame, <code>cb_avail</code>, has the years, programs (ACS vs decennial), and dataset codes (SF1, ACS5, DHC, etc.) available from the Census Bureau’s API.</li>
+<li>The function <code>dh_scaffold</code> was poorly named and not a great fit for the aims of this project. It’s been moved to {stylehaven}; find it there as <code>scaffold_project</code>.</li>
+<li>Minor improvements to some warnings and other messages.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.3.0" id="cwi-130">cwi 1.3.0<a class="anchor" aria-label="anchor" href="#cwi-130"></a></h2>
 <ul><li>Add COGs to xwalk along with function for reconciling names</li>
