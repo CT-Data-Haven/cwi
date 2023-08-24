@@ -19,9 +19,9 @@ jenks <- function(x, n = 5, true_jenks = FALSE, labels = NULL, ...) {
   if (n >= length(x)) cli::cli_abort("{.var n} must be less than the number of values to cut.")
   if (n >= length(unique(x))) cli::cli_warn(c("{.var n} should be less than the number of unique values to cut.", "Breaks might not be meaningful."))
   if (true_jenks) {
-    brks <- unique(classInt::classIntervals(x, n = n, style = "jenks")$brk)
+    brks <- unique(suppressWarnings(classInt::classIntervals(x, n = n, style = "jenks")$brk))
   } else {
-    brks <- unique(classInt::classIntervals(x, n = n, style = "fisher")$brk)
+    brks <- unique(suppressWarnings(classInt::classIntervals(x, n = n, style = "fisher")$brk))
   }
   cut(x, include.lowest = TRUE, breaks = brks, labels = labels, ...)
 }

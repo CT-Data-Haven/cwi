@@ -25,17 +25,23 @@
 #' @export
 #' @rdname sub_nonanswers
 
-sub_nonanswers <- function(data, response = response, value = value, nons = c("Don't know", "Refused"), factor_response = TRUE, rescale = FALSE) {
+sub_nonanswers <- function(data,
+                           response = response,
+                           value = value,
+                           nons = c("Don't know", "Refused"),
+                           factor_response = TRUE,
+                           rescale = FALSE) {
   # warn if any nons aren't actually in the data
   response_vals <- unique(dplyr::pull(data, {{ response }}))
   xtra_nons <- setdiff(nons, response_vals)
 
   if (length(xtra_nons) > 0) {
-    cli::cli_alert_warning("Your value of {.var nons} contains responses not found in the data: {.val {xtra_nons}} not found.")
+    cli::cli_warn(c("!" = "Your value of {.var nons} contains responses not found in the data: {.val {xtra_nons}} not found."))
   }
 
   if (any(dplyr::pull(data, {{ value }}) > 1.0)) {
-    cli::cli_alert_warning("Your data contains values greater than 1.0. This function is designed for percentage data, so you'll probably get values that don't actually make sense.")
+    cli::cli_warn(c("!" = "Your data contains values greater than 1.0.",
+                    i = "This function is designed for percentage data, so you'll probably get values that don't actually make sense."))
   }
 
   # add up values of nonanswers, use 1 - sum(nons) as denom
