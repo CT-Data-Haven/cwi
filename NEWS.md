@@ -1,3 +1,11 @@
+# cwi 1.4.0
+
+- **MINOR BREAKING CHANGE:** `multi_geo_decennial` now defaults to 2020. Because the 2020 decennial uses a different summary file code from previous years, the default `sumfile` argument, if used with 2010, *will lead to an error.*
+- 2020 decennial variables are now available in `decennial_vars20`. The 2010 ones are still in `decennial_vars10`.
+- A new data frame, `cb_avail`, has the years, programs (ACS vs decennial), and dataset codes (SF1, ACS5, DHC, etc.) available from the Census Bureau's API.
+- The function `dh_scaffold` was poorly named and not a great fit for the aims of this project. It's been moved to {stylehaven}; find it there as `scaffold_project`.
+- Minor improvements to some warnings and other messages.
+
 # cwi 1.3.0
 
 - Add COGs to xwalk along with function for reconciling names 
