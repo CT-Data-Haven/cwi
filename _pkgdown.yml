@@ -39,7 +39,7 @@ reference:
       - "basic_table_nums"
       - "ct5_clusters"
       - "cws_demo"
-      - "decennial_vars10"
+      - "decennial_vars20"
       - "ext_table_nums"
       - "gnh_tenure"
       - "laus_codes"
@@ -66,7 +66,6 @@ reference:
     contents:
       - "add_logo"
       - "batch_csv_dump"
-      - "dh_scaffold"
       - "fix_cogs"
       - "jenks"
       - "town_names"

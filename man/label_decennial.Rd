@@ -4,14 +4,14 @@
 \alias{label_decennial}
 \title{Quickly add the labels of decennial variables}
 \usage{
-label_decennial(data, year = 2010, sumfile = "sf1", variable = variable)
+label_decennial(data, year = 2020, sumfile = "dhc", variable = variable)
 }
 \arguments{
 \item{data}{A data frame/tibble.}
 
-\item{year}{The year of decennial census data; defaults 2010.}
+\item{year}{The year of decennial census data; defaults 2020.}
 
-\item{sumfile}{A string: which summary file to use. Defaults to the 100 percent summary file (\code{"sf1"}), but can also be \code{"sf3"}.}
+\item{sumfile}{A string: which summary file to use. Defaults to \code{"dhc"}, the code used for 2020. 2010 used summary files labeled \code{"sf1"} or \code{"sf3"}.}
 
 \item{variable}{The bare column name of variable codes; defaults to \code{variable}, as returned by \code{tidycensus::get_decennial}.}
 }
@@ -19,8 +19,8 @@ label_decennial(data, year = 2010, sumfile = "sf1", variable = variable)
 A tibble
 }
 \description{
-\code{tidycensus::get_decennial} returns a decennial data table with its variable codes, which can be joined with \code{cwi::decennial_vars10} to get readable labels. This function is just a quick wrapper around the common task of joining these two data frames.
+\code{tidycensus::get_decennial} returns a decennial data table with its variable codes, which can be joined with \code{cwi::decennial_vars20} to get readable labels. This function is just a quick wrapper around the common task of joining these two data frames.
 }
 \seealso{
-\link{decennial_vars10}
+\link{decennial_vars20}
 }

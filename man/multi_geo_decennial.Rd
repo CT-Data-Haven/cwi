@@ -20,7 +20,7 @@ multi_geo_decennial(
   nhood_name = name,
   nhood_geoid = geoid,
   nhood_weight = weight,
-  sumfile = c("sf1", "sf3", "pl"),
+  sumfile = c("dhc", "sf1", "sf3", "pl"),
   verbose = TRUE,
   key = NULL,
   sleep = 0,
@@ -30,7 +30,7 @@ multi_geo_decennial(
 \arguments{
 \item{table}{A string giving the decennial census table number. These are generally formatted as one or more letters, 3 numbers, and optionally a letter.}
 
-\item{year}{The year of the census table; currently defaults 2010 (most recent decennial census).}
+\item{year}{The year of the census table; currently defaults 2020.}
 
 \item{towns}{A character vector of towns to include; \code{"all"} (default) for all towns optionally filtered by county; or \code{NULL} to not fetch town-level table.}
 
@@ -58,7 +58,7 @@ multi_geo_decennial(
 
 \item{nhood_weight}{Bare column name of weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults \code{weight} to match the neighborhood lookup datasets.}
 
-\item{sumfile}{A string giving the summary file to pull from. Defaults \code{"sf1"}, which is much more common than \code{"sf3"}. Use \code{"pl"} for redistricting data, which is still all that's released for 2020.}
+\item{sumfile}{A string giving the summary file to pull from. Note that codes have changed between 2010 and 2020. Now that default year is 2020, default sumfile is \code{"dhc"}. For 2010, should be either \code{"sf1"}, or less commonly \code{"sf3"}. Use \code{"pl"} for 2020 redistricting data.}
 
 \item{verbose}{Logical: whether to print summary of geographies included. Defaults \code{TRUE}.}
 
@@ -81,7 +81,7 @@ Be advised that decennial table numbers may change from year to year, so if you'
 }
 \examples{
 \dontrun{
-multi_geo_decennial("P001", 2010,
+multi_geo_decennial("P1", 2020, sumfile = "dhc",
   towns = "all",
   regions = list(inner_ring = c("Hamden", "East Haven", "West Haven")),
   counties = "New Haven County")
