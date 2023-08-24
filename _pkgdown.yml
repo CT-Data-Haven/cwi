@@ -37,6 +37,7 @@ reference:
     contents:
       - "acs_vars21"
       - "basic_table_nums"
+      - "cb_avail"
       - "ct5_clusters"
       - "cws_demo"
       - "decennial_vars20"
