@@ -11,7 +11,7 @@ all_xt <- function(.fun, args = NULL) {
 
 multi_test <- function(src = "acs",
                        table = "B01003",
-                       year = 2019,
+                       year = 2021,
                        towns = "all",
                        regions = NULL,
                        counties = "all",

@@ -34,5 +34,5 @@ jobs:
           error-on: '"error"'
 
       - name: Test coverage
-        run: covr::codecov(quiet = FALSE)
+        run: covr::codecov(quiet = FALSE, type = "all")
         shell: Rscript {0}

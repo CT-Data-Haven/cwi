@@ -59,7 +59,7 @@ test_that("multi_geo_* handles neighborhood names", {
   # previously was returning name, name_2 columns
   skip_on_ci()
   acs_df <- multi_geo_acs("B01003", year = 2019, neighborhoods = new_haven_tracts19)
-  dec_df <- multi_geo_decennial("P001", year = 2010, neighborhoods = new_haven_tracts19)
+  dec_df <- multi_geo_decennial("P001", year = 2010, neighborhoods = new_haven_tracts19, sumfile = "sf1")
   expect_false(any(grepl("\\d", names(acs_df))))
   expect_false(any(grepl("\\d", names(dec_df))))
 })
@@ -90,7 +90,9 @@ test_that("multi_geo_* handles MSA label change in 2021", {
   expect_s3_class(multi_geo_acs(table = "B01003", msa = TRUE, year = 2021), "data.frame")
 })
 
-test_that("multi_geo_decennial handles sf1, sf3, or pl", {
-  skip_on_ci()
-  expect_s3_class(multi_geo_decennial(table = "P3", year = 2020, sumfile = "pl"), "data.frame")
+test_that("multi_geo_* handles survey codes", {
+  expect_type(dataset_available("decennial", 2020, "dhc"), "list")
+  expect_false(dataset_available("decennial", 2010, "dhc"))
+  expect_error(multi_test("decennial", "P1", 2020, dataset = "sf1"))
 })
+
