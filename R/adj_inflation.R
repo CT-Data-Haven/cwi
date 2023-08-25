@@ -29,12 +29,9 @@ adj_inflation <- function(data, value, year, base_year = 2021, verbose = TRUE, k
   # series = c("CUUR0000SA0", "CUUR0000AA0")
   series <- "CUUR0000SA0"
   yr_lbl <- rlang::as_label(rlang::enquo(year))
+  years <- cpi_yrs(data[[yr_lbl]], base_year)
 
-  yr_range <- range(dplyr::pull(data, {{ year }}))
-  startyear <- min(c(yr_range[1], base_year))
-  endyear <- max(c(yr_range[2], base_year))
-
-  query <- cpi_prep(series, startyear, endyear, verbose, key)
+  query <- cpi_prep(series, years, verbose, key)
 
   fetch <- fetch_bls(query, verbose)
 
@@ -53,20 +50,26 @@ adj_inflation <- function(data, value, year, base_year = 2021, verbose = TRUE, k
 }
 
 #################### HELPERS ##########################################
-cpi_prep <- function(series, startyear, endyear, catalog, key) {
-  key <- check_bls_key(key)
-  if (is.logical(key) && !key) {
-    cli::cli_abort("Must supply an API key. See the docs on where to store it.",
-                   call = parent.frame())
-  }
-  # prep params
+cpi_yrs <- function(year, base_year) {
+  yr_range <- range(year)
+  startyear <- min(c(yr_range[1], base_year))
+  endyear <- max(c(yr_range[2], base_year))
+
   max_yrs <- 10
   years <- seq(startyear, endyear, by = 1)
   if (length(years) > max_yrs) {
     cli::cli_alert_info("The API can only get {max_yrs} years of data at once; making multiple calls, but this might take a little longer.")
   }
   years <- split_n(years, max_yrs)
+  return(years)
+}
 
+cpi_prep <- function(series, years, catalog, key) {
+  key <- check_bls_key(key)
+  if (is.logical(key) && !key) {
+    cli::cli_abort("Must supply an API key. See the docs on where to store it.",
+                   call = parent.frame())
+  }
   # make api query, call in main function
   base_url <- "https://api.bls.gov/publicAPI/v2/timeseries/data"
   params <- make_cpi_query(series, years, catalog, key)

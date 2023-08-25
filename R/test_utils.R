@@ -30,3 +30,13 @@ multi_test <- function(src = "acs",
                        key = NULL) {
   multi_geo_prep(src, table, year, towns, regions, counties, state, neighborhoods, tracts, blockgroups, pumas, msa, us, new_england, {{ nhood_name }}, {{ nhood_geoid }}, dataset, verbose, key)
 }
+
+bls_test <- function(series = "CUUR0000SA0",
+                     year = year,
+                     base_year = 2021,
+                     verbose = TRUE,
+                     key = NULL) {
+  yrs <- cpi_yrs(year, base_year)
+  query <- cpi_prep(series, yrs, verbose, key)
+  return(list(yrs = yrs, query = query))
+}
