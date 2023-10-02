@@ -1,3 +1,5 @@
+# WRITE: msa
+
 ne <- c("CT", "MA", "ME", "NH", "RI", "VT")
 ne_re <- sprintf("(%s)", paste(ne, collapse = "|"))
 msa <- tigris::core_based_statistical_areas(year = 2020) |>

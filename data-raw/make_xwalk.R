@@ -1,3 +1,5 @@
+# WRITE: xwalk tract2town
+
 # output: block, block_grp, tract, town, town_fips, county, county_fips, msa, msa_fips, puma, puma_fips
 sf::sf_use_s2(FALSE)
 

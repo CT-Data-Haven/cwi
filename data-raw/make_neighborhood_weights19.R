@@ -1,3 +1,5 @@
+# WRITE: bridgeport_tracts19 hartford_tracts19 new_haven_tracts19 stamford_tracts19
+
 sf::sf_use_s2(FALSE)
 # same as other neighborhood weights, but need to make a copy reverted back to 2019
 min_hh <- 3

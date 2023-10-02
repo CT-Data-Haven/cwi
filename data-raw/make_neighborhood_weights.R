@@ -1,3 +1,5 @@
+# WRITE: bridgeport_tracts hartford_tracts new_haven_tracts stamford_tracts
+
 sf::sf_use_s2(FALSE)
 # weighted by households
 # for redistricting data, that's occupied housing units H1_002N--should be same

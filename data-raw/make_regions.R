@@ -1,3 +1,6 @@
+# WRITE: regions
+# READ: data-raw/files/town_region_lookup.csv
+
 town2cog <- tigris::county_subdivisions(state = "09", year = 2022, cb = TRUE) |>
   sf::st_drop_geometry() |>
   dplyr::select(name = NAMELSADCO, town = NAME) |>

@@ -1,3 +1,5 @@
+# WRITE: town_sf new_haven_sf stamford_sf bridgeport_sf hartford_sf tract_sf tract_sf19
+
 # make sf objects of towns, neighborhoods
 sf::sf_use_s2(FALSE)
 town_sf <- tigris::county_subdivisions(state = "09", cb = TRUE, class = "sf", year = 2020) |>

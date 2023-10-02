@@ -1,3 +1,4 @@
+# WRITE: laus_codes
 # area types to keep: state A, county F, cities 25k+ G, cities <25k H
 # laus_codes <- readr::read_tsv("https://download.bls.gov/pub/time.series/la/la.area") |>
 #   dplyr::filter(area_text == "Connecticut" | stringr::str_detect(area_text, "( CT|CT )")) |>

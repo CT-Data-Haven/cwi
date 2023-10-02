@@ -1,3 +1,6 @@
+# WRITE: cws_demo
+# READ: inst/extdata/test_xtab2015.xlsx
+
 wts <- read_weights(system.file("extdata/test_xtab2015.xlsx", package = "cwi")) |>
   dplyr::mutate(group = group |>
                  stringr::str_replace("(?<=\\d) to (?=[\\$\\d])", "-") |>

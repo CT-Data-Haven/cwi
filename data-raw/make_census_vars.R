@@ -1,3 +1,4 @@
+# WRITE: acs_vars21 decennial_vars10 decennial_vars20 cb_avail
 # ACS: MOST RECENT VARIABLES
 acs_vars21 <- clean_acs_vars(year = 2021, survey = "acs5")
 

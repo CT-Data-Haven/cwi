@@ -1,3 +1,6 @@
+# WRITE: school_dists
+# READ: data-raw/files/regional_school_dists.tsv
+
 regional <- readr::read_delim("data-raw/files/regional_school_dists.tsv", delim = ";") |>
   tidyr::separate_rows(towns, sep = ",") |>
   dplyr::mutate(district = paste("Regional School District", stringr::str_pad(district, width = 2, side = "left", pad = "0"))) |>

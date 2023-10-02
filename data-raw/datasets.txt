@@ -1,0 +1,15 @@
+acs_demo;;gnh_tenure
+census_vars;;acs_vars21 decennial_vars10 decennial_vars20 cb_avail
+ct5_clusters;data-raw/files/5CT_groups_2010.csv;ct5_clusters
+cws_demo;inst/extdata/test_xtab2015.xlsx;cws_demo
+geo_sf;;town_sf new_haven_sf stamford_sf bridgeport_sf hartford_sf tract_sf tract_sf19
+laus_codes;;laus_codes
+lehd;data-raw/files/occ_codes.xlsx;occ_codes
+msas;;msa
+neighborhood_weights19;;bridgeport_tracts19 hartford_tracts19 new_haven_tracts19 stamford_tracts19
+neighborhood_weights;;bridgeport_tracts hartford_tracts new_haven_tracts stamford_tracts
+regions;data-raw/files/town_region_lookup.csv;regions
+school_dists;data-raw/files/regional_school_dists.tsv;school_dists
+table_nums;;basic_table_nums ext_table_nums
+xwalk;;xwalk tract2town
+zip2town;data-raw/files/zip2town.csv;zip2town

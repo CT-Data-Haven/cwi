@@ -1,3 +1,5 @@
+# WRITE: basic_table_nums ext_table_nums
+
 basic_table_nums <- list(
   total_pop = "B01003",
   sex_by_age = "B01001",
