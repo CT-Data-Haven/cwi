@@ -5,21 +5,29 @@
 \alias{village2town}
 \title{Village to town lookup}
 \format{
-A data frame with 90 rows and 4 variables:
+A data frame with 224 rows and 7 variables:
 \describe{
-\item{cdp_geoid}{7-digits CDP FIPS code}
+\item{town}{Town (county subdivision) name}
 \item{place}{CDP name}
-\item{town_geoid}{10-digit town FIPS code}
-\item{town}{Town name}
+\item{place_geoid}{CDP FIPS code}
+\item{town_pop}{Population of the full town}
+\item{place_pop}{Population of the full CDP}
+\item{overlap_pop}{Population of the overlapping area, interpolated from block populations}
+\item{place_wt}{Share of CDP population included in the town-CDP overlapping area}
 }
 }
 \source{
-Spatial overlay of TIGER shapefiles, plus manual additions of non-CDP villages when we run into them in the wild.
+Spatial overlay of TIGER shapefiles and populations from the 2020 Decennial Census DHC table P1.
 }
 \usage{
 village2town
 }
 \description{
-A crosswalk of Connecticut's Census-designated places (CDP) to the towns (county subdivisions) containing them.
+A crosswalk of Connecticut's Census-designated places (CDP) to the towns (county subdivisions) intersecting with them.
+With the 2010 boundaries, places were generally each within a single town, but the 2020 boundaries increased the number of places,
+including ones that span multiple towns. This table now has weights to show how much of a place's population is in the
+associated town. This version also includes all places, not just ones that differ from the corresponding town.
+Note that places don't span the full state. All populations are from the 2020 decennial census, and overlaps are based on
+fitting blocks within places.
 }
 \keyword{datasets}
