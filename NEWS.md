@@ -1,3 +1,8 @@
+# cwi 1.5.0
+
+- The 2020 decennial census added a few dozen new census designated places, which is what `village2town` is based on. They now overlap with towns even less well than they used to. The table has been recalculated, with towns and villages joined based on overlapping population from the 2020 decennial, and now includes populations and weights in the crosswalk. 
+That means things could break if you're expecting one set of CDPs and get another, or if you're not expecting new columns in that table. 
+
 # cwi 1.4.0
 
 - **MINOR BREAKING CHANGE:** `multi_geo_decennial` now defaults to 2020. Because the 2020 decennial uses a different summary file code from previous years, the default `sumfile` argument, if used with 2010, *will lead to an error.*
