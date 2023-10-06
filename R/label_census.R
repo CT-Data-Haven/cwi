@@ -68,7 +68,7 @@ dataset_available <- function(src, year, dataset) {
   if (src == "decennial") {
     src <- "dec"
   }
-  avail <- cb_avail[cb_avail$vintage == year & cb_avail$program == src & cb_avail$survey == dataset, ]
+  avail <- cwi::cb_avail[cwi::cb_avail$vintage == year & cwi::cb_avail$program == src & cwi::cb_avail$survey == dataset, ]
   if (nrow(avail) == 0) {
     return(FALSE)
   } else {

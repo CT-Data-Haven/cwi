@@ -17,4 +17,5 @@
 ^\.covrignore$
 ^codecov\.yml$
 ^Makefile$
-.vscode
+^.*\.vscode$
+^\.snakemake$

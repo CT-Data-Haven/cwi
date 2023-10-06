@@ -10,4 +10,5 @@ doc
 Meta
 /doc/
 /Meta/
-.vscode
+*.vscode
+.snakemake/
