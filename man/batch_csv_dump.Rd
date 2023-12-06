@@ -10,7 +10,8 @@ batch_csv_dump(
   path = ".",
   base_name = NULL,
   bind = FALSE,
-  verbose = TRUE
+  verbose = TRUE,
+  ...
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ batch_csv_dump(
 \item{bind}{Logical: whether to row-bind list of data frames into a single data frame. Defaults \code{FALSE}, in which case a list of data frames is returned.}
 
 \item{verbose}{Logical: whether to print files' paths and names as they're written. Defaults \code{TRUE}.}
+
+\item{...}{Additional arguments to pass to \code{utils::write.csv}, such as \code{na} or \code{col.names}.}
 }
 \value{
 Either a list of data frames (in case of \code{bind = FALSE}) or a single data frame (in case of \code{bind = TRUE}).

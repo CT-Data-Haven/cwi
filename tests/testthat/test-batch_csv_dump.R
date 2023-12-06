@@ -1,13 +1,7 @@
 library(cwi)
-library(testthat)
 
 test_that("batch_csv_dump checks input data & split_by", {
-  set.seed(123)
-  df <- data.frame(
-    name = sample(letters, 20, replace = FALSE),
-    region = sample(LETTERS[1:5], 20, replace = TRUE),
-    value = rnorm(20)
-  )
+  df <- dummy_df()
   split_df <- split(df, df$region)
 
   expect_error(batch_csv_dump(df, path = tempdir()))
@@ -15,12 +9,7 @@ test_that("batch_csv_dump checks input data & split_by", {
 })
 
 test_that("batch_csv_dump output is same as input", {
-  set.seed(123)
-  df <- data.frame(
-    name = sample(letters, 20, replace = FALSE),
-    region = sample(LETTERS[1:5], 20, replace = TRUE),
-    value = rnorm(20)
-  )
+  df <- dummy_df()
   df <- df[order(df$region, df$name), ]
   rownames(df) <- NULL
   split_df <- split(df, df$region)
@@ -30,23 +19,23 @@ test_that("batch_csv_dump output is same as input", {
 })
 
 test_that("batch_csv_dump errors missing path", {
-  set.seed(123)
-  df <- data.frame(
-    name = sample(letters, 20, replace = FALSE),
-    region = sample(LETTERS[1:5], 20, replace = TRUE),
-    value = rnorm(20)
-  )
+  df <- dummy_df()
 
   expect_error(batch_csv_dump(df, split_by = region, path = "dummy"))
 })
 
 test_that("batch_csv_dump prints messages if verbose", {
-  set.seed(123)
-  df <- data.frame(
-    name = sample(letters, 20, replace = FALSE),
-    region = sample(LETTERS[1:5], 20, replace = TRUE),
-    value = rnorm(20)
-  )
+  df <- dummy_df()
 
   expect_message(batch_csv_dump(df, split_by = region, path = tempdir(), verbose = TRUE))
+})
+
+test_that("batch_csv_dump passes arguments to write.csv", {
+  df <- dummy_df()
+  df$value[1:3] <- NA_real_
+  dir <- tempdir()
+  set_na <- batch_csv_dump(df, split_by = region, path = dir, base_name = "set_na", na = "")
+  no_names <- batch_csv_dump(df, split_by = region, path = dir, base_name = "no_names", col.names = FALSE)
+
+
 })
