@@ -35,28 +35,34 @@ msa_sf <- tigris::core_based_statistical_areas(cb = TRUE, year = 2020) |>
   dplyr::filter(grepl("CT", name)) |>
   dplyr::select(msa = name, msa_fips = geoid)
 
-town2puma <- sf::st_join(town_sf, puma_sf, join = sf::st_intersects,
+town2puma <- sf::st_join(cwi::town_sf, puma_sf, join = sf::st_intersects,
                          left = TRUE, largest = TRUE,
                          suffix = c("_town", "_puma")) |>
   sf::st_drop_geometry() |>
   dplyr::select(town = name, town_fips = GEOID, puma, puma_fips)
 
-town2msa <- sf::st_join(town_sf, msa_sf, join = sf::st_intersects,
+town2msa <- sf::st_join(cwi::town_sf, msa_sf, join = sf::st_intersects,
                         left = TRUE, largest = TRUE) |>
   sf::st_drop_geometry() |>
   dplyr::select(town = name, msa, msa_fips)
 
-tract2town <- sf::st_join(tract_sf, town_sf, join = sf::st_intersects,
+tract2town <- sf::st_join(cwi::tract_sf, cwi::town_sf, join = sf::st_intersects,
                           left = TRUE, largest = TRUE,
                           suffix = c("_tract", "_town")) |>
   sf::st_drop_geometry() |>
   dplyr::select(tract = name_tract, town = name_town) |>
   dplyr::as_tibble()
 
-town2cog <- regions[grepl("COG$", names(regions))] |>
+town2cog <- cwi::regions[grepl("COG$", names(cwi::regions))] |>
   tibble::enframe(name = "cog", value = "town") |>
   tidyr::unnest(town) |>
   dplyr::left_join(cogs, by = "cog")
+
+# town FIPS changed to start with COG FIPS--add another column
+town_new_fips <- tigris::county_subdivisions(state = "09", year = 2022) |>
+  sf::st_drop_geometry() |>
+  janitor::clean_names() |>
+  dplyr::select(town_fips22 = geoid, town = name)
 
 xwalk <- blocks |>
   dplyr::left_join(counties, by = "county_fips") |>
@@ -64,8 +70,11 @@ xwalk <- blocks |>
   dplyr::left_join(town2cog, by = "town") |>
   dplyr::left_join(town2msa, by = "town") |>
   dplyr::left_join(town2puma, by = "town") |>
-  dplyr::select(block, block_grp, tract, town, town_fips, county, county_fips, cog, cog_fips, msa, msa_fips, puma, puma_fips) |>
+  dplyr::left_join(town_new_fips, by = "town") |>
+  dplyr::select(block, block_grp, tract, town, town_fips, town_fips22, county, county_fips, cog, cog_fips, msa, msa_fips, puma, puma_fips) |>
   dplyr::as_tibble()
+
+colSums(is.na(xwalk))
 
 usethis::use_data(xwalk, overwrite = TRUE)
 usethis::use_data(tract2town, overwrite = TRUE)
