@@ -31,6 +31,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -43,23 +45,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">cwi</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.3.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.5.0.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -72,7 +68,10 @@
       <a href="articles/basic-workflow.html">Basic workflow</a>
     </li>
     <li>
-      <a href="articles/crosstabs.html">crosstabs</a>
+      <a href="articles/crosstabs.html">Working with Community Wellbeing Survey crosstabs</a>
+    </li>
+    <li>
+      <a href="articles/regions.html">Regions</a>
     </li>
     <li>
       <a href="articles/shapefiles.html">Shapefiles</a>
@@ -85,7 +84,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/CT-Data-Haven/cwi/">
+  <a href="https://github.com/CT-Data-Haven/cwi/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -102,28 +101,27 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="cwi-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#cwi-" class="anchor"></a>cwi <img src="reference/figures/logo.png" align="right">
+<div class="section level1">
+<div class="page-header"><h1 id="cwi-">cwi <img src="reference/figures/logo.png" align="right"><a class="anchor" aria-label="anchor" href="#cwi-"></a>
 </h1></div>
 <!-- badges: start -->
 
-<p>The goal of <code>cwi</code> is to get data, primarily the Census ACS, fetched, aggregated, and analyzed for <a href="http://ctdatahaven.org/reports/greater-new-haven-community-index">DataHaven’s 2019 Community Index reports</a>. This includes functions to speed up and standardize analysis for multiple staff people, preview trends and patterns we’ll need to write about, and get data in more layperson-friendly formats.</p>
-<p>It pairs well with many functions from Camille’s brilliantly-named <a href="https://github.com/camille-s/camiller"><code>camiller</code></a> package.</p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install this package from <a href="https://github.com/CT-Data-Haven/cwi">GitHub</a> with:</p>
+<p>The original goal of <code>cwi</code> was to get data, primarily the Census ACS, fetched, aggregated, and analyzed for <a href="http://ctdatahaven.org/reports/greater-new-haven-community-index" class="external-link">DataHaven’s 2019 Community Index reports</a>. It’s now evolved to support more of our day-to-day work—and now we’re on the 2022 reports! This includes functions to speed up and standardize analysis for multiple staff people, preview trends and patterns we’ll need to write about, and get data in more layperson-friendly formats.</p>
+<p>It pairs well with many functions from Camille’s brilliantly-named <a href="https://github.com/camille-s/camiller" class="external-link"><code>camiller</code></a> package.</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>You can install this package from <a href="https://github.com/CT-Data-Haven/cwi" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"CT-Data-Haven/cwi"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"CT-Data-Haven/cwi"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="dependencies" class="section level2">
-<h2 class="hasAnchor">
-<a href="#dependencies" class="anchor"></a>Dependencies</h2>
+<div class="section level2">
+<h2 id="dependencies">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies"></a>
+</h2>
 <p>This package relies heavily on:</p>
 <ul>
-<li>The <a href="http://tidyverse.org/"><code>tidyverse</code></a> packages, namely <code>magrittr</code>, <code>dplyr</code>, <code>tidyr</code>, <code>purrr</code>, <code>stringr</code>, <code>forcats</code>, and <code>ggplot2</code> (version &gt;= 3.0.0) (so basically <em>all</em> the tidyverse)</li>
+<li>The <a href="http://tidyverse.org/" class="external-link"><code>tidyverse</code></a> packages, namely <code>dplyr</code>, <code>tidyr</code>, <code>purrr</code>, <code>stringr</code>, <code>forcats</code>, and <code>ggplot2</code> (version &gt;= 3.0.0) (so a lot the tidyverse)</li>
 <li>
 <code>rlang</code> and <code>tidyselect</code> for non-standard evaluation in many functions</li>
 <li>
@@ -132,106 +130,107 @@
 <code>sf</code> isn’t required but it’s encouraged</li>
 </ul>
 </div>
-<div id="data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#data" class="anchor"></a>Data</h2>
+<div class="section level2">
+<h2 id="data">Data<a class="anchor" aria-label="anchor" href="#data"></a>
+</h2>
 <p><code>cwi</code> ships with several datasets and shapefiles. These include:</p>
 <ul>
 <li>Shapes (as <code>sf</code> objects) of towns, tracts, and city neighborhoods for New Haven, Hartford, Bridgeport, and Stamford</li>
-<li>Common ACS table numbers—hopefully decreases time spent prowling around <a href="https://factfinder.census.gov">FactFinder</a>
+<li>Common ACS table numbers—hopefully decreases time spent prowling around <a href="https://data.census.gov" class="external-link">the Census Bureau site</a>
 </li>
 <li>Definitions of neighborhoods by tract or block group, and of regions by town</li>
 </ul>
 </div>
-<div id="sources" class="section level2">
-<h2 class="hasAnchor">
-<a href="#sources" class="anchor"></a>Sources</h2>
+<div class="section level2">
+<h2 id="sources">Sources<a class="anchor" aria-label="anchor" href="#sources"></a>
+</h2>
 <p>This package contains functions to make it easier and more reproducible to fetch and analyze data from:</p>
 <ul>
 <li>
-<a href="https://www.census.gov/programs-surveys/acs/">American Community Survey</a> (US Census Bureau)</li>
+<a href="https://www.census.gov/programs-surveys/acs/" class="external-link">American Community Survey</a> (US Census Bureau)</li>
 <li>
-<a href="https://www.census.gov/programs-surveys/decennial-census.html">Decennial Census</a> (US Census Bureau)</li>
+<a href="https://www.census.gov/programs-surveys/decennial-census.html" class="external-link">Decennial Census</a> (US Census Bureau)</li>
 <li>
-<a href="https://lehd.ces.census.gov/">Quarterly Workforce Indicators</a> (US Census Bureau Center for Economic Studies)</li>
+<a href="https://lehd.ces.census.gov/" class="external-link">Quarterly Workforce Indicators</a> (US Census Bureau Center for Economic Studies)</li>
 <li>
-<a href="https://www.bls.gov/lau/">Local Area Unemployment Statistics</a> (Bureau of Labor Statistics)</li>
+<a href="https://www.bls.gov/lau/" class="external-link">Local Area Unemployment Statistics</a> (Bureau of Labor Statistics)</li>
+<li><a href="https://ctdatahaven.org/reports/datahaven-community-wellbeing-survey" class="external-link">DataHaven’s Community Wellbeing Survey</a></li>
 </ul>
-<p>More to come (as of 7/17/2018) may include simplifications of working with <a href="https://lehd.ces.census.gov/data/">LEHD Origin-Destination Employment Statistics</a> (LODES) and ACS public use microdata samples (PUMS) via <a href="https://usa.ipums.org/usa/">IPUMS</a>.</p>
 </div>
-<div id="example" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h2>
+<div class="section level2">
+<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+</h2>
 <p>Here’s an example of getting a big table to calculate homeownership rates across many geographies at once:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/CT-Data-Haven/cwi">cwi</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/CT-Data-Haven/cwi" class="external-link">cwi</a></span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tenure</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/multi_geo_acs.html">multi_geo_acs</a></span><span class="op">(</span>
-  table <span class="op">=</span> <span class="va">basic_table_nums</span><span class="op">$</span><span class="va">tenure</span>,
-  year <span class="op">=</span> <span class="fl">2018</span>,
-  regions <span class="op">=</span> <span class="va">regions</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Greater New Haven"</span>, <span class="st">"New Haven Inner Ring"</span>, <span class="st">"New Haven Outer Ring"</span><span class="op">)</span><span class="op">]</span>,
-  counties <span class="op">=</span> <span class="st">"New Haven"</span>,
-  towns <span class="op">=</span> <span class="va">regions</span><span class="op">[[</span><span class="st">"Greater New Haven"</span><span class="op">]</span><span class="op">]</span>,
-  us <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span>
-<span class="co">#&gt; Table B25003: TENURE, 2018</span>
-<span class="co">#&gt; Geographies included:</span>
-<span class="co">#&gt; Towns: Bethany, Branford, East Haven, Guilford, Hamden, Madison, Milford, New Haven, North Branford, North Haven, Orange, West Haven, Woodbridge</span>
-<span class="co">#&gt; Regions: Greater New Haven, New Haven Inner Ring, New Haven Outer Ring</span>
-<span class="co">#&gt; Counties: New Haven County</span>
-<span class="co">#&gt; State: 09</span>
-<span class="co">#&gt; US: Yes</span>
-<span class="va">tenure</span>
-<span class="co">#&gt; # A tibble: 57 x 9</span>
-<span class="co">#&gt;    geoid name            variable   estimate    moe level     state county  year</span>
-<span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;           &lt;chr&gt;         &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;     &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 1     United States   B25003_001   1.20e8 232429 1_us      &lt;NA&gt;  &lt;NA&gt;    2018</span>
-<span class="co">#&gt;  2 1     United States   B25003_002   7.64e7 367132 1_us      &lt;NA&gt;  &lt;NA&gt;    2018</span>
-<span class="co">#&gt;  3 1     United States   B25003_003   4.33e7 139467 1_us      &lt;NA&gt;  &lt;NA&gt;    2018</span>
-<span class="co">#&gt;  4 09    Connecticut     B25003_001   1.37e6   3671 2_state   &lt;NA&gt;  &lt;NA&gt;    2018</span>
-<span class="co">#&gt;  5 09    Connecticut     B25003_002   9.07e5   4800 2_state   &lt;NA&gt;  &lt;NA&gt;    2018</span>
-<span class="co">#&gt;  6 09    Connecticut     B25003_003   4.60e5   3488 2_state   &lt;NA&gt;  &lt;NA&gt;    2018</span>
-<span class="co">#&gt;  7 09009 New Haven Coun… B25003_001   3.30e5   1775 3_counti… 09    &lt;NA&gt;    2018</span>
-<span class="co">#&gt;  8 09009 New Haven Coun… B25003_002   2.04e5   1887 3_counti… 09    &lt;NA&gt;    2018</span>
-<span class="co">#&gt;  9 09009 New Haven Coun… B25003_003   1.26e5   1974 3_counti… 09    &lt;NA&gt;    2018</span>
-<span class="co">#&gt; 10 &lt;NA&gt;  Greater New Ha… B25003_001   1.77e5   1531 4_regions &lt;NA&gt;  &lt;NA&gt;    2018</span>
-<span class="co">#&gt; # … with 47 more rows</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">tenure</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/multi_geo_acs.html">multi_geo_acs</a></span><span class="op">(</span></span>
+<span>  table <span class="op">=</span> <span class="va">basic_table_nums</span><span class="op">$</span><span class="va">tenure</span>,</span>
+<span>  year <span class="op">=</span> <span class="fl">2020</span>,</span>
+<span>  regions <span class="op">=</span> <span class="va">regions</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Greater New Haven"</span>, <span class="st">"New Haven Inner Ring"</span>, <span class="st">"New Haven Outer Ring"</span><span class="op">)</span><span class="op">]</span>,</span>
+<span>  counties <span class="op">=</span> <span class="st">"New Haven"</span>,</span>
+<span>  towns <span class="op">=</span> <span class="va">regions</span><span class="op">[[</span><span class="st">"Greater New Haven"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>  us <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Table B25003: TENURE, 2020 ──────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; • Towns: Bethany, Branford, East Haven, Guilford, Hamden, Madison, Milford, New</span></span>
+<span><span class="co">#&gt; Haven, North Branford, North Haven, Orange, West Haven, Woodbridge</span></span>
+<span><span class="co">#&gt; • Regions: Greater New Haven, New Haven Inner Ring, New Haven Outer Ring</span></span>
+<span><span class="co">#&gt; • Counties: New Haven County</span></span>
+<span><span class="co">#&gt; • State: 09</span></span>
+<span><span class="co">#&gt; • US: Yes</span></span>
+<span><span class="va">tenure</span></span>
+<span><span class="co">#&gt; # A tibble: 57 × 9</span></span>
+<span><span class="co">#&gt;     year level    state       county geoid name         variable estimate    moe</span></span>
+<span><span class="co">#&gt;    &lt;dbl&gt; &lt;fct&gt;    &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1  2020 1_us     &lt;NA&gt;        &lt;NA&gt;   1     United Stat… B25003_…   1.22e8 211970</span></span>
+<span><span class="co">#&gt;  2  2020 1_us     &lt;NA&gt;        &lt;NA&gt;   1     United Stat… B25003_…   7.88e7 342600</span></span>
+<span><span class="co">#&gt;  3  2020 1_us     &lt;NA&gt;        &lt;NA&gt;   1     United Stat… B25003_…   4.36e7 134985</span></span>
+<span><span class="co">#&gt;  4  2020 2_state  &lt;NA&gt;        &lt;NA&gt;   09    Connecticut  B25003_…   1.39e6   3268</span></span>
+<span><span class="co">#&gt;  5  2020 2_state  &lt;NA&gt;        &lt;NA&gt;   09    Connecticut  B25003_…   9.15e5   5015</span></span>
+<span><span class="co">#&gt;  6  2020 2_state  &lt;NA&gt;        &lt;NA&gt;   09    Connecticut  B25003_…   4.70e5   4548</span></span>
+<span><span class="co">#&gt;  7  2020 3_county Connecticut &lt;NA&gt;   09009 New Haven C… B25003_…   3.33e5   1647</span></span>
+<span><span class="co">#&gt;  8  2020 3_county Connecticut &lt;NA&gt;   09009 New Haven C… B25003_…   2.07e5   2123</span></span>
+<span><span class="co">#&gt;  9  2020 3_county Connecticut &lt;NA&gt;   09009 New Haven C… B25003_…   1.26e5   2225</span></span>
+<span><span class="co">#&gt; 10  2020 4_region Connecticut &lt;NA&gt;   &lt;NA&gt;  Greater New… B25003_…   1.76e5   1834</span></span>
+<span><span class="co">#&gt; # ℹ 47 more rows</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">homeownership</span> <span class="op">&lt;-</span> <span class="va">tenure</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/label_acs.html">label_acs</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">name</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>share <span class="op">=</span> <span class="va">estimate</span> <span class="op">/</span> <span class="va">estimate</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># or use camiller::calc_shares</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">label</span>, <span class="st">"Owner"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">name</span>, <span class="va">share</span><span class="op">)</span>
-
-<span class="va">homeownership</span>
-<span class="co">#&gt; # A tibble: 19 x 3</span>
-<span class="co">#&gt; # Groups:   level, name [19]</span>
-<span class="co">#&gt;    level      name                 share</span>
-<span class="co">#&gt;    &lt;fct&gt;      &lt;chr&gt;                &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 1_us       United States        0.638</span>
-<span class="co">#&gt;  2 2_state    Connecticut          0.663</span>
-<span class="co">#&gt;  3 3_counties New Haven County     0.619</span>
-<span class="co">#&gt;  4 4_regions  Greater New Haven    0.600</span>
-<span class="co">#&gt;  5 4_regions  New Haven Inner Ring 0.621</span>
-<span class="co">#&gt;  6 4_regions  New Haven Outer Ring 0.803</span>
-<span class="co">#&gt;  7 5_towns    Bethany              0.915</span>
-<span class="co">#&gt;  8 5_towns    Branford             0.702</span>
-<span class="co">#&gt;  9 5_towns    East Haven           0.708</span>
-<span class="co">#&gt; 10 5_towns    Guilford             0.862</span>
-<span class="co">#&gt; 11 5_towns    Hamden               0.641</span>
-<span class="co">#&gt; 12 5_towns    Madison              0.862</span>
-<span class="co">#&gt; 13 5_towns    Milford              0.751</span>
-<span class="co">#&gt; 14 5_towns    New Haven            0.276</span>
-<span class="co">#&gt; 15 5_towns    North Branford       0.867</span>
-<span class="co">#&gt; 16 5_towns    North Haven          0.834</span>
-<span class="co">#&gt; 17 5_towns    Orange               0.883</span>
-<span class="co">#&gt; 18 5_towns    West Haven           0.549</span>
-<span class="co">#&gt; 19 5_towns    Woodbridge           0.890</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">homeownership</span> <span class="op">&lt;-</span> <span class="va">tenure</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/label_acs.html">label_acs</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2020</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">name</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">camiller</span><span class="fu">::</span><span class="fu"><a href="https://camille-s.github.io/camiller/reference/calc_shares.html" class="external-link">calc_shares</a></span><span class="op">(</span>group <span class="op">=</span> <span class="va">label</span>, denom <span class="op">=</span> <span class="st">"Total"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">label</span>, <span class="st">"Owner"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">name</span>, <span class="va">share</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">homeownership</span></span>
+<span><span class="co">#&gt; # A tibble: 19 × 3</span></span>
+<span><span class="co">#&gt; # Groups:   level, name [19]</span></span>
+<span><span class="co">#&gt;    level    name                 share</span></span>
+<span><span class="co">#&gt;    &lt;fct&gt;    &lt;chr&gt;                &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 1_us     United States        0.644</span></span>
+<span><span class="co">#&gt;  2 2_state  Connecticut          0.661</span></span>
+<span><span class="co">#&gt;  3 3_county New Haven County     0.621</span></span>
+<span><span class="co">#&gt;  4 4_region Greater New Haven    0.596</span></span>
+<span><span class="co">#&gt;  5 4_region New Haven Inner Ring 0.612</span></span>
+<span><span class="co">#&gt;  6 4_region New Haven Outer Ring 0.793</span></span>
+<span><span class="co">#&gt;  7 5_town   Bethany              0.917</span></span>
+<span><span class="co">#&gt;  8 5_town   Branford             0.655</span></span>
+<span><span class="co">#&gt;  9 5_town   East Haven           0.742</span></span>
+<span><span class="co">#&gt; 10 5_town   Guilford             0.86 </span></span>
+<span><span class="co">#&gt; 11 5_town   Hamden               0.637</span></span>
+<span><span class="co">#&gt; 12 5_town   Madison              0.862</span></span>
+<span><span class="co">#&gt; 13 5_town   Milford              0.745</span></span>
+<span><span class="co">#&gt; 14 5_town   New Haven            0.28 </span></span>
+<span><span class="co">#&gt; 15 5_town   North Branford       0.86 </span></span>
+<span><span class="co">#&gt; 16 5_town   North Haven          0.826</span></span>
+<span><span class="co">#&gt; 17 5_town   Orange               0.905</span></span>
+<span><span class="co">#&gt; 18 5_town   West Haven           0.514</span></span>
+<span><span class="co">#&gt; 19 5_town   Woodbridge           0.893</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/geo_level_plot.html">geo_level_plot</a></span><span class="op">(</span><span class="va">homeownership</span>, value <span class="op">=</span> <span class="va">share</span>, hilite <span class="op">=</span> <span class="st">"#EA7FA2"</span>, 
-               title <span class="op">=</span> <span class="st">"Homeownership in Greater New Haven, 2018"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/geo_level_plot.html">geo_level_plot</a></span><span class="op">(</span><span class="va">homeownership</span>, value <span class="op">=</span> <span class="va">share</span>, hilite <span class="op">=</span> <span class="st">"#EA7FA2"</span>, </span>
+<span>               title <span class="op">=</span> <span class="st">"Homeownership in Greater New Haven, 2020"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-geo_plot-1.png" width="100%"></p>
 <p>See more detail in the vignette: <code><a href="articles/basic-workflow.html">vignette("basic-workflow")</a></code>.</p>
 </div>
@@ -240,44 +239,57 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/CT-Data-Haven/cwi/">https://​github.com/​CT-Data-Haven/​cwi/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/CT-Data-Haven/cwi/issues">https://​github.com/​CT-Data-Haven/​cwi/​issues</a>
-</li>
+<li><a href="https://github.com/CT-Data-Haven/cwi/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/CT-Data-Haven/cwi/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing cwi</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Camille Seaberry <br><small class="roles"> Author, maintainer </small>  </li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/CT-Data-Haven/cwi/actions?workflow=pkgdown"><img src="https://github.com/CT-Data-Haven/cwi/workflows/pkgdown/badge.svg" alt="R build status"></a></li>
+<li><a href="https://github.com/CT-Data-Haven/cwi/actions/workflows/check-release.yaml" class="external-link"><img src="https://github.com/CT-Data-Haven/cwi/actions/workflows/check-release.yaml/badge.svg" alt="check-release"></a></li>
+<li><a href="https://github.com/CT-Data-Haven/cwi/actions/workflows/pkgdown.yaml" class="external-link"><img src="https://github.com/CT-Data-Haven/cwi/actions/workflows/pkgdown.yaml/badge.svg" alt="pkgdown"></a></li>
+<li><a href="https://app.codecov.io/gh/CT-Data-Haven/cwi?branch=main" class="external-link"><img src="https://codecov.io/gh/CT-Data-Haven/cwi/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Camille Seaberry.</p>
+  <p></p>
+<p>Developed by Camille Seaberry.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -285,6 +297,8 @@
 
   
 
+
+  
 
   </body>
 </html>

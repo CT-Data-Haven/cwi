@@ -27,6 +27,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -39,23 +41,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.3.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.5.0.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -68,7 +64,10 @@
       <a href="../articles/basic-workflow.html">Basic workflow</a>
     </li>
     <li>
-      <a href="../articles/crosstabs.html">crosstabs</a>
+      <a href="../articles/crosstabs.html">Working with Community Wellbeing Survey crosstabs</a>
+    </li>
+    <li>
+      <a href="../articles/regions.html">Regions</a>
     </li>
     <li>
       <a href="../articles/shapefiles.html">Shapefiles</a>
@@ -81,7 +80,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/CT-Data-Haven/cwi/">
+  <a href="https://github.com/CT-Data-Haven/cwi/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -96,165 +95,233 @@
 
       
 
-      </header><script src="acs-updates_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>ACS updates</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/CT-Data-Haven/cwi/blob/master/vignettes/acs-updates.Rmd"><code>vignettes/acs-updates.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/CT-Data-Haven/cwi/blob/HEAD/vignettes/acs-updates.Rmd" class="external-link"><code>vignettes/acs-updates.Rmd</code></a></small>
       <div class="hidden name"><code>acs-updates.Rmd</code></div>
 
     </div>
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_chunk.html">opts_chunk</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>
-  collapse <span class="op">=</span> <span class="cn">TRUE</span>,
-  comment <span class="op">=</span> <span class="st">"#&gt;"</span>
-<span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_chunk.html">opts_chunk</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>warning <span class="op">=</span> <span class="cn">TRUE</span>, message <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/CT-Data-Haven/cwi">cwi</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'dplyr'</span>
-<span class="co">#&gt; The following objects are masked from 'package:stats':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     filter, lag</span>
-<span class="co">#&gt; The following objects are masked from 'package:base':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     intersect, setdiff, setequal, union</span></code></pre></div>
-<p>The 2019 ACS included <a href="https://www.census.gov/programs-surveys/acs/technical-documentation/table-and-geography-changes/2019/5-year.html">reengineering of a few tables</a>, and a few new additions. Some are clarifications of phrasing to both questions and tables, such as time leaving home for work. More substantial are the changes in how family structure has been phrased to be more inclusive of same-sex and unmarried couples–see the most recent <a href="https://www.census.gov/content/census/en/library/working-papers/2017/demo/SEHSD-WP2017-28.html">working paper</a> on this.</p>
-<p>This is just a quick check of what’s new or changed.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">acs18</span> <span class="op">&lt;-</span> <span class="fu">cwi</span><span class="fu">:::</span><span class="fu">clean_acs_vars</span><span class="op">(</span><span class="fl">2018</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>table_num <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract</a></span><span class="op">(</span><span class="va">name</span>, <span class="st">"^[A-Z]\\d+[A-Z]*"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">acs19</span> <span class="op">&lt;-</span> <span class="fu">cwi</span><span class="fu">:::</span><span class="fu">clean_acs_vars</span><span class="op">(</span><span class="fl">2019</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>table_num <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract</a></span><span class="op">(</span><span class="va">name</span>, <span class="st">"^[A-Z]\\d+[A-Z]*"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">tbl18</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="va">acs18</span>, <span class="va">concept</span>, <span class="va">table_num</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>concept <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="va">concept</span>, <span class="st">"20\\d{2}"</span>, <span class="st">"20xx"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">tbl19</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="va">acs19</span>, <span class="va">concept</span>, <span class="va">table_num</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>concept <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="va">concept</span>, <span class="st">"20\\d{2}"</span>, <span class="st">"20xx"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">tbl_changes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">tbl19</span>, <span class="va">tbl18</span>, by <span class="op">=</span> <span class="st">"table_num"</span>, suffix <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"19"</span>, <span class="st">"18"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">concept18</span> <span class="op">!=</span> <span class="va">concept19</span> <span class="op">|</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">concept18</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>new_in_2019 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">concept18</span><span class="op">)</span>, <span class="st">"x"</span>, <span class="st">""</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">new_in_2019</span>, <span class="va">table_num</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-
-<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">tbl_changes</span><span class="op">)</span></code></pre></div>
+<div class="section level2">
+<h2 id="acs">2021 ACS<a class="anchor" aria-label="anchor" href="#acs"></a>
+</h2>
 <table class="table">
 <colgroup>
-<col width="5%">
-<col width="4%">
-<col width="43%">
-<col width="47%">
+<col width="11%">
+<col width="11%">
+<col width="76%">
 </colgroup>
 <thead><tr class="header">
-<th align="left">new_in_2019</th>
+<th align="left">concept20</th>
 <th align="left">table_num</th>
-<th align="left">concept19</th>
-<th align="left">concept18</th>
+<th align="left">concept21</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">x</td>
-<td align="left">B05015</td>
-<td align="left">PLACE OF BIRTH BY YEAR OF ENTRY FOR THE FOREIGN-BORN POPULATION</td>
 <td align="left">NA</td>
+<td align="left">B17101</td>
+<td align="left">POVERTY STATUS IN THE PAST 12 MONTHS OF PEOPLE IN
+HOUSING UNITS</td>
 </tr>
 <tr class="even">
-<td align="left"></td>
-<td align="left">B08011</td>
-<td align="left">SEX OF WORKERS BY TIME OF DEPARTURE TO GO TO WORK</td>
-<td align="left">SEX OF WORKERS BY TIME LEAVING HOME TO GO TO WORK</td>
-</tr>
-<tr class="odd">
-<td align="left"></td>
-<td align="left">B08132</td>
-<td align="left">MEANS OF TRANSPORTATION TO WORK BY TIME OF DEPARTURE TO GO TO WORK</td>
-<td align="left">MEANS OF TRANSPORTATION TO WORK BY TIME LEAVING HOME TO GO TO WORK</td>
-</tr>
-<tr class="even">
-<td align="left"></td>
-<td align="left">B08133</td>
-<td align="left">AGGREGATE TRAVEL TIME TO WORK (IN MINUTES) OF WORKERS BY TIME OF DEPARTURE TO GO TO WORK</td>
-<td align="left">AGGREGATE TRAVEL TIME TO WORK (IN MINUTES) OF WORKERS BY TIME LEAVING HOME TO GO TO WORK</td>
-</tr>
-<tr class="odd">
-<td align="left"></td>
-<td align="left">B08302</td>
-<td align="left">TIME OF DEPARTURE TO GO TO WORK</td>
-<td align="left">TIME LEAVING HOME TO GO TO WORK</td>
-</tr>
-<tr class="even">
-<td align="left"></td>
-<td align="left">B08532</td>
-<td align="left">MEANS OF TRANSPORTATION TO WORK BY TIME ARRIVING AT WORK FOR WORKPLACE GEOGRAPHY</td>
-<td align="left">MEANS OF TRANSPORTATION TO WORK BY TIME ARRIVING AT WORK FROM HOME FOR WORKPLACE GEOGRAPHY</td>
-</tr>
-<tr class="odd">
-<td align="left"></td>
-<td align="left">B08602</td>
-<td align="left">TIME ARRIVING AT WORK FOR WORKPLACE GEOGRAPHY</td>
-<td align="left">TIME ARRIVING AT WORK FROM HOME FOR WORKPLACE GEOGRAPHY</td>
-</tr>
-<tr class="even">
-<td align="left">x</td>
-<td align="left">B11008</td>
-<td align="left">COHABITING COUPLE HOUSEHOLDS BY PRESENCE AND AGE OF OWN CHILDREN UNDER 18 YEARS</td>
 <td align="left">NA</td>
+<td align="left">B25132</td>
+<td align="left">MONTHLY ELECTRICITY COSTS</td>
 </tr>
 <tr class="odd">
-<td align="left"></td>
-<td align="left">B11009</td>
-<td align="left">COUPLED HOUSEHOLDS BY TYPE</td>
-<td align="left">UNMARRIED-PARTNER HOUSEHOLDS BY SEX OF PARTNER</td>
+<td align="left">NA</td>
+<td align="left">B25133</td>
+<td align="left">MONTHLY GAS COSTS</td>
 </tr>
 <tr class="even">
-<td align="left">x</td>
-<td align="left">B11012</td>
-<td align="left">HOUSEHOLDS BY TYPE</td>
 <td align="left">NA</td>
+<td align="left">B25134</td>
+<td align="left">ANNUAL WATER AND SEWER COSTS</td>
 </tr>
 <tr class="odd">
-<td align="left"></td>
-<td align="left">B13004</td>
-<td align="left">WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY PRESENCE OF SPOUSE OR UNMARRIED PARTNER</td>
-<td align="left">WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND PRESENCE OF UNMARRIED PARTNER</td>
-</tr>
-<tr class="even">
-<td align="left">x</td>
-<td align="left">B98003</td>
-<td align="left">UNWEIGHTED TOTAL POPULATION SAMPLE</td>
 <td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left"></td>
-<td align="left">B99083</td>
-<td align="left">ALLOCATION OF TIME OF DEPARTURE TO GO TO WORK</td>
-<td align="left">ALLOCATION OF TIME LEAVING HOME TO GO TO WORK</td>
+<td align="left">B25135</td>
+<td align="left">ANNUAL OTHER FUEL COSTS</td>
 </tr>
 </tbody>
 </table>
-<p>Variables in the tables related to gender &amp; family structure:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tbl_changes</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"(HOUSEHOLD|SPOUSE)"</span>, <span class="va">concept19</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">acs19</span>, by <span class="op">=</span> <span class="st">"table_num"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">table_num</span>, <span class="va">concept</span>, <span class="va">name</span>, <span class="va">label</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/unite.html">unite</a></span><span class="op">(</span><span class="va">table</span>, <span class="va">table_num</span>, <span class="va">concept</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate_rows.html">separate_rows</a></span><span class="op">(</span><span class="va">label</span>, sep <span class="op">=</span> <span class="st">"!!"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">name</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>row2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/ranking.html">row_number</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">row2</span>, values_from <span class="op">=</span> <span class="va">label</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">.</span><span class="op">$</span><span class="va">table</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">select</span>, <span class="va">name</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fu">janitor</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/janitor/man/remove_empty.html">remove_empty</a></span>, <span class="st">"cols"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">)</span></code></pre></div>
-<p>$<code>B11008_COHABITING COUPLE HOUSEHOLDS BY PRESENCE AND AGE OF OWN CHILDREN UNDER 18 YEARS</code></p>
+</div>
+<div class="section level2">
+<h2 id="acs-1">2020 ACS<a class="anchor" aria-label="anchor" href="#acs-1"></a>
+</h2>
+<table class="table">
+<colgroup>
+<col width="9%">
+<col width="9%">
+<col width="80%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">concept19</th>
+<th align="left">table_num</th>
+<th align="left">concept20</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="left">B24134</td>
+<td align="left">DETAILED INDUSTRY FOR THE CIVILIAN EMPLOYED POPULATION
+16 YEARS AND OVER</td>
+</tr>
+<tr class="even">
+<td align="left">NA</td>
+<td align="left">B24135</td>
+<td align="left">DETAILED INDUSTRY FOR THE CIVILIAN EMPLOYED MALE
+POPULATION 16 YEARS AND OVER</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="left">B24136</td>
+<td align="left">DETAILED INDUSTRY FOR THE CIVILIAN EMPLOYED FEMALE
+POPULATION 16 YEARS AND OVER</td>
+</tr>
+<tr class="even">
+<td align="left">NA</td>
+<td align="left">B28012</td>
+<td align="left">AGE AND ENROLLMENT STATUS BY COMPUTER OWNERSHIP AND
+INTERNET SUBSCRIPTION STATUS</td>
+</tr>
+</tbody>
+</table>
+<p>Not a lot new in the 2020 ACS.</p>
+<hr>
+</div>
+<div class="section level2">
+<h2 id="acs-2">2019 ACS<a class="anchor" aria-label="anchor" href="#acs-2"></a>
+</h2>
+<div class="section level3">
+<h3 id="new-tables">New tables<a class="anchor" aria-label="anchor" href="#new-tables"></a>
+</h3>
+<p>The 2019 ACS included <a href="https://www.census.gov/programs-surveys/acs/technical-documentation/table-and-geography-changes/2019/5-year.html" class="external-link">reengineering
+of a few tables</a>, and a few new additions. Some are clarifications of
+phrasing to both questions and tables, such as time leaving home for
+work. More substantial are the changes in how family structure has been
+phrased to be more inclusive of same-sex and unmarried couples–see the
+most recent <a href="https://www.census.gov/content/census/en/library/working-papers/2017/demo/SEHSD-WP2017-28.html" class="external-link">working
+paper</a> on this.</p>
+<p>This is just a quick check of what’s new or changed.</p>
+<table class="table">
+<colgroup>
+<col width="49%">
+<col width="4%">
+<col width="45%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">concept18</th>
+<th align="left">table_num</th>
+<th align="left">concept19</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">UNWEIGHTED SAMPLE COUNT OF THE POPULATION</td>
+<td align="left">B00001</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">UNWEIGHTED SAMPLE HOUSING UNITS</td>
+<td align="left">B00002</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">SEX OF WORKERS BY TIME LEAVING HOME TO GO TO WORK</td>
+<td align="left">B08011</td>
+<td align="left">SEX OF WORKERS BY TIME OF DEPARTURE TO GO TO WORK</td>
+</tr>
+<tr class="even">
+<td align="left">MEANS OF TRANSPORTATION TO WORK BY TIME LEAVING HOME TO
+GO TO WORK</td>
+<td align="left">B08132</td>
+<td align="left">MEANS OF TRANSPORTATION TO WORK BY TIME OF DEPARTURE TO
+GO TO WORK</td>
+</tr>
+<tr class="odd">
+<td align="left">AGGREGATE TRAVEL TIME TO WORK (IN MINUTES) OF WORKERS
+BY TIME LEAVING HOME TO GO TO WORK</td>
+<td align="left">B08133</td>
+<td align="left">AGGREGATE TRAVEL TIME TO WORK (IN MINUTES) OF WORKERS
+BY TIME OF DEPARTURE TO GO TO WORK</td>
+</tr>
+<tr class="even">
+<td align="left">TIME LEAVING HOME TO GO TO WORK</td>
+<td align="left">B08302</td>
+<td align="left">TIME OF DEPARTURE TO GO TO WORK</td>
+</tr>
+<tr class="odd">
+<td align="left">MEANS OF TRANSPORTATION TO WORK BY TIME ARRIVING AT
+WORK FROM HOME FOR WORKPLACE GEOGRAPHY</td>
+<td align="left">B08532</td>
+<td align="left">MEANS OF TRANSPORTATION TO WORK BY TIME ARRIVING AT
+WORK FOR WORKPLACE GEOGRAPHY</td>
+</tr>
+<tr class="even">
+<td align="left">TIME ARRIVING AT WORK FROM HOME FOR WORKPLACE
+GEOGRAPHY</td>
+<td align="left">B08602</td>
+<td align="left">TIME ARRIVING AT WORK FOR WORKPLACE GEOGRAPHY</td>
+</tr>
+<tr class="odd">
+<td align="left">PRESENCE OF UNMARRIED PARTNER OF HOUSEHOLDER BY
+HOUSEHOLD TYPE FOR CHILDREN UNDER 18 YEARS IN HOUSEHOLDS</td>
+<td align="left">B09008</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">UNMARRIED-PARTNER HOUSEHOLDS BY SEX OF PARTNER</td>
+<td align="left">B11009</td>
+<td align="left">COUPLED HOUSEHOLDS BY TYPE</td>
+</tr>
+<tr class="odd">
+<td align="left">WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12
+MONTHS BY MARITAL STATUS AND PRESENCE OF UNMARRIED PARTNER</td>
+<td align="left">B13004</td>
+<td align="left">WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12
+MONTHS BY PRESENCE OF SPOUSE OR UNMARRIED PARTNER</td>
+</tr>
+<tr class="even">
+<td align="left">ALLOCATION OF TIME LEAVING HOME TO GO TO WORK</td>
+<td align="left">B99083</td>
+<td align="left">ALLOCATION OF TIME OF DEPARTURE TO GO TO WORK</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="left">B05015</td>
+<td align="left">PLACE OF BIRTH BY YEAR OF ENTRY FOR THE FOREIGN-BORN
+POPULATION</td>
+</tr>
+<tr class="even">
+<td align="left">NA</td>
+<td align="left">B11008</td>
+<td align="left">COHABITING COUPLE HOUSEHOLDS BY PRESENCE AND AGE OF OWN
+CHILDREN UNDER 18 YEARS</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="left">B11012</td>
+<td align="left">HOUSEHOLDS BY TYPE</td>
+</tr>
+<tr class="even">
+<td align="left">NA</td>
+<td align="left">B98003</td>
+<td align="left">UNWEIGHTED TOTAL POPULATION SAMPLE</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="variables-in-the-tables-related-to-gender-family-structure">Variables in the tables related to gender &amp; family
+structure:<a class="anchor" aria-label="anchor" href="#variables-in-the-tables-related-to-gender-family-structure"></a>
+</h3>
+<p>$B11008 <span class="math inline">\(B11008\)</span><code>COHABITING COUPLE HOUSEHOLDS BY PRESENCE AND AGE OF OWN CHILDREN UNDER 18 YEARS</code></p>
 <table class="table">
 <colgroup>
 <col width="7%">
@@ -264,7 +331,7 @@
 <col width="23%">
 </colgroup>
 <thead><tr class="header">
-<th align="left">name</th>
+<th align="left">variable</th>
 <th align="left">x1</th>
 <th align="left">x2</th>
 <th align="left">x3</th>
@@ -289,35 +356,40 @@
 <td align="left">B11008_003</td>
 <td align="left">Total</td>
 <td align="left">Cohabiting couple household</td>
-<td align="left">With own children of the householder under 18 years</td>
+<td align="left">With own children of the householder under 18
+years</td>
 <td align="left">NA</td>
 </tr>
 <tr class="even">
 <td align="left">B11008_004</td>
 <td align="left">Total</td>
 <td align="left">Cohabiting couple household</td>
-<td align="left">With own children of the householder under 18 years</td>
+<td align="left">With own children of the householder under 18
+years</td>
 <td align="left">Under 6 years only</td>
 </tr>
 <tr class="odd">
 <td align="left">B11008_005</td>
 <td align="left">Total</td>
 <td align="left">Cohabiting couple household</td>
-<td align="left">With own children of the householder under 18 years</td>
+<td align="left">With own children of the householder under 18
+years</td>
 <td align="left">Under 6 years and 6 to 17 years</td>
 </tr>
 <tr class="even">
 <td align="left">B11008_006</td>
 <td align="left">Total</td>
 <td align="left">Cohabiting couple household</td>
-<td align="left">With own children of the householder under 18 years</td>
+<td align="left">With own children of the householder under 18
+years</td>
 <td align="left">6 to 17 years only</td>
 </tr>
 <tr class="odd">
 <td align="left">B11008_007</td>
 <td align="left">Total</td>
 <td align="left">Cohabiting couple household</td>
-<td align="left">With no own children of the householder under 18 years</td>
+<td align="left">With no own children of the householder under 18
+years</td>
 <td align="left">NA</td>
 </tr>
 <tr class="even">
@@ -329,7 +401,7 @@
 </tr>
 </tbody>
 </table>
-<p>$<code>B11009_COUPLED HOUSEHOLDS BY TYPE</code></p>
+<p>$B11009 <span class="math inline">\(B11009\)</span><code>COUPLED HOUSEHOLDS BY TYPE</code></p>
 <table class="table">
 <colgroup>
 <col width="11%">
@@ -339,7 +411,7 @@
 <col width="39%">
 </colgroup>
 <thead><tr class="header">
-<th align="left">name</th>
+<th align="left">variable</th>
 <th align="left">x1</th>
 <th align="left">x2</th>
 <th align="left">x3</th>
@@ -432,7 +504,7 @@
 </tr>
 </tbody>
 </table>
-<p>$<code>B11012_HOUSEHOLDS BY TYPE</code></p>
+<p>$B11012 <span class="math inline">\(B11012\)</span><code>HOUSEHOLDS BY TYPE</code></p>
 <table class="table">
 <colgroup>
 <col width="9%">
@@ -441,7 +513,7 @@
 <col width="45%">
 </colgroup>
 <thead><tr class="header">
-<th align="left">name</th>
+<th align="left">variable</th>
 <th align="left">x1</th>
 <th align="left">x2</th>
 <th align="left">x3</th>
@@ -481,13 +553,15 @@
 <td align="left">B11012_006</td>
 <td align="left">Total</td>
 <td align="left">Cohabiting couple household</td>
-<td align="left">With own children of the householder under 18 years</td>
+<td align="left">With own children of the householder under 18
+years</td>
 </tr>
 <tr class="odd">
 <td align="left">B11012_007</td>
 <td align="left">Total</td>
 <td align="left">Cohabiting couple household</td>
-<td align="left">With no own children of the householder under 18 years</td>
+<td align="left">With no own children of the householder under 18
+years</td>
 </tr>
 <tr class="even">
 <td align="left">B11012_008</td>
@@ -551,7 +625,7 @@
 </tr>
 </tbody>
 </table>
-<p>$<code>B13004_WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY PRESENCE OF SPOUSE OR UNMARRIED PARTNER</code></p>
+<p>$B13004 <span class="math inline">\(B13004\)</span><code>WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY PRESENCE OF SPOUSE OR UNMARRIED PARTNER</code></p>
 <table class="table">
 <colgroup>
 <col width="9%">
@@ -560,7 +634,7 @@
 <col width="37%">
 </colgroup>
 <thead><tr class="header">
-<th align="left">name</th>
+<th align="left">variable</th>
 <th align="left">x1</th>
 <th align="left">x2</th>
 <th align="left">x3</th>
@@ -599,45 +673,55 @@
 <tr class="even">
 <td align="left">B13004_006</td>
 <td align="left">Total</td>
-<td align="left">Women who did not have a birth in the past 12 months</td>
+<td align="left">Women who did not have a birth in the past 12
+months</td>
 <td align="left">NA</td>
 </tr>
 <tr class="odd">
 <td align="left">B13004_007</td>
 <td align="left">Total</td>
-<td align="left">Women who did not have a birth in the past 12 months</td>
+<td align="left">Women who did not have a birth in the past 12
+months</td>
 <td align="left">Has a spouse present</td>
 </tr>
 <tr class="even">
 <td align="left">B13004_008</td>
 <td align="left">Total</td>
-<td align="left">Women who did not have a birth in the past 12 months</td>
+<td align="left">Women who did not have a birth in the past 12
+months</td>
 <td align="left">Partner in an unmarried partner household</td>
 </tr>
 <tr class="odd">
 <td align="left">B13004_009</td>
 <td align="left">Total</td>
-<td align="left">Women who did not have a birth in the past 12 months</td>
+<td align="left">Women who did not have a birth in the past 12
+months</td>
 <td align="left">Other living arrangement</td>
 </tr>
 </tbody>
 </table>
 </div>
+</div>
+  </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-      </div>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
 
 </div>
 
 
 
       <footer><div class="copyright">
-  <p>Developed by Camille Seaberry.</p>
+  <p></p>
+<p>Developed by Camille Seaberry.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -645,6 +729,8 @@
 
   
 
+
+  
 
   </body>
 </html>

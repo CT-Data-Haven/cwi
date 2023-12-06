@@ -1,13 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/articles/acs-updates.html</loc>
+  </url>
+  <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/articles/basic-workflow.html</loc>
+  </url>
+  <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/articles/crosstabs.html</loc>
+  </url>
+  <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/articles/regions.html</loc>
+  </url>
+  <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/articles/shapefiles.html</loc>
+  </url>
+  <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/authors.html</loc>
+  </url>
+  <url>
     <loc>https://CT-Data-Haven.github.io/cwi/index.html</loc>
   </url>
   <url>
-    <loc>https://CT-Data-Haven.github.io/cwi/reference/acs_quick_map.html</loc>
+    <loc>https://CT-Data-Haven.github.io/cwi/news/index.html</loc>
   </url>
   <url>
-    <loc>https://CT-Data-Haven.github.io/cwi/reference/acs_vars19.html</loc>
+    <loc>https://CT-Data-Haven.github.io/cwi/reference/acs_vars21.html</loc>
   </url>
   <url>
     <loc>https://CT-Data-Haven.github.io/cwi/reference/add_logo.html</loc>
@@ -22,6 +49,9 @@
     <loc>https://CT-Data-Haven.github.io/cwi/reference/batch_csv_dump.html</loc>
   </url>
   <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/reference/cb_avail.html</loc>
+  </url>
+  <url>
     <loc>https://CT-Data-Haven.github.io/cwi/reference/collapse_n_wt.html</loc>
   </url>
   <url>
@@ -34,16 +64,22 @@
     <loc>https://CT-Data-Haven.github.io/cwi/reference/cws_demo.html</loc>
   </url>
   <url>
-    <loc>https://CT-Data-Haven.github.io/cwi/reference/decennial_vars10.html</loc>
-  </url>
-  <url>
-    <loc>https://CT-Data-Haven.github.io/cwi/reference/dh_scaffold.html</loc>
+    <loc>https://CT-Data-Haven.github.io/cwi/reference/decennial_vars20.html</loc>
   </url>
   <url>
     <loc>https://CT-Data-Haven.github.io/cwi/reference/ext_table_nums.html</loc>
   </url>
   <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/reference/fix_cogs.html</loc>
+  </url>
+  <url>
     <loc>https://CT-Data-Haven.github.io/cwi/reference/geo_level_plot.html</loc>
+  </url>
+  <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/reference/gnh_tenure.html</loc>
+  </url>
+  <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/reference/index.html</loc>
   </url>
   <url>
     <loc>https://CT-Data-Haven.github.io/cwi/reference/jenks.html</loc>
@@ -79,7 +115,10 @@
     <loc>https://CT-Data-Haven.github.io/cwi/reference/neighborhood_tracts.html</loc>
   </url>
   <url>
-    <loc>https://CT-Data-Haven.github.io/cwi/reference/pipe.html</loc>
+    <loc>https://CT-Data-Haven.github.io/cwi/reference/occ_codes.html</loc>
+  </url>
+  <url>
+    <loc>https://CT-Data-Haven.github.io/cwi/reference/quick_map.html</loc>
   </url>
   <url>
     <loc>https://CT-Data-Haven.github.io/cwi/reference/qwi_industry.html</loc>
@@ -94,10 +133,10 @@
     <loc>https://CT-Data-Haven.github.io/cwi/reference/school_dists.html</loc>
   </url>
   <url>
-    <loc>https://CT-Data-Haven.github.io/cwi/reference/sub_nonanswers.html</loc>
+    <loc>https://CT-Data-Haven.github.io/cwi/reference/separate_acs.html</loc>
   </url>
   <url>
-    <loc>https://CT-Data-Haven.github.io/cwi/reference/tidyeval.html</loc>
+    <loc>https://CT-Data-Haven.github.io/cwi/reference/sub_nonanswers.html</loc>
   </url>
   <url>
     <loc>https://CT-Data-Haven.github.io/cwi/reference/town_names.html</loc>
@@ -122,17 +161,5 @@
   </url>
   <url>
     <loc>https://CT-Data-Haven.github.io/cwi/reference/zip2town.html</loc>
-  </url>
-  <url>
-    <loc>https://CT-Data-Haven.github.io/cwi/articles/acs-updates.html</loc>
-  </url>
-  <url>
-    <loc>https://CT-Data-Haven.github.io/cwi/articles/basic-workflow.html</loc>
-  </url>
-  <url>
-    <loc>https://CT-Data-Haven.github.io/cwi/articles/crosstabs.html</loc>
-  </url>
-  <url>
-    <loc>https://CT-Data-Haven.github.io/cwi/articles/shapefiles.html</loc>
   </url>
 </urlset>

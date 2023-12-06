@@ -1,12 +1,13 @@
-pandoc: 2.7.3
-pkgdown: 1.6.1
+pandoc: 2.19.2
+pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   acs-updates: acs-updates.html
   basic-workflow: basic-workflow.html
   crosstabs: crosstabs.html
+  regions: regions.html
   shapefiles: shapefiles.html
-last_built: 2021-05-03T18:51Z
+last_built: 2023-12-06T04:40Z
 urls:
   reference: https://CT-Data-Haven.github.io/cwi/reference
   article: https://CT-Data-Haven.github.io/cwi/articles
