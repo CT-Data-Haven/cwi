@@ -40,3 +40,14 @@ bls_test <- function(series = "CUUR0000SA0",
   query <- cpi_prep(series, yrs, verbose, key)
   return(list(yrs = yrs, query = query))
 }
+
+
+dummy_df <- function(seed = 123, n = 20) {
+  set.seed(seed)
+  df <- data.frame(
+    name = sample(letters, n, replace = FALSE),
+    region = sample(LETTERS[1:5], n, replace = TRUE),
+    value = stats::rnorm(n)
+  )
+  df
+}

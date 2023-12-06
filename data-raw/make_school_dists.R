@@ -16,4 +16,4 @@ has_district <- dplyr::distinct(cwi::tract2town, town) |>
 school_dists <- dplyr::bind_rows(regional, has_district) |>
   dplyr::arrange(district)
 
-usethis::use_data(school_dists)
+usethis::use_data(school_dists, overwrite = TRUE)

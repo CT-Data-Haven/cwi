@@ -41,5 +41,5 @@ ext_table_nums <- list(
   rent = "B25074"
 )
 
-usethis::use_data(basic_table_nums)
-usethis::use_data(ext_table_nums)
+usethis::use_data(basic_table_nums, overwrite = TRUE)
+usethis::use_data(ext_table_nums, overwrite = TRUE)

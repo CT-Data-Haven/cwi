@@ -21,7 +21,10 @@ hh10 <- tidycensus::get_decennial("block", variables = "H003002", sumfile = "sf1
   dplyr::select(block = GEOID, hh = value)
 
 
-nhoods <- tibble::lst(bridgeport = bridgeport_sf, new_haven = new_haven_sf, hartford = hartford_sf, stamford = stamford_sf) |>
+nhoods <- list(bridgeport = cwi::bridgeport_sf, 
+               new_haven = cwi::new_haven_sf, 
+               hartford = cwi::hartford_sf, 
+               stamford = cwi::stamford_sf) |>
   dplyr::bind_rows(.id = "city") |>
   dplyr::mutate(name = dplyr::recode(name, "Long Wharf" = "Hill")) |>
   dplyr::filter(!name %in% c("North Meadows"))

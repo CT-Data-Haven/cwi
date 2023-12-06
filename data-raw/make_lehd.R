@@ -1,14 +1,13 @@
 # INDUSTRY CODES -- NAICS
 naics_codes <- readr::read_csv("https://lehd.ces.census.gov/data/schema/latest/label_industry.csv", col_types = "ccc") |>
-  dplyr::filter(industry == "00" | ind_level == "2")
+  dplyr::filter(industry == "00" | ind_level == "S") # used to be ind_level == "2" but I guess it changed
 
-usethis::use_data(naics_codes, overwrite = TRUE)
 
 
 # QWI AVAILABILITY -- YEARS AVAILABLE BY STATE
 qwi_avail <- rvest::read_html("https://ledextract.ces.census.gov/loading_status.html") |>
   rvest::html_table() |>
-  `[[`(1) |>
+  base::`[[`(1) |>
   janitor::clean_names() |>
   dplyr::mutate(dplyr::across(start_quarter:end_quarter, ~as.numeric(stringr::str_extract(., "\\d{4}")))) |>
   dplyr::inner_join(dplyr::distinct(tidycensus::fips_codes, state, state_code), by = "state") |>
@@ -59,6 +58,7 @@ occ_codes <- occ |>
   dplyr::select(is_major_grp, occ_group, occ_code, soc_code, description) |>
   dplyr::filter(description != "Management, Business, Science, and Arts Occupations") # this is really broad--want to separate these out
 
+usethis::use_data(naics_codes, overwrite = TRUE)
 usethis::use_data(occ_codes, overwrite = TRUE)
 
 
