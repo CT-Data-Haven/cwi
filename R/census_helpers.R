@@ -47,7 +47,8 @@ census_counties <- function(src, table, year, counties, state, dataset, key, sle
   xw <- county_x_state(state, counties)
 
   fetch <- wrap_census(src, geography = "county", table = table, year = year, state = state, dataset = dataset, key = key, ...)
-  fetch$NAME <- stringr::str_extract(fetch$NAME, "^[\\w\\s]+County(?=, )")
+  fetch$NAME <- stringr::str_remove(fetch$NAME, ", .+$") # remove , Connecticut
+  fetch$NAME <- stringr::str_replace(fetch$NAME, "Planning Region", "COG")
 
   fetch$county_geoid <- substr(fetch$GEOID, 1, 5)
   fetch <- dplyr::inner_join(fetch, xw, by = "county_geoid")

@@ -235,14 +235,15 @@ NULL
 #'
 #' A crosswalk between geographies in Connecticut, built off of TIGER shapefiles.
 #'
-#' @format A data frame with 67465 rows and 14 variables:
+#' @format A data frame with 67465 rows and 15 variables:
 #' \describe{
 #'   \item{block}{Block FIPS code}
 #'   \item{block_grp}{Block group FIPS code}
-#'   \item{tract}{Tract FIPS code}
+#'   \item{tract}{Tract FIPS code, based on county FIPS}
+#'   \item{tract_cog_fips}{Tract FIPS code, based on COG FIPS as of 2022 ACS}
 #'   \item{town}{Town name}
 #'   \item{town_fips}{Town FIPS code, based on county FIPS}
-#'   \item{town_fips22}{Town FIPS code, based on COG FIPS as of 2022 ACS}
+#'   \item{town_cog_fips}{Town FIPS code, based on COG FIPS as of 2022 ACS}
 #'   \item{county}{County name}
 #'   \item{county_fips}{County FIPS code}
 #'   \item{cog}{COG}

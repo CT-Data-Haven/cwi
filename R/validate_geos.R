@@ -79,6 +79,9 @@ get_county_fips <- function(state, counties, use_cogs) {
       counties <- stringr::str_subset(counties, "^090", negate = FALSE)
     }
   }
+  if (use_cogs) {
+    cli::cli_inform("Note that starting with the 2022 release, ACS data uses COGs instead of counties.")
+  }
   counties
 }
 

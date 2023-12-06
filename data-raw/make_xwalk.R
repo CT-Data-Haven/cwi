@@ -22,7 +22,7 @@ blocks <- tigris::blocks("09", year = 2020) |>
   dplyr::mutate(tract = paste0(county_fips, tractce20)) |>
   dplyr::mutate(block_grp = substr(geoid20, 1, 12)) |>
   sf::st_drop_geometry() |>
-  dplyr::select(block = geoid20, block_grp, tract, county_fips)
+  dplyr::select(block = geoid20, block_grp, tract, county_fips, tractce = tractce20)
 
 puma_sf <- tigris::pumas("09", cb = FALSE, year = 2020) |>
   janitor::clean_names() |>
@@ -62,7 +62,12 @@ town2cog <- cwi::regions[grepl("COG$", names(cwi::regions))] |>
 town_new_fips <- tigris::county_subdivisions(state = "09", year = 2022) |>
   sf::st_drop_geometry() |>
   janitor::clean_names() |>
-  dplyr::select(town_fips22 = geoid, town = name)
+  dplyr::select(town_cog_fips = geoid, town = name)
+# so did tract FIPS
+tract_new_fips <- tigris::tracts(state = "09", year = 2022) |>
+  sf::st_drop_geometry() |>
+  janitor::clean_names() |>
+  dplyr::select(tract_cog_fips = geoid, tractce)
 
 xwalk <- blocks |>
   dplyr::left_join(counties, by = "county_fips") |>
@@ -71,7 +76,8 @@ xwalk <- blocks |>
   dplyr::left_join(town2msa, by = "town") |>
   dplyr::left_join(town2puma, by = "town") |>
   dplyr::left_join(town_new_fips, by = "town") |>
-  dplyr::select(block, block_grp, tract, town, town_fips, town_fips22, county, county_fips, cog, cog_fips, msa, msa_fips, puma, puma_fips) |>
+  dplyr::left_join(tract_new_fips, by = "tractce") |>
+  dplyr::select(block, block_grp, tract, tract_cog_fips, town, town_fips, town_cog_fips, county, county_fips, cog, cog_fips, msa, msa_fips, puma, puma_fips) |>
   dplyr::as_tibble()
 
 colSums(is.na(xwalk))
