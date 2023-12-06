@@ -15,6 +15,5 @@ test_that("fix_cogs correctly makes replacements", {
   cogs <- fix_cogs(x1)
   expect_true("Capitol Region COG" %in% cogs)
   expect_true("New Haven" %in% cogs)
-  expect_true("Greater Bridgeport" %in% cogs)
   expect_true("Connecticut Metro COG" %in% cogs)
 })

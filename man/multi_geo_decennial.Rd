@@ -6,7 +6,7 @@
 \usage{
 multi_geo_decennial(
   table,
-  year = 2010,
+  year = 2020,
   towns = "all",
   regions = NULL,
   counties = "all",

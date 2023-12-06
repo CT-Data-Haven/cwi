@@ -15,16 +15,17 @@
 fix_cogs <- function(x) {
   # should be either character or factor
   ref <- list(
-    "Capitol Region COG" = c("Capitol", "Capitol COG"),
-    "Connecticut Metro COG" = c("Connecticut Metro", "Greater Bridgeport COG"), # can't replace Greater Bridgeport since that might legit be used
+    "Capitol Region COG" = c("Capitol", "Capitol Region"),
+    "Connecticut Metro COG" = c("Connecticut Metro", "Greater Bridgeport"), # can't replace Greater Bridgeport since that might legit be used
     "Lower Connecticut River Valley COG" = c("Lower Connecticut River Valley"),
     "Naugatuck Valley COG" = c("Naugatuck Valley"),
-    "Northeastern Connecticut COG" = c("Northeastern", "Northeastern COG", "Northeastern Connecticut"),
+    "Northeastern Connecticut COG" = c("Northeastern", "Northeastern Connecticut"),
     "Northwest Hills COG" = c("Northwest Hills"),
-    "South Central Regional COG" = c("South Central", "South Central COG", "South Central Regional"),
-    "Southeastern Connecticut COG" = c("Southeastern Connecticut", "Southeastern", "Southeastern COG"),
-    "Western Connecticut COG" = c("Western Connecticut", "Western COG", "Western")
+    "South Central Regional COG" = c("South Central", "South Central Regional", "South Central Connecticut"),
+    "Southeastern Connecticut COG" = c("Southeastern Connecticut", "Southeastern"),
+    "Western Connecticut COG" = c("Western Connecticut", "Western")
   )
+  ref <- purrr::map(ref, function(x) c(x, paste(x, "COG")))
   ref <- tibble::enframe(ref, name = "good", value = "bad")
   ref <- tidyr::unnest(ref, bad)
 

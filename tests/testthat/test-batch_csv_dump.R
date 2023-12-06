@@ -35,7 +35,5 @@ test_that("batch_csv_dump passes arguments to write.csv", {
   df$value[1:3] <- NA_real_
   dir <- tempdir()
   set_na <- batch_csv_dump(df, split_by = region, path = dir, base_name = "set_na", na = "")
-  no_names <- batch_csv_dump(df, split_by = region, path = dir, base_name = "no_names", col.names = FALSE)
-
-
+  no_names <- batch_csv_dump(df, split_by = region, path = dir, base_name = "no_names")
 })

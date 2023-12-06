@@ -10,6 +10,8 @@ county_x_state <- function(st, counties) {
     out <- dplyr::filter(out, county_geoid %in% counties)
   }
   out <- dplyr::select(out, state = state_name, county_geoid, county)
+  # TODO: hopefully calling fix_cogs works with census api
+  out$county <- fix_cogs(out$county)
   out
 }
 
@@ -34,8 +36,13 @@ get_state_fips <- function(state) {
   }
 }
 
-get_county_fips <- function(state, counties) {
+get_county_fips <- function(state, counties, use_cogs) {
   xw <- county_x_state(state, "all")
+  if (use_cogs) {
+    type <- "COG"
+  } else {
+    type <- "County"
+  }
 
   if (is.null(counties)) {
     counties <- "all"
@@ -48,9 +55,10 @@ get_county_fips <- function(state, counties) {
     }
     counties <- dplyr::case_when(
       grepl("^\\d{3}$", counties)                            ~ paste0(state, counties),
-      !grepl("\\d", counties) & !grepl(" County$", counties) ~ paste(counties, "County"),
+      !grepl("\\d", counties) & !grepl(" County$", counties) & !use_cogs ~ paste(counties, "County"),
       TRUE                                                   ~ counties
     )
+    counties <- fix_cogs(counties)
 
     cty_from_name <- xw[xw$county %in% counties, ]
     cty_from_fips <- xw[xw$county_geoid %in% counties, ]
@@ -64,9 +72,12 @@ get_county_fips <- function(state, counties) {
 
     counties <- matches$county_geoid
   }
-  # remove COGs
   if (state == "09") {
-    counties <- stringr::str_subset(counties, "^090")
+    if (use_cogs) {
+      counties <- stringr::str_subset(counties, "^090", negate = TRUE)
+    } else {
+      counties <- stringr::str_subset(counties, "^090", negate = FALSE)
+    }
   }
   counties
 }

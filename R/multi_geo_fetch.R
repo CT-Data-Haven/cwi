@@ -181,7 +181,7 @@ multi_geo_acs <- function(table, year = 2021, towns = "all", regions = NULL,
 #'   counties = "New Haven County")
 #' }
 #' @export
-multi_geo_decennial <- function(table, year = 2010, towns = "all", regions = NULL,
+multi_geo_decennial <- function(table, year = 2020, towns = "all", regions = NULL,
                                 counties = "all", state = "09", neighborhoods = NULL,
                                 tracts = NULL, blockgroups = NULL, msa = FALSE,
                                 us = FALSE, new_england = TRUE,
@@ -331,7 +331,9 @@ multi_geo_prep <- function(src,
 
   # validate county names, convert to 5-digit fips
   drop_counties <- is.null(counties)
-  counties_fips <- get_county_fips(state_fips, counties)
+  # check whether to use COGs--true if src == acs & year >= 2022
+  use_cogs <- src == "acs" & year >= 2022
+  counties_fips <- get_county_fips(state_fips, counties, use_cogs)
   xw <- county_x_state(state_fips, counties_fips)
 
   # check number of characters in fips codes
