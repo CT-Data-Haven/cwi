@@ -35,7 +35,7 @@
 #'
 #' Dataset of tables available from the Census Bureau's API, filtered to include just mainland decennial summary files and ACS detailed tables. Useful for verifying which summary files are available for different years, as some codes have changed (3-year ACS was sunset, decennial summary files are now all demographic & housing characteristics tables). Also used internally for checking calls to `multi_geo_acs` and `multi_geo_decennial`.
 #'
-#' @format A data frame with 45 rows and 3 variables:
+#' @format A data frame with `r nrow(cb_avail)` rows and 4 variables:
 #' \describe{
 #'   \item{vintage}{Vintage year of dataset}
 #'   \item{program}{Program, either "acs" or "dec"}
