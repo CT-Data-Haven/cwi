@@ -80,14 +80,17 @@
 
     <div id="format">
     <h2>Format</h2>
-    <p>A data frame with 67465 rows and 14 variables:</p><dl><dt>block</dt>
+    <p>A data frame with 67465 rows and 15 variables:</p><dl><dt>block</dt>
 <dd><p>Block FIPS code</p></dd>
 
 <dt>block_grp</dt>
 <dd><p>Block group FIPS code</p></dd>
 
 <dt>tract</dt>
-<dd><p>Tract FIPS code</p></dd>
+<dd><p>Tract FIPS code, based on county FIPS</p></dd>
+
+<dt>tract_cog_fips</dt>
+<dd><p>Tract FIPS code, based on COG FIPS as of 2022 ACS</p></dd>
 
 <dt>town</dt>
 <dd><p>Town name</p></dd>
@@ -95,7 +98,7 @@
 <dt>town_fips</dt>
 <dd><p>Town FIPS code, based on county FIPS</p></dd>
 
-<dt>town_fips22</dt>
+<dt>town_cog_fips</dt>
 <dd><p>Town FIPS code, based on COG FIPS as of 2022 ACS</p></dd>
 
 <dt>county</dt>
