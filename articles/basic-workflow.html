@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.0</span>
       </span>
     </div>
 
@@ -170,6 +170,7 @@ neighborhood-level aggregates.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/multi_geo_acs.html">multi_geo_acs</a></span><span class="op">(</span><span class="st">"B01003"</span>,</span>
 <span>  towns <span class="op">=</span> <span class="st">"New Haven"</span>, counties <span class="op">=</span> <span class="st">"New Haven"</span>,</span>
 <span>  neighborhoods <span class="op">=</span> <span class="va">new_haven_tracts</span>,</span>
+<span>  nhood_geoid <span class="op">=</span> <span class="st">"geoid"</span>,</span>
 <span>  year <span class="op">=</span> <span class="va">yr</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -387,15 +388,15 @@ Connecticut over the past 16 years. I’m filtering out the industry code
 <span><span class="co">#&gt;     year state county industry    emp payroll location         label            </span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>  <span style="text-decoration: underline;">2</span>002 09    009    11         715.      <span style="color: #BB0000;">NA</span> New Haven County Agriculture, For…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>  <span style="text-decoration: underline;">2</span>002 09    009    21         202.      <span style="color: #BB0000;">NA</span> New Haven County Mining, Quarryin…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>  <span style="text-decoration: underline;">2</span>002 09    009    22        <span style="text-decoration: underline;">1</span>773.      <span style="color: #BB0000;">NA</span> New Haven County Utilities        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>  <span style="text-decoration: underline;">2</span>002 09    009    23       <span style="text-decoration: underline;">16</span>079.      <span style="color: #BB0000;">NA</span> New Haven County Construction     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>  <span style="text-decoration: underline;">2</span>002 09    009    31-33    <span style="text-decoration: underline;">47</span>383.      <span style="color: #BB0000;">NA</span> New Haven County Manufacturing    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>  <span style="text-decoration: underline;">2</span>002 09    009    42       <span style="text-decoration: underline;">16</span>763.      <span style="color: #BB0000;">NA</span> New Haven County Wholesale Trade  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>  <span style="text-decoration: underline;">2</span>002 09    009    44-45    <span style="text-decoration: underline;">46</span>348.      <span style="color: #BB0000;">NA</span> New Haven County Retail Trade     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">2</span>002 09    009    48-49     <span style="text-decoration: underline;">7</span>853.      <span style="color: #BB0000;">NA</span> New Haven County Transportation a…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>002 09    009    51       <span style="text-decoration: underline;">14</span>287       <span style="color: #BB0000;">NA</span> New Haven County Information      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>002 09    009    52       <span style="text-decoration: underline;">13</span>869       <span style="color: #BB0000;">NA</span> New Haven County Finance and Insu…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>  <span style="text-decoration: underline;">2</span>002 09    009    21         202       <span style="color: #BB0000;">NA</span> New Haven County Mining, Quarryin…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>  <span style="text-decoration: underline;">2</span>002 09    009    22        <span style="text-decoration: underline;">1</span>777.      <span style="color: #BB0000;">NA</span> New Haven County Utilities        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>  <span style="text-decoration: underline;">2</span>002 09    009    23       <span style="text-decoration: underline;">16</span>144.      <span style="color: #BB0000;">NA</span> New Haven County Construction     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>  <span style="text-decoration: underline;">2</span>002 09    009    31-33    <span style="text-decoration: underline;">47</span>406.      <span style="color: #BB0000;">NA</span> New Haven County Manufacturing    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>  <span style="text-decoration: underline;">2</span>002 09    009    42       <span style="text-decoration: underline;">16</span>426.      <span style="color: #BB0000;">NA</span> New Haven County Wholesale Trade  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>  <span style="text-decoration: underline;">2</span>002 09    009    44-45    <span style="text-decoration: underline;">46</span>372.      <span style="color: #BB0000;">NA</span> New Haven County Retail Trade     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">2</span>002 09    009    48-49     <span style="text-decoration: underline;">7</span>817.      <span style="color: #BB0000;">NA</span> New Haven County Transportation a…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>002 09    009    51       <span style="text-decoration: underline;">14</span>337       <span style="color: #BB0000;">NA</span> New Haven County Information      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>002 09    009    52       <span style="text-decoration: underline;">13</span>870.      <span style="color: #BB0000;">NA</span> New Haven County Finance and Insu…</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 670 more rows</span></span></span></code></pre></div>
 <p>Next, say I want to look at the industries that were largest in New
 Haven county in 2018, and see how those have changed both for the county

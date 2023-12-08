@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.0</span>
       </span>
     </div>
 
@@ -80,20 +80,26 @@
 
     <div id="format">
     <h2>Format</h2>
-    <p>A data frame with 67465 rows and 13 variables:</p><dl><dt>block</dt>
+    <p>A data frame with 67465 rows and 15 variables:</p><dl><dt>block</dt>
 <dd><p>Block FIPS code</p></dd>
 
 <dt>block_grp</dt>
 <dd><p>Block group FIPS code</p></dd>
 
 <dt>tract</dt>
-<dd><p>Tract FIPS code</p></dd>
+<dd><p>Tract FIPS code, based on county FIPS</p></dd>
+
+<dt>tract_cog_fips</dt>
+<dd><p>Tract FIPS code, based on COG FIPS as of 2022 ACS</p></dd>
 
 <dt>town</dt>
 <dd><p>Town name</p></dd>
 
 <dt>town_fips</dt>
-<dd><p>Town FIPS code</p></dd>
+<dd><p>Town FIPS code, based on county FIPS</p></dd>
+
+<dt>town_cog_fips</dt>
+<dd><p>Town FIPS code, based on COG FIPS as of 2022 ACS</p></dd>
 
 <dt>county</dt>
 <dd><p>County name</p></dd>
@@ -123,7 +129,7 @@
 </dl></div>
     <div id="source">
     <h2>Source</h2>
-    <p>2020 and 2022 (for COGs) TIGER shapefiles</p>
+    <p>2020 and 2022 (for COGs &amp; towns) TIGER shapefiles</p>
     </div>
 
   </div>
