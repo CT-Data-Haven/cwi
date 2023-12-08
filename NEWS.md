@@ -1,3 +1,7 @@
+# cwi 1.6.1
+
+Bump ACS-related defaults to 2022
+
 # cwi 1.6.0
 
 **MINOR BREAKING CHANGE:** This update corresponds to the 2022 ACS data release, which is the first to use COGs instead of counties. Because COGs have different FIPS codes, town and tract FIPS codes (but apparently not block groups) have changed to match. The bulk of their code digits stay the same, but the portion signifying the county changed, e.g. 09**009**140101 is now 09**170**140101. To deal with that without breaking too much code, there are a few changes to the package:
