@@ -89,9 +89,9 @@
 <span>  msa <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  us <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  new_england <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  nhood_name <span class="op">=</span> <span class="va">name</span>,</span>
-<span>  nhood_geoid <span class="op">=</span> <span class="va">geoid</span>,</span>
-<span>  nhood_weight <span class="op">=</span> <span class="va">weight</span>,</span>
+<span>  nhood_name <span class="op">=</span> <span class="st">"name"</span>,</span>
+<span>  nhood_geoid <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  nhood_weight <span class="op">=</span> <span class="st">"weight"</span>,</span>
 <span>  survey <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"acs5"</span>, <span class="st">"acs1"</span><span class="op">)</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  key <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -155,15 +155,15 @@
 
 
 <dt>nhood_name</dt>
-<dd><p>Bare column name of neighborhood names. Only relevant if a neighborhood weight table is being used. Defaults <code>name</code> to match the neighborhood lookup datasets.</p></dd>
+<dd><p>String giving the name of the column in the data frame <code>neighborhoods</code> that contains neighborhood names. Previously this was a bare column name, but for consistency with changes to COG-based FIPS codes, this needs to be a string. Only relevant if a neighborhood weight table is being used. Defaults <code>"name"</code> to match the neighborhood lookup datasets.</p></dd>
 
 
 <dt>nhood_geoid</dt>
-<dd><p>Bare column name of neighborhood GEOIDs, either tracts or block groups. Only relevant if a neighborhood weight table is being used. Defaults <code>geoid</code> to match the neighborhood lookup datasets.</p></dd>
+<dd><p>String giving the name of the column in <code>neighborhoods</code> that contains neighborhood GEOIDs, either tracts or block groups. Only relevant if a neighborhood weight table is being used. Because of changes to FIPS codes, this no longer has a default.</p></dd>
 
 
 <dt>nhood_weight</dt>
-<dd><p>Bare column name of weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults <code>weight</code> to match the neighborhood lookup datasets.</p></dd>
+<dd><p>String giving the name of the column in <code>neighborhoods</code> that contains weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults <code>"weight"</code> to match the neighborhood lookup datasets.</p></dd>
 
 
 <dt>survey</dt>
