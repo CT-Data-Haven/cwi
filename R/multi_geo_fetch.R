@@ -17,9 +17,9 @@
 #' @param msa Logical: whether to fetch New England states' metropolitan statistical areas. Defaults `FALSE`.
 #' @param us Logical: whether to fetch US-level table. Defaults `FALSE`.
 #' @param new_england Logical: if `TRUE` (the default), limits metro areas to just New England states.
-#' @param nhood_name Bare column name of neighborhood names. Only relevant if a neighborhood weight table is being used. Defaults `name` to match the neighborhood lookup datasets.
-#' @param nhood_geoid Bare column name of neighborhood GEOIDs, either tracts or block groups. Only relevant if a neighborhood weight table is being used. Defaults `geoid` to match the neighborhood lookup datasets.
-#' @param nhood_weight Bare column name of weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults `weight` to match the neighborhood lookup datasets.
+#' @param nhood_name String giving the name of the column in the data frame `neighborhoods` that contains neighborhood names. Previously this was a bare column name, but for consistency with changes to COG-based FIPS codes, this needs to be a string. Only relevant if a neighborhood weight table is being used. Defaults `"name"` to match the neighborhood lookup datasets.
+#' @param nhood_geoid String giving the name of the column in `neighborhoods` that contains neighborhood GEOIDs, either tracts or block groups. Only relevant if a neighborhood weight table is being used. Because of changes to FIPS codes, this no longer has a default.
+#' @param nhood_weight String giving the name of the column in `neighborhoods` that contains weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults `"weight"` to match the neighborhood lookup datasets.
 #' @param survey A string: which ACS estimate to use. Defaults to 5-year (`"acs5"`), but can also be 1-year (`"acs1"`).
 #' @param verbose Logical: whether to print summary of geographies included. Defaults `TRUE`.
 #' @param key String: Census API key. If `NULL` (default), takes the value from `Sys.getenv("CENSUS_API_KEY")`.
@@ -48,11 +48,12 @@ multi_geo_acs <- function(table, year = 2021, towns = "all", regions = NULL,
                           tracts = NULL, blockgroups = NULL,
                           pumas = NULL, msa = FALSE,
                           us = FALSE, new_england = TRUE,
-                          nhood_name = name, nhood_geoid = geoid, nhood_weight = weight,
+                          nhood_name = "name", nhood_geoid = NULL, nhood_weight = "weight",
                           survey = c("acs5", "acs1"),
                           verbose = TRUE, key = NULL, sleep = 0, ...) {
 
   survey <- rlang::arg_match(survey)
+  # because of switch to COGs, removed default geoid---check for null
 
   ## PARAMS & ERROR HANDLING ----
   params <- multi_geo_prep(src = "acs",
@@ -69,7 +70,10 @@ multi_geo_acs <- function(table, year = 2021, towns = "all", regions = NULL,
                            msa = msa,
                            us = us,
                            new_england = new_england,
-                           nhood_name = {{ nhood_name }}, nhood_geoid = {{ nhood_geoid }},
+                           # nhood_name = {{ nhood_name }},
+                           # nhood_geoid = {{ nhood_geoid }},
+                           nhood_name = nhood_name,
+                           nhood_geoid = nhood_geoid,
                            dataset = survey,
                            verbose = verbose,
                            key = key)
@@ -94,7 +98,9 @@ multi_geo_acs <- function(table, year = 2021, towns = "all", regions = NULL,
 
   # neighborhoods: nhood data frame, nhood columns
   if (!is.null(neighborhoods)) {
-    fetch[["neighborhood"]] <- census_nhood("acs", table, year, neighborhoods, state_fips, {{nhood_name}}, {{nhood_geoid}}, {{nhood_weight}}, nhood_is_tract, estimate, survey, key, sleep, ...)
+    fetch[["neighborhood"]] <- census_nhood("acs", table, year, neighborhoods, state_fips,
+                                            nhood_name, nhood_geoid, nhood_weight,
+                                            nhood_is_tract, estimate, survey, key, sleep, ...)
   }
 
   # towns: towns, county
@@ -163,9 +169,9 @@ multi_geo_acs <- function(table, year = 2021, towns = "all", regions = NULL,
 #' @param msa Logical: whether to fetch New England states' metropolitan statistical areas. Defaults `FALSE`.
 #' @param us Logical: whether to fetch US-level table. Defaults `FALSE`.
 #' @param new_england Logical: if `TRUE` (the default), limits metro areas to just New England states.
-#' @param nhood_name Bare column name of neighborhood names. Only relevant if a neighborhood weight table is being used. Defaults `name` to match the neighborhood lookup datasets.
-#' @param nhood_geoid Bare column name of neighborhood tract GEOIDs. Only relevant if a neighborhood weight table is being used. Defaults `geoid` to match the neighborhood lookup datasets.
-#' @param nhood_weight Bare column name of weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults `weight` to match the neighborhood lookup datasets.
+#' @param nhood_name String giving the name of the column in the data frame `neighborhoods` that contains neighborhood names. Previously this was a bare column name, but for consistency with changes to COG-based FIPS codes, this needs to be a string. Only relevant if a neighborhood weight table is being used. Defaults `"name"` to match the neighborhood lookup datasets.
+#' @param nhood_geoid String giving the name of the column in `neighborhoods` that contains neighborhood GEOIDs, either tracts or block groups. Only relevant if a neighborhood weight table is being used. Because of changes to FIPS codes, this no longer has a default.
+#' @param nhood_weight String giving the name of the column in `neighborhoods` that contains weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults `"weight"` to match the neighborhood lookup datasets.
 #' @param sumfile A string giving the summary file to pull from. Note that codes have changed between 2010 and 2020. Now that default year is 2020, default sumfile is `"dhc"`. For 2010, should be either `"sf1"`, or less commonly `"sf3"`. Use `"pl"` for 2020 redistricting data.
 #' @param verbose Logical: whether to print summary of geographies included. Defaults `TRUE`.
 #' @param key String: Census API key. If `NULL` (default), takes the value from `Sys.getenv("CENSUS_API_KEY")`.
@@ -185,7 +191,7 @@ multi_geo_decennial <- function(table, year = 2020, towns = "all", regions = NUL
                                 counties = "all", state = "09", neighborhoods = NULL,
                                 tracts = NULL, blockgroups = NULL, msa = FALSE,
                                 us = FALSE, new_england = TRUE,
-                                nhood_name = name, nhood_geoid = geoid, nhood_weight = weight,
+                                nhood_name = "name", nhood_geoid = NULL, nhood_weight = "weight",
                                 sumfile = c("dhc", "sf1", "sf3", "pl"),
                                 verbose = TRUE, key = NULL, sleep = 0, ...) {
   sumfile <- rlang::arg_match(sumfile)
@@ -205,7 +211,7 @@ multi_geo_decennial <- function(table, year = 2020, towns = "all", regions = NUL
                            msa = msa,
                            us = us,
                            new_england = new_england,
-                           nhood_name = {{ nhood_name }}, nhood_geoid = {{ nhood_geoid }},
+                           nhood_name = nhood_name, nhood_geoid = nhood_geoid,
                            dataset = sumfile,
                            verbose = verbose,
                            key = key)
@@ -230,7 +236,9 @@ multi_geo_decennial <- function(table, year = 2020, towns = "all", regions = NUL
 
   # neighborhoods: nhood data frame, nhood columns
   if (!is.null(neighborhoods)) {
-    fetch[["neighborhood"]] <- census_nhood("decennial", table, year, neighborhoods, state_fips, {{nhood_name}}, {{nhood_geoid}}, {{nhood_weight}}, nhood_is_tract, value, sumfile, key, sleep, ...)
+    fetch[["neighborhood"]] <- census_nhood("decennial", table, year, neighborhoods, state_fips,
+                                            nhood_name, nhood_geoid, nhood_weight,
+                                            nhood_is_tract, value, sumfile, key, sleep, ...)
   }
 
   # towns: towns, county
@@ -284,9 +292,14 @@ multi_geo_prep <- function(src,
                            us, new_england,
                            nhood_name, nhood_geoid,
                            dataset, verbose, key) {
+
   ## ERROR & META HANDLING ----
   # check dataset
   NCHAR_TRACT <- 11; NCHAR_BG <- 12; NCHAR_PUMA <- 7
+
+  # COG SWITCH!!
+  # check whether to use COGs--true if src == acs & year >= 2022
+  use_cogs <- src == "acs" & year >= 2022
 
   # check key
   key <- check_census_key(key)
@@ -329,10 +342,16 @@ multi_geo_prep <- function(src,
                    call = parent.frame())
   }
 
+  # check for nhood_geoid---needs to be explicitly provided now
+  if (!is.null(neighborhoods) & !is.character(nhood_geoid)) {
+    cli::cli_abort(c("The default value of {.arg nhood_geoid} has been removed. To get neighborhood aggregations, please supply {.arg nhood_geoid} explicitly.",
+                     "i" = "Note that these columns should now be given as strings, not bare names."))
+  }
+
+
   # validate county names, convert to 5-digit fips
   drop_counties <- is.null(counties)
-  # check whether to use COGs--true if src == acs & year >= 2022
-  use_cogs <- src == "acs" & year >= 2022
+
   counties_fips <- get_county_fips(state_fips, counties, use_cogs)
   xw <- county_x_state(state_fips, counties_fips)
 
@@ -352,7 +371,7 @@ multi_geo_prep <- function(src,
 
   # are neighborhood fips for tracts or bgs?
   if (!is.null(neighborhoods)) {
-    nhood_valid_fips <- nhood_fips_type(dplyr::pull(neighborhoods, {{ nhood_geoid }} ),
+    nhood_valid_fips <- nhood_fips_type(neighborhoods[[nhood_geoid]],
                                         list(tracts = NCHAR_TRACT, block_groups = NCHAR_BG))
     nhood_is_tract <- nhood_valid_fips[["tracts"]]
 
@@ -405,4 +424,5 @@ multi_geo_prep <- function(src,
                  counties_fips = counties_fips,
                  drop_counties = drop_counties,
                  nhood_is_tract = nhood_is_tract)
+  params
 }

@@ -18,9 +18,9 @@ multi_geo_acs(
   msa = FALSE,
   us = FALSE,
   new_england = TRUE,
-  nhood_name = name,
-  nhood_geoid = geoid,
-  nhood_weight = weight,
+  nhood_name = "name",
+  nhood_geoid = NULL,
+  nhood_weight = "weight",
   survey = c("acs5", "acs1"),
   verbose = TRUE,
   key = NULL,
@@ -55,11 +55,11 @@ multi_geo_acs(
 
 \item{new_england}{Logical: if \code{TRUE} (the default), limits metro areas to just New England states.}
 
-\item{nhood_name}{Bare column name of neighborhood names. Only relevant if a neighborhood weight table is being used. Defaults \code{name} to match the neighborhood lookup datasets.}
+\item{nhood_name}{String giving the name of the column in the data frame \code{neighborhoods} that contains neighborhood names. Previously this was a bare column name, but for consistency with changes to COG-based FIPS codes, this needs to be a string. Only relevant if a neighborhood weight table is being used. Defaults \code{"name"} to match the neighborhood lookup datasets.}
 
-\item{nhood_geoid}{Bare column name of neighborhood GEOIDs, either tracts or block groups. Only relevant if a neighborhood weight table is being used. Defaults \code{geoid} to match the neighborhood lookup datasets.}
+\item{nhood_geoid}{String giving the name of the column in \code{neighborhoods} that contains neighborhood GEOIDs, either tracts or block groups. Only relevant if a neighborhood weight table is being used. Because of changes to FIPS codes, this no longer has a default.}
 
-\item{nhood_weight}{Bare column name of weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults \code{weight} to match the neighborhood lookup datasets.}
+\item{nhood_weight}{String giving the name of the column in \code{neighborhoods} that contains weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults \code{"weight"} to match the neighborhood lookup datasets.}
 
 \item{survey}{A string: which ACS estimate to use. Defaults to 5-year (\code{"acs5"}), but can also be 1-year (\code{"acs1"}).}
 

@@ -132,6 +132,7 @@ census_regions <- function(src, table, year, regions, state, value, dataset, key
 # fetch tracts or bgs, then filter by nhood table & aggregate
 # let counties be independent of neighborhoods
 # needs name of estimate/value column
+# switch nhood col names to strings instead of bare
 census_nhood <- function(src, table, year, nhood_data, state, name, geoid, weight, is_tract, value, dataset, key, sleep, ...) {
   Sys.sleep(sleep)
   if (is_tract) {
@@ -139,15 +140,17 @@ census_nhood <- function(src, table, year, nhood_data, state, name, geoid, weigh
   } else {
     fetch <- census_blockgroups(src, table, year, "all", "all", state, dataset, key, 0, ...)
   }
-  fetch <- dplyr::inner_join(nhood_data, fetch, by = stats::setNames("GEOID", rlang::as_label(rlang::enquo(geoid))))
-  fetch <- dplyr::group_by(fetch, state, county, {{ name }}, variable)
+  fetch <- dplyr::inner_join(nhood_data, fetch, by = stats::setNames("GEOID", geoid))
+  fetch <- dplyr::group_by(fetch, dplyr::across(c(state, county, tidyselect::any_of(name), variable)))
+
+  weight_col <- rlang::sym(weight)
   if ("moe" %in% names(fetch)) {
     fetch <- dplyr::summarise(fetch,
-                              {{ value }} := round(sum({{ value }} * {{ weight }})),
-                              moe = round(tidycensus::moe_sum(moe, {{ value }} * {{ weight }})))
+                              {{ value }} := round(sum({{ value }} * {{ weight_col }})),
+                              moe = round(tidycensus::moe_sum(moe, {{ value }} * {{ weight_col }})))
   } else {
     fetch <- dplyr::summarise(fetch,
-                              {{ value }} := round(sum({{ value }} * {{ weight }})))
+                              {{ value }} := round(sum({{ value }} * {{ weight_col }})))
   }
   fetch <- dplyr::ungroup(fetch)
   fetch

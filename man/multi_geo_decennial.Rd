@@ -17,9 +17,9 @@ multi_geo_decennial(
   msa = FALSE,
   us = FALSE,
   new_england = TRUE,
-  nhood_name = name,
-  nhood_geoid = geoid,
-  nhood_weight = weight,
+  nhood_name = "name",
+  nhood_geoid = NULL,
+  nhood_weight = "weight",
   sumfile = c("dhc", "sf1", "sf3", "pl"),
   verbose = TRUE,
   key = NULL,
@@ -52,11 +52,11 @@ multi_geo_decennial(
 
 \item{new_england}{Logical: if \code{TRUE} (the default), limits metro areas to just New England states.}
 
-\item{nhood_name}{Bare column name of neighborhood names. Only relevant if a neighborhood weight table is being used. Defaults \code{name} to match the neighborhood lookup datasets.}
+\item{nhood_name}{String giving the name of the column in the data frame \code{neighborhoods} that contains neighborhood names. Previously this was a bare column name, but for consistency with changes to COG-based FIPS codes, this needs to be a string. Only relevant if a neighborhood weight table is being used. Defaults \code{"name"} to match the neighborhood lookup datasets.}
 
-\item{nhood_geoid}{Bare column name of neighborhood tract GEOIDs. Only relevant if a neighborhood weight table is being used. Defaults \code{geoid} to match the neighborhood lookup datasets.}
+\item{nhood_geoid}{String giving the name of the column in \code{neighborhoods} that contains neighborhood GEOIDs, either tracts or block groups. Only relevant if a neighborhood weight table is being used. Because of changes to FIPS codes, this no longer has a default.}
 
-\item{nhood_weight}{Bare column name of weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults \code{weight} to match the neighborhood lookup datasets.}
+\item{nhood_weight}{String giving the name of the column in \code{neighborhoods} that contains weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults \code{"weight"} to match the neighborhood lookup datasets.}
 
 \item{sumfile}{A string giving the summary file to pull from. Note that codes have changed between 2010 and 2020. Now that default year is 2020, default sumfile is \code{"dhc"}. For 2010, should be either \code{"sf1"}, or less commonly \code{"sf3"}. Use \code{"pl"} for 2020 redistricting data.}
 

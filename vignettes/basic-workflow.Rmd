@@ -60,6 +60,7 @@ Neighborhoods with corresponding tracts or block groups are included for 4 citie
 multi_geo_acs("B01003",
   towns = "New Haven", counties = "New Haven",
   neighborhoods = new_haven_tracts,
+  nhood_geoid = "geoid",
   year = yr
 )
 ```

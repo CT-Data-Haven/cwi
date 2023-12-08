@@ -80,7 +80,7 @@ get_county_fips <- function(state, counties, use_cogs) {
     }
   }
   if (use_cogs) {
-    cli::cli_inform("Note that starting with the 2022 release, ACS data uses COGs instead of counties.")
+    cli::cli_inform(c("i" = "Note that starting with the 2022 release, ACS data uses COGs instead of counties."))
   }
   counties
 }

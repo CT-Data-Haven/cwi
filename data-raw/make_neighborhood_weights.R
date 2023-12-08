@@ -5,6 +5,8 @@ sf::sf_use_s2(FALSE)
 # for nhv manually move long wharf to hill
 # for hartford drop north meadows
 # switch to using regular tiger data with tigris
+
+# for 2022 switch to COGs, need to add COG-based fips codes as another column
 min_hh <- 3
 counties <- sprintf("%03d", c(1, 3, 9))
 
@@ -40,9 +42,9 @@ hh20 <- tidycensus::get_decennial("block", table = "H1", sumfile = "pl", year = 
   dplyr::filter(variable == "H1_002N") |>
   dplyr::select(block = GEOID, hh = value)
 
-nhoods <- list(bridgeport = cwi::bridgeport_sf, 
-               new_haven = cwi::new_haven_sf, 
-               hartford = cwi::hartford_sf, 
+nhoods <- list(bridgeport = cwi::bridgeport_sf,
+               new_haven = cwi::new_haven_sf,
+               hartford = cwi::hartford_sf,
                stamford = cwi::stamford_sf) |>
   dplyr::bind_rows(.id = "city") |>
   dplyr::mutate(name = dplyr::recode(name, "Long Wharf" = "Hill")) |>
@@ -72,8 +74,9 @@ tract2nhood <- block2nhood |>
   dplyr::mutate(weight = round(hh / sum(hh), 3)) |>
   dplyr::ungroup() |>
   dplyr::select(-hh) |>
+  dplyr::left_join(dplyr::distinct(cwi::xwalk, tract, tract_cog_fips), by = "tract") |>
   split(~city) |>
-  purrr::map(dplyr::select, town, name, geoid = tract, weight) |>
+  purrr::map(dplyr::select, town, name, geoid = tract, geoid_cog = tract_cog_fips, weight) |>
   purrr::map(janitor::remove_empty, "cols") |>
   rlang::set_names(~paste(., "tracts", sep = "_"))
 

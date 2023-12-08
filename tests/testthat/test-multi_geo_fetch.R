@@ -49,19 +49,25 @@ test_that("multi_geo_* handles neighborhood geoids", {
   dummy_nhood_00 <- dplyr::mutate(new_haven_tracts19, geoid = paste0(geoid, "00"))
   dummy_nhood_bg <- dplyr::mutate(new_haven_tracts19, geoid = paste0(geoid, "0"))
   dummy_nhood_nm <- dplyr::rename(new_haven_tracts19, fips = geoid)
-  expect_message(multi_test(neighborhoods = new_haven_tracts19), "tracts")
-  expect_message(multi_test(neighborhoods = dummy_nhood_00))
-  expect_message(multi_test(neighborhoods = dummy_nhood_bg))
-  expect_silent(multi_test(neighborhoods = dummy_nhood_nm, nhood_geoid = fips, verbose = FALSE))
+  expect_message(multi_test(neighborhoods = new_haven_tracts19, nhood_geoid = "geoid"), "tracts")
+  expect_message(multi_test(neighborhoods = dummy_nhood_00, nhood_geoid = "geoid"))
+  expect_message(multi_test(neighborhoods = dummy_nhood_bg, nhood_geoid = "geoid"))
+  expect_silent(multi_test(neighborhoods = dummy_nhood_nm, nhood_geoid = "fips", verbose = FALSE))
 })
 
 test_that("multi_geo_* handles neighborhood names", {
   # previously was returning name, name_2 columns
   skip_on_ci()
-  acs_df <- multi_geo_acs("B01003", year = 2019, neighborhoods = new_haven_tracts19)
-  dec_df <- multi_geo_decennial("P001", year = 2010, neighborhoods = new_haven_tracts19, sumfile = "sf1")
+  acs_df <- multi_geo_acs("B01003", year = 2019, neighborhoods = new_haven_tracts19, nhood_geoid = "geoid")
+  dec_df <- multi_geo_decennial("P001", year = 2010, neighborhoods = new_haven_tracts19, nhood_geoid = "geoid", sumfile = "sf1")
   expect_false(any(grepl("\\d", names(acs_df))))
   expect_false(any(grepl("\\d", names(dec_df))))
+})
+
+test_that("multi_geo_* requires string for neighborhood columns", {
+  expect_error(multi_test(year = 2022, neighborhoods = new_haven_tracts), "default value .+ has been removed")
+  expect_error(multi_test(src = "decennial", table = "P1", year = 2020, dataset = "dhc", neighborhoods = new_haven_tracts), "default value .+ has been removed")
+  expect_error(multi_test(year = 2022, neighborhoods = new_haven_tracts, nhood_geoid = geoid_cog))
 })
 
 test_that("multi_geo_* handles passing args to tidycensus::get_*", {
@@ -96,3 +102,6 @@ test_that("multi_geo_* handles survey codes", {
   expect_error(multi_test("decennial", "P1", 2020, dataset = "sf1"))
 })
 
+test_that("multi_geo_acs gives notice about COGs", {
+  expect_message(multi_test(year = 2022), "COGs instead of counties")
+})
