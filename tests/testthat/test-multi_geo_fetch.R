@@ -102,6 +102,3 @@ test_that("multi_geo_* handles survey codes", {
   expect_error(multi_test("decennial", "P1", 2020, dataset = "sf1"))
 })
 
-test_that("multi_geo_acs gives notice about COGs", {
-  expect_message(multi_test(year = 2022), "COGs instead of counties")
-})

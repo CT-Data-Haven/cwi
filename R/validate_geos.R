@@ -11,7 +11,10 @@ county_x_state <- function(st, counties) {
   }
   out <- dplyr::select(out, state = state_name, county_geoid, county)
   # TODO: hopefully calling fix_cogs works with census api
-  out$county <- fix_cogs(out$county)
+  if (st == "09") {
+    out$county <- ifelse(grepl("^091", out$county_geoid), paste(out$county, "COG"), out$county) # if cog, paste COG on name
+  }
+  # out$county <- fix_cogs(out$county)
   out
 }
 
@@ -58,7 +61,7 @@ get_county_fips <- function(state, counties, use_cogs) {
       !grepl("\\d", counties) & !grepl(" County$", counties) & !use_cogs ~ paste(counties, "County"),
       TRUE                                                   ~ counties
     )
-    counties <- fix_cogs(counties)
+    # counties <- fix_cogs(counties)
 
     cty_from_name <- xw[xw$county %in% counties, ]
     cty_from_fips <- xw[xw$county_geoid %in% counties, ]
@@ -80,7 +83,8 @@ get_county_fips <- function(state, counties, use_cogs) {
     }
   }
   if (use_cogs) {
-    cli::cli_inform(c("i" = "Note that starting with the 2022 release, ACS data uses COGs instead of counties."))
+    cli::cli_inform(c("i" = "Note that starting with the 2022 release, ACS data uses COGs instead of counties."),
+                    .frequency = "once", .frequency_id = "cog")
   }
   counties
 }

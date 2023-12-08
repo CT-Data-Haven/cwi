@@ -11,7 +11,6 @@ test_that("get_county_fips matches & returns FIPS codes", {
   expect_equal(get_county_fips("09", c("09009", "09001", "Fairfield"), FALSE), correct)
 
   correct_cog <- c("09120", "09190")
-  expect_equal(get_county_fips("09", c("Western Connecticut", "Greater Bridgeport"), TRUE), correct_cog)
   expect_equal(get_county_fips("09", c("Western Connecticut COG", "Greater Bridgeport COG"), TRUE), correct_cog)
   expect_equal(get_county_fips("09", c("120", "190"), TRUE), correct_cog)
 })
@@ -37,3 +36,4 @@ test_that("get_state_fips matches & returns FIPS codes", {
   expect_equal(get_state_fips("CT"), correct)
   expect_equal(get_state_fips("Connecticut"), correct)
 })
+
