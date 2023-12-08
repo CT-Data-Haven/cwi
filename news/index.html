@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.1</span>
       </span>
     </div>
 
@@ -69,6 +69,10 @@
       <small>Source: <a href="https://github.com/CT-Data-Haven/cwi/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.6.1" id="cwi-161">cwi 1.6.1<a class="anchor" aria-label="anchor" href="#cwi-161"></a></h2>
+<p>Bump ACS-related defaults to 2022</p>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.6.0" id="cwi-160">cwi 1.6.0<a class="anchor" aria-label="anchor" href="#cwi-160"></a></h2>
 <p><strong>MINOR BREAKING CHANGE:</strong> This update corresponds to the 2022 ACS data release, which is the first to use COGs instead of counties. Because COGs have different FIPS codes, town and tract FIPS codes (but apparently not block groups) have changed to match. The bulk of their code digits stay the same, but the portion signifying the county changed, e.g. 09<strong>009</strong>140101 is now 09<strong>170</strong>140101. To deal with that without breaking too much code, there are a few changes to the package:</p>
