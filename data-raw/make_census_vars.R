@@ -1,5 +1,5 @@
 # ACS: MOST RECENT VARIABLES
-acs_vars21 <- clean_acs_vars(year = 2021, survey = "acs5")
+acs_vars22 <- clean_acs_vars(year = 2022, survey = "acs5")
 
 
 # DECENNIAL: 2 MOST RECENT
@@ -25,7 +25,7 @@ cb_avail$title <- stringr::str_replace_all(cb_avail$title, c("Summary File " = "
 cb_avail <- dplyr::arrange(cb_avail, program, vintage, survey)
 
 
-usethis::use_data(acs_vars21, overwrite = TRUE)
+usethis::use_data(acs_vars22, overwrite = TRUE)
 usethis::use_data(decennial_vars10, overwrite = TRUE)
 usethis::use_data(decennial_vars20, overwrite = TRUE)
 usethis::use_data(cb_avail, overwrite = TRUE)

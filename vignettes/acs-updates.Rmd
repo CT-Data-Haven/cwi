@@ -28,7 +28,7 @@ compare_yrs <- function(yr, ret = FALSE) {
   tbls <- purrr::map(yrs, cwi:::clean_acs_vars, "acs5")
   tbls <- purrr::map(tbls, mutate, table_num = stringr::str_remove(name, "_.+$"))
   tbls <- purrr::map(tbls, distinct, concept, table_num)
-  tbls <- purrr::map(tbls, mutate, concept = stringr::str_replace_all(concept, "20\\d{2}", "20xx"))
+  tbls <- purrr::map(tbls, mutate, concept = stringr::str_squish(tolower(stringr::str_replace_all(concept, "20\\d{2}", "20xx"))))
   
   purrr::map(tbls, ~paste("Number of rows:", nrow(.)))
   
@@ -43,6 +43,13 @@ compare_yrs <- function(yr, ret = FALSE) {
   }
 }
 ```
+
+# 2022 ACS
+
+```{r results='asis'}
+compare_yrs(2022)
+```
+
 
 
 # 2021 ACS

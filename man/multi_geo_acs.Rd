@@ -6,7 +6,7 @@
 \usage{
 multi_geo_acs(
   table,
-  year = 2021,
+  year = 2022,
   towns = "all",
   regions = NULL,
   counties = "all",
@@ -31,7 +31,7 @@ multi_geo_acs(
 \arguments{
 \item{table}{A string giving the ACS table number.}
 
-\item{year}{The year of the ACS table; currently defaults 2021 (most recent available).}
+\item{year}{The year of the ACS table; currently defaults 2022 (most recent available).}
 
 \item{towns}{A character vector of names of towns to include; \code{"all"} (default) for all towns optionally filtered by county; or \code{NULL} to not fetch town-level table.}
 
