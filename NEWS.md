@@ -1,4 +1,12 @@
-# cwi (development version)
+# cwi 1.6.0
+
+**MINOR BREAKING CHANGE:** This update corresponds to the 2022 ACS data release, which is the first to use COGs instead of counties. Because COGs have different FIPS codes, town and tract FIPS codes (but apparently not block groups) have changed to match. The bulk of their code digits stay the same, but the portion signifying the county changed, e.g. 09**009**140101 is now 09**170**140101. To deal with that without breaking too much code, there are a few changes to the package:
+
+- Neighborhood lookup tables (`bridgeport_tracts`, etc) have the previous county-based FIPS codes in the column `geoid`, and the new COG-based FIPS codes in the column `geoid_cog`.
+- `xwalk` now has columns for COG-based town and tract FIPS codes, in addition to the previous county-based ones.
+- Calling `multi_geo_acs` with `counties = "all"` (the default) will get you COGs, but `multi_geo_decennial` will get you counties, because the switch was not retroactive.
+- The names of COGs returned by `multi_geo_acs` and used for names in the `regions` list are the ones the Census Bureau uses. Unfortunately, these aren't all the ones the state uses. For that, I've added a function `fix_cogs`, which replaces common names for them with the ones the state lists somewhat officially, e.g. Capitol COG is in the census data, Capitol Region COG is what the state usually uses but probably not always.
+- Finally, the part that doesn't come up often but will break: previously the `multi_geo_*` functions took neighborhood names, weights, and GEOIDs as bare column names, with defaults (name, weight, and geoid, respectively). These now have to all be given as strings (i.e. in quotation marks), and geoid no longer has a default. This is to deal with the fact that some calculations will now need the neighborhood lookup tables' `geoid` columns, and some will need `geoid_cog`. This only matters when you're including neighborhoods in function calls.
 
 # cwi 1.5.0
 
