@@ -1,3 +1,7 @@
+# cwi 1.6.2
+
+Edit `xwalk`---there were still more FIPS codes to update with their COG-based versions. The data frame now includes COG-based codes for block groups, tracts, towns, and PUMAs.
+
 # cwi 1.6.1
 
 Bump ACS-related defaults to 2022
