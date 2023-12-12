@@ -5,23 +5,25 @@
 \alias{xwalk}
 \title{CT crosswalk}
 \format{
-A data frame with 67465 rows and 15 variables:
+A data frame with 48358 rows and 17 variables:
 \describe{
 \item{block}{Block FIPS code}
-\item{block_grp}{Block group FIPS code}
+\item{block_grp}{Block group FIPS code, based on county FIPS}
+\item{block_grp_cog}{Block group FIPS code, based on COG FIPS as of 2022 ACS}
 \item{tract}{Tract FIPS code, based on county FIPS}
-\item{tract_cog_fips}{Tract FIPS code, based on COG FIPS as of 2022 ACS}
+\item{tract_cog}{Tract FIPS code, based on COG FIPS as of 2022 ACS}
 \item{town}{Town name}
 \item{town_fips}{Town FIPS code, based on county FIPS}
-\item{town_cog_fips}{Town FIPS code, based on COG FIPS as of 2022 ACS}
+\item{town_fips_cog}{Town FIPS code, based on COG FIPS as of 2022 ACS}
 \item{county}{County name}
 \item{county_fips}{County FIPS code}
-\item{cog}{COG}
+\item{cog}{COG name}
 \item{cog_fips}{COG FIPS code}
 \item{msa}{Metro/micropolitan area name}
 \item{msa_fips}{Metro/micropolitan area FIPS code}
 \item{puma}{PUMA name}
-\item{puma_fips}{PUMA FIPS code}
+\item{puma_fips}{PUMA FIPS code, based on county FIPS}
+\item{puma_fips_cog}{PUMA FIPS code, based on COG FIPS as of 2022 ACS}
 }
 }
 \source{

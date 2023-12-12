@@ -34,7 +34,7 @@ test_that("adj_inflation prints table header", {
 
   wages <- data.frame(year = 2015:2019, wage = 100)
 
-  expect_message(adj_inflation(wages, wage, year, verbose = TRUE), "-- CPI ")
+  expect_message(adj_inflation(wages, wage, year, verbose = TRUE), "-- Consumer Price Index ") # title changed in API
   expect_silent(dummy <- adj_inflation(wages, wage, year, verbose = FALSE))
 })
 
