@@ -31,9 +31,16 @@ test_that("batch_csv_dump prints messages if verbose", {
 })
 
 test_that("batch_csv_dump passes arguments to write.csv", {
-  df <- dummy_df()
-  df$value[1:3] <- NA_real_
+  # remember batch_csv_dump uses write.csv, not readr::write_csv!
+  df <- data.frame(
+    region = rep(c("A", "B", "C"), each = 2),
+    value = c(NA_real_, runif(5))
+  )
   dir <- tempdir()
   set_na <- batch_csv_dump(df, split_by = region, path = dir, base_name = "set_na", na = "")
-  no_names <- batch_csv_dump(df, split_by = region, path = dir, base_name = "no_names")
+
+  # should have blank at end of line
+  set_na_read <- stringr::str_remove_all(readLines(file.path(dir, "set_na_A.csv")), '\"')
+  expect_true(grepl(",$", set_na_read[2]))
+  expect_false(grepl(",$", set_na_read[3]))
 })

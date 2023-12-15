@@ -411,7 +411,8 @@ multi_geo_prep <- function(src,
       msa = msa,
       us = us,
       new_england = new_england,
-      nhood_type = nhood_valid_fips
+      nhood_type = nhood_valid_fips,
+      use_cogs = use_cogs
     )
     # print title
     rlang::exec(table_printout, !!!tbl_title)

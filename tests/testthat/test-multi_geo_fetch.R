@@ -1,6 +1,3 @@
-library(cwi)
-library(testthat)
-
 # since there's a function that preps but doesn't make API calls, can use that for testing without doing full calls.
 test_that("multi_geo_* validates state names and FIPS codes", {
   expect_error(multi_test(state = NULL), "Must supply")

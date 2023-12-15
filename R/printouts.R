@@ -4,11 +4,17 @@ bold_hdr <- function(place_name, place_type) {
 }
 
 ######## CENSUS: ACS + DECENNIAL ----
-geo_printout <- function(neighborhoods, tracts, blockgroups, towns, regions, pumas, counties, all_counties, drop_counties, state, msa, us, new_england, nhood_type) {
+geo_printout <- function(neighborhoods, tracts, blockgroups, towns, regions, pumas, counties, all_counties, drop_counties, state, msa, us, new_england, nhood_type, use_cogs) {
   geos <- tibble::lst(neighborhoods, tracts, blockgroups, towns, regions, pumas, counties, state)
   if (drop_counties) {
-    geos$counties <- NULL
+    geos[["counties"]] <- NULL
   }
+  # rename counties to cogs
+  if (!is.null(counties) & use_cogs) {
+    geos[["cogs"]] <- geos[["counties"]]
+    geos[["counties"]] <- NULL
+  }
+
   # basically writing own imap_at
   subgeos <- c("neighborhoods", "tracts", "blockgroups", "towns", "pumas")
   geos[subgeos] <- purrr::map(subgeos, function(geo_hdr) {
@@ -17,13 +23,17 @@ geo_printout <- function(neighborhoods, tracts, blockgroups, towns, regions, pum
       geo_txt <- NULL
     } else if (identical(geo, "all")) {
       if (all_counties) {
-        county_str <- "all counties"
+        if (use_cogs) {
+          county_str <- "all COGs"
+        } else {
+          county_str <- "all counties"
+        }
       } else {
         county_str <- "{counties}"
       }
       geo_txt <- sprintf("all %s in %s", geo_hdr, county_str)
     } else {
-      if (geo_hdr == "towns") {
+      if (identical(geo_hdr, "towns")) {
         geo_txt <- geo
       } else {
         geo_txt <- paste(length(unique(geo)), geo_hdr)
@@ -32,6 +42,7 @@ geo_printout <- function(neighborhoods, tracts, blockgroups, towns, regions, pum
     geo_txt
   })
   geos <- rlang::set_names(geos, stringr::str_to_sentence)
+  geos <- rlang::set_names(geos, stringr::str_replace, "Cogs", "COGs")
 
   if (msa) {
     if (new_england) {
