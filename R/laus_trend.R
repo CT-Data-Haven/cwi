@@ -37,7 +37,7 @@ laus_trend <- function(names = NULL, startyear, endyear, state = "09", measures 
 make_laus_series <- function(names, state, measures) {
   # check measures
   measures <- check_laus_vars(measures)
-  valid_measures <- laus_measures$measure_text
+  valid_measures <- cwi:::laus_measures$measure_text
   if (is.logical(measures) && !measures) {
     cli::cli_abort(c("The argument supplied to {.arg measures} is invalid.",
                      "i" = "Possible values are {.val {valid_measures}}, or {.val all} for all measures."),
@@ -112,10 +112,10 @@ make_laus_query <- function(series, years, annual, verbose, key) {
 
 check_laus_vars <- function(measures) {
   if (identical(measures, "all") | is.null(measures)) {
-    measure_lookup <- laus_measures
+    measure_lookup <- cwi:::laus_measures
   } else {
-    measure_lookup <- laus_measures[laus_measures$measure_code %in% measures | laus_measures$measure_text %in% measures, ]
-    mismatch <- setdiff(measures, c(laus_measures$measure_code, laus_measures$measure_text))
+    measure_lookup <- cwi:::laus_measures[cwi:::laus_measures$measure_code %in% measures | cwi:::laus_measures$measure_text %in% measures, ]
+    mismatch <- setdiff(measures, c(cwi:::laus_measures$measure_code, cwi:::laus_measures$measure_text))
     if (length(mismatch) > 0) {
       return(FALSE)
     }
@@ -124,7 +124,7 @@ check_laus_vars <- function(measures) {
 }
 
 check_laus_names <- function(state, names) {
-  codes <- laus_codes[laus_codes$state_code %in% state, ]
+  codes <- cwi::laus_codes[cwi::laus_codes$state_code %in% state, ]
   if (!is.null(names)) {
     codes <- codes[codes$area %in% names, ]
   }
