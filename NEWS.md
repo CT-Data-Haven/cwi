@@ -1,3 +1,7 @@
+# cwi 1.6.3
+
+Bumping package versions just to draw attention to the fact that there's now a set of PUMA proxy crosswalks; see `proxy_pumas`.
+
 # cwi 1.6.2
 
 Edit `xwalk`---there were still more FIPS codes to update with their COG-based versions. The data frame now includes COG-based codes for block groups, tracts, towns, and PUMAs.
