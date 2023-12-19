@@ -15,7 +15,7 @@ town2county <- cwi::xwalk |>
   dplyr::rename(name = county) |>
   dplyr::anti_join(town2reg, by = "name")
 
-regions <- rbind(town2reg, town2cog) |>
+regions <- dplyr::bind_rows(town2cog, town2reg, town2county) |>
   split(~name) |>
   purrr::map(dplyr::pull, town) |>
   purrr::map(sort)
