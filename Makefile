@@ -83,6 +83,9 @@ data/xwalk.rda data/tract2town.rda &: data-raw/make_xwalk.R data/town_sf.rda dat
 data/zip2town.rda: data-raw/make_zip2town.R data-raw/files/zip2town.csv
 	$(SRC)
 
+data/proxy_pumas.rda: data-raw/make_proxy_pumas.R
+	$(SRC)
+
 R/sysdata.rda: data-raw/make_internal_data.R
 	$(SRC)
 

@@ -106,7 +106,7 @@ qwi_prep <- function(years, industries, state, counties, key) {
 check_avail_qwi <- function(yrs_asked, state_fips, api_len) {
   # adjust column names if necessary, altho state_code name comes from tidycensus
   asked_range <- range(yrs_asked)
-  yrs_avail <- as.list(cwi:::qwi_avail[cwi:::qwi_avail$state_code == state_fips, ])
+  yrs_avail <- as.list(qwi_avail[qwi_avail$state_code == state_fips, ])
   avail_range <- seq(from = yrs_avail$start_year, to = yrs_avail$end_year)
   unavail <- setdiff(yrs_asked, avail_range)
   if (!any(yrs_asked %in% avail_range)) {

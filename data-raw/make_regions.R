@@ -9,6 +9,12 @@ town2reg <- readr::read_csv("./data-raw/files/town_region_lookup.csv") |>
   dplyr::filter(!is.na(region)) |>
   dplyr::select(name = region, town)
 
+# add back in legacy counties
+town2county <- cwi::xwalk |>
+  dplyr::distinct(town, county) |>
+  dplyr::rename(name = county) |>
+  dplyr::anti_join(town2reg, by = "name")
+
 regions <- rbind(town2reg, town2cog) |>
   split(~name) |>
   purrr::map(dplyr::pull, town) |>
