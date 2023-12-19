@@ -16,7 +16,7 @@ reg_df <- cwi::regions[c("Greater New Haven", "Greater Hartford", "Greater Water
   dplyr::bind_rows(town_county)
 
 pops <- tidyr::expand_grid(
-  puma_type = tibble::enframe(list(county = 2020, cog = 2022), name = "puma_type", value = "year") |> tidyr::unnest(year),
+  puma_type = tibble::enframe(list(county = 2021, cog = 2022), name = "puma_type", value = "year") |> tidyr::unnest(year),
   geo = c("county subdivision", "puma")
 ) |>
   tidyr::unnest(puma_type) |>

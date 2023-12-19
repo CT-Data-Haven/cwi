@@ -319,7 +319,7 @@ NULL
 
 #' Proxy PUMAs
 #'
-#' This is a list of 2 data frames giving PUMAs that make reasonable approximations of designated regions, with weights to apply to both population- and household-based measures. The data frame labeled `county` uses county-based PUMAs and 2020 ACS values; the data frame `cog` uses the new COG-based PUMAs and 2022 ACS values. When working with PUMS data or other weighted surveys, multiply the weights in the proxy table with the weights from the survey to account for how much of the PUMA overlaps the region.
+#' This is a list of 2 data frames giving PUMAs that make reasonable approximations of designated regions, with weights to apply to both population- and household-based measures. The data frame labeled `county` uses county-based PUMAs and 2021 ACS values; the data frame `cog` uses the new COG-based PUMAs and 2022 ACS values. When working with PUMS data or other weighted surveys, multiply the weights in the proxy table with the weights from the survey to account for how much of the PUMA overlaps the region.
 #'
 #' @format A list of 2 data frames, `county` and `cog`, with 19 and 54 rows, respectively, and 6 variables:
 #' \describe{
@@ -330,5 +330,5 @@ NULL
 #' \item{\code{pop_weight}}{Population weight: share of the PUMA's population that's included in the region, to be used for population-based survey analysis}
 #' \item{\code{hh_weight}}{Household weight: share of the PUMA's households that are included in the region, to be used for household-based survey analysis}
 #' }
-#' @source 2020 & 2022 5-year ACS
+#' @source 2021 & 2022 5-year ACS
 "proxy_pumas"
