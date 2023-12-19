@@ -32,28 +32,34 @@ reference:
       - "label_decennial"
       - "quick_map"
 
-  - title: Datasets
+  - title: Datasets - reference
     desc: Reference datasets, lookup tables, and crosswalks
     contents:
       - "acs_vars22"
       - "basic_table_nums"
       - "cb_avail"
       - "ct5_clusters"
-      - "cws_demo"
       - "decennial_vars20"
       - "ext_table_nums"
-      - "gnh_tenure"
       - "laus_codes"
       - "msa"
       - "naics_codes"
       - "neighborhood_tracts"
       - "occ_codes"
+      - "proxy_pumas"
       - "regions"
       - "school_dists"
       - "tract2town"
       - "village2town"
       - "xwalk"
       - "zip2town"
+
+  - title: Datasets - examples
+    desc: Datasets used for examples in vignettes, package docs, & testing
+    contents:
+      - "cws_demo"
+      - "gnh_tenure"
+
 
   - title: Shapefiles
     desc: Shapefiles in `sf` format
