@@ -15,6 +15,8 @@ geo_printout <- function(neighborhoods, tracts, blockgroups, towns, regions, pum
     geos[["counties"]] <- NULL
   }
 
+  geos <- purrr::modify(geos, unique)
+
   # basically writing own imap_at
   subgeos <- c("neighborhoods", "tracts", "blockgroups", "towns", "pumas")
   geos[subgeos] <- purrr::map(subgeos, function(geo_hdr) {
