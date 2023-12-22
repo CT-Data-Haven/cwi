@@ -111,6 +111,10 @@ census_state <- function(src, table, year, state, dataset, key, sleep, ...) {
 # needs name of estimate/value column
 census_regions <- function(src, table, year, regions, state, value, dataset, key, sleep, ...) {
   Sys.sleep(sleep)
+
+  # get unique regions but keep names
+  regions <- regions[unique(names(regions))]
+
   region_df <- tibble::enframe(regions, value = "town")
   region_df <- tidyr::unnest(region_df, town)
   fetch <- census_towns(src, table, year, "all", "all", state, dataset, key, 0, ...)

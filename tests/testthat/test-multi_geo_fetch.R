@@ -99,3 +99,9 @@ test_that("multi_geo_* handles survey codes", {
   expect_error(multi_test("decennial", "P1", 2020, dataset = "sf1"))
 })
 
+test_that("multi_geo_* deduplicates regions", {
+  skip_on_ci()
+  p1 <- multi_geo_acs("B01003", regions = regions[c("Greater New Haven", "Greater New Haven", "Greater Waterbury")], towns = NULL, counties = NULL)
+  p2 <- multi_geo_acs("B01003", regions = regions[c("Greater New Haven", "Greater Waterbury")], towns = NULL, counties = NULL)
+  expect_identical(p1, p2)
+})

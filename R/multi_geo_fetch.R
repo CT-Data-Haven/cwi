@@ -348,7 +348,6 @@ multi_geo_prep <- function(src,
                      "i" = "Note that these columns should now be given as strings, not bare names."))
   }
 
-
   # validate county names, convert to 5-digit fips
   drop_counties <- is.null(counties)
 
