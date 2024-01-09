@@ -74,9 +74,9 @@ tract2nhood <- block2nhood |>
   dplyr::mutate(weight = round(hh / sum(hh), 3)) |>
   dplyr::ungroup() |>
   dplyr::select(-hh) |>
-  dplyr::left_join(dplyr::distinct(cwi::xwalk, tract, tract_cog_fips), by = "tract") |>
+  dplyr::left_join(dplyr::distinct(cwi::xwalk, tract, tract_cog), by = "tract") |>
   split(~city) |>
-  purrr::map(dplyr::select, town, name, geoid = tract, geoid_cog = tract_cog_fips, weight) |>
+  purrr::map(dplyr::select, town, name, geoid = tract, geoid_cog = tract_cog, weight) |>
   purrr::map(janitor::remove_empty, "cols") |>
   rlang::set_names(~paste(., "tracts", sep = "_"))
 

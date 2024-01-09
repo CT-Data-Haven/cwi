@@ -22,8 +22,8 @@ stamford_sf <- sf::st_read("https://gist.github.com/camille-s/7002148f77b0020f78
 
 bridgeport_sf <- sf::st_read("https://gist.github.com/camille-s/c5e4f0178cfbf288af454016018f5173/raw/43faa412db577c4f770d861ab913116ccdb3d445/bpt_tract_neighborhoods.geojson") |>
   dplyr::select(name = Name, geometry) |>
-  sf::st_transform(sf::st_crs(tract_sf)) |>
-  sf::st_simplify(dTolerance = 1e-6)
+  sf::st_make_valid() |>
+  sf::st_transform(sf::st_crs(tract_sf))
 
 
 hartford_sf <- sf::st_read("https://gist.github.com/camille-s/9e9761b69a7c86bf6d7163cb73636f26/raw/3858f538d955c022b43e168e4c7cec316c2e437f/hfd_shape.json") |>
