@@ -299,7 +299,17 @@ multi_geo_prep <- function(src,
 
   # COG SWITCH!!
   # check whether to use COGs--true if src == acs & year >= 2022
-  use_cogs <- src == "acs" & year >= 2022
+  # check state, convert / copy to fips
+  if (is.null(state) | length(state) > 1) {
+    cli::cli_abort("Must supply a single state by name, abbreviation, or FIPS code.",
+                   call = parent.frame())
+  }
+  state_fips <- get_state_fips(state)
+  if (is.null(state_fips)) {
+    cli::cli_abort("{state} is not a valid state name, abbreviation, or FIPS code.",
+                   call = parent.frame())
+  }
+  use_cogs <- src == "acs" & year >= 2022 & state_fips == "09"
 
   # check key
   key <- check_census_key(key)
@@ -328,17 +338,6 @@ multi_geo_prep <- function(src,
     # msg <- rlang::set_names(c(sprintf("Try looking through the corresponding {.var %s_vars} dataset", src), digits_msg), "i")
     cli::cli_abort(c("Table {table} for {year} {dataset} is not available in the API.",
                      "i" = "Try calling {.fn tidycensus::load_variables} to see what variables are available."),
-                   call = parent.frame())
-  }
-
-  # check state, convert / copy to fips
-  if (is.null(state) | length(state) > 1) {
-    cli::cli_abort("Must supply a single state by name, abbreviation, or FIPS code.",
-                   call = parent.frame())
-  }
-  state_fips <- get_state_fips(state)
-  if (is.null(state_fips)) {
-    cli::cli_abort("{state} is not a valid state name, abbreviation, or FIPS code.",
                    call = parent.frame())
   }
 
