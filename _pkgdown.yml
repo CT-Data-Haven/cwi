@@ -60,7 +60,6 @@ reference:
       - "cws_demo"
       - "gnh_tenure"
 
-
   - title: Shapefiles
     desc: Shapefiles in `sf` format
     contents:
@@ -71,7 +70,6 @@ reference:
   - title: Misc. / utilities
     desc: Miscellaneous functions
     contents:
-      - "add_logo"
       - "batch_csv_dump"
       - "fix_cogs"
       - "jenks"
