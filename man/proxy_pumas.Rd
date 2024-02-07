@@ -22,16 +22,17 @@ A list of 2 data frames, \code{county} and \code{cog}, with 19 and 54 rows, resp
 proxy_pumas
 }
 \description{
-This is a list of 2 data frames giving PUMAs that make reasonable approximations of designated regions, with weights to apply to both population- and household-based measures. The data frame labeled \code{county} uses county-based PUMAs and 2021 ACS values; the data frame \code{cog} uses the new COG-based PUMAs and 2022 ACS values. When working with PUMS data or other weighted surveys, multiply the weights in the proxy table with the weights from the survey to account for how much of the PUMA overlaps the region.
-See maps of proxies and their weights here: https://ct-data-haven.github.io/cogs/proxy-geos.html
+This is a list of 2 data frames giving PUMAs that make reasonable approximations of designated regions, with weights to apply to both population- and household-based measures. The data frame labeled \code{county} uses county-based PUMAs and 2021 ACS values; the data frame \code{cog} uses the new COG-based PUMAs and 2022 ACS values. When working with PUMS data or other weighted surveys, multiply the weights in the proxy table with the weights from the survey to account for how much of the PUMA overlaps the region. The county-based table includes just non-county regions (e.g. Greater New Haven), but the COG-based table also includes "legacy" counties (e.g. New Haven County), since we assume that even if data isn't released for counties, some organizations might still want estimates based on those geographies.
+See maps of proxies and their weights here: \url{https://ct-data-haven.github.io/cogs/proxy-geos.html}
+\strong{NOTE:} There are some PUMAs that are included in more than one region. When joining these tables with survey data, make sure you're allowing for duplicates of PUMAs.
 }
 \examples{
 \dontrun{
-  # proxies made from county-based PUMAs, use for pre-2022 ACS or other datasets
-  proxy_pumas$county
+# proxies made from county-based PUMAs, use for pre-2022 ACS or other datasets
+proxy_pumas$county
 
-  # proxies made from COG-based PUMAs
-  proxy_pumas$cog
+# proxies made from COG-based PUMAs
+proxy_pumas$cog
 }
 }
 \keyword{datasets}

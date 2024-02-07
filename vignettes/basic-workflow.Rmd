@@ -250,13 +250,4 @@ unemp_plot <- ggplot(unemployment, aes(x = date, y = value, group = area, color 
   geom_line() +
   geom_smooth(se = FALSE, method = "loess", linewidth = 0.8)
 unemp_plot
-```
-
-## Adding a logo
-
-DataHaven's logo is saved as an SVG file inside this package. (Folks at other orgs who fork this, feel free to replace with your own logo.) `add_logo` tacks on a logo, either that default, or another image or `ggplot` grob, making it easier to create distribution-ready plots (which this one is not, tbh).
-
-```{r logo, out.width="100%"}
-add_logo(unemp_plot, position = "right")
-```
 

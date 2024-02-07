@@ -22,6 +22,7 @@ stamford_sf <- sf::st_read("https://gist.github.com/camille-s/7002148f77b0020f78
 
 bridgeport_sf <- sf::st_read("https://gist.github.com/camille-s/c5e4f0178cfbf288af454016018f5173/raw/43faa412db577c4f770d861ab913116ccdb3d445/bpt_tract_neighborhoods.geojson") |>
   dplyr::select(name = Name, geometry) |>
+  sf::st_cast("MULTIPOLYGON") |>
   sf::st_make_valid() |>
   sf::st_transform(sf::st_crs(tract_sf))
 

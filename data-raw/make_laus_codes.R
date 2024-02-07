@@ -17,14 +17,17 @@ h1 <- curl::new_handle(); h2 <- curl::new_handle()
 curl::handle_setheaders(h1, .list = headers)
 curl::handle_setheaders(h2, .list = headers)
 
-laus_measures <- curl::curl("https://download.bls.gov/pub/time.series/la/la.measure", open = "rb", handle = h1) |>
+con1 <- curl::curl("https://download.bls.gov/pub/time.series/la/la.measure", open = "rb", handle = h1)
+laus_measures <- con1 |>
   readr::read_tsv() |>
   dplyr::filter(measure_code %in% c("03", "04", "05", "06"))
+close(con1)
 
 # make this internal
 # usethis::use_data(laus_measures, overwrite = TRUE)
 
-laus_codes <- curl::curl("https://download.bls.gov/pub/time.series/la/la.area", open = "rb", handle = h2) |>
+con2 <- curl::curl("https://download.bls.gov/pub/time.series/la/la.area", open = "rb", handle = h2)
+laus_codes <- con2 |>
   readr::read_tsv() |>
   dplyr::mutate(state_code = substr(area_code, 3, 4)) |>
   dplyr::left_join(dplyr::distinct(tidycensus::fips_codes, state_code, state), by = "state_code") |>
@@ -32,5 +35,6 @@ laus_codes <- curl::curl("https://download.bls.gov/pub/time.series/la/la.area", 
   # dplyr::select(area_type_code, area_code, area_text, state_code) |>
   dplyr::mutate(area = trimws(stringr::str_extract(area_text, "(([A-Z][a-z\\-\\.]+\\s?)|of\\s?)+"))) |>
   dplyr::select(type = area_type_code, state_code, area, area_code)
+close(con2)
 
 usethis::use_data(laus_codes, overwrite = TRUE)
