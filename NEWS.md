@@ -1,3 +1,7 @@
+# cwi 1.7.0
+
+Moved `add_logo` to the stylehaven package.
+
 # cwi 1.6.3
 
 Bumping package versions just to draw attention to the fact that there's now a set of PUMA proxy crosswalks; see `proxy_pumas`.
