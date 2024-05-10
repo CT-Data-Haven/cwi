@@ -1,3 +1,8 @@
+# cwi 1.7.1
+
+* Updated and improved methods for making `zip2town` crosswalk, based on 2020 / 2022 geographies. The columns included in the data frame are slightly changed.
+* Fixed issues with `qwi_industry`: the API now uses COGs for Connecticut instead of counties.
+
 # cwi 1.7.0
 
 Moved `add_logo` to the stylehaven package.
