@@ -6,7 +6,7 @@
 #' @param years A numeric vector of one or more years for which to get data
 #' @param industries A character vector of NAICS industry codes; default is the 20 sectors plus "All industries" from the dataset `naics_codes`.
 #' @param state A string of length 1 representing a state's FIPS code, name, or two-letter abbreviation; defaults to `"09"` for Connecticut
-#' @param counties A character vector of county FIPS codes, or `"all"` for all counties. If `NULL` (the default), will return data just at the state level.
+#' @param counties A character vector of county FIPS codes, or `"all"` for all counties. If `NULL` (the default), will return data just at the state level. For Connecticut, these now need to be COGs; data has been changed retroactively.
 #' @param annual Logical, whether to return annual averages or quarterly data (default) .
 #' @param key A Census API key. If `NULL`, defaults to the environmental variable `"CENSUS_API_KEY"`, as set by `tidycensus::census_api_key()`.
 #' @param retry The number of times to retry the API call(s), since the server this comes from can be a bit finicky.
@@ -85,8 +85,9 @@ qwi_prep <- function(years, industries, state, counties, key) {
                    call = parent.frame())
   }
   # check counties--if null, don't include
+  # update 5/2024--uses cogs now
   if (!is.null(counties)) {
-    counties <- substr(get_county_fips(state_fips, counties, use_cogs = FALSE), 3, 5)
+    counties <- substr(get_county_fips(state_fips, counties, use_cogs = TRUE), 3, 5)
   }
   # get available years for state
   # will throw error--not the best place for that

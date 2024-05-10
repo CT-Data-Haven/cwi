@@ -157,7 +157,7 @@ age <- multi_geo_acs(
   ungroup()
 
 age |>
-  split(.$name) |>
+  split(~name) |>
   batch_csv_dump(base_name = "pop_by_age", bind = TRUE, verbose = TRUE) |>
   group_by(level, name) |>
   camiller::add_grps(list(ages00_04 = 1, ages05_17 = 2:4, ages00_17 = 1:4),
@@ -170,26 +170,26 @@ age |>
 
 ## Quarterly Workforce Indicators
 
-I'm also interested in learning about employment by industry over the past several years. `qwi_industry()` fetches county-level data by industry over time, either quarterly or annually. Here I'll look at annual averages of all industries for New Haven County and Connecticut over the past 16 years. I'm filtering out the industry code "00", which is the counts for all industries. 
+I'm also interested in learning about employment by industry over the past several years. `qwi_industry()` fetches county-level data by industry over time, either quarterly or annually. Here I'll look at annual averages of all industries for South Central COG and Connecticut over the past 16 years. I'm filtering out the industry code "00", which is the counts for all industries. 
 
 
 ```{r qwi1}
-nhc_employment <- qwi_industry(2002:2018, counties = "009", annual = TRUE) |>
-  mutate(location = "New Haven County")
+scc_employment <- qwi_industry(2002:2018, counties = "170", annual = TRUE) |>
+  mutate(location = "South Central COG")
 ct_employment <- qwi_industry(2002:2018, annual = T) |>
   mutate(location = "Connecticut")
-employment <- bind_rows(nhc_employment, ct_employment) |>
+employment <- bind_rows(scc_employment, ct_employment) |>
   filter(industry != "00") |>
   inner_join(naics_codes |> select(-ind_level), by = "industry")
 
 employment
 ```
 
-Next, say I want to look at the industries that were largest in New Haven county in 2018, and see how those have changed both for the county and statewide over this time period. I'll filter `employment`, get the industries with the largest numbers of employees, then filter `employment` for just those industries and plot it.
+Next, say I want to look at the industries that were largest in the South Central COG in 2018, and see how those have changed both for the COG and statewide over this time period. I'll filter `employment`, get the industries with the largest numbers of employees, then filter `employment` for just those industries and plot it.
 
 ```{r qwi2, out.width="100%"}
 top2018 <- employment |>
-  filter(year == 2018, county == "009") |>
+  filter(year == 2018, county == "170") |>
   top_n(8, emp) |>
   pull(industry)
 top2018
@@ -202,7 +202,7 @@ employment |>
   geom_line() +
   labs(
     x = "Year", y = "Employees (thousands)", title = "Employment by industry",
-    subtitle = "Connecticut and New Haven County, 2002-2018", color = "Industry"
+    subtitle = "Connecticut and South Central COG, 2002-2018", color = "Industry"
   ) +
   theme_minimal() +
   facet_wrap(vars(location), scales = "free_y")

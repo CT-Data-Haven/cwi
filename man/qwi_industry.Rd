@@ -21,7 +21,7 @@ qwi_industry(
 
 \item{state}{A string of length 1 representing a state's FIPS code, name, or two-letter abbreviation; defaults to \code{"09"} for Connecticut}
 
-\item{counties}{A character vector of county FIPS codes, or \code{"all"} for all counties. If \code{NULL} (the default), will return data just at the state level.}
+\item{counties}{A character vector of county FIPS codes, or \code{"all"} for all counties. If \code{NULL} (the default), will return data just at the state level. For Connecticut, these now need to be COGs; data has been changed retroactively.}
 
 \item{annual}{Logical, whether to return annual averages or quarterly data (default) .}
 
