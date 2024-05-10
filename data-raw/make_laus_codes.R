@@ -9,10 +9,12 @@
 
 # no longer allows direct download--403 error
 # got these headers from firefox devtools
-headers <- list("User-Agent" = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:120.0) Gecko/20100101 Firefox/120.0",
+headers <- list("User-Agent" = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0",
                 "Accept" = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
                 "Accept-Language" = "en-US,en;q=0.5",
-                "Accept-Encoding" = "gzip, deflate, br")
+                "Accept-Encoding" = "gzip, deflate, br",
+                "Connection" = "keep-alive")
+
 h1 <- curl::new_handle(); h2 <- curl::new_handle()
 curl::handle_setheaders(h1, .list = headers)
 curl::handle_setheaders(h2, .list = headers)
