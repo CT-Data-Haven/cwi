@@ -12,3 +12,4 @@ Meta
 /Meta/
 *.vscode
 .snakemake/
+vignettes/*.csv

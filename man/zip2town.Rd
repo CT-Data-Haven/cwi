@@ -5,24 +5,25 @@
 \alias{zip2town}
 \title{Zip to town lookup}
 \format{
-A data frame with 407 rows and 7 variables:
+A data frame with 410 rows and 8 variables:
 \describe{
-\item{zip}{5-digit zip code (ZCTA5)}
-\item{town_geoid}{10-digit town FIPS code}
 \item{town}{Town name}
-\item{poppt}{Population living in this combination of zip and town}
-\item{hupt}{Number of housing units in this combination of zip and town}
-\item{pct_zip_hh_in_town}{Percentage of the zip's total households that are also in this town}
-\item{pct_town_hh_in_zip}{Percentage of the town's total households that are also in this zip}
+\item{zip}{5-digit zip code (ZCTA5)}
+\item{inter_pop}{Population in this intersection of zips and towns}
+\item{inter_hh}{Number of households in this intersection of zips and towns}
+\item{pct_of_town_pop}{Percentage of the town's population that is also in this zip}
+\item{pct_of_town_hh}{Percentage of the town's households that are also in this zip}
+\item{pct_of_zip_pop}{Percentage of the zip's population that is also in this town}
+\item{pct_of_zip_hh}{Percentage of the zip's households that are also in this town}
 }
 }
 \source{
-Cleaned-up version of the Census \href{https://www.census.gov/geo/maps-data/data/zcta_rel_download.html}{2010 ZCTA to county subdivision relationship file}
+Cleaned-up version of the Census \href{https://www2.census.gov/geo/docs/maps-data/data/rel2022/acs22_cousub22_zcta520_st09.txt}{2022 ZCTA to county subdivision relationship file}, updated for Connecticut's 2022 revisions from counties to COGs.
 }
 \usage{
 zip2town
 }
 \description{
-A crosswalk of Connecticut's ZCTA5s, towns, and town GEOIDs with shares of households in overlapping areas. Each row corresponds to a combination of zip and town; therefore, some zips have more than one observation, as do towns.
+A crosswalk of Connecticut's ZCTA5s and towns with shares of populations and households in overlapping areas. Each row corresponds to a combination of zip and town; therefore, some zips have more than one observation, as do towns.
 }
 \keyword{datasets}
