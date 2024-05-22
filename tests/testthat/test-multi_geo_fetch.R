@@ -43,20 +43,20 @@ test_that("multi_geo_* handles tables that don't exist", {
 })
 
 test_that("multi_geo_* handles neighborhood geoids", {
-  dummy_nhood_00 <- dplyr::mutate(new_haven_tracts19, geoid = paste0(geoid, "00"))
-  dummy_nhood_bg <- dplyr::mutate(new_haven_tracts19, geoid = paste0(geoid, "0"))
-  dummy_nhood_nm <- dplyr::rename(new_haven_tracts19, fips = geoid)
-  expect_message(multi_test(neighborhoods = new_haven_tracts19, nhood_geoid = "geoid"), "tracts")
-  expect_message(multi_test(neighborhoods = dummy_nhood_00, nhood_geoid = "geoid"))
-  expect_message(multi_test(neighborhoods = dummy_nhood_bg, nhood_geoid = "geoid"))
+  dummy_nhood_00 <- dplyr::mutate(new_haven_tracts19, geoid10 = paste0(geoid10, "00"))
+  dummy_nhood_bg <- dplyr::mutate(new_haven_tracts19, geoid10 = paste0(geoid10, "0"))
+  dummy_nhood_nm <- dplyr::rename(new_haven_tracts19, fips = geoid10)
+  expect_message(multi_test(neighborhoods = new_haven_tracts19, nhood_geoid = "geoid10"), "tracts")
+  expect_message(multi_test(neighborhoods = dummy_nhood_00, nhood_geoid = "geoid10"))
+  expect_message(multi_test(neighborhoods = dummy_nhood_bg, nhood_geoid = "geoid10"))
   expect_silent(multi_test(neighborhoods = dummy_nhood_nm, nhood_geoid = "fips", verbose = FALSE))
 })
 
 test_that("multi_geo_* handles neighborhood names", {
   # previously was returning name, name_2 columns
   skip_on_ci()
-  acs_df <- multi_geo_acs("B01003", year = 2019, neighborhoods = new_haven_tracts19, nhood_geoid = "geoid")
-  dec_df <- multi_geo_decennial("P001", year = 2010, neighborhoods = new_haven_tracts19, nhood_geoid = "geoid", sumfile = "sf1")
+  acs_df <- multi_geo_acs("B01003", year = 2019, neighborhoods = new_haven_tracts19, nhood_geoid = "geoid10")
+  dec_df <- multi_geo_decennial("P001", year = 2010, neighborhoods = new_haven_tracts19, nhood_geoid = "geoid10", sumfile = "sf1")
   expect_false(any(grepl("\\d", names(acs_df))))
   expect_false(any(grepl("\\d", names(dec_df))))
 })

@@ -62,10 +62,7 @@ data/occ_codes.rda data/naics_codes.rda &: data-raw/make_lehd.R
 data/msa.rda: data-raw/make_msas.R
 	$(SRC)
 
-data/%_tracts.rda &: data-raw/make_neighborhood_weights.R data/town_sf.rda data/%_sf.rda
-	$(SRC)
-
-data/%_tracts19.rda &: data-raw/make_neighborhood_weights19.R data/town_sf.rda data/%_sf19.rda
+data/%_tracts.rda &: data-raw/make_neighborhood_weights.R data/town_sf.rda data/%_sf.rda 
 	$(SRC)
 
 data/regions.rda: data-raw/make_regions.R data-raw/files/town_region_lookup.csv
