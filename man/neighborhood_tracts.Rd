@@ -13,7 +13,7 @@
 \alias{hartford_tracts19}
 \title{City neighborhoods by tract}
 \format{
-A data frame
+A data frame; the number of rows depends on the city.
 \describe{
 \item{town}{For \code{hartford_tracts}, the name of the town, because both Hartford and West Hartford neighborhoods are included; otherwise, no \code{town} variable is needed}
 \item{name}{Neighborhood name}
@@ -60,5 +60,7 @@ Datasets of neighborhoods for New Haven, Hartford/West Hartford, Stamford, and B
 }
 \details{
 These were updated to 2020 tract definitions. There are still 2019 versions of weight tables with names ending in \code{"19"}; for the time being, those will stick around for use with pre-2020 data.
+
+Note also that there was an error in the tables for Stamford and Hartford/West Hartford where a few neighborhoods were given extra tracts from outside the town boundaries. This particularly would affect counts, such as population totals by neighborhood, and was based on poor alignment in doing spatial overlays. Fixed 5/22/2024.
 }
 \keyword{datasets}

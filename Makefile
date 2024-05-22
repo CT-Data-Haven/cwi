@@ -47,7 +47,10 @@ data/ct5_clusters.rda: data-raw/make_ct5_clusters.R data-raw/files/5CT_groups_20
 data/cws_demo.rda: data-raw/make_cws_demo.R inst/extdata/test_xtab2015.xlsx
 	$(SRC)
 
-data/*_sf.rda &: data-raw/make_geo_sf.R
+data-raw/files/all_city_nhoods.rds: data-raw/get_nhood_geos.sh
+	bash "$<"
+
+data/*_sf.rda &: data-raw/make_geo_sf.R data-raw/files/all_city_nhoods.rds
 	$(SRC)
 
 data/laus_codes.rda: data-raw/make_laus_codes.R

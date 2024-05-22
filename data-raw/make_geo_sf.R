@@ -9,29 +9,23 @@ tract_sf <- tigris::tracts(state = "09", cb = TRUE, class = "sf", year = 2020) |
 tract_sf19 <- tigris::tracts(state = "09", cb = TRUE, class = "sf", year = 2019) |>
   dplyr::select(name = GEOID, geometry)
 
-new_haven_sf <- sf::st_read("https://gist.githubusercontent.com/camille-s/c8cfa583ef22105e90d53ceb299f1a7b/raw/fc087f30ddb2658a05fb5408f1e9d5276b8a433d/nhv.json") |>
-  dplyr::rename(name = neighborhood) |>
-  dplyr::mutate(name = dplyr::recode(name, "Wooster Square/Mill River" = "Wooster Square")) |>
-  sf::st_transform(sf::st_crs(tract_sf))
+# get neighborhoods from gh releases in scratchpad
+# get_gh_asset <- function(repo, tag, files, download = TRUE) {
+#   release <- gh::gh("/repos/CT-Data-Haven/{repo}/releases/tags/{tag}", repo = repo, tag = tag)[["assets"]]
+#   filenames <- purrr::map_chr(release, \(x) x[["name"]])
+#   urls <- purrr::map_chr(release, \(x) x[["browser_download_url"]])
+#   urls <- urls[filenames %in% files]
+#   if (download) {
+#     purrr::walk(urls, \(x) download.file(x, basename(x)))
+#   } else {
+#     urls
+#   }
+# }
+# system("gh release download geos --repo CT-Data-Haven/scratchpad -p 'all_city_nhoods.rds' -D data-raw/files --clobber")
+nhoods <- readRDS(file.path("data-raw", "files", "all_city_nhoods.rds"))
+names(nhoods) <- paste(names(nhoods), "sf", sep = "_")
 
-
-stamford_sf <- sf::st_read("https://gist.github.com/camille-s/7002148f77b0020f780f46127be5e9ea/raw/084af721d6dcf509b29c69b3425179fda0748f03/stamford.geojson") |>
-  dplyr::select(name, geometry) |>
-  sf::st_transform(sf::st_crs(tract_sf))
-
-
-bridgeport_sf <- sf::st_read("https://gist.github.com/camille-s/c5e4f0178cfbf288af454016018f5173/raw/43faa412db577c4f770d861ab913116ccdb3d445/bpt_tract_neighborhoods.geojson") |>
-  dplyr::select(name = Name, geometry) |>
-  sf::st_cast("MULTIPOLYGON") |>
-  sf::st_make_valid() |>
-  sf::st_transform(sf::st_crs(tract_sf))
-
-
-hartford_sf <- sf::st_read("https://gist.github.com/camille-s/9e9761b69a7c86bf6d7163cb73636f26/raw/3858f538d955c022b43e168e4c7cec316c2e437f/hfd_shape.json") |>
-  dplyr::select(name = Neighborhood, town = Town, geometry) |>
-  sf::st_set_crs(sf::st_crs(tract_sf)) |>
-  sf::st_transform(sf::st_crs(tract_sf))
-
+list2env(nhoods, .GlobalEnv)
 
 usethis::use_data(town_sf, overwrite = TRUE)
 usethis::use_data(new_haven_sf, overwrite = TRUE)
@@ -41,3 +35,5 @@ usethis::use_data(hartford_sf, overwrite = TRUE)
 usethis::use_data(tract_sf, overwrite = TRUE)
 usethis::use_data(tract_sf19, overwrite = TRUE)
 
+# force rerun
+file.remove(file.path("data-raw", "files", "all_city_nhoods.rds"))
