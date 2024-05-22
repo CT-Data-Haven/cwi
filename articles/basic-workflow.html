@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.0</span>
       </span>
     </div>
 
@@ -379,11 +379,13 @@ Connecticut over the past 16 years. I’m filtering out the industry code
 <span><span class="co">#&gt;   counties.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The API can only get 10 years of data at once; making multiple calls, but this might take a little longer.</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This message is displayed once per session.</span></span></span>
-<span><span class="va">ct_employment</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qwi_industry.html">qwi_industry</a></span><span class="op">(</span><span class="fl">2002</span><span class="op">:</span><span class="fl">2018</span>, annual <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">This message is displayed once per session.</span></span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ct_employment</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qwi_industry.html">qwi_industry</a></span><span class="op">(</span><span class="fl">2002</span><span class="op">:</span><span class="fl">2018</span>, annual <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>location <span class="op">=</span> <span class="st">"Connecticut"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The API can only get 10 years of data at once; making multiple calls, but this might take a little longer.</span></span>
-<span><span class="va">employment</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">scc_employment</span>, <span class="va">ct_employment</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The API can only get 10 years of data at once; making multiple calls, but this might take a little longer.</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">employment</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">scc_employment</span>, <span class="va">ct_employment</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">industry</span> <span class="op">!=</span> <span class="st">"00"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">inner_join</a></span><span class="op">(</span><span class="va">naics_codes</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">ind_level</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"industry"</span><span class="op">)</span></span>
 <span></span>
@@ -408,14 +410,15 @@ COG and statewide over this time period. I’ll filter
 <code>employment</code>, get the industries with the largest numbers of
 employees, then filter <code>employment</code> for just those industries
 and plot it.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">top2018</span> <span class="op">&lt;-</span> <span class="va">employment</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">==</span> <span class="fl">2018</span>, <span class="va">county</span> <span class="op">==</span> <span class="st">"170"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/top_n.html" class="external-link">top_n</a></span><span class="op">(</span><span class="fl">8</span>, <span class="va">emp</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">industry</span><span class="op">)</span></span>
 <span><span class="va">top2018</span></span>
-<span><span class="co">#&gt; [1] "31-33" "44-45" "54"    "56"    "61"    "62"    "72"    "81"</span></span>
-<span></span>
+<span><span class="co">#&gt; [1] "31-33" "44-45" "54"    "56"    "61"    "62"    "72"    "81"</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="va">employment</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">industry</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">top2018</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_sub.html" class="external-link">str_sub</a></span><span class="op">(</span><span class="va">label</span>, <span class="fl">1</span>, <span class="fl">25</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -436,7 +439,7 @@ should still be valid if it ever gets returned.</p>
 <code><a href="../reference/adj_inflation.html">adj_inflation()</a></code> function. This takes a data frame, the name
 of the column containing dollar amounts, and a base year, then adds two
 columns for the inflation adjustment factor and the adjusted value.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">employment</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">industry</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">top2018</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_sub.html" class="external-link">str_sub</a></span><span class="op">(</span><span class="va">label</span>, <span class="fl">1</span>, <span class="fl">25</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -467,7 +470,7 @@ combination of state, counties, or towns. The LAUS API returns monthly
 data on labor force counts, employment counts, unemployed counts, and
 unemployment rate; <code><a href="../reference/laus_trend.html">laus_trend()</a></code> lets you specify which of
 these measures to fetch.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">unemployment</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/laus_trend.html">laus_trend</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"New Haven"</span>, <span class="st">"New Haven County"</span>, <span class="st">"Connecticut"</span><span class="op">)</span>,</span>
 <span>  startyear <span class="op">=</span> <span class="fl">2000</span>, endyear <span class="op">=</span> <span class="fl">2018</span>, measures <span class="op">=</span> <span class="st">"unemployment rate"</span></span>
 <span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -476,8 +479,9 @@ these measures to fetch.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Local Area Unemployment Statistics</span> <span style="color: #00BBBB;">──────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt; • Unemployment Rate</span></span>
-<span><span class="co">#&gt; • Not Seasonally Adjusted</span></span>
-<span></span>
+<span><span class="co">#&gt; • Not Seasonally Adjusted</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="va">unemployment</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 684 × 3</span></span></span>
 <span><span class="co">#&gt;    area             date       value</span></span>
@@ -492,8 +496,9 @@ these measures to fetch.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> New Haven County 2000-03-01 0.025</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> New Haven        2000-03-01 0.033</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Connecticut      2000-04-01 0.018</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 674 more rows</span></span></span>
-<span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 674 more rows</span></span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="va">unemp_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">unemployment</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">value</span>, group <span class="op">=</span> <span class="va">area</span>, color <span class="op">=</span> <span class="va">area</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html" class="external-link">geom_smooth</a></span><span class="op">(</span>se <span class="op">=</span> <span class="cn">FALSE</span>, method <span class="op">=</span> <span class="st">"loess"</span>, linewidth <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span>

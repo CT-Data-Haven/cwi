@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cwi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.0</span>
       </span>
     </div>
 
@@ -94,7 +94,7 @@
 
     <div id="format">
     <h2>Format</h2>
-    <p>A data frame</p><dl><dt>town</dt>
+    <p>A data frame; the number of rows depends on the city.</p><dl><dt>town</dt>
 <dd><p>For <code>hartford_tracts</code>, the name of the town, because both Hartford and West Hartford neighborhoods are included; otherwise, no <code>town</code> variable is needed</p></dd>
 
 <dt>name</dt>
@@ -122,6 +122,7 @@
     <div id="details">
     <h2>Details</h2>
     <p>These were updated to 2020 tract definitions. There are still 2019 versions of weight tables with names ending in <code>"19"</code>; for the time being, those will stick around for use with pre-2020 data.</p>
+<p>Note also that there was an error in the tables for Stamford and Hartford/West Hartford where a few neighborhoods were given extra tracts from outside the town boundaries. This particularly would affect counts, such as population totals by neighborhood, and was based on poor alignment in doing spatial overlays. Fixed 5/22/2024.</p>
     </div>
 
   </div>
