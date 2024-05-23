@@ -50,6 +50,7 @@ Suggests:
     testthat (>= 3.0.0),
     showtext,
     R.utils,
+    lwgeom,
     covr
 Remotes: 
     camille-s/camiller
