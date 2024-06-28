@@ -185,11 +185,17 @@ census_pumas <- function(src, table, year, pumas, counties, state, dataset, key,
   if (identical(pumas, "all")) {
     xw <- county_x_state(state, counties)
   } else {
+    # joining with county_x_state doesn't work here for 2022 because pumas aren't subsets of counties anymore
     xw <- county_x_state(state, "all")
     fetch <- dplyr::filter(fetch, GEOID %in% pumas)
   }
+
   fetch$county_geoid <- substr(fetch$GEOID, 1, 5)
-  fetch <- dplyr::inner_join(fetch, xw, by = "county_geoid")
+
+  # don't filter if CT in 2022+
+  if (!(year >= 2022 & state == "09")) {
+    fetch <- dplyr::inner_join(fetch, xw, by = "county_geoid")
+  }
   fetch$county_geoid <- NULL
   fetch$NAME <- fetch$GEOID
   fetch
