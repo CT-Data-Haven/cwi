@@ -155,7 +155,60 @@
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional arguments to pass on to <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html" class="external-link">tidycensus::get_acs</a></code></p></dd>
+<dd><p>Arguments passed on to <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html" class="external-link">tidycensus::get_acs</a></code></p><dl><dt><code>variables</code></dt>
+<dd><p>Character string or vector of character strings of variable
+IDs. tidycensus automatically returns the estimate and the margin of error
+associated with the variable.</p></dd>
+
+    <dt><code>output</code></dt>
+<dd><p>One of "tidy" (the default) in which each row represents an
+enumeration unit-variable combination, or "wide" in which each row
+represents an enumeration unit and the variables are in the columns.</p></dd>
+
+    <dt><code>county</code></dt>
+<dd><p>The county for which you are requesting data. County names and
+FIPS codes are accepted. Must be combined with a value supplied to `state`.
+Defaults to NULL.</p></dd>
+
+    <dt><code>zcta</code></dt>
+<dd><p>The zip code tabulation area(s) for which you are requesting
+data. Specify a single value or a vector of values to get data for more
+than one ZCTA. Numeric or character ZCTA GEOIDs are accepted. When
+specifying ZCTAs, geography must be set to `"zcta"` and `state` must be specified with
+`county` left as `NULL`. Defaults to NULL.</p></dd>
+
+    <dt><code>geometry</code></dt>
+<dd><p>if FALSE (the default), return a regular tibble of ACS data.
+if TRUE, uses the tigris package to return an sf tibble with simple feature
+geometry in the `geometry` column.</p></dd>
+
+    <dt><code>keep_geo_vars</code></dt>
+<dd><p>if TRUE, keeps all the variables from the Census
+shapefile obtained by tigris.  Defaults to FALSE.</p></dd>
+
+    <dt><code>shift_geo</code></dt>
+<dd><p>(deprecated) if TRUE, returns geometry with Alaska and Hawaii shifted for
+thematic mapping of the entire US. Geometry was originally obtained from
+the albersusa R package. As of May 2021, we recommend using <code><a href="https://rdrr.io/pkg/tigris/man/shift_geometry.html" class="external-link">tigris::shift_geometry()</a></code>
+instead.</p></dd>
+
+    <dt><code>summary_var</code></dt>
+<dd><p>Character string of a "summary variable" from the ACS to
+be included in your output. Usually a variable (e.g. total population) that
+you'll want to use as a denominator or comparison.</p></dd>
+
+    <dt><code>moe_level</code></dt>
+<dd><p>The confidence level of the returned margin of error.  One
+of 90 (the default), 95, or 99.</p></dd>
+
+    <dt><code>show_call</code></dt>
+<dd><p>if TRUE, display call made to Census API. This can be very
+useful in debugging and determining if error messages returned are due to
+tidycensus or the Census API. Copy to the API call into a browser and see
+what is returned by the API directly. Defaults to FALSE.</p></dd>
+
+
+</dl></dd>
 
 </dl></div>
     <div class="section level2">
@@ -164,7 +217,7 @@
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This function essentially calls <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html" class="external-link">tidycensus::get_acs()</a></code> multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html" class="external-link">tidycensus::get_acs()</a></code> requires a Census API key. As is the case with other <code>tidycensus</code> functions, <code>multi_geo_acs</code> assumes this key is stored as <code>CENSUS_API_KEY</code> in your <code>.Renviron</code>. See <code><a href="https://walker-data.com/tidycensus/reference/census_api_key.html" class="external-link">tidycensus::census_api_key()</a></code> for installation.</p>
+    <p>This function essentially calls <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html" class="external-link">tidycensus::get_acs()</a></code> multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying <code><a href="https://walker-data.com/tidycensus/reference/get_acs.html" class="external-link">tidycensus::get_acs()</a></code> requires a Census API key. As is the case with other <code>tidycensus</code> functions, <code>multi_geo_acs</code> assumes this key is stored as <code>CENSUS_API_KEY</code> in your <code>.Renviron</code> or other source of environment variables. See <code><a href="https://walker-data.com/tidycensus/reference/census_api_key.html" class="external-link">tidycensus::census_api_key()</a></code> for installation.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

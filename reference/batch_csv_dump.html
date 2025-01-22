@@ -85,7 +85,54 @@
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional arguments to pass to <code><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">utils::write.csv</a></code>, such as <code>na</code> or <code>col.names</code>.</p></dd>
+<dd><p>Arguments passed on to <code><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">utils::write.table</a></code></p><dl><dt><code>append</code></dt>
+<dd><p>logical. Only relevant if <code>file</code> is a character
+    string.  If <code>TRUE</code>, the output is appended to the
+    file.  If <code>FALSE</code>, any existing file of the name is destroyed.</p></dd>
+
+    <dt><code>quote</code></dt>
+<dd><p>a logical value (<code>TRUE</code> or <code>FALSE</code>) or a
+    numeric vector.  If <code>TRUE</code>, any character or factor columns
+    will be surrounded by double quotes.  If a numeric vector, its
+    elements are taken as the indices of columns to quote.  In both
+    cases, row and column names are quoted if they are written.  If
+    <code>FALSE</code>, nothing is quoted.</p></dd>
+
+    <dt><code>eol</code></dt>
+<dd><p>the character(s) to print at the end of each line (row).
+    For example, <code>eol = "\r\n"</code> will produce Windows' line endings on
+    a Unix-alike OS, and <code>eol = "\r"</code> will produce files as expected by
+    Excel:mac 2004.</p></dd>
+
+    <dt><code>na</code></dt>
+<dd><p>the string to use for missing values in the data.</p></dd>
+
+    <dt><code>dec</code></dt>
+<dd><p>the string to use for decimal points in numeric or complex
+    columns: must be a single character.</p></dd>
+
+    <dt><code>col.names</code></dt>
+<dd><p>either a logical value indicating whether the column
+    names of <code>x</code> are to be written along with <code>x</code>, or a
+    character vector of column names to be written.  See the section on
+    ‘CSV files’ for the meaning of <code>col.names = NA</code>.</p></dd>
+
+    <dt><code>qmethod</code></dt>
+<dd><p>a character string specifying how to deal with embedded
+    double quote characters when quoting strings.  Must be one of
+    <code>"escape"</code> (default for <code>write.table</code>), in which case the
+    quote character is escaped in C style by a backslash, or
+    <code>"double"</code> (default for <code>write.csv</code> and
+    <code>write.csv2</code>), in which case it is doubled.  You can specify
+    just the initial letter.</p></dd>
+
+    <dt><code>fileEncoding</code></dt>
+<dd><p>character string: if non-empty declares the
+    encoding to be used on a file (not a connection) so the character data can
+    be re-encoded as they are written.  See <code><a href="https://rdrr.io/r/base/connections.html" class="external-link">file</a></code>.</p></dd>
+
+
+</dl></dd>
 
 </dl></div>
     <div class="section level2">
