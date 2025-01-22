@@ -14,7 +14,7 @@ separate_acs(
 )
 }
 \arguments{
-\item{data}{A data frame such as returned by \code{cwi::multi_geo_acs} or \code{tidycensus::get_acs}.}
+\item{data}{A data frame such as returned by \code{\link[=multi_geo_acs]{multi_geo_acs()}} or \code{\link[tidycensus:get_acs]{tidycensus::get_acs()}}.}
 
 \item{col}{Bare column name where ACS labels are. Default: label}
 
@@ -24,13 +24,36 @@ separate_acs(
 
 \item{drop_total}{Logical, whether to include the "Total" column that comes from separating ACS data. Default: FALSE}
 
-\item{...}{Any additional arguments to be passed on to \code{tidyr::separate}.}
+\item{...}{
+  Arguments passed on to \code{\link[tidyr:separate]{tidyr::separate}}
+  \describe{
+    \item{\code{remove}}{If \code{TRUE}, remove input column from output data frame.}
+    \item{\code{convert}}{If \code{TRUE}, will run \code{\link[=type.convert]{type.convert()}} with
+\code{as.is = TRUE} on new columns. This is useful if the component
+columns are integer, numeric or logical.
+
+NB: this will cause string \code{"NA"}s to be converted to \code{NA}s.}
+    \item{\code{extra}}{If \code{sep} is a character vector, this controls what
+happens when there are too many pieces. There are three valid options:
+\itemize{
+\item \code{"warn"} (the default): emit a warning and drop extra values.
+\item \code{"drop"}: drop any extra values without a warning.
+\item \code{"merge"}: only splits at most \code{length(into)} times
+}}
+    \item{\code{fill}}{If \code{sep} is a character vector, this controls what
+happens when there are not enough pieces. There are three valid options:
+\itemize{
+\item \code{"warn"} (the default): emit a warning and fill from the right
+\item \code{"right"}: fill with missing values on the right
+\item \code{"left"}: fill with missing values on the left
+}}
+  }}
 }
 \value{
 A data frame
 }
 \description{
-This is a quick wrapper around \code{tidyr::separate} written to match the standard formatting used for ACS variable labels. These generally take the form e.g. "Total!!Male!!5 to 9 years". This function will separate values by \code{"!!"} and optionally drop the resulting "Total" column, which is generally constant for the entire data frame.
+This is a quick wrapper around \code{\link[tidyr:separate]{tidyr::separate()}} written to match the standard formatting used for ACS variable labels. These generally take the form e.g. "Total!!Male!!5 to 9 years". This function will separate values by \code{"!!"} and optionally drop the resulting "Total" column, which is generally constant for the entire data frame.
 }
 \examples{
 \dontrun{
@@ -56,5 +79,5 @@ if (interactive()) {
 }
 }
 \seealso{
-tidyr::separate
+\code{\link[tidyr:separate]{tidyr::separate()}}
 }

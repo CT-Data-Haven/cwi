@@ -66,7 +66,37 @@ multi_geo_decennial(
 
 \item{sleep}{Number of seconds, if any, to sleep before each API call. This might help with the Census API's tendency to crash, but for many geographies, it could add a sizable about of time. Probably don't add more than a few seconds.}
 
-\item{...}{Additional arguments to pass on to \code{tidycensus::get_acs}}
+\item{...}{
+  Arguments passed on to \code{\link[tidycensus:get_decennial]{tidycensus::get_decennial}}
+  \describe{
+    \item{\code{variables}}{Character string or vector of character strings of variable
+IDs.}
+    \item{\code{county}}{The county for which you are requesting data. County names and
+FIPS codes are accepted. Must be combined with a value supplied
+to `state`.  Defaults to NULL.}
+    \item{\code{geometry}}{if FALSE (the default), return a regular tibble of ACS data.
+if TRUE, uses the tigris package to return an sf tibble
+with simple feature geometry in the `geometry` column.}
+    \item{\code{output}}{One of "tidy" (the default) in which each row represents an
+enumeration unit-variable combination, or "wide" in which each
+row represents an enumeration unit and the variables are in the
+columns.}
+    \item{\code{keep_geo_vars}}{if TRUE, keeps all the variables from the Census
+shapefile obtained by tigris.  Defaults to FALSE.}
+    \item{\code{shift_geo}}{(deprecated) if TRUE, returns geometry with Alaska and Hawaii
+shifted for thematic mapping of the entire US.
+Geometry was originally obtained from the albersusa R package.  As of May 2021,
+we recommend using \code{tigris::shift_geometry()} instead.}
+    \item{\code{summary_var}}{Character string of a "summary variable" from the decennial Census
+to be included in your output. Usually a variable (e.g. total population)
+that you'll want to use as a denominator or comparison.}
+    \item{\code{pop_group}}{The population group code for which you'd like to request data.  Applies to summary files for which population group breakdowns are available like the Detailed DHC-A file.}
+    \item{\code{pop_group_label}}{If \code{TRUE}, return a \code{"pop_group_label"} column that contains the label for the population group.  Defaults to \code{FALSE}.}
+    \item{\code{show_call}}{if TRUE, display call made to Census API. This can be very useful
+in debugging and determining if error messages returned are
+due to tidycensus or the Census API. Copy to the API call into
+a browser and see what is returned by the API directly. Defaults to FALSE.}
+  }}
 }
 \value{
 A tibble with GEOID, name, variable code, estimate, moe, geography level, state, and year, as applicable, for the chosen table.
@@ -75,9 +105,9 @@ A tibble with GEOID, name, variable code, estimate, moe, geography level, state,
 Fetch a data table from the decennial census via \code{tidycensus} with your choice of geographies at multiple levels. For geographies made of aggregates, i.e. neighborhoods made of tracts or regions made of towns, the returned table will have estimates summed for the whole area. Any geographic levels that are null will be excluded.
 }
 \details{
-This function essentially calls \code{tidycensus::get_decennial()} multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying \code{tidycensus::get_decennial()} requires a Census API key. As is the case with other \code{tidycensus} functions, \code{multi_geo_decennial} assumes this key is stored as \code{CENSUS_API_KEY} in your \code{.Renviron}. See \code{\link[tidycensus:census_api_key]{tidycensus::census_api_key()}} for installation.
+This function essentially calls \code{\link[tidycensus:get_decennial]{tidycensus::get_decennial()}} multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying \code{\link[tidycensus:get_decennial]{tidycensus::get_decennial()}} requires a Census API key. As is the case with other \code{tidycensus} functions, \code{multi_geo_decennial} assumes this key is stored as \code{CENSUS_API_KEY} in your \code{.Renviron} or other source of environment variables. See \code{\link[tidycensus:census_api_key]{tidycensus::census_api_key()}} for installation.
 
-Be advised that decennial table numbers may change from year to year, so if you're looking at trends, check FactFinder or another source to make sure the tables have the same meaning. Setting \code{verbose = TRUE} is helpful for this as well.
+Be advised that decennial table numbers generally change from year to year, so if you're looking at trends, check \href{https://data.census.gov}{data.census.gov} or another source to make sure the tables have the same meaning. Setting \code{verbose = TRUE} is helpful for this as well.
 }
 \examples{
 \dontrun{

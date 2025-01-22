@@ -33,7 +33,50 @@ quick_map(
 
 \item{title}{String giving the title, if desired, for the plot.}
 
-\item{...}{Any other parameters to pass along to \code{geom_sf()}, such as \code{color} or \code{size}.}
+\item{...}{
+  Arguments passed on to \code{\link[ggplot2:ggsf]{ggplot2::geom_sf}}
+  \describe{
+    \item{\code{mapping}}{Set of aesthetic mappings created by \code{\link[ggplot2:aes]{aes()}}. If specified and
+\code{inherit.aes = TRUE} (the default), it is combined with the default mapping
+at the top level of the plot. You must supply \code{mapping} if there is no plot
+mapping.}
+    \item{\code{stat}}{The statistical transformation to use on the data for this layer.
+When using a \verb{geom_*()} function to construct a layer, the \code{stat}
+argument can be used the override the default coupling between geoms and
+stats. The \code{stat} argument accepts the following:
+\itemize{
+\item A \code{Stat} ggproto subclass, for example \code{StatCount}.
+\item A string naming the stat. To give the stat as a string, strip the
+function name of the \code{stat_} prefix. For example, to use \code{stat_count()},
+give the stat as \code{"count"}.
+\item For more information and other ways to specify the stat, see the
+\link[ggplot2:layer_stats]{layer stat} documentation.
+}}
+    \item{\code{position}}{A position adjustment to use on the data for this layer. This
+can be used in various ways, including to prevent overplotting and
+improving the display. The \code{position} argument accepts the following:
+\itemize{
+\item The result of calling a position function, such as \code{position_jitter()}.
+This method allows for passing extra arguments to the position.
+\item A string naming the position adjustment. To give the position as a
+string, strip the function name of the \code{position_} prefix. For example,
+to use \code{position_jitter()}, give the position as \code{"jitter"}.
+\item For more information and other ways to specify the position, see the
+\link[ggplot2:layer_positions]{layer position} documentation.
+}}
+    \item{\code{na.rm}}{If \code{FALSE}, the default, missing values are removed with
+a warning. If \code{TRUE}, missing values are silently removed.}
+    \item{\code{show.legend}}{logical. Should this layer be included in the legends?
+\code{NA}, the default, includes if any aesthetics are mapped.
+\code{FALSE} never includes, and \code{TRUE} always includes.
+
+You can also set this to one of "polygon", "line", and "point" to
+override the default legend.}
+    \item{\code{inherit.aes}}{If \code{FALSE}, overrides the default aesthetics,
+rather than combining with them. This is most useful for helper functions
+that define both data and aesthetics and shouldn't inherit behaviour from
+the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
+  }}
 }
 \value{
 A ggplot
@@ -51,4 +94,7 @@ tidycensus::get_acs(
     dplyr::filter(NAME \%in\% regions$`Greater New Haven`) |>
     quick_map(name = NAME, value = estimate, title = "Median age by town, 2017", n = 6)
 }
+}
+\seealso{
+\code{\link[ggplot2:ggsf]{ggplot2::geom_sf()}}
 }

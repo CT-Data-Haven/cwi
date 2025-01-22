@@ -3,15 +3,16 @@
 #' into `n` number of breaks using the Jenks/Fisher algorithms. The algorithm(s) sets breaks in a way that highlights very high or very low values well. It's good to use for choropleths that need to convey imbalances or inequities.
 #' @param x A numeric vector to cut
 #' @param n Number of bins, Default: 5
-#' @param true_jenks Logical: should a "true" Jenks algorithm be used? If false, uses the faster Fisher-Jenks algorithm. See `classInt::classIntervals` docs for discussion. Default: FALSE
+#' @param true_jenks Logical: should a "true" Jenks algorithm be used? If false, uses the faster Fisher-Jenks algorithm. See [classInt::classIntervals()] docs for discussion. Default: FALSE
 #' @param labels A string vector to be used as bin labels, Default: NULL
-#' @param ... Additional arguments passed on to [`base::cut`]
+#' @param ... Additional arguments passed on to [base::cut()]
+#' @inheritDotParams base::cut
 #' @return A factor of the same length as x
 #' @examples
 #' set.seed(123)
 #' values <- rexp(30, 0.8)
 #' jenks(values, n = 4)
-#' @seealso [`classInt::classIntervals`]
+#' @seealso [classInt::classIntervals()]
 #' @export
 jenks <- function(x, n = 5, true_jenks = FALSE, labels = NULL, ...) {
     if (!is.numeric(x)) cli::cli_abort("{.var x} must be numeric.")

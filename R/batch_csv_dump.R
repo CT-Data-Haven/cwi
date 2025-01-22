@@ -7,7 +7,8 @@
 #' @param base_name Optional string to be prepended to all file names.
 #' @param bind Logical: whether to row-bind list of data frames into a single data frame. Defaults `FALSE`, in which case a list of data frames is returned.
 #' @param verbose Logical: whether to print files' paths and names as they're written. Defaults `TRUE`.
-#' @param ... Additional arguments to pass to `utils::write.csv`, such as `na` or `col.names`.
+#' @param ... Additional arguments to pass to `utils::write.csv`, such as `na` or `col.names`. The argument `file` is generated, and `row.names` is fixed to `FALSE`
+#' @inheritDotParams utils::write.table -x -file -row.names -sep
 #' @return Either a list of data frames (in case of `bind = FALSE`) or a single data frame (in case of `bind = TRUE`).
 #'
 #' @export

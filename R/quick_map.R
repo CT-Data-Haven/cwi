@@ -10,7 +10,8 @@
 #' @param n Number of breaks into which to bin values; defaults (approximately) 5.
 #' @param palette String of a ColorBrewer palette; see [RColorBrewer::RColorBrewer()] for possible values. Defaults `"GnBu"`.
 #' @param title String giving the title, if desired, for the plot.
-#' @param ... Any other parameters to pass along to `geom_sf()`, such as `color` or `size`.
+#' @param ... Any other parameters to pass along to [ggplot2::geom_sf()], such as `color` or `size`.
+#' @inheritDotParams ggplot2::geom_sf
 #' @return A ggplot
 #' @examples
 #' \dontrun{
@@ -22,8 +23,17 @@
 #'     dplyr::filter(NAME %in% regions$`Greater New Haven`) |>
 #'     quick_map(name = NAME, value = estimate, title = "Median age by town, 2017", n = 6)
 #' }
+#' @seealso [ggplot2::geom_sf()]
 #' @export
-quick_map <- function(data, name = name, value = value, level = c("town", "neighborhood", "tract"), city = NULL, n = 5, palette = "GnBu", title = NULL, ...) {
+quick_map <- function(data,
+                      name = name,
+                      value = value,
+                      level = c("town", "neighborhood", "tract"),
+                      city = NULL,
+                      n = 5,
+                      palette = "GnBu",
+                      title = NULL,
+                      ...) {
     # supply city if it's neighborhoods
     level <- rlang::arg_match(level)
 

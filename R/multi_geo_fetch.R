@@ -2,7 +2,7 @@
 #'
 #' Fetch a data table from the ACS via `tidycensus` with your choice of geographies at multiple levels. For geographies made of aggregates, i.e. neighborhoods made of tracts or regions made of towns, the returned table will have estimates summed and margins of error calculated for the whole area. Any geographic levels that are null will be excluded.
 #'
-#' This function essentially calls `tidycensus::get_acs()` multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying `tidycensus::get_acs()` requires a Census API key. As is the case with other `tidycensus` functions, `multi_geo_acs` assumes this key is stored as `CENSUS_API_KEY` in your `.Renviron`. See [tidycensus::census_api_key()] for installation.
+#' This function essentially calls [tidycensus::get_acs()] multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying [tidycensus::get_acs()] requires a Census API key. As is the case with other `tidycensus` functions, `multi_geo_acs` assumes this key is stored as `CENSUS_API_KEY` in your `.Renviron` or other source of environment variables. See [tidycensus::census_api_key()] for installation.
 #'
 #' @param table A string giving the ACS table number.
 #' @param year The year of the ACS table; currently defaults `r cwi:::endyears[["acs"]]` (most recent available).
@@ -25,6 +25,7 @@
 #' @param key String: Census API key. If `NULL` (default), takes the value from `Sys.getenv("CENSUS_API_KEY")`.
 #' @param sleep Number of seconds, if any, to sleep before each API call. This might help with the Census API's tendency to crash, but for many geographies, it could add a sizable about of time. Probably don't add more than a few seconds.
 #' @param ... Additional arguments to pass on to `tidycensus::get_acs`
+#' @inheritDotParams tidycensus::get_acs -geography -table -year -state -survey -key -cache_table
 #' @return A tibble with GEOID, name, variable code, estimate, moe, geography level, state, and year, as applicable, for the chosen ACS table.
 #' @seealso [tidycensus::census_api_key()], [tidycensus::get_acs()]
 #' @examples
@@ -159,9 +160,9 @@ multi_geo_acs <- function(table, year = endyears[["acs"]],
 #'
 #' Fetch a data table from the decennial census via `tidycensus` with your choice of geographies at multiple levels. For geographies made of aggregates, i.e. neighborhoods made of tracts or regions made of towns, the returned table will have estimates summed for the whole area. Any geographic levels that are null will be excluded.
 #'
-#' This function essentially calls `tidycensus::get_decennial()` multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying `tidycensus::get_decennial()` requires a Census API key. As is the case with other `tidycensus` functions, `multi_geo_decennial` assumes this key is stored as `CENSUS_API_KEY` in your `.Renviron`. See [tidycensus::census_api_key()] for installation.
+#' This function essentially calls [tidycensus::get_decennial()] multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying [tidycensus::get_decennial()] requires a Census API key. As is the case with other `tidycensus` functions, `multi_geo_decennial` assumes this key is stored as `CENSUS_API_KEY` in your `.Renviron` or other source of environment variables. See [tidycensus::census_api_key()] for installation.
 #'
-#' Be advised that decennial table numbers may change from year to year, so if you're looking at trends, check FactFinder or another source to make sure the tables have the same meaning. Setting `verbose = TRUE` is helpful for this as well.
+#' Be advised that decennial table numbers generally change from year to year, so if you're looking at trends, check [data.census.gov](https://data.census.gov) or another source to make sure the tables have the same meaning. Setting `verbose = TRUE` is helpful for this as well.
 #'
 #' @param table A string giving the decennial census table number. These are generally formatted as one or more letters, 3 numbers, and optionally a letter.
 #' @param year The year of the census table; currently defaults `r cwi:::endyears[["decennial"]]`.
@@ -182,7 +183,8 @@ multi_geo_acs <- function(table, year = endyears[["acs"]],
 #' @param verbose Logical: whether to print summary of geographies included. Defaults `TRUE`.
 #' @param key String: Census API key. If `NULL` (default), takes the value from `Sys.getenv("CENSUS_API_KEY")`.
 #' @param sleep Number of seconds, if any, to sleep before each API call. This might help with the Census API's tendency to crash, but for many geographies, it could add a sizable about of time. Probably don't add more than a few seconds.
-#' @param ... Additional arguments to pass on to `tidycensus::get_acs`
+#' @param ... Additional arguments to pass on to [tidycensus::get_decennial()]
+#' @inheritDotParams tidycensus::get_decennial -geography -table -year -state -sumfile -key -cache_table
 #' @return A tibble with GEOID, name, variable code, estimate, moe, geography level, state, and year, as applicable, for the chosen table.
 #' @seealso [tidycensus::census_api_key()], [tidycensus::get_decennial()]
 #' @examples

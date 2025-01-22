@@ -11,11 +11,15 @@ jenks(x, n = 5, true_jenks = FALSE, labels = NULL, ...)
 
 \item{n}{Number of bins, Default: 5}
 
-\item{true_jenks}{Logical: should a "true" Jenks algorithm be used? If false, uses the faster Fisher-Jenks algorithm. See \code{classInt::classIntervals} docs for discussion. Default: FALSE}
+\item{true_jenks}{Logical: should a "true" Jenks algorithm be used? If false, uses the faster Fisher-Jenks algorithm. See \code{\link[classInt:classIntervals]{classInt::classIntervals()}} docs for discussion. Default: FALSE}
 
 \item{labels}{A string vector to be used as bin labels, Default: NULL}
 
-\item{...}{Additional arguments passed on to \code{\link[base:cut]{base::cut}}}
+\item{...}{
+  Arguments passed on to \code{\link[base:cut]{base::cut}}
+  \describe{
+    \item{\code{}}{}
+  }}
 }
 \value{
 A factor of the same length as x
@@ -30,5 +34,5 @@ values <- rexp(30, 0.8)
 jenks(values, n = 4)
 }
 \seealso{
-\code{\link[classInt:classIntervals]{classInt::classIntervals}}
+\code{\link[classInt:classIntervals]{classInt::classIntervals()}}
 }
