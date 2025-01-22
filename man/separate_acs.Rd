@@ -34,25 +34,25 @@ This is a quick wrapper around \code{tidyr::separate} written to match the stand
 }
 \examples{
 \dontrun{
-if(interactive()){
-   age <- label_acs(multi_geo_acs("B01001"))
+if (interactive()) {
+    age <- label_acs(multi_geo_acs("B01001"))
 
-   # Default: allow automatic labeling, in this case x1, x2, x3
-   separate_acs(age)
+    # Default: allow automatic labeling, in this case x1, x2, x3
+    separate_acs(age)
 
-   # Drop Total column, use automatic labeling (x1 & x2)
-   separate_acs(age, drop_total = TRUE)
+    # Drop Total column, use automatic labeling (x1 & x2)
+    separate_acs(age, drop_total = TRUE)
 
-   # Keep Total column; assign names total, sex, age
-   separate_acs(age, into = c("total", "sex", "age"))
+    # Keep Total column; assign names total, sex, age
+    separate_acs(age, into = c("total", "sex", "age"))
 
-   # Drop Total column; only need to name sex & age
-   separate_acs(age, into = c("sex", "age"), drop_total = TRUE)
+    # Drop Total column; only need to name sex & age
+    separate_acs(age, into = c("sex", "age"), drop_total = TRUE)
 
-   # Carried over from tidyr::separate, using NA in place of the Total column
-   # will also drop that column and yield the same as the previous example
-   separate_acs(age, into = c(NA, "sex", "age"))
- }
+    # Carried over from tidyr::separate, using NA in place of the Total column
+    # will also drop that column and yield the same as the previous example
+    separate_acs(age, into = c(NA, "sex", "age"))
+}
 }
 }
 \seealso{

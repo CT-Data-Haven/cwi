@@ -9,13 +9,13 @@ read_xtabs(
   path,
   name_prefix = "x",
   marker = "Nature of the [Ss]ample",
-  year = 2018,
+  year = NULL,
   process = FALSE,
   verbose = TRUE,
   ...
 )
 
-read_weights(path, marker = "Nature of the [Ss]ample")
+read_weights(path, year, marker = "Nature of the [Ss]ample")
 }
 \arguments{
 \item{path}{Path to an excel file}
@@ -30,8 +30,12 @@ it's assumed that weights are in headers above the data, such as for 2021,
 in which case a different operation is done but the same weights table is
 returned. Default: \code{"Nature of the [Ss]ample"}}
 
-\item{year}{Numeric. As of now, its main purpose is to add an extra filtering
-step to take out headers in the 2015 files. Default: 2018}
+\item{year}{Numeric: year of the survey (or end year, in the case of pooled data).
+This tells the functions how to read the files, since formatting has changed
+across years of the survey. Because the ability to read a file depends so much
+on the year for which it was produced, this argument no longer defaults to a
+specific year. Instead, if \code{NULL} (the default), it will be guessed from the
+path. Supplying it explicitly is better, but this serves as a fallback.}
 
 \item{process}{Logical: if \code{FALSE} (the default), this will return the
 crosstab data to be processed, most likely by passing along to \code{xtab2df}. If
@@ -41,7 +45,9 @@ what the crosstab data looks like, so you don't accidentally lose some
 questions or important description. As a sanity check, you'll see a message
 listing the parameters used in the \code{xtab2df} call.}
 
-\item{verbose}{Logical: if \code{process} is true, should parameters being passed to \code{xtab2df} be printed? Defaults to \code{TRUE} to encourage you to double check that you're passing arguments intentionally.}
+\item{verbose}{Logical: if \code{process} is true, should parameters being passed to
+\code{xtab2df} be printed? Defaults to \code{TRUE} to encourage you to double check that
+you're passing arguments intentionally.}
 
 \item{...}{Additional arguments passed on to \code{xtab2df} if \code{process = TRUE}.}
 }
@@ -57,14 +63,14 @@ spreadsheets of crosstabs generated from SPSS. Note that they're likely
 only useful for working with the DataHaven Community Wellbeing Survey.
 }
 \examples{
-if(interactive()) {
-  xt <- system.file("extdata/test_xtab2018.xlsx", package = "cwi")
-  read_weights(xt)
+if (interactive()) {
+    xt <- system.file("extdata/test_xtab2018.xlsx", package = "cwi")
+    read_weights(xt, year = 2018)
 
-  # returns a not-very-pretty data frame of the crosstabs to be processed
-  read_xtabs(xt)
-  # returns a pretty data frame ready for analysis
-  read_xtabs(xt, process = TRUE)
+    # returns a not-very-pretty data frame of the crosstabs to be processed
+    read_xtabs(xt, year = 2018)
+    # returns a pretty data frame ready for analysis
+    read_xtabs(xt, year = 2018, process = TRUE)
 }
 }
 \seealso{

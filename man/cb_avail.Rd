@@ -5,7 +5,7 @@
 \alias{cb_avail}
 \title{Tables available from the Census Bureau API}
 \format{
-A data frame with 48 rows and 4 variables:
+A data frame with 52 rows and 4 variables:
 \describe{
 \item{vintage}{Vintage year of dataset}
 \item{program}{Program, either "acs" or "dec"}

@@ -5,7 +5,7 @@
 \alias{school_dists}
 \title{School districts by town}
 \format{
-A data frame with 195 rows and 2 variables:
+A data frame with 196 rows and 2 variables:
 \describe{
 \item{district}{School district name}
 \item{town}{Name of town included in district}

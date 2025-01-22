@@ -22,5 +22,5 @@ A tibble
 \code{tidycensus::get_decennial} returns a decennial data table with its variable codes, which can be joined with \code{cwi::decennial_vars20} to get readable labels. This function is just a quick wrapper around the common task of joining these two data frames.
 }
 \seealso{
-\link{decennial_vars20}
+\link{decennial_vars}
 }

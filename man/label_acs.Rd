@@ -4,12 +4,12 @@
 \alias{label_acs}
 \title{Quickly add the labels of ACS variables}
 \usage{
-label_acs(data, year = 2022, survey = "acs5", variable = variable)
+label_acs(data, year = 2023, survey = "acs5", variable = variable)
 }
 \arguments{
 \item{data}{A data frame/tibble.}
 
-\item{year}{The endyear of ACS data; defaults 2022.}
+\item{year}{The endyear of ACS data; defaults 2023.}
 
 \item{survey}{A string: which ACS estimate to use. Defaults to 5-year (\code{"acs5"}), but can also be 1-year (\code{"acs1"}) or 3-year (\code{"acs3"}), though both 1-year and 3-year have limited availability.}
 
@@ -22,5 +22,5 @@ A tibble
 \code{tidycensus::get_acs} returns an ACS table with its variable codes, which can be joined with \verb{cwi::acs_vars*} to get readable labels. This function is just a quick wrapper around the common task of joining these two data frames.
 }
 \seealso{
-\link{acs_vars22}
+\link{acs_vars}
 }

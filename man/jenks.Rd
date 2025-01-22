@@ -25,9 +25,9 @@ Given a numeric vector, this returns a factor of those values cut
 into \code{n} number of breaks using the Jenks/Fisher algorithms. The algorithm(s) sets breaks in a way that highlights very high or very low values well. It's good to use for choropleths that need to convey imbalances or inequities.
 }
 \examples{
- set.seed(123)
- values <- rexp(30, 0.8)
- jenks(values, n = 4)
+set.seed(123)
+values <- rexp(30, 0.8)
+jenks(values, n = 4)
 }
 \seealso{
 \code{\link[classInt:classIntervals]{classInt::classIntervals}}

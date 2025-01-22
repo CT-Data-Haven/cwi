@@ -3,6 +3,7 @@
 \docType{data}
 \name{xwalk}
 \alias{xwalk}
+\alias{tract2town}
 \title{CT crosswalk}
 \format{
 A data frame with 48358 rows and 17 variables:
@@ -25,14 +26,24 @@ A data frame with 48358 rows and 17 variables:
 \item{puma_fips}{PUMA FIPS code, based on county FIPS}
 \item{puma_fips_cog}{PUMA FIPS code, based on COG FIPS as of 2022 ACS}
 }
+
+A data frame with 879 rows and 3 variables:
+\describe{
+\item{tract}{Tract FIPS code}
+\item{town}{Town name}
+}
 }
 \source{
 2020 and 2022 (for COGs & towns) TIGER shapefiles
 }
 \usage{
 xwalk
+
+tract2town
 }
 \description{
-A crosswalk between geographies in Connecticut, built off of TIGER shapefiles.
+A crosswalk between geographies in Connecticut, built off of TIGER shapefiles. \code{tract2town} is a subset with just tracts and towns. Tracts that span multiple towns are deduplicated and listed with the town with the largest areal overlap.
+
+A version of \code{cwi::xwalk} that only contains tracts and town names, and is deduplicated for tracts that span multiple towns.
 }
 \keyword{datasets}

@@ -4,18 +4,26 @@
 \alias{xtab2df}
 \title{Extract survey data and descriptions from crosstabs into a tidy data frame}
 \usage{
-xtab2df(.data, col = x1, code_pattern = "^[A-Z\\\\d_]{2,20}$")
+xtab2df(data, year, col = x1, code_pattern = NULL)
 }
 \arguments{
-\item{.data}{A data frame as returned from \code{read_xtab}.}
+\item{data}{A data frame as returned from \code{read_xtab}.}
+
+\item{year}{Numeric: year of the survey (or end year, in the case of pooled data).
+This tells the functions how to read the files, since formatting has changed
+across years of the survey. Because the ability to read a file depends so much
+on the year for which it was produced, this argument no longer has a default;
+instead it must be supplied explicitly.}
 
 \item{col}{The bare column name of where to find question codes and text.
 Default: x1, based on names assigned by \code{read_xtab}}
 
 \item{code_pattern}{String: regex pattern denoting how to find cells that
-contain only a question code, such as "Q10", "Q4B", or "ASTHMA". This is
+contain only a question code, such as "Q10", "Q4B", or "ASTHMA", or to
+split codes and question text within the same cell. This is
 pretty finicky, so you probably don't want to change it.
-Default: \code{"^[A-Z\\\\d_]{2,20}$"}}
+If \code{NULL} (the default), the function will fill in \code{"^[A-Z\\\\d_]{2,20}$"} for
+years before 2024, or \code{"^[A-Z\\\\d_]+(?=\\\\. )"} for 2024 onward.}
 }
 \value{
 A data frame with the following columns:
@@ -36,13 +44,18 @@ Survey. Applications to other crosstabs are probably limited unless their
 formatting is largely the same. After reading a crosstab excel file, \code{xtab2df}
 extracts the question codes (e.g. Q4A), question text, categories, and
 demographic groups, and joins those descriptions with survey responses and
-values, making it ready for analysis.
+values, making it ready for analysis. Under the hood there are 2 versions of this
+function: one for crosstabs generated from SPSS (pre-2024 DCWS), and one for
+crosstabs generated at DataHaven starting in 2024. Those in-house crosstabs
+don't have categories included in headings in excel, but this function will
+add them.
 }
 \examples{
-if(interactive()){
-  xtab <- read_xtabs(system.file("extdata/test_xtab2018.xlsx", package = "cwi"))
-  xtab2df(xtab)
- }
+if (interactive()) {
+    xt <- system.file("extdata/test_xtab2018.xlsx", package = "cwi")
+    xtab <- read_xtabs(xt, year = 2018)
+    xtab2df(xtab, year = 2018)
+}
 }
 \seealso{
 \code{\link[=read_xtabs]{read_xtabs()}}

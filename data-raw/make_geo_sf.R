@@ -1,13 +1,13 @@
 # make sf objects of towns, neighborhoods
 sf::sf_use_s2(FALSE)
 town_sf <- tigris::county_subdivisions(state = "09", cb = TRUE, class = "sf", year = 2020) |>
-  dplyr::select(name = NAME, GEOID, geometry) |>
-  dplyr::arrange(GEOID)
+    dplyr::select(name = NAME, GEOID, geometry) |>
+    dplyr::arrange(GEOID)
 
 tract_sf <- tigris::tracts(state = "09", cb = TRUE, class = "sf", year = 2020) |>
-  dplyr::select(name = GEOID, geometry)
+    dplyr::select(name = GEOID, geometry)
 tract_sf19 <- tigris::tracts(state = "09", cb = TRUE, class = "sf", year = 2019) |>
-  dplyr::select(name = GEOID, geometry)
+    dplyr::select(name = GEOID, geometry)
 
 # get neighborhoods from gh releases in scratchpad
 # get_gh_asset <- function(repo, tag, files, download = TRUE) {

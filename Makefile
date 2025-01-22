@@ -15,7 +15,7 @@ all: gen_data check README.md
 
 ############################# UTILS
 check: DESCRIPTION
-	$(R_CMD) "devtools::check(cran = FALSE)"
+	$(R_CMD) "devtools::check(cran = FALSE, document = TRUE)"
 
 docs:
 	$(R_CMD) "devtools::document()"
@@ -38,7 +38,7 @@ gen_data: $(wildcard data/*.rda) R/sysdata.rda
 data/gnh_tenure.rda: data-raw/make_acs_demo.R  data/regions.rda data/basic_table_nums.rda
 	$(SRC)
 
-data/acs_vars22.rda data/decennial_vars10.rda data/decennial_vars20.rda data/cb_avail.rda &: data-raw/make_census_vars.R
+data/acs_vars.rda data/decennial_vars10.rda data/decennial_vars.rda data/cb_avail.rda &: data-raw/make_census_vars.R
 	$(SRC)
 
 data/ct5_clusters.rda: data-raw/make_ct5_clusters.R data-raw/files/5CT_groups_2010.csv
@@ -62,7 +62,7 @@ data/occ_codes.rda data/naics_codes.rda &: data-raw/make_lehd.R
 data/msa.rda: data-raw/make_msas.R
 	$(SRC)
 
-data/%_tracts.rda &: data-raw/make_neighborhood_weights.R data/town_sf.rda data/%_sf.rda 
+data/%_tracts.rda data/%_tracts19.rda &: data-raw/make_neighborhood_weights.R data/town_sf.rda data/%_sf.rda
 	$(SRC)
 
 data/regions.rda: data-raw/make_regions.R data-raw/files/town_region_lookup.csv
@@ -80,7 +80,7 @@ data/village2town.rda: data-raw/make_village_town_xwalk.R
 data/xwalk.rda data/tract2town.rda &: data-raw/make_xwalk.R data/town_sf.rda data/tract_sf.rda data/regions.rda
 	$(SRC)
 
-data/zip2town.rda: data-raw/make_zip2town.R data-raw/files/zip2town.csv
+data/zip2town.rda: data-raw/make_zip2town.R
 	$(SRC)
 
 data/proxy_pumas.rda: data-raw/make_proxy_pumas.R
@@ -92,7 +92,7 @@ R/sysdata.rda: data-raw/make_internal_data.R
 inst/extdata/test_data/age_df.rds: data-raw/make_testdata.R
 	$(SRC)
 
-data-raw/make_internal_data.R: data-raw/make_laus_codes.R data-raw/make_census_vars.R
+data-raw/make_internal_data.R: data-raw/make_laus_codes.R data-raw/make_census_vars.R data-raw/make_endyears.R
 	Rscript $@
 
 

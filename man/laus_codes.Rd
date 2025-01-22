@@ -5,7 +5,7 @@
 \alias{laus_codes}
 \title{LAUS area codes}
 \format{
-A data frame with 6625 rows and 4 variables:
+A data frame with 6644 rows and 4 variables:
 \describe{
 \item{type}{Area type code}
 \item{state_code}{Two-digit state FIPS code}

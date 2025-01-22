@@ -6,7 +6,7 @@
 \usage{
 multi_geo_decennial(
   table,
-  year = 2020,
+  year = endyears[["decennial"]],
   towns = "all",
   regions = NULL,
   counties = "all",
@@ -81,10 +81,12 @@ Be advised that decennial table numbers may change from year to year, so if you'
 }
 \examples{
 \dontrun{
-multi_geo_decennial("P1", 2020, sumfile = "dhc",
-  towns = "all",
-  regions = list(inner_ring = c("Hamden", "East Haven", "West Haven")),
-  counties = "New Haven County")
+multi_geo_decennial("P1", 2020,
+    sumfile = "dhc",
+    towns = "all",
+    regions = list(inner_ring = c("Hamden", "East Haven", "West Haven")),
+    counties = "New Haven County"
+)
 }
 }
 \seealso{

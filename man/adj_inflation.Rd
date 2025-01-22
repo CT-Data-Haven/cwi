@@ -4,7 +4,14 @@
 \alias{adj_inflation}
 \title{Add inflation-adjusted values to a data frame}
 \usage{
-adj_inflation(data, value, year, base_year = 2022, verbose = TRUE, key = NULL)
+adj_inflation(
+  data,
+  value,
+  year,
+  base_year = endyears[["acs"]],
+  verbose = TRUE,
+  key = NULL
+)
 }
 \arguments{
 \item{data}{A data frame containing monetary values by year.}
@@ -13,7 +20,7 @@ adj_inflation(data, value, year, base_year = 2022, verbose = TRUE, key = NULL)
 
 \item{year}{Bare column name of years; for safety, has no default.}
 
-\item{base_year}{Year on which to base inflation amounts. Defaults to 2022, which corresponds to saying "... adjusted to 2022 dollars."}
+\item{base_year}{Year on which to base inflation amounts. Defaults to 2023, which corresponds to saying "... adjusted to 2023 dollars."}
 
 \item{verbose}{Logical: if \code{TRUE} (default), this will print overview information about the series being used, as returned by the API.}
 
@@ -32,10 +39,10 @@ According to the BLS research page, the series this uses is best suited to data 
 }
 \examples{
 \dontrun{
-  wages <- data.frame(
+wages <- data.frame(
     fiscal_year = 2010:2016,
     wage = c(50000, 51000, 52000, 53000, 54000, 55000, 54000)
-  )
-  adj_inflation(wages, value = wage, year = fiscal_year, base_year = 2016)
+)
+adj_inflation(wages, value = wage, year = fiscal_year, base_year = 2016)
 }
 }
