@@ -19,3 +19,5 @@
 ^Makefile$
 ^.*\.vscode$
 ^\.snakemake$
+^.env$
+migrate

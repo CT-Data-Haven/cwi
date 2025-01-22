@@ -8,10 +8,6 @@
 \title{Common ACS table numbers}
 \format{
 A named list, where names correspond to abbreviated subjects and string values correspond to table numbers.
-
-An object of class \code{list} of length 11.
-
-An object of class \code{list} of length 26.
 }
 \usage{
 basic_table_nums

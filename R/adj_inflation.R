@@ -9,84 +9,92 @@
 #' @param data A data frame containing monetary values by year.
 #' @param value Bare column name of monetary values; for safety, has no default.
 #' @param year Bare column name of years; for safety, has no default.
-#' @param base_year Year on which to base inflation amounts. Defaults to 2022, which corresponds to saying "... adjusted to 2022 dollars."
+#' @param base_year Year on which to base inflation amounts. Defaults to `r cwi:::endyears[["acs"]]`, which corresponds to saying "... adjusted to `r cwi:::endyears[["acs"]]` dollars."
 #' @param verbose Logical: if `TRUE` (default), this will print overview information about the series being used, as returned by the API.
 #' @param key A string giving the BLS API key. If `NULL` (the default), will take the value in `Sys.getenv("BLS_KEY")`.
 #' @return A data frame with two additional columns: adjustment factors, and adjusted values. The adjusted values column is named based on the name supplied as `value`; e.g. if `value = avg_wage`, the adjusted column is named `adj_avg_wage`.
 #' @examples
 #' \dontrun{
-#'   wages <- data.frame(
+#' wages <- data.frame(
 #'     fiscal_year = 2010:2016,
 #'     wage = c(50000, 51000, 52000, 53000, 54000, 55000, 54000)
-#'   )
-#'   adj_inflation(wages, value = wage, year = fiscal_year, base_year = 2016)
+#' )
+#' adj_inflation(wages, value = wage, year = fiscal_year, base_year = 2016)
 #' }
 #' @export
-adj_inflation <- function(data, value, year, base_year = 2022, verbose = TRUE, key = NULL) {
-  if (missing(value) || missing(year)) {
-    cli::cli_abort("Must supply column names for both value and year.")
-  }
-  # series = c("CUUR0000SA0", "CUUR0000AA0")
-  series <- "CUUR0000SA0"
-  yr_lbl <- rlang::as_label(rlang::enquo(year))
-  years <- cpi_yrs(data[[yr_lbl]], base_year)
+adj_inflation <- function(data,
+                          value,
+                          year,
+                          base_year = endyears[["acs"]],
+                          verbose = TRUE,
+                          key = NULL) {
+    if (missing(value) || missing(year)) {
+        cli::cli_abort("Must supply column names for both value and year.")
+    }
+    # series = c("CUUR0000SA0", "CUUR0000AA0")
+    series <- "CUUR0000SA0"
+    yr_lbl <- rlang::as_label(rlang::enquo(year))
+    years <- cpi_yrs(data[[yr_lbl]], base_year)
 
-  query <- cpi_prep(series, years, verbose, key)
+    query <- cpi_prep(series, years, verbose, key)
 
-  fetch <- fetch_bls(query, verbose)
+    fetch <- fetch_bls(query, verbose)
 
-  cpi <- dplyr::mutate(fetch, dplyr::across(c(year, value), as.numeric))
-  cpi <- dplyr::group_by(cpi, year)
-  cpi <- dplyr::summarise(cpi, avg_cpi = mean(value))
-  cpi <- dplyr::ungroup(cpi)
-  cpi <- dplyr::mutate(cpi, adj_factor = round(avg_cpi / avg_cpi[year == base_year], digits = 3))
-  cpi <- dplyr::select(cpi, year, adj_factor)
+    cpi <- dplyr::mutate(fetch, dplyr::across(c(year, value), as.numeric))
+    cpi <- dplyr::group_by(cpi, year)
+    cpi <- dplyr::summarise(cpi, avg_cpi = mean(value))
+    cpi <- dplyr::ungroup(cpi)
+    cpi <- dplyr::mutate(cpi, adj_factor = round(avg_cpi / avg_cpi[year == base_year], digits = 3))
+    cpi <- dplyr::select(cpi, year, adj_factor)
 
-  adjusted <- dplyr::mutate(data, dplyr::across({{ year }}, as.numeric))
-  adjusted <- dplyr::left_join(adjusted, cpi, by = stats::setNames("year", yr_lbl))
-  adjusted <- dplyr::mutate(adjusted, )
-  adjusted <- dplyr::mutate(adjusted, dplyr::across({{ value }}, list(adj = ~ .x / adj_factor), .names = "{.fn}_{.col}"))
-  adjusted
+    adjusted <- dplyr::mutate(data, dplyr::across({{ year }}, as.numeric))
+    adjusted <- dplyr::left_join(adjusted, cpi, by = stats::setNames("year", yr_lbl))
+    adjusted <- dplyr::mutate(adjusted, )
+    adjusted <- dplyr::mutate(adjusted, dplyr::across({{ value }},
+                                                      list(adj = \(x) x / adj_factor), .names = "{.fn}_{.col}"))
+    adjusted
 }
 
 #################### HELPERS ##########################################
 cpi_yrs <- function(year, base_year) {
-  yr_range <- range(year)
-  startyear <- min(c(yr_range[1], base_year))
-  endyear <- max(c(yr_range[2], base_year))
+    yr_range <- range(year)
+    startyear <- min(c(yr_range[1], base_year))
+    endyear <- max(c(yr_range[2], base_year))
 
-  max_yrs <- 10
-  years <- seq(startyear, endyear, by = 1)
-  if (length(years) > max_yrs) {
-    cli::cli_alert_info("The API can only get {max_yrs} years of data at once; making multiple calls, but this might take a little longer.")
-  }
-  years <- split_n(years, max_yrs)
-  return(years)
+    max_yrs <- 10
+    years <- seq(startyear, endyear, by = 1)
+    if (length(years) > max_yrs) {
+        cli::cli_alert_info("The API can only get {max_yrs} years of data at once; making multiple calls, but this might take a little longer.")
+    }
+    years <- split_n(years, max_yrs)
+    return(years)
 }
 
 cpi_prep <- function(series, years, catalog, key) {
-  key <- check_bls_key(key)
-  if (is.logical(key) && !key) {
-    cli::cli_abort("Must supply an API key. See the docs on where to store it.",
-                   call = parent.frame())
-  }
-  # make api query, call in main function
-  base_url <- "https://api.bls.gov/publicAPI/v2/timeseries/data"
-  params <- make_cpi_query(series, years, catalog, key)
-  params <- purrr::map(params, function(p) list(url = base_url, body = p))
-  params
+    key <- check_bls_key(key)
+    if (is.logical(key) && !key) {
+        cli::cli_abort("Must supply an API key. See the docs on where to store it.",
+            call = parent.frame()
+        )
+    }
+    # make api query, call in main function
+    base_url <- "https://api.bls.gov/publicAPI/v2/timeseries/data"
+    params <- make_cpi_query(series, years, catalog, key)
+    params <- purrr::map(params, function(p) list(url = base_url, body = p))
+    params
 }
 
 make_cpi_query <- function(series, years, catalog, key) {
-  purrr::map(years, function(yr) {
-    startyear <- min(yr); endyear <- max(yr)
-    list(seriesid = I(series),
-         startyear = startyear,
-         endyear = endyear,
-         calculations = FALSE,
-         catalog = catalog,
-         registrationKey = key)
-  })
+    purrr::map(years, function(yr) {
+        startyear <- min(yr)
+        endyear <- max(yr)
+        list(
+            seriesid = I(series),
+            startyear = startyear,
+            endyear = endyear,
+            calculations = FALSE,
+            catalog = catalog,
+            registrationKey = key
+        )
+    })
 }
-
-

@@ -12,8 +12,6 @@ A data frame with 8959 rows (2010) or 9067 rows (2020) and 3 variables:
 \item{label}{Readable label of each variable}
 \item{concept}{Table name}
 }
-
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 8959 rows and 3 columns.
 }
 \source{
 US Census Bureau via \code{tidycensus}

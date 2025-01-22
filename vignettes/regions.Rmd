@@ -9,8 +9,8 @@ vignette: >
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
+    collapse = TRUE,
+    comment = "#>"
 )
 ```
 
@@ -27,13 +27,13 @@ There are too many regions stored here now that the state is switching to COGs i
 
 ```{r echo=FALSE}
 purrr::iwalk(cwi::regions, function(towns, reg) {
-  sf <- dplyr::mutate(cwi::town_sf, region = name %in% towns)
-  p <- ggplot(sf, aes(fill = region)) +
-    geom_sf(linewidth = 0.2, color = "gray10") +
-    scale_fill_manual(values = c("TRUE" = "mediumorchid", "FALSE" = "gray90"), guide = "none") +
-    # coord_sf(ndiscr = 0) +
-    labs(title = reg)
-  print(p)
+    sf <- dplyr::mutate(cwi::town_sf, region = name %in% towns)
+    p <- ggplot(sf, aes(fill = region)) +
+        geom_sf(linewidth = 0.2, color = "gray10") +
+        scale_fill_manual(values = c("TRUE" = "mediumorchid", "FALSE" = "gray90"), guide = "none") +
+        # coord_sf(ndiscr = 0) +
+        labs(title = reg)
+    print(p)
 })
 ```
 

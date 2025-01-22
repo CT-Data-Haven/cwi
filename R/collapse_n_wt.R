@@ -30,30 +30,30 @@
 #' @examples
 #' # collapse income groups, such that <$15K, $15K-$30K become <$30K, etc
 #' income_lvls <- list(
-#'   "<$30K" = c("<$15K", "$15K-$30K"),
-#'   "$30K-$100K" = c("$30K-$50K", "$50K-$75K", "$75K-$100K"),
-#'   "$100K+" = c("$100K-$200K", "$200K+")
+#'     "<$30K" = c("<$15K", "$15K-$30K"),
+#'     "$30K-$100K" = c("$30K-$50K", "$50K-$75K", "$75K-$100K"),
+#'     "$100K+" = c("$100K-$200K", "$200K+")
 #' )
 #' cws_demo |>
-#'   dplyr::filter(category %in% c("Greater New Haven", "Income")) |>
-#'   collapse_n_wt(code:response, .lvls = income_lvls, .digits = 2)
+#'     dplyr::filter(category %in% c("Greater New Haven", "Income")) |>
+#'     collapse_n_wt(code:response, .lvls = income_lvls, .digits = 2)
 #' @export
 #' @rdname collapse_n_wt
 #' @seealso [cwi::xtab2df()], [cwi::read_weights()], [forcats::fct_collapse()]
 collapse_n_wt <- function(data, ..., .lvls, .group = group, .value = value, .weight = weight, .fill_wts = FALSE, .digits = NULL) {
-  group_cols <- quos(...)
-  to_wt <- dplyr::ungroup(data)
-  to_wt <- dplyr::mutate(to_wt, dplyr::across({{ .group }}, ~forcats::fct_collapse(.x, !!!.lvls)))
-  to_wt <- dplyr::group_by(to_wt, dplyr::across(!!!group_cols))
+    group_cols <- quos(...)
+    to_wt <- dplyr::ungroup(data)
+    to_wt <- dplyr::mutate(to_wt, dplyr::across({{ .group }}, ~ forcats::fct_collapse(.x, !!!.lvls)))
+    to_wt <- dplyr::group_by(to_wt, dplyr::across(!!!group_cols))
 
-  if (.fill_wts) {
-    cli::cli_alert_info("Missing values in your weights column are being filled in. Make sure this is intentional!")
-    to_wt <- dplyr::mutate(to_wt, dplyr::across({{ .weight }}, ~tidyr::replace_na(.x, 1)))
-  }
-  out <- dplyr::summarise(to_wt, {{ .value }} := stats::weighted.mean({{ .value }}, w = {{ .weight }}))
+    if (.fill_wts) {
+        cli::cli_alert_info("Missing values in your weights column are being filled in. Make sure this is intentional!")
+        to_wt <- dplyr::mutate(to_wt, dplyr::across({{ .weight }}, ~ tidyr::replace_na(.x, 1)))
+    }
+    out <- dplyr::summarise(to_wt, {{ .value }} := stats::weighted.mean({{ .value }}, w = {{ .weight }}))
 
-  if (is.numeric(.digits)) {
-    out <- dplyr::mutate(out, {{ .value }} := round({{ .value }}, digits = .digits))
-  }
-  dplyr::ungroup(out)
+    if (is.numeric(.digits)) {
+        out <- dplyr::mutate(out, {{ .value }} := round({{ .value }}, digits = .digits))
+    }
+    dplyr::ungroup(out)
 }

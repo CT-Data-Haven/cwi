@@ -21,22 +21,6 @@ A data frame; the number of rows depends on the city.
 \item{tract}{6-digit FIPS code of the tract; same as geoid but missing state & county components.}
 \item{weight}{Share of tract's households in that neighborhood}
 }
-
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 46 rows and 4 columns.
-
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 46 rows and 4 columns.
-
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 36 rows and 4 columns.
-
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 70 rows and 5 columns.
-
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 46 rows and 3 columns.
-
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 47 rows and 3 columns.
-
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 25 rows and 3 columns.
-
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 67 rows and 4 columns.
 }
 \usage{
 new_haven_tracts

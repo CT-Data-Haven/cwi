@@ -1,33 +1,41 @@
-#' Variable labels from the 2022 ACS
+#' Variable labels from the `r cwi:::endyears[["acs"]]` ACS
 #'
-#' Dataset of ACS variable labels, loaded from `tidycensus::load_variables()` for 2022 and cleaned up slightly.
+#' Dataset of ACS variable labels, loaded from `tidycensus::load_variables()` for `r cwi:::endyears[["acs"]]` and cleaned up slightly.
 #'
-#' This dataset is updated and renamed accordingly with each annual ACS release.
+#' This dataset is updated with each annual ACS release, with an attribute `year` giving the ACS endyear of the dataset.
 #'
-#' @format A data frame with `r nrow(acs_vars22)` rows and 3 variables:
+#' @format A data frame with `r nrow(acs_vars)` rows and 3 variables:
 #' \describe{
 #'   \item{name}{Variable code, where first 6 characters are the table number and last 3 digits are the variable number}
 #'   \item{label}{Readable label of each variable}
 #'   \item{concept}{Table name}
 #' }
 #' @source US Census Bureau via `tidycensus`
-"acs_vars22"
+#' @examples
+#' # get the year
+#' attr(acs_vars, "year")
+"acs_vars"
 
 
 #' Variable labels from the Decennial Census
 #'
-#' Dataset of Decennial Census variable labels, loaded from `tidycensus::load_variables()` and cleaned up slightly. 2010 and 2020 versions are saved separately and have different variable code formats.
+#' Dataset of Decennial Census variable labels, loaded from `tidycensus::load_variables()` and cleaned up slightly. 2010 and `r cwi:::endyears[["decennial"]]` versions are saved separately and have different variable code formats. `decennial_vars` has an attribute `year` giving the year of the dataset.
 #'
-#' @format A data frame with 8959 rows (2010) or 9067 rows (2020) and 3 variables:
+#' @format A data frame with `r nrow(decennial_vars10)` rows (2010) or `r nrow(decennial_vars)` rows (`r cwi:::endyears[["decennial"]]`) and 3 variables:
 #' \describe{
 #'   \item{name}{Variable code containing the table number and variable number}
 #'   \item{label}{Readable label of each variable}
 #'   \item{concept}{Table name}
 #' }
 #' @source US Census Bureau via `tidycensus`
-"decennial_vars20"
+#' @examples
+#' # get the year
+#' attr(decennial_vars, "year")
+#'
+"decennial_vars"
 
-#' @rdname decennial_vars20
+#' @rdname decennial_vars
+#' @format NULL
 "decennial_vars10"
 
 
@@ -46,21 +54,19 @@
 "cb_avail"
 
 
-#' Basic ACS table numbers
+#' Common ACS table numbers
 #'
-#' List of ACS table numbers commonly used by DataHaven for making short profiles of towns, neighborhoods, and regions.
+#' Lists of ACS table numbers commonly used by DataHaven. `basic_table_nums` is used for making short profiles of towns, neighborhoods, and regions, while `ext_table_nums` is used for "extended" profiles, such as neighborhood profiles distributed as PDF on the DataHaven website.
 #'
-#' @format A named list of length 11, where names correspond to abbreviated subjects and string values correspond to table numbers.
-#' @seealso  [ext_table_nums]
+#' @name table_nums
+NULL
+
+#' @format A named list, where names correspond to abbreviated subjects and string values correspond to table numbers.
+#' @rdname table_nums
 "basic_table_nums"
 
-
-#' Extended ACS table numbers
-#'
-#' List of ACS tables less commonly used by DataHaven. These are used for "extended" profiles, such as neighborhood profiles distributed as PDF on the DataHaven website.
-#'
-#' @format A named list of length 26, where names correspond to abbreviated subjects and string values correspond to table numbers.
-#' @seealso [basic_table_nums]
+#' @format NULL
+#' @rdname table_nums
 "ext_table_nums"
 
 
@@ -68,7 +74,7 @@
 #'
 #' A reference dataset of all the metropolitan statistical areas (MSAs) in the US, marked with whether they're in a New England state.
 #'
-#' @format A data frame with 392 rows and 3 variables:
+#' @format A data frame with `r nrow(msa)` rows and 3 variables:
 #' \describe{
 #'   \item{geoid}{GEOID/FIPS code}
 #'   \item{name}{Name of MSA}
@@ -97,27 +103,35 @@
 #' @name neighborhood_tracts
 NULL
 
+#' @format NULL
 #' @rdname neighborhood_tracts
 "new_haven_tracts"
 
+#' @format NULL
 #' @rdname neighborhood_tracts
 "bridgeport_tracts"
 
+#' @format NULL
 #' @rdname neighborhood_tracts
 "stamford_tracts"
 
+#' @format NULL
 #' @rdname neighborhood_tracts
 "hartford_tracts"
 
+#' @format NULL
 #' @rdname neighborhood_tracts
 "new_haven_tracts19"
 
+#' @format NULL
 #' @rdname neighborhood_tracts
 "bridgeport_tracts19"
 
+#' @format NULL
 #' @rdname neighborhood_tracts
 "stamford_tracts19"
 
+#' @format NULL
 #' @rdname neighborhood_tracts
 "hartford_tracts19"
 
@@ -161,7 +175,7 @@ NULL
 #' Note that places don't span the full state. All populations are from the 2020 decennial census, and overlaps are based on
 #' fitting blocks within places.
 #'
-#' @format A data frame with 224 rows and 7 variables:
+#' @format A data frame with `r nrow(village2town)` rows and 7 variables:
 #' \describe{
 #'   \item{town}{Town (county subdivision) name}
 #'   \item{place}{CDP name}
@@ -181,7 +195,7 @@ NULL
 #'
 #' Note that for aggregating by region, the Hartford-area regional district CREC is not included here, because it spans so many other towns that also run their own schools.CREC is of significant enough size that it should generally be included in Greater Hartford aggregations or as its own district for comparisons alongside e.g. Hartford and West Hartford.
 #'
-#' @format A data frame with 195 rows and 2 variables:
+#' @format A data frame with `r nrow(school_dists)` rows and 2 variables:
 #' \describe{
 #'   \item{district}{School district name}
 #'   \item{town}{Name of town included in district}
@@ -194,7 +208,7 @@ NULL
 #'
 #' A dataset of industry names with their NAICS codes. These are only the main sectors, not detailed industry codes.
 #'
-#' @format A data frame with 21 rows and 3 variables:
+#' @format A data frame with `r nrow(naics_codes)` rows and 3 variables:
 #' \describe{
 #'   \item{industry}{NAICS code}
 #'   \item{label}{Industry name}
@@ -207,7 +221,7 @@ NULL
 #'
 #' A dataset of occupation groups and descriptions with both Census (OCC) codes and SOC codes. Occupations are grouped hierarchically. This is filtered from a Census crosswalk to include only top-level groups, except for the very broad management, business, science, and arts occupations group; for this one, the second level groups are treated as the major one. Often you'll just want the major groups, so you can filter by the `is_major_grp` column.
 #'
-#' @format A data frame with 32 rows and 5 columns:
+#' @format A data frame with `r nrow(occ_codes)` rows and 5 columns:
 #' \describe{
 #'   \item{is_major_grp}{Logical: whether this is the highest level included}
 #'   \item{occ_group}{Major occupation group name}
@@ -223,7 +237,7 @@ NULL
 #'
 #' A dataset of area types and codes for states, counties, and towns across the US, as used for the Local Area Unemployment Statistics. These are needed to put together series names, like those used to make API calls in `qwi_industry`. This used to be filtered just for Connecticut.
 #'
-#' @format A data frame with 6625 rows and 4 variables:
+#' @format A data frame with `r nrow(laus_codes)` rows and 4 variables:
 #' \describe{
 #'   \item{type}{Area type code}
 #'   \item{state_code}{Two-digit state FIPS code}
@@ -236,9 +250,10 @@ NULL
 
 #' CT crosswalk
 #'
-#' A crosswalk between geographies in Connecticut, built off of TIGER shapefiles.
+#' A crosswalk between geographies in Connecticut, built off of TIGER shapefiles. `tract2town` is a subset with just tracts and towns. Tracts that span multiple towns are deduplicated and listed with the town with the largest areal overlap.
 #'
-#' @format A data frame with `r nrow(xwalk)` rows and `r ncol(xwalk)` variables:
+#' @format ## For `xwalk`:
+#'  A data frame with `r nrow(xwalk)` rows and `r ncol(xwalk)` variables:
 #' \describe{
 #'   \item{block}{Block FIPS code}
 #'   \item{block_grp}{Block group FIPS code, based on county FIPS}
@@ -266,11 +281,14 @@ NULL
 #'
 #' A version of `cwi::xwalk` that only contains tracts and town names, and is deduplicated for tracts that span multiple towns.
 #'
-#' @format A data frame with 879 rows and 2 variables:
+#' @format ## For `tract2town`:
+#' A data frame with `r nrow(tract2town)` rows and 3 variables:
 #' \describe{
 #'   \item{tract}{Tract FIPS code}
+#'   \item{tract_cog}{Tract FIPS code, based on COG FIPS as of 2022 ACS}
 #'   \item{town}{Town name}
 #' }
+#' @rdname xwalk
 "tract2town"
 
 
@@ -290,9 +308,9 @@ NULL
 
 #' CWS demo data
 #'
-#' This is a sample of 2015 DataHaven Community Wellbeing Survey data for Greater New Haven with weights attached. It's more or less what's created in the crosstabs vignette, saved here for use in examples.
+#' This is a sample of 2015 DataHaven Community Wellbeing Survey data for Greater New Haven with weights attached, saved here for use in examples.
 #'
-#' @format A data frame with 100 rows and 7 variables:
+#' @format A data frame with `r nrow(cws_demo)` rows and 7 variables:
 #' \describe{
 #'   \item{code}{Question code}
 #'   \item{question}{Question text}
@@ -309,7 +327,7 @@ NULL
 #'
 #' This is a table of housing tenure data for Greater New Haven obtained with `multi_geo_acs`, to be used in testing and examples.
 #'
-#' @format A data frame with 45 rows and 5 variables:
+#' @format A data frame with `r nrow(gnh_tenure)` rows and 5 variables:
 #' \describe{
 #'   \item{\code{level}}{Geographic level}
 #'   \item{\code{name}}{Geography name}
@@ -325,7 +343,7 @@ NULL
 #' This is a list of 2 data frames giving PUMAs that make reasonable approximations of designated regions, with weights to apply to both population- and household-based measures. The data frame labeled `county` uses county-based PUMAs and 2021 ACS values; the data frame `cog` uses the new COG-based PUMAs and 2022 ACS values. When working with PUMS data or other weighted surveys, multiply the weights in the proxy table with the weights from the survey to account for how much of the PUMA overlaps the region. The county-based table includes just non-county regions (e.g. Greater New Haven), but the COG-based table also includes "legacy" counties (e.g. New Haven County), since we assume that even if data isn't released for counties, some organizations might still want estimates based on those geographies.
 #' See maps of proxies and their weights here: [https://ct-data-haven.github.io/cogs/proxy-geos.html](https://ct-data-haven.github.io/cogs/proxy-geos.html)
 #' **NOTE:** There are some PUMAs that are included in more than one region. When joining these tables with survey data, make sure you're allowing for duplicates of PUMAs.
-#' @format A list of 2 data frames, `county` and `cog`, with 19 and 54 rows, respectively, and 6 variables:
+#' @format A list of 2 data frames, `county` and `cog`, with `r nrow(proxy_pumas$county)` and `r nrow(proxy_pumas$cog)` rows, respectively, and 6 variables:
 #' \describe{
 #' \item{\code{puma}}{7-digit PUMA FIPS code}
 #' \item{\code{region}}{Region name}

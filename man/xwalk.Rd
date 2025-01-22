@@ -6,6 +6,8 @@
 \alias{tract2town}
 \title{CT crosswalk}
 \format{
+\subsection{For \code{xwalk}:}{
+
 A data frame with 48358 rows and 17 variables:
 \describe{
 \item{block}{Block FIPS code}
@@ -26,11 +28,16 @@ A data frame with 48358 rows and 17 variables:
 \item{puma_fips}{PUMA FIPS code, based on county FIPS}
 \item{puma_fips_cog}{PUMA FIPS code, based on COG FIPS as of 2022 ACS}
 }
+}
+
+\subsection{For \code{tract2town}:}{
 
 A data frame with 879 rows and 3 variables:
 \describe{
 \item{tract}{Tract FIPS code}
+\item{tract_cog}{Tract FIPS code, based on COG FIPS as of 2022 ACS}
 \item{town}{Town name}
+}
 }
 }
 \source{

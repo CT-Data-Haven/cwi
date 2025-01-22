@@ -6,17 +6,17 @@
 #' @return A tibble/data frame with cleaned names and "not defined" towns removed
 #' @examples
 #' pops <- tibble::tribble(
-#'   ~name, ~total_pop,
-#'   "County subdivisions not defined, New Haven County, Connecticut",     0,
-#'   "Ansonia town, New Haven County, Connecticut",                    18802,
-#'   "Beacon Falls town, New Haven County, Connecticut",                6168,
-#'   "Bethany town, New Haven County, Connecticut",                     5513,
-#'   "Branford town, New Haven County, Connecticut",                    2802
-#'   )
+#'     ~name, ~total_pop,
+#'     "County subdivisions not defined, New Haven County, Connecticut", 0,
+#'     "Ansonia town, New Haven County, Connecticut", 18802,
+#'     "Beacon Falls town, New Haven County, Connecticut", 6168,
+#'     "Bethany town, New Haven County, Connecticut", 5513,
+#'     "Branford town, New Haven County, Connecticut", 2802
+#' )
 #' town_names(pops, name_col = name)
 #' @export
 town_names <- function(data, name_col) {
-  data <- dplyr::mutate(data, {{ name_col }} := stringr::str_extract({{ name_col }}, "^.+(?= town)"))
-  data <- dplyr::filter(data, !grepl("not defined", {{ name_col }}) & !is.na({{ name_col }}))
-  data
+    data <- dplyr::mutate(data, {{ name_col }} := stringr::str_extract({{ name_col }}, "^.+(?= town)"))
+    data <- dplyr::filter(data, !grepl("not defined", {{ name_col }}) & !is.na({{ name_col }}))
+    data
 }

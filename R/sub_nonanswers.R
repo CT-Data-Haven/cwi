@@ -17,10 +17,10 @@
 #' fewer rows
 #' @examples
 #' if (interactive()) {
-#' xt <- system.file("extdata/test_xtab2018.xlsx", package = "cwi")
-#' df <- read_xtabs(xt, process = TRUE) |>
-#'   dplyr::filter(code == "Q1") |>
-#'   sub_nonanswers()
+#'     xt <- system.file("extdata/test_xtab2018.xlsx", package = "cwi")
+#'     df <- read_xtabs(xt, process = TRUE) |>
+#'         dplyr::filter(code == "Q1") |>
+#'         sub_nonanswers()
 #' }
 #' @export
 #' @rdname sub_nonanswers
@@ -31,46 +31,50 @@ sub_nonanswers <- function(data,
                            nons = c("Don't know", "Refused"),
                            factor_response = TRUE,
                            rescale = FALSE) {
-  # warn if any nons aren't actually in the data
-  response_vals <- unique(dplyr::pull(data, {{ response }}))
-  xtra_nons <- setdiff(nons, response_vals)
+    # warn if any nons aren't actually in the data
+    response_vals <- unique(dplyr::pull(data, {{ response }}))
+    xtra_nons <- setdiff(nons, response_vals)
 
-  if (length(xtra_nons) > 0) {
-    cli::cli_warn(c("!" = "Your value of {.var nons} contains responses not found in the data: {.val {xtra_nons}} not found."))
-  }
+    if (length(xtra_nons) > 0) {
+        cli::cli_warn(c("!" = "Your value of {.var nons} contains responses not found in the data: {.val {xtra_nons}} not found."))
+    }
 
-  if (any(dplyr::pull(data, {{ value }}) > 1.0)) {
-    cli::cli_warn(c("!" = "Your data contains values greater than 1.0.",
-                    i = "This function is designed for percentage data, so you'll probably get values that don't actually make sense."))
-  }
+    if (any(dplyr::pull(data, {{ value }}) > 1.0)) {
+        cli::cli_warn(c(
+            "!" = "Your data contains values greater than 1.0.",
+            i = "This function is designed for percentage data, so you'll probably get values that don't actually make sense."
+        ))
+    }
 
-  # add up values of nonanswers, use 1 - sum(nons) as denom
-  # responses = real answers, i.e. not nons
-  responses <- rlang::syms(setdiff(response_vals, nons))
-  grps <- dplyr::groups(data)
+    # add up values of nonanswers, use 1 - sum(nons) as denom
+    # responses = real answers, i.e. not nons
+    responses <- rlang::syms(setdiff(response_vals, nons))
+    grps <- dplyr::groups(data)
 
-  wide <- dplyr::ungroup(data)
-  wide <- tidyr::pivot_wider(wide, names_from = {{ response }}, values_from = {{ value }})
-  # non_sum <- rowSums(dplyr::select(wide, dplyr::any_of(nons)))
-  wide$non_sum <- rowSums(dplyr::select(wide, dplyr::any_of(nons)))
+    wide <- dplyr::ungroup(data)
+    wide <- tidyr::pivot_wider(wide, names_from = {{ response }}, values_from = {{ value }})
+    # non_sum <- rowSums(dplyr::select(wide, dplyr::any_of(nons)))
+    wide$non_sum <- rowSums(dplyr::select(wide, dplyr::any_of(nons)))
 
-  if (rescale) {
-    total <- rowSums(dplyr::select(wide, dplyr::any_of(response_vals)))
-  } else {
-    total <- 1
-  }
+    if (rescale) {
+        total <- rowSums(dplyr::select(wide, dplyr::any_of(response_vals)))
+    } else {
+        total <- 1
+    }
 
-  wide <- dplyr::mutate(wide, dplyr::across(c(!!!responses),  ~.x / (total - non_sum)))
-  wide <- dplyr::select(wide, -non_sum, -dplyr::any_of(nons))
+    wide <- dplyr::mutate(wide, dplyr::across(c(!!!responses), ~ .x / (total - non_sum)))
+    wide <- dplyr::select(wide, -non_sum, -dplyr::any_of(nons))
 
-  out <- tidyr::pivot_longer(wide, cols = c(!!!responses),
-                             names_to = rlang::as_label(rlang::enquo(response)),
-                             values_to = rlang::as_label(rlang::enquo(value)))
-  out <- dplyr::group_by(out, !!!grps)
+    out <- tidyr::pivot_longer(wide,
+        cols = c(!!!responses),
+        names_to = rlang::as_label(rlang::enquo(response)),
+        values_to = rlang::as_label(rlang::enquo(value))
+    )
+    out <- dplyr::group_by(out, !!!grps)
 
-  if (factor_response) {
-    out <- dplyr::mutate(out, dplyr::across({{ response }}, forcats::as_factor))
-  }
+    if (factor_response) {
+        out <- dplyr::mutate(out, dplyr::across({{ response }}, forcats::as_factor))
+    }
 
-  out
+    out
 }

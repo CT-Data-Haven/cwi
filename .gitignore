@@ -13,3 +13,4 @@ Meta
 *.vscode
 .snakemake/
 vignettes/*.csv
+migrate

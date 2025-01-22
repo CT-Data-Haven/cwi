@@ -14,38 +14,37 @@
 #' @return A ggplot
 #' @export
 geo_level_plot <- function(data, name = name, value = value, level = level, type = c("col", "hist", "point"), hilite = "dodgerblue", title = NULL, dark_gray = "gray20", light_gray = "gray60", ...) {
-  # type can be column (col), histogram (hist), or point (point)
-  type <- rlang::arg_match(type)
-  if (!grepl("gr(a|e)y", dark_gray)) dark_gray <- "gray20"
-  if (!grepl("gr(a|e)y", light_gray)) light_gray <- "gray60"
+    # type can be column (col), histogram (hist), or point (point)
+    type <- rlang::arg_match(type)
+    if (!grepl("gr(a|e)y", dark_gray)) dark_gray <- "gray20"
+    if (!grepl("gr(a|e)y", light_gray)) light_gray <- "gray60"
 
-  geos <- sort(unique(data[[rlang::as_label(rlang::enquo(level))]]))
+    geos <- sort(unique(data[[rlang::as_label(rlang::enquo(level))]]))
 
-  g1 <- as.numeric(stringr::str_extract(dark_gray, "\\d+$") )
-  g2 <- as.numeric(stringr::str_extract(light_gray, "\\d+$"))
-  pal1 <- round(seq(g1, g2, length.out = length(geos) - 1))
-  pal <- c(paste0("gray", pal1), hilite)
+    g1 <- as.numeric(stringr::str_extract(dark_gray, "\\d+$"))
+    g2 <- as.numeric(stringr::str_extract(light_gray, "\\d+$"))
+    pal1 <- round(seq(g1, g2, length.out = length(geos) - 1))
+    pal <- c(paste0("gray", pal1), hilite)
 
-  data <- dplyr::ungroup(data)
-  data <- dplyr::mutate(data, dplyr::across({{ name }}, ~forcats::fct_reorder(.x, {{ value }})))
+    data <- dplyr::ungroup(data)
+    data <- dplyr::mutate(data, dplyr::across({{ name }}, ~ forcats::fct_reorder(.x, {{ value }})))
 
-  p <- ggplot2::ggplot(data, ggplot2::aes(fill = {{ level }}))
-  p <- p + ggplot2::scale_fill_manual(values = pal)
-  p <- p + ggplot2::theme_minimal()
+    p <- ggplot2::ggplot(data, ggplot2::aes(fill = {{ level }}))
+    p <- p + ggplot2::scale_fill_manual(values = pal)
+    p <- p + ggplot2::theme_minimal()
 
-  if (type == "hist") {
-    p <- p + ggplot2::geom_histogram(ggplot2::aes(x = {{ value }}), ...)
-  } else if (type == "point") {
-    p <- p + ggplot2::geom_point(ggplot2::aes(x = {{ name }}, y = {{ value }}), stroke = 0, size = 4, shape = 21, ...)
-    p <- p + ggplot2::coord_flip()
-  } else {
-    p <- p + ggplot2::geom_col(ggplot2::aes(x = {{ name }}, y = {{ value }}), width = 0.8, ...)
-    p <- p + ggplot2::coord_flip()
-    p <- p + ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.05)))
-  }
-  if (!is.null(title)) {
-    p <- p + ggplot2::ggtitle(title)
-  }
-  p
+    if (type == "hist") {
+        p <- p + ggplot2::geom_histogram(ggplot2::aes(x = {{ value }}), ...)
+    } else if (type == "point") {
+        p <- p + ggplot2::geom_point(ggplot2::aes(x = {{ name }}, y = {{ value }}), stroke = 0, size = 4, shape = 21, ...)
+        p <- p + ggplot2::coord_flip()
+    } else {
+        p <- p + ggplot2::geom_col(ggplot2::aes(x = {{ name }}, y = {{ value }}), width = 0.8, ...)
+        p <- p + ggplot2::coord_flip()
+        p <- p + ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.05)))
+    }
+    if (!is.null(title)) {
+        p <- p + ggplot2::ggtitle(title)
+    }
+    p
 }
-
