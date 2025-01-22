@@ -1,3 +1,4 @@
+devtools::load_all()
 # ACS: MOST RECENT VARIABLES
 acs_vars22 <- clean_acs_vars(year = 2022, survey = "acs5")
 
