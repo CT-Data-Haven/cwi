@@ -3,8 +3,8 @@ destination: docs/
 development:
   mode: auto
 template:
-  params:
-    bootswatch: yeti
+  bootstrap: 5
+  bootswatch: yeti
 
 reference:
   - title: Functions - fetching
@@ -35,11 +35,11 @@ reference:
   - title: Datasets - reference
     desc: Reference datasets, lookup tables, and crosswalks
     contents:
-      - "acs_vars22"
+      - "acs_vars"
       - "basic_table_nums"
       - "cb_avail"
       - "ct5_clusters"
-      - "decennial_vars20"
+      - "decennial_vars"
       - "ext_table_nums"
       - "laus_codes"
       - "msa"
