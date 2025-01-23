@@ -10,8 +10,6 @@
 #' fix_cogs(names(regions[1:6]))
 #' @export
 #' @seealso xwalk regions
-#'
-#' @import dplyr
 fix_cogs <- function(x) {
     # should be either character or factor
     ref <- list(

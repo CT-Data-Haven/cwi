@@ -1,6 +1,8 @@
+# cwi 1.9.0
+
 # cwi 1.8.0
 
-* Fixed neighborhood shapefiles. These now come directly from cities' data portals in the scratchpad repo, where they're published as a release, giving us a single source of truth for what those boundaries are. There were also errors where a few neighborhoods in Hartford / West Hartford and Stamford received tracts outside the city boundaries. As a result, weights tables have changed a fair amount. We'd also used our own combinations of Stamford neighborhoods but now have those from the city, with some shifts in what neighborhoods are lumped together and how they're labeled.
+* Fixed neighborhood shapefiles. These now come directly from cities' data portals in the [scratchpad repo](https://github.com/CT-Data-Haven/scratchpad), where they're published as a release, giving us a single source of truth for what those boundaries are. There were also errors where a few neighborhoods in Hartford / West Hartford and Stamford received tracts outside the city boundaries. As a result, weights tables have changed a fair amount. We'd also used our own combinations of Stamford neighborhoods but now have those from the city, with some shifts in what neighborhoods are lumped together and how they're labeled.
 
 # cwi 1.7.1
 
