@@ -102,7 +102,7 @@ qwi_prep <- function(years, industries, state, counties, key) {
     # get available years for state
     # will throw error--not the best place for that
     max_yrs <- 10
-    years <- check_avail_qwi(years, state_fips, max_yrs)
+    years <- prep_qwi_yrs(years, state_fips, max_yrs)
 
     # build GET params
     base_url <- "https://api.census.gov/data/timeseries/qwi/se"
@@ -114,9 +114,12 @@ qwi_prep <- function(years, industries, state, counties, key) {
     urls
 }
 
-check_avail_qwi <- function(yrs_asked, state_fips, api_len) {
+prep_qwi_yrs <- function(yrs_asked, state_fips, api_len) {
     # adjust column names if necessary, altho state_code name comes from tidycensus
     asked_range <- range(yrs_asked)
+    # cache results of checking qwi availability
+    # mem_check_qwi <- memoise::memoise(check_qwi_avail, cache = prep_cache())
+    qwi_avail <- check_qwi_avail()
     yrs_avail <- as.list(qwi_avail[qwi_avail$state_code == state_fips, ])
     avail_range <- seq(from = yrs_avail$start_year, to = yrs_avail$end_year)
     unavail <- setdiff(yrs_asked, avail_range)

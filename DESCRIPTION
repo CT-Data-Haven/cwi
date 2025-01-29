@@ -40,7 +40,11 @@ Imports:
     readr,
     tidycensus,
     tidyselect,
-    cli
+    cli,
+    rvest,
+    memoise,
+    cachem,
+    rappdirs
 Suggests: 
     knitr,
     sf,
@@ -52,7 +56,8 @@ Suggests:
     R.utils,
     lwgeom,
     covr,
-    units
+    units,
+    withr
 Remotes: 
     camille-s/camiller
 VignetteBuilder:

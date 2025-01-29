@@ -14,3 +14,5 @@ Meta
 .snakemake/
 vignettes/*.csv
 migrate
+.cz.toml
+pkgdown

@@ -21,3 +21,4 @@
 ^\.snakemake$
 ^.env$
 migrate
+.cz.toml
