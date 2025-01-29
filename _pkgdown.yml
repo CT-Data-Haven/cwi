@@ -37,7 +37,6 @@ reference:
     contents:
       - "acs_vars"
       - "basic_table_nums"
-      - "cb_avail"
       - "ct5_clusters"
       - "decennial_vars"
       - "ext_table_nums"
@@ -75,3 +74,5 @@ reference:
       - "jenks"
       - "town_names"
       - "separate_acs"
+      - "check_cb_avail"
+      - "check_qwi_avail"

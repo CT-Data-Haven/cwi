@@ -39,20 +39,6 @@
 "decennial_vars10"
 
 
-#' Tables available from the Census Bureau API
-#'
-#' Dataset of tables available from the Census Bureau's API, filtered to include just mainland decennial summary files and ACS detailed tables. Useful for verifying which summary files are available for different years, as some codes have changed (3-year ACS was sunset, decennial summary files are now all demographic & housing characteristics tables). Also used internally for checking calls to `multi_geo_acs` and `multi_geo_decennial`.
-#'
-#' @format A data frame with `r nrow(cb_avail)` rows and 4 variables:
-#' \describe{
-#'   \item{vintage}{Vintage year of dataset}
-#'   \item{program}{Program, either "acs" or "dec"}
-#'   \item{survey}{Survey/summary file}
-#'   \item{title}{Brief title, standardized}
-#' }
-#' @source [US Census Bureau API Discovery Tool](https://www.census.gov/data/developers/updates/new-discovery-tool.html)
-"cb_avail"
-
 
 #' Common ACS table numbers
 #'
@@ -329,36 +315,37 @@ NULL
 #'
 #' @format A data frame with `r nrow(gnh_tenure)` rows and 5 variables:
 #' \describe{
-#'   \item{\code{level}}{Geographic level}
-#'   \item{\code{name}}{Geography name}
-#'   \item{\code{tenure}}{Tenure: total households, owner-occupied, or renter-occupied}
-#'   \item{\code{estimate}}{Estimated count}
-#'   \item{\code{share}}{Calculated share of households, or `NA` for total}
+#'   \item{level}{Geographic level}
+#'   \item{name}{Geography name}
+#'   \item{tenure}{Tenure: total households, owner-occupied, or renter-occupied}
+#'   \item{estimate}{Estimated count}
+#'   \item{share}{Calculated share of households, or `NA` for total}
 #' }
 "gnh_tenure"
 
 
 #' Proxy PUMAs
 #'
-#' This is a list of 2 data frames giving PUMAs that make reasonable approximations of designated regions, with weights to apply to both population- and household-based measures. The data frame labeled `county` uses county-based PUMAs and 2021 ACS values; the data frame `cog` uses the new COG-based PUMAs and 2022 ACS values. When working with PUMS data or other weighted surveys, multiply the weights in the proxy table with the weights from the survey to account for how much of the PUMA overlaps the region. The county-based table includes just non-county regions (e.g. Greater New Haven), but the COG-based table also includes "legacy" counties (e.g. New Haven County), since we assume that even if data isn't released for counties, some organizations might still want estimates based on those geographies.
+#' This is a list of 2 data frames giving PUMAs that make reasonable approximations of designated regions, with weights to apply to both population- and household-based measures. The data frame labeled `county` uses county-based PUMAs and 2021 ACS values; the data frame `cog` uses the new COG-based PUMAs and 2022 ACS values. When working with PUMS data or other weighted surveys, multiply the weights in the proxy table with the weights from the survey to account for how much of the PUMA overlaps the region.
+#'
+#' The county-based table includes just non-county regions (e.g. Greater New Haven), but the COG-based table also includes "legacy" counties (e.g. New Haven County), since we assume that even if data isn't released for counties, some organizations might still want estimates based on those geographies.
 #' See maps of proxies and their weights here: [https://ct-data-haven.github.io/cogs/proxy-geos.html](https://ct-data-haven.github.io/cogs/proxy-geos.html)
+#'
 #' **NOTE:** There are some PUMAs that are included in more than one region. When joining these tables with survey data, make sure you're allowing for duplicates of PUMAs.
 #' @format A list of 2 data frames, `county` and `cog`, with `r nrow(proxy_pumas$county)` and `r nrow(proxy_pumas$cog)` rows, respectively, and 6 variables:
 #' \describe{
-#' \item{\code{puma}}{7-digit PUMA FIPS code}
-#' \item{\code{region}}{Region name}
-#' \item{\code{pop}}{Total population in the overlapping area between the region and the PUMA}
-#' \item{\code{hh}}{Total households in the overlapping area between the region and the PUMA}
-#' \item{\code{pop_weight}}{Population weight: share of the PUMA's population that's included in the region, to be used for population-based survey analysis}
-#' \item{\code{hh_weight}}{Household weight: share of the PUMA's households that are included in the region, to be used for household-based survey analysis}
+#' \item{puma}{7-digit PUMA FIPS code}
+#' \item{region}{Region name}
+#' \item{pop}{Total population in the overlapping area between the region and the PUMA}
+#' \item{hh}{Total households in the overlapping area between the region and the PUMA}
+#' \item{pop_weight}{Population weight: share of the PUMA's population that's included in the region, to be used for population-based survey analysis}
+#' \item{hh_weight}{Household weight: share of the PUMA's households that are included in the region, to be used for household-based survey analysis}
 #' }
 #' @examples
-#' \dontrun{
 #' # proxies made from county-based PUMAs, use for pre-2022 ACS or other datasets
 #' proxy_pumas$county
 #'
 #' # proxies made from COG-based PUMAs
 #' proxy_pumas$cog
-#' }
 #' @source 2021 & 2022 5-year ACS
 "proxy_pumas"

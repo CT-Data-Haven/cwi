@@ -1,37 +1,45 @@
 ############# LABEL DATA TABLES ----
-#' Quickly add the labels of decennial variables
-#'
-#' `tidycensus::get_decennial` returns a decennial data table with its variable codes, which can be joined with `cwi::decennial_vars20` to get readable labels. This function is just a quick wrapper around the common task of joining these two data frames.
+#' @title Quickly add the labels of census variables
+#' @description `multi_geo_*` functions, and their underlying `tidycensus::get_*` functions, return data tables with variable codes (e.g. "B01001_003"), which can be joined with lookup tables to get readable labels (e.g. "Total!!Male!!Under 5 years"). These functions are just quick wrappers around the common task of joining your data frame with the variable codes and labels.
 #' @param data A data frame/tibble.
-#' @param year The year of decennial census data; defaults `r cwi:::endyears[["decennial"]]`.
-#' @param sumfile A string: which summary file to use. Defaults to `"dhc"`, the code used for 2020. 2010 used summary files labeled `"sf1"` or `"sf3"`.
-#' @param variable The bare column name of variable codes; defaults to `variable`, as returned by `tidycensus::get_decennial`.
-#' @return A tibble
-#' @seealso [decennial_vars]
+#' @param year The year of data; defaults to `r cwi:::endyears[["acs"]]` for ACS, or `r cwi:::endyears[["decennial"]]` for decennial.
+#' @param variable The bare column name of variable codes; defaults to `variable`, as returned by the `multi_geo_*` or `tidycensus::get_*` functions.
+#' @param sumfile For `label_decennial`, a string: which summary file to use. Defaults to `"dhc"`, the code used for 2020. 2010 used summary files labeled `"sf1"` or `"sf3"`.
+#' @return A tibble with the same number of rows as `data` but an additional column called `label`
+#' @seealso [decennial_vars] [acs_vars]
 #' @export
+#' @rdname label_census
 label_decennial <- function(data, year = 2020, sumfile = "dhc", variable = variable) {
     variable_lbl <- rlang::as_label(rlang::enquo(variable))
     dec_vars <- clean_decennial_vars(year = year, sumfile = sumfile)
     dec_vars <- dplyr::select(dec_vars, name, label)
     vars_out <- dplyr::left_join(data, dec_vars, by = stats::setNames("name", variable_lbl))
+
+    if (any(is.na(vars_out[["label"]]))) {
+        cli::cli_warn(c("Not all variables matched with decennial census labels.",
+                        i = "Check that you have the correct year and sumfile, and that this is proper decennial data."))
+    }
     vars_out
 }
 
-#' Quickly add the labels of ACS variables
-#'
-#' `tidycensus::get_acs` returns an ACS table with its variable codes, which can be joined with `cwi::acs_vars*` to get readable labels. This function is just a quick wrapper around the common task of joining these two data frames.
-#' @param data A data frame/tibble.
-#' @param year The endyear of ACS data; defaults `r cwi:::endyears[["acs"]]`.
-#' @param survey A string: which ACS estimate to use. Defaults to 5-year (`"acs5"`), but can also be 1-year (`"acs1"`) or 3-year (`"acs3"`), though both 1-year and 3-year have limited availability.
-#' @param variable The bare column name of variable codes; defaults to `variable`, as returned by `tidycensus::get_acs`.
-#' @return A tibble
-#' @seealso [acs_vars]
+#' @param survey For `label_acs`, a string: which ACS estimate to use. Defaults to 5-year (`"acs5"`), but can also be 1-year (`"acs1"`) or 3-year (`"acs3"`), though both 1-year and 3-year have limited availability.
+#' @examples
+#' \dontrun{
+#'   acs_pops <- multi_geo_acs("B01001")
+#'   label_acs(acs_pops)
+#' }
 #' @export
+#' @rdname label_census
 label_acs <- function(data, year = 2023, survey = "acs5", variable = variable) {
     variable_lbl <- rlang::as_label(rlang::enquo(variable))
     acs_vars <- clean_acs_vars(year = year, survey = survey)
     acs_vars <- dplyr::select(acs_vars, name, label)
     vars_out <- dplyr::left_join(data, acs_vars, by = stats::setNames("name", variable_lbl))
+
+    if (any(is.na(vars_out[["label"]]))) {
+        cli::cli_warn(c("Not all variables matched with ACS labels.",
+                        i = "Check that you have the correct year and survey, and that this is proper ACS data."))
+    }
     vars_out
 }
 
@@ -68,7 +76,10 @@ dataset_available <- function(src, year, dataset) {
     if (src == "decennial") {
         src <- "dec"
     }
-    avail <- cwi::cb_avail[cwi::cb_avail$vintage == year & cwi::cb_avail$program == src & cwi::cb_avail$survey == dataset, ]
+    # cache results of checking cb availability
+    # mem_check_cb <- memoise::memoise(check_cb_avail, cache = prep_cache())
+    cb_avail <- check_cb_avail()
+    avail <- cb_avail[cb_avail$vintage == year & cb_avail$program == src & cb_avail$survey == dataset, ]
     if (nrow(avail) == 0) {
         return(FALSE)
     } else {
