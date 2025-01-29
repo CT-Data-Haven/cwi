@@ -12,8 +12,8 @@
 <url><loc>https://CT-Data-Haven.github.io/cwi/news/index.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/acs_vars.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/adj_inflation.html</loc></url>
+<url><loc>https://CT-Data-Haven.github.io/cwi/reference/availability.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/batch_csv_dump.html</loc></url>
-<url><loc>https://CT-Data-Haven.github.io/cwi/reference/cb_avail.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/collapse_n_wt.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/ct5_clusters.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/cwi-package.html</loc></url>
@@ -24,8 +24,7 @@
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/gnh_tenure.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/index.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/jenks.html</loc></url>
-<url><loc>https://CT-Data-Haven.github.io/cwi/reference/label_acs.html</loc></url>
-<url><loc>https://CT-Data-Haven.github.io/cwi/reference/label_decennial.html</loc></url>
+<url><loc>https://CT-Data-Haven.github.io/cwi/reference/label_census.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/laus_codes.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/laus_trend.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/msa.html</loc></url>
