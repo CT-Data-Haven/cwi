@@ -53,7 +53,7 @@ data-raw/files/all_city_nhoods.rds: data-raw/get_nhood_geos.sh
 data/*_sf.rda &: data-raw/make_geo_sf.R data-raw/files/all_city_nhoods.rds
 	$(SRC)
 
-data/laus_codes.rda: data-raw/make_laus_codes.R
+data/laus_codes.rda data/laus_measures.rda data/cpi_series.rda &: data-raw/make_bls_codes.R
 	$(SRC)
 
 data/occ_codes.rda data/naics_codes.rda &: data-raw/make_lehd.R
@@ -92,7 +92,7 @@ R/sysdata.rda: data-raw/make_internal_data.R
 inst/extdata/test_data/age_df.rds: data-raw/make_testdata.R
 	$(SRC)
 
-data-raw/make_internal_data.R: data-raw/make_laus_codes.R data-raw/make_census_vars.R data-raw/make_endyears.R
+data-raw/make_internal_data.R: data-raw/make_bls_codes.R data-raw/make_census_vars.R data-raw/make_endyears.R
 	Rscript $@
 
 

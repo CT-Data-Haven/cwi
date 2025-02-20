@@ -14,6 +14,7 @@
 #' \dontrun{
 #' laus_trend(c("Connecticut", "New Haven", "Hamden"), 2014, 2017, annual = TRUE)
 #' }
+#' @family fetching-functions
 #' @export
 laus_trend <- function(names = NULL, startyear, endyear, state = "09", measures = "all", annual = FALSE, verbose = TRUE, key = NULL) {
     # check measures
@@ -132,7 +133,7 @@ check_laus_vars <- function(measures) {
 }
 
 check_laus_names <- function(state, names) {
-    codes <- cwi::laus_codes[cwi::laus_codes$state_code %in% state, ]
+    codes <- laus_codes[laus_codes$state_code %in% state, ]
     if (!is.null(names)) {
         codes <- codes[codes$area %in% names, ]
     }
