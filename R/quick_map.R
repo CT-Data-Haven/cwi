@@ -24,6 +24,7 @@
 #'     quick_map(name = NAME, value = estimate, title = "Median age by town, 2017", n = 6)
 #' }
 #' @seealso [ggplot2::geom_sf()]
+#' @family quick-plotting-functions
 #' @export
 quick_map <- function(data,
                       name = name,

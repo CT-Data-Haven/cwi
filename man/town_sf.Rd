@@ -18,4 +18,10 @@ town_sf
 \description{
 Data frame of Connecticut towns with \code{sf} geometries.
 }
+\seealso{
+Other shapefiles: 
+\code{\link{neighborhood_shapes}},
+\code{\link{tract_sf}}
+}
+\concept{shapefiles}
 \keyword{datasets}

@@ -80,4 +80,12 @@ if (interactive()) {
 }
 \seealso{
 \code{\link[tidyr:separate]{tidyr::separate()}}
+
+Other utils: 
+\code{\link{batch_csv_dump}()},
+\code{\link{check_cb_avail}()},
+\code{\link{fix_cogs}()},
+\code{\link{jenks}()},
+\code{\link{town_names}()}
 }
+\concept{utils}

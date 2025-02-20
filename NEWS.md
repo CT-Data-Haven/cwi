@@ -1,6 +1,18 @@
-# cwi 1.10.0
+## v1.11.0 (2025-02-19)
 
-# cwi 1.9.0
+### Feat
+
+- Added `get_cpi` function, used under the hood of `adj_inflation`. Consider `adj_inflation` a higher-level application of `get_cpi`. The new function doesn't change a data frame, but it takes arguments for seasonality and period, allowing you to choose whether CPI values should be by month vs annual average, and whether they are seasonally adjusted. `adj_inflation` makes these decisions (annual averages not seasonally adjusted) for you for simplicity.
+
+## v1.10.0 (2025-01-29)
+
+A small flurry of behind-the-scenes updates, including build tools and documentation.
+
+## v1.9.0 (2025-01-29)
+
+### Feat
+
+- add memoized functions to keep availability lookups up to date, close #33 and #36
 
 # cwi 1.8.0
 

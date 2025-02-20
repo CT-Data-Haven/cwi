@@ -4,6 +4,7 @@
 #'
 #' @format Data frames (classes `data.frame` and `sf`). In each, `name` is the name of each neighborhood, and `geometry` is the shape of each neighborhood as either a `sfc_POLYGON` or `sfc_MULTIPOLYGON` object. `hartford_sf` contains an additional variable, `town`, which marks the neighborhoods as being in Hartford or West Hartford.
 #' @source All neighborhood boundaries, with the exception of West Hartford, come directly from their respective cities' online data portals. West Hartford neighborhood boundaries are based directly on current tracts; the common names corresponding to tracts were scraped from a third-party real estate site.
+#' @family shapefiles
 #' @name neighborhood_shapes
 NULL
 
@@ -30,6 +31,7 @@ NULL
 #'   \item{GEOID}{Town GEOID}
 #'   \item{geometry}{Town geometry as `sfc_MULTIPOLYGON`}
 #' }
+#' @family shapefiles
 "town_sf"
 
 
@@ -42,6 +44,7 @@ NULL
 #'   \item{name}{Tract FIPS code}
 #'   \item{geometry}{Tract geometry as `sfc_MULTIPOLYGON`}
 #' }
+#' @family shapefiles
 "tract_sf"
 
 #' @rdname tract_sf

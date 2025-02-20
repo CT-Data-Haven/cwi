@@ -23,4 +23,21 @@ occ_codes
 \description{
 A dataset of occupation groups and descriptions with both Census (OCC) codes and SOC codes. Occupations are grouped hierarchically. This is filtered from a Census crosswalk to include only top-level groups, except for the very broad management, business, science, and arts occupations group; for this one, the second level groups are treated as the major one. Often you'll just want the major groups, so you can filter by the \code{is_major_grp} column.
 }
+\seealso{
+Other ref-datasets: 
+\code{\link{acs_vars}},
+\code{\link{ct5_clusters}},
+\code{\link{decennial_vars}},
+\code{\link{msa}},
+\code{\link{naics_codes}},
+\code{\link{neighborhood_tracts}},
+\code{\link{proxy_pumas}},
+\code{\link{regions}},
+\code{\link{school_dists}},
+\code{\link{table_nums}},
+\code{\link{village2town}},
+\code{\link{xwalk}},
+\code{\link{zip2town}}
+}
+\concept{ref-datasets}
 \keyword{datasets}

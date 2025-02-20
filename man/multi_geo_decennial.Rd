@@ -121,4 +121,10 @@ multi_geo_decennial("P1", 2020,
 }
 \seealso{
 \code{\link[tidycensus:census_api_key]{tidycensus::census_api_key()}}, \code{\link[tidycensus:get_decennial]{tidycensus::get_decennial()}}
+
+Other fetching-functions: 
+\code{\link{laus_trend}()},
+\code{\link{multi_geo_acs}()},
+\code{\link{qwi_industry}()}
 }
+\concept{fetching-functions}

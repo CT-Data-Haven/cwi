@@ -30,11 +30,14 @@ hh20 <- tigris::blocks(state = "09", year = 2020, refresh = FALSE) |>
     dplyr::left_join(dplyr::select(cwi::xwalk, block, tract, town), by = "block")
 
 # 2010 shapefile doesn't
-hh10 <- tidycensus::get_decennial("block",
-    variables = c(hh10 = "H003001"), year = 2010, sumfile = "sf1",
-    state = "09", geometry = TRUE, keep_geo_vars = TRUE,
-    cache_table = TRUE
-) |>
+# no longer working without county
+counties <- tidycensus::fips_codes |>
+    dplyr::filter(state == "CT",
+                  grepl("^0", county_code))
+hh10 <- purrr::map(counties$county_code, function(cty) {
+    tidycensus::get_decennial("block", variables = c(hh10 = "H003001"), year = 2010, sumfile = "sf1", state = "09", county = cty, geometry = TRUE, keep_geo_vars = TRUE, cache_table = TRUE)
+}) |>
+    dplyr::bind_rows() |>
     janitor::clean_names() |>
     dplyr::filter(aland10 > 0, value > 0) |>
     dplyr::select(block10 = geoid, hh = value) |>

@@ -68,3 +68,12 @@ Either a list of data frames (in case of \code{bind = FALSE}) or a single data f
 \description{
 This function takes either a list of data frames, or a data frame and a column to split by, and writes them all to CSV files. It then returns the list of data frames, optionally row-binded back together. It fits neatly in the middle of a longer piped workflow.
 }
+\seealso{
+Other utils: 
+\code{\link{check_cb_avail}()},
+\code{\link{fix_cogs}()},
+\code{\link{jenks}()},
+\code{\link{separate_acs}()},
+\code{\link{town_names}()}
+}
+\concept{utils}

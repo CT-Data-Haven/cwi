@@ -97,4 +97,8 @@ tidycensus::get_acs(
 }
 \seealso{
 \code{\link[ggplot2:ggsf]{ggplot2::geom_sf()}}
+
+Other quick-plotting-functions: 
+\code{\link{geo_level_plot}()}
 }
+\concept{quick-plotting-functions}

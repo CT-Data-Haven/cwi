@@ -28,4 +28,21 @@ This dataset is updated with each annual ACS release, with an attribute \code{ye
 # get the year
 attr(acs_vars, "year")
 }
+\seealso{
+Other ref-datasets: 
+\code{\link{ct5_clusters}},
+\code{\link{decennial_vars}},
+\code{\link{msa}},
+\code{\link{naics_codes}},
+\code{\link{neighborhood_tracts}},
+\code{\link{occ_codes}},
+\code{\link{proxy_pumas}},
+\code{\link{regions}},
+\code{\link{school_dists}},
+\code{\link{table_nums}},
+\code{\link{village2town}},
+\code{\link{xwalk}},
+\code{\link{zip2town}}
+}
+\concept{ref-datasets}
 \keyword{datasets}
