@@ -1,3 +1,9 @@
+## v1.11.0 (2025-02-19)
+
+### Feat
+
+- Add get_cpi function, better BLS handling
+
 ## v1.10.0 (2025-01-29)
 
 ## v1.9.0 (2025-01-29)

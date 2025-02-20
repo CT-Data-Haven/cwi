@@ -34,4 +34,11 @@ A tibble with the same number of rows as \code{data} but an additional column ca
 }
 \seealso{
 \link{decennial_vars} \link{acs_vars}
+
+Other augmenting-functions: 
+\code{\link{adj_inflation}()}
+
+Other augmenting-functions: 
+\code{\link{adj_inflation}()}
 }
+\concept{augmenting-functions}

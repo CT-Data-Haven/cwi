@@ -28,3 +28,12 @@ pops <- tibble::tribble(
 )
 town_names(pops, name_col = name)
 }
+\seealso{
+Other utils: 
+\code{\link{batch_csv_dump}()},
+\code{\link{check_cb_avail}()},
+\code{\link{fix_cogs}()},
+\code{\link{jenks}()},
+\code{\link{separate_acs}()}
+}
+\concept{utils}

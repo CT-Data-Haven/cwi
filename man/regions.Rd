@@ -16,4 +16,21 @@ regions
 \description{
 A dataset of Connecticut regions by town
 }
+\seealso{
+Other ref-datasets: 
+\code{\link{acs_vars}},
+\code{\link{ct5_clusters}},
+\code{\link{decennial_vars}},
+\code{\link{msa}},
+\code{\link{naics_codes}},
+\code{\link{neighborhood_tracts}},
+\code{\link{occ_codes}},
+\code{\link{proxy_pumas}},
+\code{\link{school_dists}},
+\code{\link{table_nums}},
+\code{\link{village2town}},
+\code{\link{xwalk}},
+\code{\link{zip2town}}
+}
+\concept{ref-datasets}
 \keyword{datasets}

@@ -46,4 +46,8 @@ This is a quick way to make a bar chart, a Cleveland dotplot, or a histogram fro
 }
 \seealso{
 \code{\link[ggplot2:geom_bar]{ggplot2::geom_col()}} \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}} \code{\link[ggplot2:geom_histogram]{ggplot2::geom_histogram()}}
+
+Other quick-plotting-functions: 
+\code{\link{quick_map}()}
 }
+\concept{quick-plotting-functions}

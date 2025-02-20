@@ -25,7 +25,7 @@ There are too many regions stored here now that the state is switching to COGs i
 
 
 
-```{r echo=FALSE}
+```{r regions, echo=FALSE}
 purrr::iwalk(cwi::regions, function(towns, reg) {
     sf <- dplyr::mutate(cwi::town_sf, region = name %in% towns)
     p <- ggplot(sf, aes(fill = region)) +

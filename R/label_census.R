@@ -7,6 +7,7 @@
 #' @param sumfile For `label_decennial`, a string: which summary file to use. Defaults to `"dhc"`, the code used for 2020. 2010 used summary files labeled `"sf1"` or `"sf3"`.
 #' @return A tibble with the same number of rows as `data` but an additional column called `label`
 #' @seealso [decennial_vars] [acs_vars]
+#' @family augmenting-functions
 #' @export
 #' @rdname label_census
 label_decennial <- function(data, year = 2020, sumfile = "dhc", variable = variable) {
@@ -28,6 +29,7 @@ label_decennial <- function(data, year = 2020, sumfile = "dhc", variable = varia
 #'   acs_pops <- multi_geo_acs("B01001")
 #'   label_acs(acs_pops)
 #' }
+#' @family augmenting-functions
 #' @export
 #' @rdname label_census
 label_acs <- function(data, year = 2023, survey = "acs5", variable = variable) {

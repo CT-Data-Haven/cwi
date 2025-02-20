@@ -10,10 +10,7 @@ reference:
   - title: Functions - fetching
     desc: Functions to fetch data from APIs
     contents:
-      - "laus_trend"
-      - "multi_geo_acs"
-      - "multi_geo_decennial"
-      - "qwi_industry"
+      - has_concept("fetching-functions")
 
   - title: Functions - survey & crosstabs
     desc: Functions to read, clean, and analyze DataHaven Community Wellbeing Survey crosstabs
@@ -26,53 +23,25 @@ reference:
   - title: Functions - analyzing and plotting
     desc: Functions to analyze or quickly plot data
     contents:
-      - "adj_inflation"
-      - "geo_level_plot"
-      - "label_acs"
-      - "label_decennial"
-      - "quick_map"
+      - has_concept("augmenting-functions")
+      - has_concept("quick-plotting-functions")
 
   - title: Datasets - reference
     desc: Reference datasets, lookup tables, and crosswalks
     contents:
-      - "acs_vars"
-      - "basic_table_nums"
-      - "ct5_clusters"
-      - "decennial_vars"
-      - "ext_table_nums"
-      - "laus_codes"
-      - "msa"
-      - "naics_codes"
-      - "neighborhood_tracts"
-      - "occ_codes"
-      - "proxy_pumas"
-      - "regions"
-      - "school_dists"
-      - "tract2town"
-      - "village2town"
-      - "xwalk"
-      - "zip2town"
+      - has_concept("ref-datasets")
 
   - title: Datasets - examples
     desc: Datasets used for examples in vignettes, package docs, & testing
     contents:
-      - "cws_demo"
-      - "gnh_tenure"
+      - has_concept("example-datasets")
 
   - title: Shapefiles
     desc: Shapefiles in `sf` format
     contents:
-      - "neighborhood_shapes"
-      - "town_sf"
-      - "tract_sf"
+      - has_concept("shapefiles")
 
   - title: Misc. / utilities
     desc: Miscellaneous functions
     contents:
-      - "batch_csv_dump"
-      - "fix_cogs"
-      - "jenks"
-      - "town_names"
-      - "separate_acs"
-      - "check_cb_avail"
-      - "check_qwi_avail"
+      - has_concept("utils")

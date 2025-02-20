@@ -30,6 +30,7 @@
 #'     separate_acs(age, into = c(NA, "sex", "age"))
 #' }
 #' }
+#' @family utils
 #' @export
 #' @seealso [tidyr::separate()]
 separate_acs <- function(data, col = label, into = NULL, sep = "!!", drop_total = FALSE, ...) {

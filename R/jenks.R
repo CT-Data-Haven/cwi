@@ -13,6 +13,7 @@
 #' values <- rexp(30, 0.8)
 #' jenks(values, n = 4)
 #' @seealso [classInt::classIntervals()]
+#' @family utils
 #' @export
 jenks <- function(x, n = 5, true_jenks = FALSE, labels = NULL, ...) {
     if (!is.numeric(x)) cli::cli_abort("{.var x} must be numeric.")

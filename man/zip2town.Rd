@@ -26,4 +26,21 @@ zip2town
 \description{
 A crosswalk of Connecticut's ZCTA5s and towns with shares of populations and households in overlapping areas. Each row corresponds to a combination of zip and town; therefore, some zips have more than one observation, as do towns.
 }
+\seealso{
+Other ref-datasets: 
+\code{\link{acs_vars}},
+\code{\link{ct5_clusters}},
+\code{\link{decennial_vars}},
+\code{\link{msa}},
+\code{\link{naics_codes}},
+\code{\link{neighborhood_tracts}},
+\code{\link{occ_codes}},
+\code{\link{proxy_pumas}},
+\code{\link{regions}},
+\code{\link{school_dists}},
+\code{\link{table_nums}},
+\code{\link{village2town}},
+\code{\link{xwalk}}
+}
+\concept{ref-datasets}
 \keyword{datasets}

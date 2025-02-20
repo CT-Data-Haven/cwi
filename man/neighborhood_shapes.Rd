@@ -34,4 +34,10 @@ stamford_sf
 \description{
 Data frames of neighborhoods of Connecticut cities with \code{sf} geometries. Includes Bridgeport, Hartford/West Hartford, New Haven, and Stamford.
 }
+\seealso{
+Other shapefiles: 
+\code{\link{town_sf}},
+\code{\link{tract_sf}}
+}
+\concept{shapefiles}
 \keyword{datasets}
