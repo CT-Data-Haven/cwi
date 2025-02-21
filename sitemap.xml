@@ -1,8 +1,6 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://CT-Data-Haven.github.io/cwi/404.html</loc></url>
-<url><loc>https://CT-Data-Haven.github.io/cwi/CHANGELOG.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/LICENSE-text.html</loc></url>
-<url><loc>https://CT-Data-Haven.github.io/cwi/LICENSE.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/articles/acs-updates.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/articles/cwi.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/articles/index.html</loc></url>
@@ -12,7 +10,6 @@
 <url><loc>https://CT-Data-Haven.github.io/cwi/index.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/news/index.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/acs_vars.html</loc></url>
-<url><loc>https://CT-Data-Haven.github.io/cwi/reference/adj_inflation.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/availability.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/batch_csv_dump.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/collapse_n_wt.html</loc></url>
@@ -24,9 +21,9 @@
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/geo_level_plot.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/gnh_tenure.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/index.html</loc></url>
+<url><loc>https://CT-Data-Haven.github.io/cwi/reference/inflation.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/jenks.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/label_census.html</loc></url>
-<url><loc>https://CT-Data-Haven.github.io/cwi/reference/laus_codes.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/laus_trend.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/msa.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/multi_geo_acs.html</loc></url>

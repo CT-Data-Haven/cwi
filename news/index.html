@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cwi</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.10.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.11.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,11 +39,17 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.10.0" id="cwi-1100">cwi 1.10.0<a class="anchor" aria-label="anchor" href="#cwi-1100"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.11.0" id="cwi-v1110-2025-02-19">cwi v1.11.0 (2025-02-19)<a class="anchor" aria-label="anchor" href="#cwi-v1110-2025-02-19"></a></h2>
+<ul><li>Added <code>get_cpi</code> function, used under the hood of <code>adj_inflation</code>. Consider <code>adj_inflation</code> a higher-level application of <code>get_cpi</code>. The new function doesn’t change a data frame, but it takes arguments for seasonality and period, allowing you to choose whether CPI values should be by month vs annual average, and whether they are seasonally adjusted. <code>adj_inflation</code> makes these decisions (annual averages not seasonally adjusted) for you for simplicity.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.10.0" id="cwi-v1100-2025-01-29">cwi v1.10.0 (2025-01-29)<a class="anchor" aria-label="anchor" href="#cwi-v1100-2025-01-29"></a></h2>
+<p>A small flurry of behind-the-scenes updates, including build tools and documentation.</p>
 </div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.9.0" id="cwi-190">cwi 1.9.0<a class="anchor" aria-label="anchor" href="#cwi-190"></a></h2>
-</div>
+<h2 class="pkg-version" data-toc-text="1.9.0" id="cwi-v190-2025-01-29">cwi v1.9.0 (2025-01-29)<a class="anchor" aria-label="anchor" href="#cwi-v190-2025-01-29"></a></h2>
+<ul><li>add memoized functions to keep availability lookups up to date, close <a href="https://github.com/CT-Data-Haven/cwi/issues/33" class="external-link">#33</a> and <a href="https://github.com/CT-Data-Haven/cwi/issues/36" class="external-link">#36</a></li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.8.0" id="cwi-180">cwi 1.8.0<a class="anchor" aria-label="anchor" href="#cwi-180"></a></h2>
 <ul><li>Fixed neighborhood shapefiles. These now come directly from cities’ data portals in the <a href="https://github.com/CT-Data-Haven/scratchpad" class="external-link">scratchpad repo</a>, where they’re published as a release, giving us a single source of truth for what those boundaries are. There were also errors where a few neighborhoods in Hartford / West Hartford and Stamford received tracts outside the city boundaries. As a result, weights tables have changed a fair amount. We’d also used our own combinations of Stamford neighborhoods but now have those from the city, with some shifts in what neighborhoods are lumped together and how they’re labeled.</li>
