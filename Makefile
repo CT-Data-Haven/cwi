@@ -15,7 +15,7 @@ all: gen_data check README.md
 
 ############################# UTILS
 check: DESCRIPTION
-	$(R_CMD) "devtools::check(cran = FALSE, document = TRUE)"
+	$(R_CMD) "devtools::check(cran = FALSE, document = TRUE, error_on = 'error')"
 
 docs:
 	$(R_CMD) "devtools::document()"

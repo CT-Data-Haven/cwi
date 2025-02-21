@@ -1,26 +1,24 @@
 ---
 title: "Shapefiles"
-output: rmarkdown::html_vignette
+description: Shapefiles shipped with the package
 vignette: >
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{quarto::html}
   %\VignetteIndexEntry{Shapefiles}
-  %\usepackage[utf8]{inputenc}
+  %\usepackage{UTF-8}
+execute: 
+  echo: true
+  message: false
+  warning: false
+fig-dpi: 150
+fig-width: 6
+fig-height: 3
+out-width: 100%
 ---
 
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-    echo = TRUE,
-    warning = FALSE,
-    collapse = TRUE,
-    comment = "#>",
-    fig.width = 6,
-    fig.height = 3,
-    dpi = 150
-)
-```
-
-```{r libraries, message=FALSE}
+```{r}
+#| label: libs
+#| message: false 
 library(dplyr)
 library(ggplot2)
 library(cwi)
@@ -54,7 +52,8 @@ theme_set(theme_void())
 
 A basic plot of `cwi::town_sf`, with some `ggplot` aesthetics set, graticule lines turned off with `coord_sf(ndiscr = F)`, and a blank theme.
 
-```{r towns, out.width="100%"}
+```{r}
+#| label: towns
 ggplot(town_sf) +
     geom_sf(fill = "gray70", color = "white", linewidth = 0.5) +
     ggtitle("Connecticut towns")
@@ -62,7 +61,8 @@ ggplot(town_sf) +
 
 With some `dplyr` operations. For example, `group_by()` followed by `summarise()` conducts a union on each group's geometries, using `sf::st_union()` in its back-end.
 
-```{r town_regional, out.width="100%"}
+```{r }
+#| label: town-regional
 town_sf |>
     filter(name %in% regions[["Greater New Haven"]]) |>
     group_by(area = ifelse(name == "New Haven", "New Haven", "New Haven suburbs")) |>
@@ -76,7 +76,8 @@ town_sf |>
 
 `cwi::tract_sf`, a fairly large shape containing all tracts in the state, as of 2020 redistricting.
 
-```{r tracts, out.width="100%"}
+```{r}
+#| label: tracts
 ggplot(tract_sf) +
     geom_sf(fill = "gray70", color = "white", linewidth = 0.1) +
     ggtitle("Connecticut tracts")
@@ -86,7 +87,10 @@ ggplot(tract_sf) +
 
 Neighborhood shapes were made at DataHaven by splitting or grouping census tracts into neighborhood areas as defined by each city's government. In some cases, boundaries were slightly adjusted to fit tracts. Small neighborhoods may be grouped together for analysis. See documentation of these at `cwi::neighborhood_shapes` and crosswalk of tracts to neighborhoods at `cwi::neighborhood_tracts`.
 
-```{r city_maps, message=FALSE, warning=FALSE, out.width="100%"}
+```{r }
+#| label: city-maps
+#| message: false
+#| warning: false 
 list(
     "New Haven" = new_haven_sf, Stamford = stamford_sf,
     "Hartford/West Hartford" = hartford_sf, Bridgeport = bridgeport_sf

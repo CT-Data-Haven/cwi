@@ -1,30 +1,36 @@
 ---
 title: "ACS updates"
-output: rmarkdown::html_vignette
+description: New or changed ACS tables by year
 vignette: >
   %\VignetteIndexEntry{ACS updates}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    comment: '#>'
+    collapse: true
+execute:
+  warning: false
+  message: false
+  echo: false
+fig-dpi: 150
+fig-width: 6
 ---
 
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(
-    echo = FALSE,
-    message = FALSE,
-    warning = FALSE,
-    collapse = TRUE,
-    comment = "#>"
-)
+```{r}
+#| label: libs
+#| message: false 
 library(cwi)
 library(dplyr)
 library(purrr)
 ```
 
 ```{r}
+#| label: compare-yrs
 compare_yrs <- function(yr, ret = FALSE) {
     yrs <- rlang::set_names(c(yr - 1, yr))
-    short_yrs <- rlang::set_names(substr(yrs, 3, 4), sprintf("%s$", seq_along(yrs)))
+    short_yrs <- rlang::set_names(as.character(yrs), sprintf("_%s$", letters[seq_along(yrs)]))
     tbls <- purrr::map(yrs, cwi:::clean_acs_vars, "acs5")
     tbls <- purrr::map(tbls, mutate, table_num = stringr::str_remove(name, "_.+$"))
     tbls <- purrr::map(tbls, distinct, concept, table_num)
@@ -32,9 +38,11 @@ compare_yrs <- function(yr, ret = FALSE) {
 
     purrr::map(tbls, ~ paste("Number of rows:", nrow(.)))
 
-    out <- purrr::reduce(tbls, dplyr::full_join, by = "table_num", suffix = as.character(c(1, 2)))
-    out <- dplyr::filter(out, concept1 != concept2 | is.na(concept1) | is.na(concept2))
-    out <- dplyr::rename_with(out, ~ stringr::str_replace_all(., short_yrs), .cols = dplyr::matches("concept\\d"))
+    out <- purrr::reduce(tbls, dplyr::full_join, by = "table_num", suffix = sprintf("_%s", letters[1:2]))
+    out <- dplyr::filter(out, concept_a != concept_b | is.na(concept_a) | is.na(concept_b))
+    out <- dplyr::rename_with(out, \(x) stringr::str_replace_all(x, short_yrs), .cols = dplyr::matches("concept_[a-z]$"))
+    # fix misspelling in 2022
+    out <- dplyr::mutate(out, dplyr::across(dplyr::matches("^concept"), \(x) stringr::str_replace(x, "major the population", "major for the population")))
 
     print(knitr::kable(out))
 
@@ -44,9 +52,19 @@ compare_yrs <- function(yr, ret = FALSE) {
 }
 ```
 
+# 2023 ACS
+
+```{r}
+#| label: c2023
+#| results: asis 
+compare_yrs(2023)
+```
+
 # 2022 ACS
 
-```{r results='asis'}
+```{r}
+#| label: c2022
+#| results: asis 
 compare_yrs(2022)
 ```
 
@@ -54,14 +72,18 @@ compare_yrs(2022)
 
 # 2021 ACS
 
-```{r results='asis'}
+```{r}
+#| label: c2021
+#| results: asis 
 compare_yrs(2021)
 ```
 
 
 # 2020 ACS
 
-```{r results='asis'}
+```{r}
+#| label: c2020
+#| results: asis 
 compare_yrs(2020)
 ```
 
@@ -78,17 +100,21 @@ The 2019 ACS included [reengineering of a few tables](https://www.census.gov/pro
 
 This is just a quick check of what's new or changed.
 
-```{r results='asis'}
+```{r}
+#| label: c2019
+#| results: asis 
 change19 <- compare_yrs(2019, ret = TRUE)
 ```
 
 ## Variables in the tables related to gender & family structure:
 
-```{r message=FALSE, warning=FALSE, results='asis'}
+```{r}
+#| label: c2019-gender
+#| results: asis 
 acs19 <- cwi:::clean_acs_vars(2019, "acs5") |>
     mutate(table_num = stringr::str_remove(name, "_.+$"))
 change19 |>
-    filter(grepl("(HOUSEHOLD|SPOUSE)", concept19)) |>
+    filter(grepl("(HOUSEHOLD|SPOUSE)", concept2019)) |>
     inner_join(acs19, by = "table_num") |>
     split(~table_num) |>
     purrr::map(function(x) split(x, x$concept)) |>

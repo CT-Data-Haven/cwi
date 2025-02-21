@@ -1,20 +1,20 @@
 ---
 title: "Regions"
-output: rmarkdown::html_vignette
+description: Region definitions
 vignette: >
   %\VignetteIndexEntry{Regions}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
+execute: 
+  warning: false
+  message: false
+  echo: false
+fig-dpi: 150
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-    collapse = TRUE,
-    comment = "#>"
-)
-```
 
-```{r setup}
+```{r}
+#| label: libs
 library(sf)
 library(cwi)
 library(ggplot2)
@@ -25,7 +25,8 @@ There are too many regions stored here now that the state is switching to COGs i
 
 
 
-```{r regions, echo=FALSE}
+```{r }
+#| label: regions
 purrr::iwalk(cwi::regions, function(towns, reg) {
     sf <- dplyr::mutate(cwi::town_sf, region = name %in% towns)
     p <- ggplot(sf, aes(fill = region)) +
