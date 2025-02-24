@@ -1,3 +1,4 @@
+# WRITE: village2town
 # 2010 to 2020 increased by like 80 CDPs, many are much smaller than towns
 # so rewriting for 2020 with block-based population weights
 # since geometries need to be more precise now, can't use cb shapes

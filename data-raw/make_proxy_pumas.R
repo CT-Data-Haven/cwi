@@ -1,3 +1,4 @@
+# WRITE: proxy_pumas
 # need to do this a little awkwardly to make sure PUMAs can be included in multiple regions, e.g. for county-based, Ansonia PUMA is both GNH & Valley
 # include regions for county-based, regions and counties for COG-based
 town_puma <- list(

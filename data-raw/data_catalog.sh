@@ -3,8 +3,9 @@
 # data-raw scripts have a header line with the names of datasets they write
 file=data-raw/datasets.txt
 rm -f $file
+echo "script;input;output" > "$file"
 
-for r in data-raw/*.R; do
+for r in data-raw/make_*.R; do
   rbase=$(basename $r)
   rbase=$(echo $rbase | sed 's/\.R$//' | sed 's/make_//')
 

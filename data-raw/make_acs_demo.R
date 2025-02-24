@@ -13,5 +13,4 @@ gnh_tenure <- multi_geo_acs(basic_table_nums$tenure, towns = regions$`Greater Ne
   calc_shares(group = tenure, denom = "total_hh", digits = 2) |>
   dplyr::ungroup()
 
-
 usethis::use_data(gnh_tenure, overwrite = TRUE)

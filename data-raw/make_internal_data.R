@@ -1,3 +1,5 @@
+# READ: data-raw/make_bls_codes.R data-raw/make_endyears.R
+# WRITE: R/sysdata
 # sysdata.rda except all in one use_data call
 # so this sources the files that create them, then writes use_data(internal = T)
 source("./data-raw/make_bls_codes.R", local = TRUE)
