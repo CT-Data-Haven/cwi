@@ -26,7 +26,7 @@ geo_level_plot(
 
 \item{level}{Bare column name containing geographic levels for fill.}
 
-\item{type}{String: one of \code{"col"} (bar chart), \code{"point"} (dot plot), or \code{"hist"} (histogram); defaults \code{"col"}.}
+\item{type}{String: one of \code{"col"} (bar chart, using \code{\link[ggplot2:geom_bar]{ggplot2::geom_col()}}, \code{"point"} (dot plot, using \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}), or \code{"hist"} (histogram, using \code{\link[ggplot2:geom_histogram]{ggplot2::geom_histogram()}}); defaults \code{"col"}.}
 
 \item{hilite}{String giving the highlight color, used for the lowest geography present.}
 
@@ -44,3 +44,10 @@ A ggplot
 \description{
 This is a quick way to make a bar chart, a Cleveland dotplot, or a histogram from a set of data, filled by geographic level.
 }
+\seealso{
+\code{\link[ggplot2:geom_bar]{ggplot2::geom_col()}} \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}} \code{\link[ggplot2:geom_histogram]{ggplot2::geom_histogram()}}
+
+Other quick-plotting-functions: 
+\code{\link{quick_map}()}
+}
+\concept{quick-plotting-functions}

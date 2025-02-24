@@ -13,7 +13,7 @@
 \alias{hartford_tracts19}
 \title{City neighborhoods by tract}
 \format{
-A data frame
+A data frame; the number of rows depends on the city.
 \describe{
 \item{town}{For \code{hartford_tracts}, the name of the town, because both Hartford and West Hartford neighborhoods are included; otherwise, no \code{town} variable is needed}
 \item{name}{Neighborhood name}
@@ -21,22 +21,6 @@ A data frame
 \item{tract}{6-digit FIPS code of the tract; same as geoid but missing state & county components.}
 \item{weight}{Share of tract's households in that neighborhood}
 }
-
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 37 rows and 3 columns.
-
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 47 rows and 3 columns.
-
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 50 rows and 3 columns.
-
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 64 rows and 4 columns.
-
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 36 rows and 3 columns.
-
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 48 rows and 3 columns.
-
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 39 rows and 3 columns.
-
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 60 rows and 4 columns.
 }
 \usage{
 new_haven_tracts
@@ -60,5 +44,24 @@ Datasets of neighborhoods for New Haven, Hartford/West Hartford, Stamford, and B
 }
 \details{
 These were updated to 2020 tract definitions. There are still 2019 versions of weight tables with names ending in \code{"19"}; for the time being, those will stick around for use with pre-2020 data.
+
+Note also that there was an error in the tables for Stamford and Hartford/West Hartford where a few neighborhoods were given extra tracts from outside the town boundaries. This particularly would affect counts, such as population totals by neighborhood, and was based on poor alignment in doing spatial overlays. Fixed 5/22/2024.
 }
+\seealso{
+Other ref-datasets: 
+\code{\link{acs_vars}},
+\code{\link{ct5_clusters}},
+\code{\link{decennial_vars}},
+\code{\link{msa}},
+\code{\link{naics_codes}},
+\code{\link{occ_codes}},
+\code{\link{proxy_pumas}},
+\code{\link{regions}},
+\code{\link{school_dists}},
+\code{\link{table_nums}},
+\code{\link{village2town}},
+\code{\link{xwalk}},
+\code{\link{zip2town}}
+}
+\concept{ref-datasets}
 \keyword{datasets}

@@ -1,3 +1,55 @@
+# cwi v1.11.0 (2025-02-19)
+
+- Added `get_cpi` function, used under the hood of `adj_inflation`. Consider `adj_inflation` a higher-level application of `get_cpi`. The new function doesn't change a data frame, but it takes arguments for seasonality and period, allowing you to choose whether CPI values should be by month vs annual average, and whether they are seasonally adjusted. `adj_inflation` makes these decisions (annual averages not seasonally adjusted) for you for simplicity.
+
+# cwi v1.10.0 (2025-01-29)
+
+A small flurry of behind-the-scenes updates, including build tools and documentation.
+
+# cwi v1.9.0 (2025-01-29)
+
+- add memoized functions to keep availability lookups up to date, close #33 and #36
+
+# cwi 1.8.0
+
+* Fixed neighborhood shapefiles. These now come directly from cities' data portals in the [scratchpad repo](https://github.com/CT-Data-Haven/scratchpad), where they're published as a release, giving us a single source of truth for what those boundaries are. There were also errors where a few neighborhoods in Hartford / West Hartford and Stamford received tracts outside the city boundaries. As a result, weights tables have changed a fair amount. We'd also used our own combinations of Stamford neighborhoods but now have those from the city, with some shifts in what neighborhoods are lumped together and how they're labeled.
+
+# cwi 1.7.1
+
+* Updated and improved methods for making `zip2town` crosswalk, based on 2020 / 2022 geographies. The columns included in the data frame are slightly changed.
+* Fixed issues with `qwi_industry`: the API now uses COGs for Connecticut instead of counties.
+
+# cwi 1.7.0
+
+Moved `add_logo` to the stylehaven package.
+
+# cwi 1.6.3
+
+Bumping package versions just to draw attention to the fact that there's now a set of PUMA proxy crosswalks; see `proxy_pumas`.
+
+# cwi 1.6.2
+
+Edit `xwalk`---there were still more FIPS codes to update with their COG-based versions. The data frame now includes COG-based codes for block groups, tracts, towns, and PUMAs.
+
+# cwi 1.6.1
+
+Bump ACS-related defaults to 2022
+
+# cwi 1.6.0
+
+**MINOR BREAKING CHANGE:** This update corresponds to the 2022 ACS data release, which is the first to use COGs instead of counties. Because COGs have different FIPS codes, town and tract FIPS codes (but apparently not block groups) have changed to match. The bulk of their code digits stay the same, but the portion signifying the county changed, e.g. 09**009**140101 is now 09**170**140101. To deal with that without breaking too much code, there are a few changes to the package:
+
+- Neighborhood lookup tables (`bridgeport_tracts`, etc) have the previous county-based FIPS codes in the column `geoid`, and the new COG-based FIPS codes in the column `geoid_cog`.
+- `xwalk` now has columns for COG-based town and tract FIPS codes, in addition to the previous county-based ones.
+- Calling `multi_geo_acs` with `counties = "all"` (the default) will get you COGs, but `multi_geo_decennial` will get you counties, because the switch was not retroactive.
+- The names of COGs returned by `multi_geo_acs` and used for names in the `regions` list are the ones the Census Bureau uses. Unfortunately, these aren't all the ones the state uses. For that, I've added a function `fix_cogs`, which replaces common names for them with the ones the state lists somewhat officially, e.g. Capitol COG is in the census data, Capitol Region COG is what the state usually uses but probably not always.
+- Finally, the part that doesn't come up often but will break: previously the `multi_geo_*` functions took neighborhood names, weights, and GEOIDs as bare column names, with defaults (name, weight, and geoid, respectively). These now have to all be given as strings (i.e. in quotation marks), and geoid no longer has a default. This is to deal with the fact that some calculations will now need the neighborhood lookup tables' `geoid` columns, and some will need `geoid_cog`. This only matters when you're including neighborhoods in function calls.
+
+# cwi 1.5.0
+
+- The 2020 decennial census added a few dozen new census designated places, which is what `village2town` is based on. They now overlap with towns even less well than they used to. The table has been recalculated, with towns and villages joined based on overlapping population from the 2020 decennial, and now includes populations and weights in the crosswalk. 
+That means things could break if you're expecting one set of CDPs and get another, or if you're not expecting new columns in that table. 
+
 # cwi 1.4.0
 
 - **MINOR BREAKING CHANGE:** `multi_geo_decennial` now defaults to 2020. Because the 2020 decennial uses a different summary file code from previous years, the default `sumfile` argument, if used with 2010, *will lead to an error.*

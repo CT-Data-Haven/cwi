@@ -6,7 +6,7 @@
 \usage{
 multi_geo_acs(
   table,
-  year = 2021,
+  year = endyears[["acs"]],
   towns = "all",
   regions = NULL,
   counties = "all",
@@ -18,9 +18,9 @@ multi_geo_acs(
   msa = FALSE,
   us = FALSE,
   new_england = TRUE,
-  nhood_name = name,
-  nhood_geoid = geoid,
-  nhood_weight = weight,
+  nhood_name = "name",
+  nhood_geoid = NULL,
+  nhood_weight = "weight",
   survey = c("acs5", "acs1"),
   verbose = TRUE,
   key = NULL,
@@ -31,7 +31,7 @@ multi_geo_acs(
 \arguments{
 \item{table}{A string giving the ACS table number.}
 
-\item{year}{The year of the ACS table; currently defaults 2021 (most recent available).}
+\item{year}{The year of the ACS table; currently defaults 2023 (most recent available).}
 
 \item{towns}{A character vector of names of towns to include; \code{"all"} (default) for all towns optionally filtered by county; or \code{NULL} to not fetch town-level table.}
 
@@ -55,11 +55,11 @@ multi_geo_acs(
 
 \item{new_england}{Logical: if \code{TRUE} (the default), limits metro areas to just New England states.}
 
-\item{nhood_name}{Bare column name of neighborhood names. Only relevant if a neighborhood weight table is being used. Defaults \code{name} to match the neighborhood lookup datasets.}
+\item{nhood_name}{String giving the name of the column in the data frame \code{neighborhoods} that contains neighborhood names. Previously this was a bare column name, but for consistency with changes to COG-based FIPS codes, this needs to be a string. Only relevant if a neighborhood weight table is being used. Defaults \code{"name"} to match the neighborhood lookup datasets.}
 
-\item{nhood_geoid}{Bare column name of neighborhood GEOIDs, either tracts or block groups. Only relevant if a neighborhood weight table is being used. Defaults \code{geoid} to match the neighborhood lookup datasets.}
+\item{nhood_geoid}{String giving the name of the column in \code{neighborhoods} that contains neighborhood GEOIDs, either tracts or block groups. Only relevant if a neighborhood weight table is being used. Because of changes to FIPS codes, this no longer has a default.}
 
-\item{nhood_weight}{Bare column name of weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults \code{weight} to match the neighborhood lookup datasets.}
+\item{nhood_weight}{String giving the name of the column in \code{neighborhoods} that contains weights between neighborhood names and tract/block groups. Only relevant if a neighborhood weight table is being used. Defaults \code{"weight"} to match the neighborhood lookup datasets.}
 
 \item{survey}{A string: which ACS estimate to use. Defaults to 5-year (\code{"acs5"}), but can also be 1-year (\code{"acs1"}).}
 
@@ -69,7 +69,42 @@ multi_geo_acs(
 
 \item{sleep}{Number of seconds, if any, to sleep before each API call. This might help with the Census API's tendency to crash, but for many geographies, it could add a sizable about of time. Probably don't add more than a few seconds.}
 
-\item{...}{Additional arguments to pass on to \code{tidycensus::get_acs}}
+\item{...}{
+  Arguments passed on to \code{\link[tidycensus:get_acs]{tidycensus::get_acs}}
+  \describe{
+    \item{\code{variables}}{Character string or vector of character strings of variable
+IDs. tidycensus automatically returns the estimate and the margin of error
+associated with the variable.}
+    \item{\code{output}}{One of "tidy" (the default) in which each row represents an
+enumeration unit-variable combination, or "wide" in which each row
+represents an enumeration unit and the variables are in the columns.}
+    \item{\code{county}}{The county for which you are requesting data. County names and
+FIPS codes are accepted. Must be combined with a value supplied to `state`.
+Defaults to NULL.}
+    \item{\code{zcta}}{The zip code tabulation area(s) for which you are requesting
+data. Specify a single value or a vector of values to get data for more
+than one ZCTA. Numeric or character ZCTA GEOIDs are accepted. When
+specifying ZCTAs, geography must be set to `"zcta"` and `state` must be specified with
+`county` left as `NULL`. Defaults to NULL.}
+    \item{\code{geometry}}{if FALSE (the default), return a regular tibble of ACS data.
+if TRUE, uses the tigris package to return an sf tibble with simple feature
+geometry in the `geometry` column.}
+    \item{\code{keep_geo_vars}}{if TRUE, keeps all the variables from the Census
+shapefile obtained by tigris.  Defaults to FALSE.}
+    \item{\code{shift_geo}}{(deprecated) if TRUE, returns geometry with Alaska and Hawaii shifted for
+thematic mapping of the entire US. Geometry was originally obtained from
+the albersusa R package. As of May 2021, we recommend using \code{tigris::shift_geometry()}
+instead.}
+    \item{\code{summary_var}}{Character string of a "summary variable" from the ACS to
+be included in your output. Usually a variable (e.g. total population) that
+you'll want to use as a denominator or comparison.}
+    \item{\code{moe_level}}{The confidence level of the returned margin of error.  One
+of 90 (the default), 95, or 99.}
+    \item{\code{show_call}}{if TRUE, display call made to Census API. This can be very
+useful in debugging and determining if error messages returned are due to
+tidycensus or the Census API. Copy to the API call into a browser and see
+what is returned by the API directly. Defaults to FALSE.}
+  }}
 }
 \value{
 A tibble with GEOID, name, variable code, estimate, moe, geography level, state, and year, as applicable, for the chosen ACS table.
@@ -78,24 +113,30 @@ A tibble with GEOID, name, variable code, estimate, moe, geography level, state,
 Fetch a data table from the ACS via \code{tidycensus} with your choice of geographies at multiple levels. For geographies made of aggregates, i.e. neighborhoods made of tracts or regions made of towns, the returned table will have estimates summed and margins of error calculated for the whole area. Any geographic levels that are null will be excluded.
 }
 \details{
-This function essentially calls \code{tidycensus::get_acs()} multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying \code{tidycensus::get_acs()} requires a Census API key. As is the case with other \code{tidycensus} functions, \code{multi_geo_acs} assumes this key is stored as \code{CENSUS_API_KEY} in your \code{.Renviron}. See \code{\link[tidycensus:census_api_key]{tidycensus::census_api_key()}} for installation.
+This function essentially calls \code{\link[tidycensus:get_acs]{tidycensus::get_acs()}} multiple times, depending on geographic levels chosen, and does minor cleaning, filtering, and aggregation. Note that the underlying \code{\link[tidycensus:get_acs]{tidycensus::get_acs()}} requires a Census API key. As is the case with other \code{tidycensus} functions, \code{multi_geo_acs} assumes this key is stored as \code{CENSUS_API_KEY} in your \code{.Renviron} or other source of environment variables. See \code{\link[tidycensus:census_api_key]{tidycensus::census_api_key()}} for installation.
 }
 \examples{
 \dontrun{
 multi_geo_acs("B01003", 2019,
-  towns = "all",
-  regions = list(inner_ring = c("Hamden", "East Haven", "West Haven")),
-  counties = "New Haven County",
-  tracts = unique(new_haven_tracts$geoid))
-
-multi_geo_acs("B01003", 2018,
-  towns = "Bridgeport",
-  counties = "Fairfield County",
-  neighborhoods = bridgeport_tracts
+    towns = "all",
+    regions = list(inner_ring = c("Hamden", "East Haven", "West Haven")),
+    counties = "New Haven County",
+    tracts = unique(new_haven_tracts$geoid)
 )
 
+multi_geo_acs("B01003", 2018,
+    towns = "Bridgeport",
+    counties = "Fairfield County",
+    neighborhoods = bridgeport_tracts
+)
 }
 }
 \seealso{
 \code{\link[tidycensus:census_api_key]{tidycensus::census_api_key()}}, \code{\link[tidycensus:get_acs]{tidycensus::get_acs()}}
+
+Other fetching-functions: 
+\code{\link{laus_trend}()},
+\code{\link{multi_geo_decennial}()},
+\code{\link{qwi_industry}()}
 }
+\concept{fetching-functions}

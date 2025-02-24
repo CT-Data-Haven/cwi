@@ -9,35 +9,36 @@
 #' @examples
 #' fix_cogs(names(regions[1:6]))
 #' @export
+#' @family utils
 #' @seealso xwalk regions
-#'
-#' @import dplyr
 fix_cogs <- function(x) {
-  # should be either character or factor
-  ref <- list(
-    "Capitol Region COG" = c("Capitol", "Capitol COG"),
-    "Connecticut Metro COG" = c("Connecticut Metro", "Greater Bridgeport COG"), # can't replace Greater Bridgeport since that might legit be used
-    "Lower Connecticut River Valley COG" = c("Lower Connecticut River Valley"),
-    "Naugatuck Valley COG" = c("Naugatuck Valley"),
-    "Northeastern Connecticut COG" = c("Northeastern", "Northeastern COG", "Northeastern Connecticut"),
-    "Northwest Hills COG" = c("Northwest Hills"),
-    "South Central Regional COG" = c("South Central", "South Central COG", "South Central Regional"),
-    "Southeastern Connecticut COG" = c("Southeastern Connecticut", "Southeastern", "Southeastern COG"),
-    "Western Connecticut COG" = c("Western Connecticut", "Western COG", "Western")
-  )
-  ref <- tibble::enframe(ref, name = "good", value = "bad")
-  ref <- tidyr::unnest(ref, bad)
+    # should be either character or factor
+    ref <- list(
+        "Capitol Region COG" = c("Capitol", "Capitol Region"),
+        "Connecticut Metro COG" = c("Connecticut Metro", "Greater Bridgeport"), # can't replace Greater Bridgeport since that might legit be used
+        "Lower Connecticut River Valley COG" = c("Lower Connecticut River Valley"),
+        "Naugatuck Valley COG" = c("Naugatuck Valley"),
+        "Northeastern Connecticut COG" = c("Northeastern", "Northeastern Connecticut"),
+        "Northwest Hills COG" = c("Northwest Hills"),
+        "South Central Regional COG" = c("South Central", "South Central Regional", "South Central Connecticut"),
+        "Southeastern Connecticut COG" = c("Southeastern Connecticut", "Southeastern"),
+        "Western Connecticut COG" = c("Western Connecticut", "Western")
+    )
+    ref <- purrr::map(ref, function(x) c(x, paste(x, "COG")))
+    ref <- tibble::enframe(ref, name = "good", value = "bad")
+    ref <- tidyr::unnest(ref, bad)
 
-  fx_cgs <- function(a) {
-    dplyr::if_else(a %in% ref[["bad"]],
-                   ref[["good"]][match(a, ref[["bad"]])],
-                   a)
-  }
-  if (inherits(x, "character")) {
-    fx_cgs(x)
-  } else if (inherits(x, "factor")) {
-    x <- forcats::fct_relabel(x, fx_cgs)
-  } else {
-    cli::cli_abort("{.arg x} should be either a character or factor.")
-  }
+    fx_cgs <- function(a) {
+        dplyr::if_else(a %in% ref[["bad"]],
+            ref[["good"]][match(a, ref[["bad"]])],
+            a
+        )
+    }
+    if (inherits(x, "character")) {
+        fx_cgs(x)
+    } else if (inherits(x, "factor")) {
+        x <- forcats::fct_relabel(x, fx_cgs)
+    } else {
+        cli::cli_abort("{.arg x} should be either a character or factor.")
+    }
 }

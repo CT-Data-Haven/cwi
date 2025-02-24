@@ -22,4 +22,10 @@ tract_sf19
 \description{
 Data frame of Connecticut tracts with \code{sf} geometries. \code{tract_sf19} is the 2019 version, should you need an older shapefile.
 }
+\seealso{
+Other shapefiles: 
+\code{\link{neighborhood_shapes}},
+\code{\link{town_sf}}
+}
+\concept{shapefiles}
 \keyword{datasets}

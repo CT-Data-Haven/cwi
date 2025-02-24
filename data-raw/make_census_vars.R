@@ -1,12 +1,13 @@
 # WRITE: acs_vars21 decennial_vars10 decennial_vars20 cb_avail
+devtools::load_all()
 # ACS: MOST RECENT VARIABLES
-acs_vars21 <- clean_acs_vars(year = 2021, survey = "acs5")
-
+acs_vars <- clean_acs_vars(year = endyears[["acs"]], survey = "acs5")
+attr(acs_vars, "year") <- endyears[["acs"]]
 
 # DECENNIAL: 2 MOST RECENT
 decennial_vars10 <- clean_decennial_vars(year = 2010, sumfile = "sf1")
-decennial_vars20 <- clean_decennial_vars(year = 2020, sumfile = "dhc")
-
+decennial_vars <- clean_decennial_vars(year = endyears[["decennial"]], sumfile = "dhc")
+attr(decennial_vars, "year") <- endyears[["decennial"]]
 
 # ALL TABLES AVAILABLE: VINTAGE + PROGRAM + SURVEY CODE
 include_str <- c("Detailed Tables", "PL 94-171", "Summary File \\d(?! Demographic Profile)", "SF\\d", "Demographic and Housing Characteristics")
@@ -26,7 +27,7 @@ cb_avail$title <- stringr::str_replace_all(cb_avail$title, c("Summary File " = "
 cb_avail <- dplyr::arrange(cb_avail, program, vintage, survey)
 
 
-usethis::use_data(acs_vars21, overwrite = TRUE)
+usethis::use_data(acs_vars, overwrite = TRUE)
 usethis::use_data(decennial_vars10, overwrite = TRUE)
-usethis::use_data(decennial_vars20, overwrite = TRUE)
-usethis::use_data(cb_avail, overwrite = TRUE)
+usethis::use_data(decennial_vars, overwrite = TRUE)
+# usethis::use_data(cb_avail, overwrite = TRUE)

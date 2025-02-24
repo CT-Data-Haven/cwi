@@ -43,3 +43,10 @@ Fetch monthly LAUS data for a list of locations over a given time period, modele
 laus_trend(c("Connecticut", "New Haven", "Hamden"), 2014, 2017, annual = TRUE)
 }
 }
+\seealso{
+Other fetching-functions: 
+\code{\link{multi_geo_acs}()},
+\code{\link{multi_geo_decennial}()},
+\code{\link{qwi_industry}()}
+}
+\concept{fetching-functions}

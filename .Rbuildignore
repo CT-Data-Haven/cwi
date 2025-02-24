@@ -17,4 +17,8 @@
 ^\.covrignore$
 ^codecov\.yml$
 ^Makefile$
-.vscode
+^.*\.vscode$
+^\.snakemake$
+^.env$
+migrate
+.cz.toml

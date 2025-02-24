@@ -1,6 +1,6 @@
 Package: cwi
 Title: Prep for DataHaven's Community Wellbeing Index
-Version: 1.4.0
+Version: 1.11.0
 Authors@R: 
     person(given = "Camille",
            family = "Seaberry",
@@ -18,9 +18,9 @@ BugReports: https://github.com/CT-Data-Haven/cwi/issues
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 Depends:
-    R (>= 4.0.0)
+    R (>= 4.2.0)
 Imports: 
     classInt,
     dplyr,
@@ -36,13 +36,15 @@ Imports:
     stringr,
     tidyr,
     tibble,
-    magick,
-    cowplot,
     camiller (>= 0.2.0),
     readr,
     tidycensus,
     tidyselect,
-    cli
+    cli,
+    rvest,
+    memoise,
+    cachem,
+    rappdirs
 Suggests: 
     knitr,
     sf,
@@ -52,10 +54,15 @@ Suggests:
     testthat (>= 3.0.0),
     showtext,
     R.utils,
-    covr
+    lwgeom,
+    covr,
+    units,
+    withr,
+    quarto
 Remotes: 
     camille-s/camiller
 VignetteBuilder:
-    knitr
+    knitr,
+    quarto
 Config/testthat/edition: 3
 Config/check/ignore-inconsequential-notes: true

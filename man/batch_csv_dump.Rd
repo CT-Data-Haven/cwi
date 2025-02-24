@@ -10,7 +10,8 @@ batch_csv_dump(
   path = ".",
   base_name = NULL,
   bind = FALSE,
-  verbose = TRUE
+  verbose = TRUE,
+  ...
 )
 }
 \arguments{
@@ -25,6 +26,41 @@ batch_csv_dump(
 \item{bind}{Logical: whether to row-bind list of data frames into a single data frame. Defaults \code{FALSE}, in which case a list of data frames is returned.}
 
 \item{verbose}{Logical: whether to print files' paths and names as they're written. Defaults \code{TRUE}.}
+
+\item{...}{
+  Arguments passed on to \code{\link[utils:write.table]{utils::write.table}}
+  \describe{
+    \item{\code{append}}{logical. Only relevant if \code{file} is a character
+    string.  If \code{TRUE}, the output is appended to the
+    file.  If \code{FALSE}, any existing file of the name is destroyed.}
+    \item{\code{quote}}{a logical value (\code{TRUE} or \code{FALSE}) or a
+    numeric vector.  If \code{TRUE}, any character or factor columns
+    will be surrounded by double quotes.  If a numeric vector, its
+    elements are taken as the indices of columns to quote.  In both
+    cases, row and column names are quoted if they are written.  If
+    \code{FALSE}, nothing is quoted.}
+    \item{\code{eol}}{the character(s) to print at the end of each line (row).
+    For example, \code{eol = "\r\n"} will produce Windows' line endings on
+    a Unix-alike OS, and \code{eol = "\r"} will produce files as expected by
+    Excel:mac 2004.}
+    \item{\code{na}}{the string to use for missing values in the data.}
+    \item{\code{dec}}{the string to use for decimal points in numeric or complex
+    columns: must be a single character.}
+    \item{\code{col.names}}{either a logical value indicating whether the column
+    names of \code{x} are to be written along with \code{x}, or a
+    character vector of column names to be written.  See the section on
+    \sQuote{CSV files} for the meaning of \code{col.names = NA}.}
+    \item{\code{qmethod}}{a character string specifying how to deal with embedded
+    double quote characters when quoting strings.  Must be one of
+    \code{"escape"} (default for \code{write.table}), in which case the
+    quote character is escaped in C style by a backslash, or
+    \code{"double"} (default for \code{write.csv} and
+    \code{write.csv2}), in which case it is doubled.  You can specify
+    just the initial letter.}
+    \item{\code{fileEncoding}}{character string: if non-empty declares the
+    encoding to be used on a file (not a connection) so the character data can
+    be re-encoded as they are written.  See \code{\link{file}}.}
+  }}
 }
 \value{
 Either a list of data frames (in case of \code{bind = FALSE}) or a single data frame (in case of \code{bind = TRUE}).
@@ -32,3 +68,12 @@ Either a list of data frames (in case of \code{bind = FALSE}) or a single data f
 \description{
 This function takes either a list of data frames, or a data frame and a column to split by, and writes them all to CSV files. It then returns the list of data frames, optionally row-binded back together. It fits neatly in the middle of a longer piped workflow.
 }
+\seealso{
+Other utils: 
+\code{\link{check_cb_avail}()},
+\code{\link{fix_cogs}()},
+\code{\link{jenks}()},
+\code{\link{separate_acs}()},
+\code{\link{town_names}()}
+}
+\concept{utils}

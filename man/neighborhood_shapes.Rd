@@ -17,7 +17,10 @@ An object of class \code{sf} (inherits from \code{data.frame}) with 27 rows and 
 
 An object of class \code{sf} (inherits from \code{data.frame}) with 20 rows and 2 columns.
 
-An object of class \code{sf} (inherits from \code{data.frame}) with 16 rows and 2 columns.
+An object of class \code{sf} (inherits from \code{data.frame}) with 13 rows and 2 columns.
+}
+\source{
+All neighborhood boundaries, with the exception of West Hartford, come directly from their respective cities' online data portals. West Hartford neighborhood boundaries are based directly on current tracts; the common names corresponding to tracts were scraped from a third-party real estate site.
 }
 \usage{
 bridgeport_sf
@@ -31,4 +34,10 @@ stamford_sf
 \description{
 Data frames of neighborhoods of Connecticut cities with \code{sf} geometries. Includes Bridgeport, Hartford/West Hartford, New Haven, and Stamford.
 }
+\seealso{
+Other shapefiles: 
+\code{\link{town_sf}},
+\code{\link{tract_sf}}
+}
+\concept{shapefiles}
 \keyword{datasets}

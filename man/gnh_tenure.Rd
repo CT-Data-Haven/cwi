@@ -7,11 +7,11 @@
 \format{
 A data frame with 45 rows and 5 variables:
 \describe{
-\item{\code{level}}{Geographic level}
-\item{\code{name}}{Geography name}
-\item{\code{tenure}}{Tenure: total households, owner-occupied, or renter-occupied}
-\item{\code{estimate}}{Estimated count}
-\item{\code{share}}{Calculated share of households, or \code{NA} for total}
+\item{level}{Geographic level}
+\item{name}{Geography name}
+\item{tenure}{Tenure: total households, owner-occupied, or renter-occupied}
+\item{estimate}{Estimated count}
+\item{share}{Calculated share of households, or \code{NA} for total}
 }
 }
 \usage{
@@ -20,4 +20,9 @@ gnh_tenure
 \description{
 This is a table of housing tenure data for Greater New Haven obtained with \code{multi_geo_acs}, to be used in testing and examples.
 }
+\seealso{
+Other example-datasets: 
+\code{\link{cws_demo}}
+}
+\concept{example-datasets}
 \keyword{datasets}

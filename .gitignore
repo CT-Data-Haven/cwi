@@ -10,4 +10,9 @@ doc
 Meta
 /doc/
 /Meta/
-.vscode
+*.vscode
+.snakemake/
+vignettes/*.csv
+migrate
+.cz.toml
+pkgdown

@@ -20,6 +20,11 @@ A data frame with 100 rows and 7 variables:
 cws_demo
 }
 \description{
-This is a sample of 2015 DataHaven Community Wellbeing Survey data for Greater New Haven with weights attached. It's more or less what's created in the crosstabs vignette, saved here for use in examples.
+This is a sample of 2015 DataHaven Community Wellbeing Survey data for Greater New Haven with weights attached, saved here for use in examples.
 }
+\seealso{
+Other example-datasets: 
+\code{\link{gnh_tenure}}
+}
+\concept{example-datasets}
 \keyword{datasets}

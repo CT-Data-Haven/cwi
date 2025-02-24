@@ -1,0 +1,40 @@
+---
+title: "Regions"
+description: Region definitions
+vignette: >
+  %\VignetteIndexEntry{Regions}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+execute: 
+  warning: false
+  message: false
+  echo: false
+fig-dpi: 150
+---
+
+
+```{r}
+#| label: libs
+library(sf)
+library(cwi)
+library(ggplot2)
+theme_set(theme_void() + theme(plot.title = element_text(size = 11)))
+```
+
+There are too many regions stored here now that the state is switching to COGs instead of counties. Here's a visual reference to them. Note that Greater Hartford and the Capitol Region COG are the same, as are Greater Bridgeport and Connecticut Metro COG.
+
+
+
+```{r }
+#| label: regions
+purrr::iwalk(cwi::regions, function(towns, reg) {
+    sf <- dplyr::mutate(cwi::town_sf, region = name %in% towns)
+    p <- ggplot(sf, aes(fill = region)) +
+        geom_sf(linewidth = 0.2, color = "gray10") +
+        scale_fill_manual(values = c("TRUE" = "mediumorchid", "FALSE" = "gray90"), guide = "none") +
+        # coord_sf(ndiscr = 0) +
+        labs(title = reg)
+    print(p)
+})
+```
+
