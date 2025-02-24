@@ -1,6 +1,3 @@
-library(cwi)
-library(testthat)
-
 test_that("separate_acs handles column specifications", {
     df <- readRDS(system.file("test_data/age_df.rds", package = "cwi"))
 

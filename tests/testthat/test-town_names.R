@@ -1,6 +1,3 @@
-library(cwi)
-library(testthat)
-
 test_that("town_names removes 'town, * County'", {
     skip_on_ci()
     pops21 <- tidycensus::get_acs(

@@ -30,17 +30,19 @@
 #' @seealso [tidycensus::census_api_key()], [tidycensus::get_acs()]
 #' @examples
 #' \dontrun{
-#' multi_geo_acs("B01003", 2019,
+#' multi_geo_acs("B01003", 2018,
 #'     towns = "all",
 #'     regions = list(inner_ring = c("Hamden", "East Haven", "West Haven")),
 #'     counties = "New Haven County",
 #'     tracts = unique(new_haven_tracts$geoid)
 #' )
 #'
-#' multi_geo_acs("B01003", 2018,
+#' multi_geo_acs("B01003", 2023,
 #'     towns = "Bridgeport",
-#'     counties = "Fairfield County",
-#'     neighborhoods = bridgeport_tracts
+#'     counties = "Greater Bridgeport COG",
+#'     neighborhoods = bridgeport_tracts,
+#'     nhood_name = "name",
+#'     nhood_geoid = "geoid_cog"
 #' )
 #' }
 #' @family fetching-functions

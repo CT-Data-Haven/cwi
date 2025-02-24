@@ -1,6 +1,3 @@
-library(cwi)
-library(testthat)
-
 test_that("fix_cogs checks data types", {
     x1 <- c("Capitol COG", "Greater Bridgeport", "Northwest Hills COG")
     x2 <- as.factor(x1)

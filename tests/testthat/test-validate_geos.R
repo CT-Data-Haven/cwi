@@ -1,6 +1,3 @@
-library(cwi)
-library(testthat)
-
 test_that("get_county_fips matches & returns FIPS codes", {
     correct <- c("09001", "09009")
     expect_equal(get_county_fips("09", c("New Haven County", "Fairfield County"), FALSE), correct)

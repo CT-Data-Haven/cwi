@@ -13,7 +13,7 @@
 #' @return A data frame / tibble
 #' @examples
 #' \dontrun{
-#' qwi_industry(2012:2017, industries = c("23", "62"), counties = "009")
+#' qwi_industry(2012:2017, industries = c("23", "62"), counties = "170")
 #' }
 #' @family fetching-functions
 #' @export
@@ -27,6 +27,17 @@ qwi_industry <- function(years, industries = cwi::naics_codes[["industry"]],
         counties = counties,
         key = key
     )
+    if (length(urls) == 0) {
+        # add hint if looking for CT counties
+        if (state %in% c("09", "CT") & !is.null(counties)) {
+            msg <- c("An error occurred in preparing your API calls.",
+                "i" = "This API retroactively replaced counties with COGs--double check your arguments."
+            )
+        } else {
+            msg <- "An error occurred in preparing your API calls."
+        }
+        cli::cli_abort(msg, call = parent.frame(n = 3))
+    }
     agent <- httr::user_agent("cwi")
 
     fetch <- purrr::imap(urls, function(u, i) {

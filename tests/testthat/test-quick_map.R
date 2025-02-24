@@ -1,6 +1,3 @@
-library(cwi)
-library(testthat)
-
 test_that("quick_map successful calls return ggplots", {
     set.seed(123)
     town_df <- dplyr::tibble(name = regions[["Greater New Haven"]]) |>

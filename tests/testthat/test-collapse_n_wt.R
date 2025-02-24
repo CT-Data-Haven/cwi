@@ -1,6 +1,3 @@
-library(cwi)
-library(testthat)
-
 test_that("collapse_n_wt returns correct number of rows", {
     income_lvls <- list(
         "<$30K" = c("<$15K", "$15K-$30K"),

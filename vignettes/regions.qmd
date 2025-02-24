@@ -9,7 +9,7 @@ execute:
   warning: false
   message: false
   echo: false
-fig-dpi: 150
+fig-dpi: 100
 ---
 
 

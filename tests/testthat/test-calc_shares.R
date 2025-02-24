@@ -1,6 +1,3 @@
-library(cwi)
-library(testthat)
-
 test_that("calc_shares imports from camiller", {
     df <- gnh_tenure |>
         dplyr::select(-share) |>

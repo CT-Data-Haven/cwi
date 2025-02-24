@@ -1,14 +1,13 @@
-library(cwi)
-library(testthat)
-
 test_that("qwi_industry handles county defaults", {
     skip_on_ci()
     by_state <- qwi_industry(2018, counties = NULL)
     expect_false("county" %in% names(by_state))
-    by_county <- qwi_industry(2018, counties = "170")
-    expect_true("county" %in% names(by_county))
+    by_cog <- qwi_industry(2018, counties = "170")
+    expect_true("county" %in% names(by_cog))
     all_county <- qwi_industry(2018, counties = "all")
-    expect_equal(length(unique(all_county$county)), 9)
+    expect_equal(length(unique(all_county$county)), length(unique(cwi::xwalk$cog)))
+    # error if using counties instead of cogs
+    expect_error(qwi_industry(2024, state = "09", counties = "009"), "replaced counties with COGs")
 })
 
 test_that("qwi_industry checks for API key", {
@@ -23,7 +22,7 @@ test_that("qwi_industry handles years not in API", {
     skip_on_ci()
     expect_error(qwi_industry(1990:1994, industries = "23"), "only available")
     # should only return 1996-2000
-    expect_equal(nrow(suppressWarnings(qwi_industry(1991:2000, industries = "23", annual = T))), 5)
+    expect_equal(nrow(suppressWarnings(qwi_industry(1991:2000, industries = "23", annual = TRUE))), 5)
 })
 
 test_that("qwi_industry handles long time periods", {

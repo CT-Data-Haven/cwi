@@ -1,6 +1,3 @@
-library(cwi)
-library(testthat)
-
 test_that("geo_level_plot checks for valid plot types", {
     df <- data.frame(
         name = letters[1:10],

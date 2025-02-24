@@ -1,6 +1,3 @@
-library(cwi)
-library(testthat)
-
 test_that("laus_trend checks for API key", {
     expect_error(laus_trend("New Haven", 2012, 2016, key = ""))
 

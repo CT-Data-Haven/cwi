@@ -40,7 +40,7 @@ Note that when looking at data quarterly, the payroll reported will be for that 
 }
 \examples{
 \dontrun{
-qwi_industry(2012:2017, industries = c("23", "62"), counties = "009")
+qwi_industry(2012:2017, industries = c("23", "62"), counties = "170")
 }
 }
 \seealso{

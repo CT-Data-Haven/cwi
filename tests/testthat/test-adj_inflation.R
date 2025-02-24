@@ -1,6 +1,3 @@
-library(cwi)
-library(testthat)
-
 test_that("bls functions check for API key", {
     expect_error(bls_test(year = 2011:2014, key = ""))
     expect_type(bls_test(year = 2011:2014, key = NULL), "list")
