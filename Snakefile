@@ -1,37 +1,238 @@
-import pandas as pd 
+import pandas as pd
+from pathlib import Path
+from dotenv import load_dotenv
+import subprocess
 
-datasets = pd.read_csv('data-raw/datasets.txt', 
-                       sep = ';',
-                       header = None, 
-                       names = ['script', 'data_in', 'data_out'],
-                       index_col = 'script',
-                       keep_default_na = False)
-# replace NaN with None
-# datasets['data_in'] = datasets['data_in'].apply(lambda x: None if x == '' else x)
-# datasets['data_in'] = datasets['data_in'].str.split(' ')
-datasets['data_out'] = datasets['data_out'].str.split(' ')
-scripts = datasets.index.tolist()
-data_in = datasets['data_in'].to_dict()
-data_out = datasets['data_out'].to_dict()
+load_dotenv()
 
-rule data:
-  input:
-    data_in[script]
-  output:
-    data_out[script]
-  script:
-    expand('data-raw/make_{script}.R', script = scripts)
 
-rule internal_data:
-  input:
-    'data-raw/make_laus_codes.R'
-  output:
-    'R/sysdata.rda'
-  script:
-    'data-raw/make_internal_data.R'
+def replace_parent(file: str | Path, parent: str | Path) -> Path:
+    file = Path(file)
+    parent = Path(parent)
+    # if no parent given, replace with this parent. otherwise return as is
+    if file.parent == Path("."):
+        return parent / file
+    else:
+        return file
 
-rule test_data:
-  output:
-    'inst/test_data/age_df.rds'
-  script:
-    'data-raw/make_testdata.R'
+
+def replace_ext(file: str | Path, ext: str) -> Path:
+    file = Path(file)
+    return file.with_suffix(ext)
+
+
+def none_if(x: str, to_replace: str) -> str | None:
+    if x == to_replace:
+        return None
+    else:
+        return x
+
+
+def sep_files(
+    files: str,
+    parent: str | Path = "data",
+    ext: str = ".rda",
+    set_parent: bool = False,
+    set_ext: bool = False,
+) -> list[Path]:
+    """
+    Split a string of space-delimited file paths into a list of Path objs with parent directory tacked on.
+    """
+    if files == "":
+        return []
+    else:
+        file_list = files.split(" ")
+        if set_parent:
+            file_list = [replace_parent(file, parent) for file in file_list]
+        if set_ext:
+            file_list = [replace_ext(file, ext) for file in file_list]
+        return file_list
+
+
+def prep_datasets(path: str, sep: str = ";", index="script") -> pd.DataFrame:
+    datasets = pd.read_csv(path, sep=sep, index_col=index, keep_default_na=False)
+    datasets["input"] = datasets["input"].apply(sep_files)
+    datasets["output"] = datasets["output"].apply(
+        sep_files, set_parent=True, set_ext=True
+    )
+    return datasets
+
+
+def get_inputs(df: pd.DataFrame, script: str) -> list[Path] | list[str]:
+    return df.loc[script, "input"]
+
+
+def get_outputs(df: pd.DataFrame, script: str) -> list[Path] | list[str]:
+    return df.loc[script, "output"]
+
+
+def get_funcs():
+    return list(Path("R").glob("*.R"))
+
+
+def get_tests():
+    scripts = Path("tests").glob("**/*.R")
+    data = Path("tests/testthat/test_data").glob("**/*")
+    return list(scripts) + list(data)
+
+
+def get_vignettes():
+    return list(Path("vignettes").glob("*.qmd"))
+
+
+def run_r(x: str):
+    code = f"Rscript -e '{x}'"
+    print(code)
+    shell(code)
+    return None
+
+
+datasets = prep_datasets("data-raw/datasets.txt")
+
+
+def create_rule(script):
+    inputs = get_inputs(datasets, script)
+    outputs = get_outputs(datasets, script)
+
+    rule:
+        name:
+            f"make_{script}"
+        input:
+            inputs,
+        output:
+            outputs,
+        # script:
+        #     f"data-raw/make_{script}.R"
+        shell:
+            f"Rscript data-raw/make_{script}.R"
+
+
+# rule make_datasets:
+#     input:
+#         lambda wildcards: data_inputs[wildcards.script],
+#     output:
+#         'flags/.{script}_done',
+#     script:
+#         'data-raw/make_{script}.R'
+r_files = get_funcs()
+test_files = get_tests()
+doc_files = get_vignettes()
+
+
+envvars:
+    "CENSUS_API_KEY",
+    "BLS_KEY",
+
+
+for script in datasets.index:
+    create_rule(script)
+
+
+rule catalog:
+    input:
+        expand("data-raw/make_{script}.R", script=datasets.index),
+    output:
+        "data-raw/datasets.txt",
+    script:
+        "data-raw/data_catalog.sh"
+
+
+rule all_data:
+    input:
+        datasets["output"],
+    output:
+        flag=touch("flags/.all_data"),
+
+
+rule check:
+    input:
+        rules.all_data.output.flag,
+        "DESCRIPTION",
+        r_files,
+        test_files,
+    output:
+        flag=touch("flags/.check"),
+    run:
+        run_r(
+              """
+                devtools::check(
+                    document = TRUE,
+                    cran = FALSE,
+                    args = c(\"--run-dontrun\"))
+              """
+        )
+
+
+# test is just a subset of check
+rule test:
+    input:
+        rules.all_data.output.flag,
+        r_files,
+        test_files,
+    output:
+        flag=touch("flags/.test"),
+    run:
+        run_r("devtools::test()")
+
+
+rule site:
+    input:
+        doc_files,
+        "README.qmd",
+        "_pkgdown.yml",
+        "DESCRIPTION",
+        "LICENSE",
+        check=rules.check.output.flag,
+    output:
+        flag=touch("flags/.site"),
+    run:
+        run_r("pkgdown::build_site(run_dont_run = TRUE)")
+
+
+rule coverage:
+    input:
+        r_files,
+        test_files,
+        ".covrignore",
+    output:
+        report="coverage.html",
+    run:
+        run_r(
+            """
+            covr::report(
+                covr::package_coverage(quiet = FALSE),
+                file = \"coverage.html\",
+                browse = FALSE
+            )
+            """
+        )
+
+
+rule quarto:
+    input:
+        qmd="{dir}{doc}.qmd",
+    output:
+        md="{dir}{doc}.md",
+    wildcard_constraints:
+        dir=r"[\w\-]*?/?",
+    shell:
+        "quarto render {input.qmd}"
+
+
+rule dag:
+    input:
+        "Snakefile",
+    output:
+        png="dag.png",
+    shell:
+        "snakemake --filegraph | dot -T png > {output.png}"
+
+
+rule all:
+    default_target: True
+    input:
+        readme="README.md",
+        all_data=rules.all_data.output.flag,
+        check=rules.check.output.flag,
+        site=rules.site.output.flag,
+        # coverage=rules.coverage.output.report,

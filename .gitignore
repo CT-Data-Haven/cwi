@@ -16,3 +16,9 @@ vignettes/*.csv
 migrate
 .cz.toml
 pkgdown
+dag.png
+.env
+flags/
+lib/
+docs/
+coverage.html

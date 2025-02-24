@@ -22,3 +22,7 @@
 ^.env$
 migrate
 .cz.toml
+^Snakefile$
+^report$
+^flags$
+vignettes/.quarto
