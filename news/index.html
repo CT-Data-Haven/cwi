@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cwi</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.11.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.11.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +38,14 @@
       <small>Source: <a href="https://github.com/CT-Data-Haven/cwi/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.11.1" id="cwi-v1111-2025-02-26">cwi v1.11.1 (2025-02-26)<a class="anchor" aria-label="anchor" href="#cwi-v1111-2025-02-26"></a></h2>
+<div class="section level3">
+<h3 id="fix-1-11-1">Fix<a class="anchor" aria-label="anchor" href="#fix-1-11-1"></a></h3>
+<ul><li>
+<strong>qwi_industry</strong>: fix handling of QWI queries that return empty results</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.11.0" id="cwi-v1110-2025-02-19">cwi v1.11.0 (2025-02-19)<a class="anchor" aria-label="anchor" href="#cwi-v1110-2025-02-19"></a></h2>
 <ul><li>Added <code>get_cpi</code> function, used under the hood of <code>adj_inflation</code>. Consider <code>adj_inflation</code> a higher-level application of <code>get_cpi</code>. The new function doesn’t change a data frame, but it takes arguments for seasonality and period, allowing you to choose whether CPI values should be by month vs annual average, and whether they are seasonally adjusted. <code>adj_inflation</code> makes these decisions (annual averages not seasonally adjusted) for you for simplicity.</li>
