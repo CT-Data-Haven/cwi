@@ -232,6 +232,7 @@ rule all:
     default_target: True
     input:
         readme="README.md",
+        dag="dag.png",
         all_data=rules.all_data.output.flag,
         check=rules.check.output.flag,
         site=rules.site.output.flag,

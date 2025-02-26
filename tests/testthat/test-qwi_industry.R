@@ -6,8 +6,13 @@ test_that("qwi_industry handles county defaults", {
     expect_true("county" %in% names(by_cog))
     all_county <- qwi_industry(2018, counties = "all")
     expect_equal(length(unique(all_county$county)), length(unique(cwi::xwalk$cog)))
+})
+
+test_that("qwi_industry handles errors, including from COG mismatches", {
     # error if using counties instead of cogs
     expect_error(qwi_industry(2024, state = "09", counties = "009"), "replaced counties with COGs")
+    expect_error(qwi_industry(2099, retry = 1), "only available from")
+    expect_error(qwi_industry(2024, industries = "31"), "empty")
 })
 
 test_that("qwi_industry checks for API key", {
@@ -15,6 +20,7 @@ test_that("qwi_industry checks for API key", {
 
     skip_on_ci()
     expect_s3_class(qwi_industry(2016, key = NULL), "data.frame")
+    expect_error(qwi_industry(2020, key = "xyz"), "An error occurred")
 })
 
 test_that("qwi_industry handles years not in API", {

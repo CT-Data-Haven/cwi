@@ -29,38 +29,34 @@ qwi_industry <- function(years, industries = cwi::naics_codes[["industry"]],
     )
     if (length(urls) == 0) {
         # add hint if looking for CT counties
+        msg <- "An error occurred in preparing your API calls."
         if (state %in% c("09", "CT") & !is.null(counties)) {
-            msg <- c("An error occurred in preparing your API calls.",
-                "i" = "This API retroactively replaced counties with COGs--double check your arguments."
-            )
-        } else {
-            msg <- "An error occurred in preparing your API calls."
+            msg <- c(msg, "i" = "This API retroactively replaced counties with COGs--double check your arguments.")
         }
         cli::cli_abort(msg, call = parent.frame(n = 3))
     }
-    agent <- httr::user_agent("cwi")
 
-    fetch <- purrr::imap(urls, function(u, i) {
-        # httr::GET(u, agent)
-        resp <- httr::RETRY("GET", u, agent, times = retry) # census is really playing games
-        if (httr::http_error(resp)) {
-            cli::cli_abort(
-                c("An error occurred in making one or more API calls.",
-                    "x" = httr::http_status(resp)[["message"]]
-                ),
-                call = parent.frame(n = 3)
+    response <- purrr::map(urls, \(u) call_qwi(u, retry))
+    result <- purrr::map(response, \(x) x[["result"]])
+    success <- purrr::map_lgl(response, \(x) x[["success"]])
+    if (!all(success)) {
+        fails <- purrr::keep(response, \(x) !x[["success"]])
+        status <- purrr::map_chr(fails, \(x) x[["result"]]) 
+        if ("No Content" %in% status) {
+            cli::cli_abort(c(
+                "One or more of your API calls came back empty.",
+                "i" = "Double check your arguments, especially the industry codes."
+                ), call = parent.frame(n = 2)
             )
+        } else {
+            cli::cli_abort(c(
+                "An error occurred in making one or more API calls.",
+                "x" = unique(status)
+            ), call = parent.frame(n = 3))
         }
-        resp
-    })
-    fetch <- purrr::map(fetch, httr::content, as = "text")
-    fetch <- purrr::map(fetch, jsonlite::fromJSON)
-    fetch <- purrr::map(fetch, function(mtx) {
-        colnames(mtx) <- mtx[1, ]
-        mtx[-1, ]
-    })
-    fetch <- purrr::map(fetch, as.data.frame)
-    fetch <- dplyr::bind_rows(fetch)
+    }
+    
+    fetch <- dplyr::bind_rows(result)
     fetch <- dplyr::mutate(fetch, dplyr::across(c(quarter, Emp, Payroll, year), as.numeric))
     fetch <- dplyr::as_tibble(fetch)
     fetch <- dplyr::select(
@@ -191,4 +187,26 @@ make_qwi_query <- function(years, industries, state, counties, key) {
     })
 
     purrr::flatten(params)
+}
+
+call_qwi <- function(url, retry) {
+    agent <- httr::user_agent("cwi")
+    resp <- httr::RETRY("GET", url, agent, times = retry)
+    # if 200, parse & return results
+    # otherwise return status
+    status <- httr::http_status(resp)[["reason"]]
+    if (status == "OK") {
+        fetch <- httr::content(resp, as = "text")
+        # if bad key is used, still returns 200
+        if (grepl("\\<html", fetch)) {
+            list(result = "Invalid key", success = FALSE)
+        } else {
+            fetch <- jsonlite::fromJSON(fetch)
+            colnames(fetch) <- fetch[1, ]
+            fetch <- as.data.frame(fetch[-1, ])
+            list(result = fetch, success = TRUE)
+        }
+    } else {
+        list(result = status, success = FALSE)
+    }
 }
