@@ -175,6 +175,20 @@ rule test:
         run_r("devtools::test()")
 
 
+rule document:
+    input:
+        rules.all_data.output.flag,
+        r_files,
+        doc_files,
+        readme = 'README.qmd',
+    output:
+        flag=touch('flags/.document'),
+        readme = 'README.md',
+    run:
+        run_r("devtools::document()")
+        shell("quarto render {input.readme}")
+
+
 rule site:
     input:
         doc_files,

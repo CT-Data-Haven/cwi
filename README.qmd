@@ -4,6 +4,7 @@ knitr:
   opts_chunk:
     comment: '#>'
     collapse: true
+    fig-path: "man/figures/README-"
 execute:
   warning: false
   message: true
@@ -15,10 +16,11 @@ fig-dpi: 150
 # cwi <img src="man/figures/logo.png" align="right" />
 
 <!-- badges: start -->
-
-[![check-release](https://github.com/CT-Data-Haven/cwi/actions/workflows/check-release.yaml/badge.svg)](https://github.com/CT-Data-Haven/cwi/actions/workflows/check-release.yaml)
-[![pkgdown](https://github.com/CT-Data-Haven/cwi/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/CT-Data-Haven/cwi/actions/workflows/pkgdown.yaml)
-[![Codecov test coverage](https://codecov.io/gh/CT-Data-Haven/cwi/branch/main/graph/badge.svg)](https://app.codecov.io/gh/CT-Data-Haven/cwi?branch=main)
+![version](https://img.shields.io/github/r-package/v/ct-data-haven/cwi?style=flat-square&color=%230099FF)
+[![check-package](https://img.shields.io/github/actions/workflow/status/ct-data-haven/cwi/check-package.yaml?label=check-package&style=flat-square)](https://github.com/CT-Data-Haven/cwi/actions/workflows/check-package.yaml)
+[![pkgdown](https://img.shields.io/github/actions/workflow/status/ct-data-haven/cwi/pkgdown.yaml?label=pkgdown&style=flat-square)](https://github.com/CT-Data-Haven/cwi/actions/workflows/pkgdown.yaml)
+[![Codecov test coverage](https://img.shields.io/codecov/c/github/ct-data-haven/cwi?style=flat-square)
+](https://app.codecov.io/gh/CT-Data-Haven/cwi?branch=main)
 <!-- badges: end -->
 
 

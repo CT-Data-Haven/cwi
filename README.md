@@ -1,14 +1,16 @@
 
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # cwi <img src="man/figures/logo.png" align="right" />
 
 <!-- badges: start -->
 
-[![check-release](https://github.com/CT-Data-Haven/cwi/actions/workflows/check-release.yaml/badge.svg)](https://github.com/CT-Data-Haven/cwi/actions/workflows/check-release.yaml)
-[![pkgdown](https://github.com/CT-Data-Haven/cwi/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/CT-Data-Haven/cwi/actions/workflows/pkgdown.yaml)
+![version](https://img.shields.io/github/r-package/v/ct-data-haven/cwi?style=flat-square&color=%230099FF.png)
+[![check-package](https://img.shields.io/github/actions/workflow/status/ct-data-haven/cwi/check-package.yaml?label=check-package&style=flat-square)](https://github.com/CT-Data-Haven/cwi/actions/workflows/check-package.yaml)
+[![pkgdown](https://img.shields.io/github/actions/workflow/status/ct-data-haven/cwi/pkgdown.yaml?label=pkgdown&style=flat-square)](https://github.com/CT-Data-Haven/cwi/actions/workflows/pkgdown.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh/CT-Data-Haven/cwi/branch/main/graph/badge.svg)](https://app.codecov.io/gh/CT-Data-Haven/cwi?branch=main)
+coverage](https://img.shields.io/codecov/c/github/ct-data-haven/cwi?style=flat-square.png)](https://app.codecov.io/gh/CT-Data-Haven/cwi?branch=main)
 <!-- badges: end -->
 
 The original goal of `cwi` was to get data, primarily the Census ACS,
@@ -84,21 +86,13 @@ library(cwi)
 
 ``` r
 tenure <- multi_geo_acs(
-  table = basic_table_nums$tenure,
-  year = 2020,
-  regions = regions[c("Greater New Haven", "New Haven Inner Ring", "New Haven Outer Ring")],
-  counties = "New Haven",
-  towns = regions[["Greater New Haven"]],
-  us = TRUE
+    table = basic_table_nums$tenure,
+    year = 2020,
+    regions = regions[c("Greater New Haven", "New Haven Inner Ring", "New Haven Outer Ring")],
+    counties = "New Haven",
+    towns = regions[["Greater New Haven"]],
+    us = TRUE
 )
-#> 
-#> ── Table B25003: TENURE, 2020 ──────────────────────────────────────────────────
-#> • Towns: Bethany, Branford, East Haven, Guilford, Hamden, Madison, Milford, New
-#> Haven, North Branford, North Haven, Orange, West Haven, Woodbridge
-#> • Regions: Greater New Haven, New Haven Inner Ring, New Haven Outer Ring
-#> • Counties: New Haven County
-#> • State: 09
-#> • US: Yes
 tenure
 #> # A tibble: 57 × 9
 #>     year level    state       county geoid name         variable estimate    moe
@@ -118,11 +112,11 @@ tenure
 
 ``` r
 homeownership <- tenure |>
-  label_acs(year = 2020) |>
-  dplyr::group_by(level, name) |>
-  camiller::calc_shares(group = label, denom = "Total") |>
-  dplyr::filter(stringr::str_detect(label, "Owner")) |>
-  dplyr::select(level, name, share)
+    label_acs(year = 2020) |>
+    dplyr::group_by(level, name) |>
+    camiller::calc_shares(group = label, denom = "Total") |>
+    dplyr::filter(stringr::str_detect(label, "Owner")) |>
+    dplyr::select(level, name, share)
 
 homeownership
 #> # A tibble: 19 × 3
@@ -151,10 +145,12 @@ homeownership
 ```
 
 ``` r
-geo_level_plot(homeownership, value = share, hilite = "#EA7FA2", 
-               title = "Homeownership in Greater New Haven, 2020")
+geo_level_plot(homeownership,
+    value = share, hilite = "#EA7FA2",
+    title = "Homeownership in Greater New Haven, 2020"
+)
 ```
 
-<img src="man/figures/README-geo_plot-1.png" width="100%" />
+![](man/figures/README-tenure-plot-1.png)
 
 See more detail in the vignette: `vignette("cwi")`.
