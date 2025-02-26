@@ -1,0 +1,19 @@
+name: Create GH release
+on:
+    push:
+        tags:
+            - 'v*'
+
+jobs:
+    create_release:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: Create release
+              uses: ncipollo/release-action@v1
+              with:
+                generateReleaseNotes: true
+                skipIfReleaseExists: true
