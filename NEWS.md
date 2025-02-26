@@ -1,3 +1,9 @@
+## v1.11.1 (2025-02-26)
+
+### Fix
+
+- **qwi_industry**: fix handling of QWI queries that return empty results
+
 # cwi v1.11.0 (2025-02-19)
 
 - Added `get_cpi` function, used under the hood of `adj_inflation`. Consider `adj_inflation` a higher-level application of `get_cpi`. The new function doesn't change a data frame, but it takes arguments for seasonality and period, allowing you to choose whether CPI values should be by month vs annual average, and whether they are seasonally adjusted. `adj_inflation` makes these decisions (annual averages not seasonally adjusted) for you for simplicity.
