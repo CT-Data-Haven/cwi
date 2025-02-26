@@ -1,6 +1,6 @@
-## v1.11.1 (2025-02-26)
+# cwi v1.11.1 (2025-02-26)
 
-### Fix
+## Fix
 
 - **qwi_industry**: fix handling of QWI queries that return empty results
 
