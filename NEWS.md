@@ -1,3 +1,13 @@
+# cwi v1.12.0 (2025-03-26)
+
+## Feat
+
+- first set of deprecating functions moving to dcws: `read_xtabs`, `read_weights`, `xtab2df`
+
+## Fix
+
+- second round of deprecations: `sub_nonanswers` and `collapse_n_wt`
+
 # cwi v1.11.1 (2025-02-26)
 
 ## Fix
