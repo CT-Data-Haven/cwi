@@ -49,11 +49,7 @@ Imports:
 Suggests: 
     knitr,
     sf,
-    lubridate,
-    scales,
-    rmarkdown,
     testthat (>= 3.0.0),
-    showtext,
     R.utils,
     lwgeom,
     covr,
@@ -63,7 +59,6 @@ Suggests:
 Remotes: 
     camille-s/camiller
 VignetteBuilder:
-    knitr,
     quarto
 Config/testthat/edition: 3
 Config/check/ignore-inconsequential-notes: true
