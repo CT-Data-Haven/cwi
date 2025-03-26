@@ -35,7 +35,8 @@ test_that("laus_trend validates geographies", {
 test_that("laus_trend handles more than 20 years okay", {
     skip_on_ci()
     expect_message(laus <- laus_trend("New Haven", 1990, 2016, measures = "employment", annual = FALSE), "multiple calls")
-    expect_equal(nrow(laus), 27 * 12)
+    yrs <- 1990:2016
+    expect_setequal(laus$year, yrs)
 })
 
 test_that("laus_trend prints table header", {

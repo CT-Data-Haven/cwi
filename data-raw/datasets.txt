@@ -4,10 +4,9 @@ census_vars;;acs_vars decennial_vars10 decennial_vars
 ct5_clusters;data-raw/files/5CT_groups_2010.csv;ct5_clusters
 cws_demo;inst/extdata/test_xtab2015.xlsx;cws_demo
 geo_sf;;town_sf new_haven_sf stamford_sf bridgeport_sf hartford_sf tract_sf tract_sf19
-internal_data;data-raw/make_bls_codes.R data-raw/make_endyears.R;R/sysdata.rda
-lehd;;occ_codes
+internal_data;data-raw/make_bls_codes.R data-raw/make_endyears.R;R/sysdata
+lehd;;occ_codes naics_codes
 msas;;msa
-neighborhood_weights19;;bridgeport_tracts19 hartford_tracts19 new_haven_tracts19 stamford_tracts19
 neighborhood_weights;;bridgeport_tracts hartford_tracts new_haven_tracts stamford_tracts
 proxy_pumas;;proxy_pumas
 regions;data-raw/files/town_region_lookup.csv;regions

@@ -50,6 +50,7 @@ def sep_files(
 
 
 def prep_datasets(path: str, sep: str = ";", index="script") -> pd.DataFrame:
+    # shell('bash ./data-raw/data_catalog.sh')
     datasets = pd.read_csv(path, sep=sep, index_col=index, keep_default_na=False)
     datasets["input"] = datasets["input"].apply(sep_files)
     datasets["output"] = datasets["output"].apply(
@@ -124,17 +125,16 @@ envvars:
     "BLS_KEY",
 
 
+rule setup:
+    output:
+        catalog = 'data-raw/datasets.txt',
+    # script:
+    #     'data-raw/data_catalog.sh'
+    shell:
+        "bash ./data-raw/data_catalog.sh"
+
 for script in datasets.index:
     create_rule(script)
-
-
-rule catalog:
-    input:
-        expand("data-raw/make_{script}.R", script=datasets.index),
-    output:
-        "data-raw/datasets.txt",
-    script:
-        "data-raw/data_catalog.sh"
 
 
 rule all_data:

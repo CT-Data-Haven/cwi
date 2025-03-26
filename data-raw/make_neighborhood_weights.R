@@ -35,8 +35,10 @@ hh20 <- tigris::blocks(state = "09", year = 2020, refresh = FALSE) |>
 # 2010 shapefile doesn't
 # no longer working without county
 counties <- tidycensus::fips_codes |>
-    dplyr::filter(state == "CT",
-                  grepl("^0", county_code))
+    dplyr::filter(
+        state == "CT",
+        grepl("^0", county_code)
+    )
 hh10 <- purrr::map(counties$county_code, function(cty) {
     tidycensus::get_decennial("block", variables = c(hh10 = "H003001"), year = 2010, sumfile = "sf1", state = "09", county = cty, geometry = TRUE, keep_geo_vars = TRUE, cache_table = TRUE)
 }) |>

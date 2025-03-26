@@ -18,7 +18,8 @@ label_decennial <- function(data, year = 2020, sumfile = "dhc", variable = varia
 
     if (any(is.na(vars_out[["label"]]))) {
         cli::cli_warn(c("Not all variables matched with decennial census labels.",
-                        i = "Check that you have the correct year and sumfile, and that this is proper decennial data."))
+            i = "Check that you have the correct year and sumfile, and that this is proper decennial data."
+        ))
     }
     vars_out
 }
@@ -26,8 +27,8 @@ label_decennial <- function(data, year = 2020, sumfile = "dhc", variable = varia
 #' @param survey For `label_acs`, a string: which ACS estimate to use. Defaults to 5-year (`"acs5"`), but can also be 1-year (`"acs1"`) or 3-year (`"acs3"`), though both 1-year and 3-year have limited availability.
 #' @examples
 #' \dontrun{
-#'   acs_pops <- multi_geo_acs("B01001")
-#'   label_acs(acs_pops)
+#' acs_pops <- multi_geo_acs("B01001")
+#' label_acs(acs_pops)
 #' }
 #' @family augmenting-functions
 #' @export
@@ -40,7 +41,8 @@ label_acs <- function(data, year = 2023, survey = "acs5", variable = variable) {
 
     if (any(is.na(vars_out[["label"]]))) {
         cli::cli_warn(c("Not all variables matched with ACS labels.",
-                        i = "Check that you have the correct year and survey, and that this is proper ACS data."))
+            i = "Check that you have the correct year and survey, and that this is proper ACS data."
+        ))
     }
     vars_out
 }

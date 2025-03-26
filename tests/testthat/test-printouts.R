@@ -13,3 +13,4 @@ test_that("geo_printout removes duplicates", {
     regs <- cwi::regions[c("Greater Hartford", "Greater New Haven", "Greater Hartford")]
     expect_no_message(multi_test(regions = regs), message = "(Greater Hartford).+(\\1)")
 })
+

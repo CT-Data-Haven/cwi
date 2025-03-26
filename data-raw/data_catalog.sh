@@ -6,12 +6,12 @@ rm -f $file
 echo "script;input;output" > "$file"
 
 for r in data-raw/make_*.R; do
-  rbase=$(basename $r)
-  rbase=$(echo $rbase | sed 's/\.R$//' | sed 's/make_//')
+  rbase=$(basename "$r")
+  rbase=$(echo "$rbase" | sed 's/\.R$//' | sed 's/make_//')
 
   # get line from script starting with # WRITE or READ flag 
-  df_out=$(grep -oP '(?<=^# WRITE\: ).+$' $r)
-  df_in=$(grep -oP '(?<=^# READ\: ).+$' $r)
+  df_out=$(grep -oP '(?<=^# WRITE\: ).+$' $r | tr -d ",")
+  df_in=$(grep -oP '(?<=^# READ\: ).+$' $r | tr -d ",")
   # if more than 0 characters, write to file
   if [ ${#df_in} -gt 0 ] || [ ${#df_out} -gt 0 ]; then
     echo "$rbase;$df_in;$df_out" >> $file

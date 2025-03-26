@@ -32,18 +32,18 @@ reasonably up-to-date without having to make API calls repeatedly.
 }
 \examples{
 \dontrun{
-if(interactive()){
- cb_avail <- check_cb_avail()
- cb_avail |>
-   dplyr::filter(program == "dec", vintage == 2020)
- }
+if (interactive()) {
+    cb_avail <- check_cb_avail()
+    cb_avail |>
+        dplyr::filter(program == "dec", vintage == 2020)
+}
 }
 \dontrun{
-if(interactive()){
- qwi_avail <- check_qwi_avail()
- qwi_avail |>
-   dplyr::filter(state_code == "09")
- }
+if (interactive()) {
+    qwi_avail <- check_qwi_avail()
+    qwi_avail |>
+        dplyr::filter(state_code == "09")
+}
 }
 }
 \seealso{

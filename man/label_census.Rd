@@ -28,8 +28,8 @@ A tibble with the same number of rows as \code{data} but an additional column ca
 }
 \examples{
 \dontrun{
-  acs_pops <- multi_geo_acs("B01001")
-  label_acs(acs_pops)
+acs_pops <- multi_geo_acs("B01001")
+label_acs(acs_pops)
 }
 }
 \seealso{

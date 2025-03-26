@@ -41,13 +41,12 @@ qwi_industry <- function(years, industries = cwi::naics_codes[["industry"]],
     success <- purrr::map_lgl(response, \(x) x[["success"]])
     if (!all(success)) {
         fails <- purrr::keep(response, \(x) !x[["success"]])
-        status <- purrr::map_chr(fails, \(x) x[["result"]]) 
+        status <- purrr::map_chr(fails, \(x) x[["result"]])
         if ("No Content" %in% status) {
             cli::cli_abort(c(
                 "One or more of your API calls came back empty.",
                 "i" = "Double check your arguments, especially the industry codes."
-                ), call = parent.frame(n = 2)
-            )
+            ), call = parent.frame(n = 2))
         } else {
             cli::cli_abort(c(
                 "An error occurred in making one or more API calls.",
@@ -55,7 +54,7 @@ qwi_industry <- function(years, industries = cwi::naics_codes[["industry"]],
             ), call = parent.frame(n = 3))
         }
     }
-    
+
     fetch <- dplyr::bind_rows(result)
     fetch <- dplyr::mutate(fetch, dplyr::across(c(quarter, Emp, Payroll, year), as.numeric))
     fetch <- dplyr::as_tibble(fetch)

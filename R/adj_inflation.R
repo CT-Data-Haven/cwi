@@ -35,18 +35,22 @@ adj_inflation <- function(data,
         cli::cli_abort("Must supply column names for both value and year.")
     }
     yr_lbl <- rlang::as_label(rlang::enquo(year))
-    cpi <- get_cpi(years = data[[yr_lbl]],
-                   base = base_year,
-                   seasonal = FALSE,
-                   monthly = FALSE,
-                   verbose = verbose,
-                   key = key)
+    cpi <- get_cpi(
+        years = data[[yr_lbl]],
+        base = base_year,
+        seasonal = FALSE,
+        monthly = FALSE,
+        verbose = verbose,
+        key = key
+    )
     cpi <- dplyr::select(cpi, year = date, adj_factor)
 
     adjusted <- dplyr::mutate(data, dplyr::across({{ year }}, as.numeric))
     adjusted <- dplyr::left_join(adjusted, cpi, by = stats::setNames("year", yr_lbl))
     adjusted <- dplyr::mutate(adjusted, dplyr::across({{ value }},
-                                                      list(adj = \(x) x / adj_factor), .names = "{.fn}_{.col}"))
+        list(adj = \(x) x / adj_factor),
+        .names = "{.fn}_{.col}"
+    ))
     adjusted
 }
 
@@ -136,10 +140,12 @@ get_cpi_series <- function(seasonal, monthly_period, current) {
     } else {
         base <- "alternative"
     }
-    series <- dplyr::filter(cpi_series,
-                  seasonality == ssn,
-                  periodicity == prd,
-                  base_type == base)
+    series <- dplyr::filter(
+        cpi_series,
+        seasonality == ssn,
+        periodicity == prd,
+        base_type == base
+    )
     series[["id"]]
 }
 

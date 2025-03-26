@@ -24,7 +24,7 @@ fig-dpi: 150
 <!-- badges: end -->
 
 
-The original goal of `cwi` was to get data, primarily the Census ACS, fetched, aggregated, and analyzed for [DataHaven's 2019 Community Index reports](http://ctdatahaven.org/reports/greater-new-haven-community-index). It's now evolved to support more of our day-to-day work—and now we're on the 2022 reports! This includes functions to speed up and standardize analysis for multiple staff people, preview trends and patterns we'll need to write about, and get data in more layperson-friendly formats.
+The original goal of `cwi` was to get data, primarily the Census ACS, fetched, aggregated, and analyzed for [DataHaven's 2019 Community Index reports](http://ctdatahaven.org/reports/greater-new-haven-community-index). It's now evolved to support more of our day-to-day work and several major reports. This includes functions to speed up and standardize analysis for multiple staff people, preview trends and patterns we'll need to write about, and get data in more layperson-friendly formats.
 
 It pairs well with many functions from Camille's brilliantly-named [`camiller`](https://github.com/camille-s/camiller) package.
 
@@ -62,7 +62,7 @@ This package contains functions to make it easier and more reproducible to fetch
 * [Decennial Census](https://www.census.gov/programs-surveys/decennial-census.html) (US Census Bureau)
 * [Quarterly Workforce Indicators](https://lehd.ces.census.gov/) (US Census Bureau Center for Economic Studies)
 * [Local Area Unemployment Statistics](https://www.bls.gov/lau/) (Bureau of Labor Statistics)
-* [DataHaven's Community Wellbeing Survey](https://ctdatahaven.org/reports/datahaven-community-wellbeing-survey)
+* ~~[DataHaven's Community Wellbeing Survey](https://ctdatahaven.org/reports/datahaven-community-wellbeing-survey)~~ This has been moved to the dcws package 
 
 
 ## Example
@@ -71,7 +71,7 @@ Here's an example of getting a big table to calculate homeownership rates across
 
 ```{r}
 #| label: libs
-#| message: false 
+#| message: false
 library(dplyr)
 library(cwi)
 ```

@@ -20,7 +20,7 @@ fig-width: 6
 
 ```{r}
 #| label: libs
-#| message: false 
+#| message: false
 library(cwi)
 library(dplyr)
 library(purrr)
@@ -56,7 +56,7 @@ compare_yrs <- function(yr, ret = FALSE) {
 
 ```{r}
 #| label: c2023
-#| results: asis 
+#| results: asis
 compare_yrs(2023)
 ```
 
@@ -64,7 +64,7 @@ compare_yrs(2023)
 
 ```{r}
 #| label: c2022
-#| results: asis 
+#| results: asis
 compare_yrs(2022)
 ```
 
@@ -74,7 +74,7 @@ compare_yrs(2022)
 
 ```{r}
 #| label: c2021
-#| results: asis 
+#| results: asis
 compare_yrs(2021)
 ```
 
@@ -83,7 +83,7 @@ compare_yrs(2021)
 
 ```{r}
 #| label: c2020
-#| results: asis 
+#| results: asis
 compare_yrs(2020)
 ```
 
@@ -102,7 +102,7 @@ This is just a quick check of what's new or changed.
 
 ```{r}
 #| label: c2019
-#| results: asis 
+#| results: asis
 change19 <- compare_yrs(2019, ret = TRUE)
 ```
 
@@ -110,7 +110,7 @@ change19 <- compare_yrs(2019, ret = TRUE)
 
 ```{r}
 #| label: c2019-gender
-#| results: asis 
+#| results: asis
 acs19 <- cwi:::clean_acs_vars(2019, "acs5") |>
     mutate(table_num = stringr::str_remove(name, "_.+$"))
 change19 |>

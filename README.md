@@ -16,8 +16,8 @@ coverage](https://img.shields.io/codecov/c/github/ct-data-haven/cwi?style=flat-s
 The original goal of `cwi` was to get data, primarily the Census ACS,
 fetched, aggregated, and analyzed for [DataHaven’s 2019 Community Index
 reports](http://ctdatahaven.org/reports/greater-new-haven-community-index).
-It’s now evolved to support more of our day-to-day work—and now we’re on
-the 2022 reports! This includes functions to speed up and standardize
+It’s now evolved to support more of our day-to-day work and several
+major reports. This includes functions to speed up and standardize
 analysis for multiple staff people, preview trends and patterns we’ll
 need to write about, and get data in more layperson-friendly formats.
 
@@ -71,8 +71,9 @@ to fetch and analyze data from:
   Census Bureau Center for Economic Studies)
 - [Local Area Unemployment Statistics](https://www.bls.gov/lau/) (Bureau
   of Labor Statistics)
-- [DataHaven’s Community Wellbeing
-  Survey](https://ctdatahaven.org/reports/datahaven-community-wellbeing-survey)
+- ~~[DataHaven’s Community Wellbeing
+  Survey](https://ctdatahaven.org/reports/datahaven-community-wellbeing-survey)~~
+  This has been moved to the dcws package
 
 ## Example
 

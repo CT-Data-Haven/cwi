@@ -1,4 +1,4 @@
-# WRITE: occ_codes
+# WRITE: occ_codes, naics_codes
 
 # INDUSTRY CODES -- NAICS
 naics_codes <- readr::read_csv("https://lehd.ces.census.gov/data/schema/latest/label_industry.csv", col_types = "ccc") |>

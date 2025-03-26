@@ -79,6 +79,7 @@ table_printout <- function(table, concept, year) {
 ######## BLS ----
 bls_series_printout <- function(fetch) {
     catalog <- fetch[["catalog"]]
+    catalog <- catalog[!is.na(catalog$series_id), ]
     series_title <- catalog[["series_title"]]
     series_title <- gsub("\\:.+$", "", series_title)
     series_title <- unique(series_title)

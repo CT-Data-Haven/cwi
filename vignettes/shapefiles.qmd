@@ -18,7 +18,7 @@ out-width: 100%
 
 ```{r}
 #| label: libs
-#| message: false 
+#| message: false
 library(dplyr)
 library(ggplot2)
 library(cwi)
@@ -90,7 +90,7 @@ Neighborhood shapes were made at DataHaven by splitting or grouping census tract
 ```{r }
 #| label: city-maps
 #| message: false
-#| warning: false 
+#| warning: false
 list(
     "New Haven" = new_haven_sf, Stamford = stamford_sf,
     "Hartford/West Hartford" = hartford_sf, Bridgeport = bridgeport_sf

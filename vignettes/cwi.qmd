@@ -35,9 +35,9 @@ The tables I'm working with are `B01003`, total population; `B03002`, race and L
 #| label: tbls
 yr <- 2023
 table_nums <- list(
-  total_pop = "B01003",
-  race = "B03002",
-  tenure = "B25003"
+    total_pop = "B01003",
+    race = "B03002",
+    tenure = "B25003"
 )
 ```
 
@@ -50,9 +50,9 @@ I'm pulling out the entries in the `cwi` dataset `cwi::regions` (a list) to only
 gnh_regions <- regions[c("Greater New Haven", "New Haven Inner Ring", "New Haven Outer Ring")]
 
 gnh_data <- map(table_nums, multi_geo_acs,
-  year = yr, towns = regions$`Greater New Haven`,
-  regions = gnh_regions, state = "09", sleep = 1,
-  verbose = FALSE
+    year = yr, towns = regions$`Greater New Haven`,
+    regions = gnh_regions, state = "09", sleep = 1,
+    verbose = FALSE
 )
 
 gnh_data$total_pop
@@ -63,10 +63,10 @@ Neighborhoods with corresponding tracts or block groups are included for 4 citie
 ```{r }
 #| label: acs2
 multi_geo_acs("B01003",
-  towns = "New Haven", 
-  neighborhoods = new_haven_tracts,
-  nhood_geoid = "geoid",
-  year = yr
+    towns = "New Haven",
+    neighborhoods = new_haven_tracts,
+    nhood_geoid = "geoid",
+    year = yr
 )
 ```
 
@@ -85,10 +85,10 @@ The race and ethnicity table will require some calculations, using the brilliant
 ```{r }
 #| label: calc
 gnh_data$race |>
-  label_acs(year = yr) |>
-  group_by(level, name) |>
-  add_grps(list(total = 1, white = 3, black = 4, latino = 12, other = 5:9), group = label) |>
-  calc_shares(group = label, denom = "total")
+    label_acs(year = yr) |>
+    group_by(level, name) |>
+    add_grps(list(total = 1, white = 3, black = 4, latino = 12, other = 5:9), group = label) |>
+    calc_shares(group = label, denom = "total")
 ```
 
 With the tenure table, it's easiest to separate the labels by `"!!"`. Here the table can be wrangled into shares of households that are owner-occupied.
@@ -96,12 +96,12 @@ With the tenure table, it's easiest to separate the labels by `"!!"`. Here the t
 ```{r }
 #| label: sep
 homeownership <- gnh_data$tenure |>
-  label_acs(year = yr) |>
-  separate(label, into = c("total", "tenure"), sep = "!!", fill = "left") |>
-  select(level, name, tenure, estimate) |>
-  group_by(level, name) |>
-  calc_shares(group = tenure, denom = "Total") |>
-  filter(tenure == "Owner occupied")
+    label_acs(year = yr) |>
+    separate(label, into = c("total", "tenure"), sep = "!!", fill = "left") |>
+    select(level, name, tenure, estimate) |>
+    group_by(level, name) |>
+    calc_shares(group = tenure, denom = "Total") |>
+    filter(tenure == "Owner occupied")
 
 homeownership
 ```
@@ -115,7 +115,7 @@ homeownership
 #| fig-height: 6
 #| out-width: 100%
 homeownership |>
-  geo_level_plot(value = share, hilite = "darkslateblue", type = "point")
+    geo_level_plot(value = share, hilite = "darkslateblue", type = "point")
 ```
 
 `acs_quick_map()` gives a quick map sketch of the rates. This function uses the Jenks algorithm for making breaks with `jenks()`. This algorithm is well suited for visually displaying larger inequalities, but the number of breaks you give it won't necessarily be the number of breaks returned.This function lets us see whether there's a geographic distribution of this data with minimal work. 
@@ -124,11 +124,11 @@ homeownership |>
 #| label: quick-map1
 #| out-width: 100%
 tenure_map <- homeownership |>
-  filter(level == "4_town") |>
-  quick_map(
-    value = share, level = "town", color = "black", linewidth = 0.4,
-    title = "Homeownership, Greater New Haven", palette = "BuPu"
-  )
+    filter(level == "4_town") |>
+    quick_map(
+        value = share, level = "town", color = "black", linewidth = 0.4,
+        title = "Homeownership, Greater New Haven", palette = "BuPu"
+    )
 
 tenure_map
 ```
@@ -141,8 +141,8 @@ Since this returns a `ggplot` object with `sf` data, we can add additional `ggpl
 #| warning: false
 #| out-width: 100%
 tenure_map +
-  labs(subtitle = stringr::str_glue("By town, {yr}")) +
-  geom_sf(data = ~filter(., name == "New Haven"), fill = NA, color = "black", linewidth = 1.5)
+    labs(subtitle = stringr::str_glue("By town, {yr}")) +
+    geom_sf(data = ~ filter(., name == "New Haven"), fill = NA, color = "black", linewidth = 1.5)
 ```
 
 # Batch output
@@ -157,33 +157,33 @@ For example, I need to pull a table of populations by age group for several regi
 #| message: true
 #| warning: true
 new_haven_regions <- regions[c(
-  "Greater New Haven", "New Haven Inner Ring",
-  "New Haven Outer Ring", "Lower Naugatuck Valley",
-  "Greater Waterbury"
+    "Greater New Haven", "New Haven Inner Ring",
+    "New Haven Outer Ring", "Lower Naugatuck Valley",
+    "Greater Waterbury"
 )]
 
 age <- multi_geo_acs(
-  table = "B01001", year = yr, towns = NULL,
-  regions = new_haven_regions,
-  counties = c("New Haven County", "Fairfield County")
+    table = "B01001", year = yr, towns = NULL,
+    regions = new_haven_regions,
+    counties = c("New Haven County", "Fairfield County")
 ) |>
-  label_acs(year = yr) |>
-  # shortcut around tidyr::separate
-  separate_acs(into = c("sex", "age"), drop_total = TRUE) |>
-  filter(!is.na(age)) |>
-  mutate(age = forcats::as_factor(age)) |>
-  group_by(name, level, age) |>
-  summarise(estimate = sum(estimate)) |>
-  ungroup()
+    label_acs(year = yr) |>
+    # shortcut around tidyr::separate
+    separate_acs(into = c("sex", "age"), drop_total = TRUE) |>
+    filter(!is.na(age)) |>
+    mutate(age = forcats::as_factor(age)) |>
+    group_by(name, level, age) |>
+    summarise(estimate = sum(estimate)) |>
+    ungroup()
 
 age |>
-  split(~name) |>
-  batch_csv_dump(base_name = "pop_by_age", bind = TRUE, verbose = TRUE) |>
-  group_by(level, name) |>
-  camiller::add_grps(list(ages00_04 = 1, ages05_17 = 2:4, ages00_17 = 1:4),
-    group = age, value = estimate
-  ) |>
-  arrange(level, name, age)
+    split(~name) |>
+    batch_csv_dump(base_name = "pop_by_age", bind = TRUE, verbose = TRUE) |>
+    group_by(level, name) |>
+    camiller::add_grps(list(ages00_04 = 1, ages05_17 = 2:4, ages00_17 = 1:4),
+        group = age, value = estimate
+    ) |>
+    arrange(level, name, age)
 ```
 
 # Employment trends
@@ -196,12 +196,12 @@ I'm also interested in learning about employment by industry over the past sever
 ```{r }
 #| label: qwi1
 scc_employment <- qwi_industry(2002:2018, counties = "170", annual = TRUE) |>
-  mutate(location = "South Central COG")
+    mutate(location = "South Central COG")
 ct_employment <- qwi_industry(2002:2018, annual = T) |>
-  mutate(location = "Connecticut")
+    mutate(location = "Connecticut")
 employment <- bind_rows(scc_employment, ct_employment) |>
-  filter(industry != "00") |>
-  inner_join(naics_codes |> select(-ind_level), by = "industry")
+    filter(industry != "00") |>
+    inner_join(naics_codes |> select(-ind_level), by = "industry")
 
 employment
 ```
@@ -212,23 +212,23 @@ Next, say I want to look at the industries that were largest in the South Centra
 #| label: qwi2
 #| out-width: 100%
 top2018 <- employment |>
-  filter(year == 2018, county == "170") |>
-  top_n(8, emp) |>
-  pull(industry)
+    filter(year == 2018, county == "170") |>
+    top_n(8, emp) |>
+    pull(industry)
 top2018
 
 employment |>
-  filter(industry %in% top2018) |>
-  mutate(label = stringr::str_sub(label, 1, 25)) |>
-  mutate(Emp_1k = emp / 1000) |>
-  ggplot(aes(x = year, y = Emp_1k, color = label)) +
-  geom_line() +
-  labs(
-    x = "Year", y = "Employees (thousands)", title = "Employment by industry",
-    subtitle = "Connecticut and South Central COG, 2002-2018", color = "Industry"
-  ) +
-  theme_minimal() +
-  facet_wrap(vars(location), scales = "free_y")
+    filter(industry %in% top2018) |>
+    mutate(label = stringr::str_sub(label, 1, 25)) |>
+    mutate(Emp_1k = emp / 1000) |>
+    ggplot(aes(x = year, y = Emp_1k, color = label)) +
+    geom_line() +
+    labs(
+        x = "Year", y = "Employees (thousands)", title = "Employment by industry",
+        subtitle = "Connecticut and South Central COG, 2002-2018", color = "Industry"
+    ) +
+    theme_minimal() +
+    facet_wrap(vars(location), scales = "free_y")
 ```
 
 **Update 11/2021:** The QWI API was broken for a little while. It's up again, but all the payroll data is missing. This code should still be valid if it ever gets returned.
@@ -240,21 +240,21 @@ If I'm interested in changes in wages over this period, I can use the `adj_infla
 #| eval: false
 #| include: true
 employment |>
-  filter(industry %in% top2018) |>
-  mutate(label = stringr::str_sub(label, 1, 25)) |>
-  mutate(avg_wage = Payroll / Emp) |>
-  adj_inflation(value = avg_wage, base_year = 2018, year = year) |>
-  mutate(adj_wage_1k = round(adj_avg_wage / 1000)) |>
-  ggplot(aes(x = year, y = adj_wage_1k, color = label)) +
-  geom_line() +
-  scale_y_continuous(labels = scales::dollar) +
-  labs(
-    x = "Year", y = "Average annual wages (thousands)",
-    title = "Average annual wages by industry (adjusted to 2018 dollars)",
-    subtitle = "Connecticut and New Haven County, 2002-2018", color = "Industry"
-  ) +
-  theme_minimal() +
-  facet_wrap(vars(location), scales = "free_y")
+    filter(industry %in% top2018) |>
+    mutate(label = stringr::str_sub(label, 1, 25)) |>
+    mutate(avg_wage = Payroll / Emp) |>
+    adj_inflation(value = avg_wage, base_year = 2018, year = year) |>
+    mutate(adj_wage_1k = round(adj_avg_wage / 1000)) |>
+    ggplot(aes(x = year, y = adj_wage_1k, color = label)) +
+    geom_line() +
+    scale_y_continuous(labels = scales::dollar) +
+    labs(
+        x = "Year", y = "Average annual wages (thousands)",
+        title = "Average annual wages by industry (adjusted to 2018 dollars)",
+        subtitle = "Connecticut and New Haven County, 2002-2018", color = "Industry"
+    ) +
+    theme_minimal() +
+    facet_wrap(vars(location), scales = "free_y")
 ```
 
 Now we have a visual that shows that in a few industries, wages have climbed over the past several years, but in many industries, wages haven't increased except by inflation.
@@ -267,15 +267,15 @@ To look at unemployment rates over time, I can use `laus_trend()`. The LAUS cove
 #| label: laus
 #| out-width: 100%
 unemployment <- laus_trend(c("New Haven", "New Haven County", "Connecticut"),
-  startyear = 2000, endyear = 2018, measures = "unemployment rate"
+    startyear = 2000, endyear = 2018, measures = "unemployment rate"
 ) |>
-  mutate(unemployment_rate = unemployment_rate / 100) |>
-  select(area, date, value = unemployment_rate)
+    mutate(unemployment_rate = unemployment_rate / 100) |>
+    select(area, date, value = unemployment_rate)
 
 unemployment
 
 unemp_plot <- ggplot(unemployment, aes(x = date, y = value, group = area, color = area)) +
-  geom_line() +
-  geom_smooth(se = FALSE, method = "loess", linewidth = 0.8)
+    geom_line() +
+    geom_smooth(se = FALSE, method = "loess", linewidth = 0.8)
 unemp_plot
 ```
