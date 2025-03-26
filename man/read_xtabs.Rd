@@ -58,21 +58,30 @@ For \code{read_weights}, only 2 columns, one for demographic groups and one for
 their associated weights.
 }
 \description{
-These two functions facilitate reading in Excel
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} \strong{Deprecation notice:} Crosstab-related
+functions have been moved from cwi to the dcws package. The versions here will be
+removed soon. These two functions facilitate reading in Excel
 spreadsheets of crosstabs generated from SPSS. Note that they're likely
 only useful for working with the DataHaven Community Wellbeing Survey.
 }
 \examples{
-if (interactive()) {
-    xt <- system.file("extdata/test_xtab2018.xlsx", package = "cwi")
-    read_weights(xt, year = 2018)
+\dontrun{
+# these functions are being deprecated
+# replace them with their equivalents in the dcws package
+xt <- system.file("extdata/test_xtab2018.xlsx", package = "dcws")
+dcws::read_weights(xt, year = 2018)
 
-    # returns a not-very-pretty data frame of the crosstabs to be processed
-    read_xtabs(xt, year = 2018)
-    # returns a pretty data frame ready for analysis
-    read_xtabs(xt, year = 2018, process = TRUE)
+# returns a not-very-pretty data frame of the crosstabs to be processed
+dcws::read_xtabs(xt, year = 2018)
+# returns a pretty data frame ready for analysis
+dcws::read_xtabs(xt, year = 2018, process = TRUE)
 }
 }
 \seealso{
-\code{\link[=xtab2df]{xtab2df()}}
+\code{\link[dcws:read_xtabs]{dcws::read_xtabs()}} \code{\link[dcws:xtab2df]{dcws::xtab2df()}}
+
+Other dcws-migration: 
+\code{\link{xtab2df}()}
 }
+\concept{dcws-migration}
+\keyword{internal}

@@ -1,5 +1,7 @@
 #' @title Extract survey data and descriptions from crosstabs into a tidy data frame
 #' @description
+#' `r lifecycle::badge("deprecated")` **Deprecation notice:** Crosstab-related
+#' functions have been moved from cwi to the dcws package. The versions here will be removed soon.
 #' Like `read_xtab` & `read_weights`, this is a bespoke function
 #' to make it easier to extract data from the DataHaven Community Wellbeing
 #' Survey. Applications to other crosstabs are probably limited unless their
@@ -34,16 +36,20 @@
 #' * response
 #' * value
 #' @examples
-#' if (interactive()) {
-#'     xt <- system.file("extdata/test_xtab2018.xlsx", package = "cwi")
-#'     xtab <- read_xtabs(xt, year = 2018)
-#'     xtab2df(xtab, year = 2018)
+#' \dontrun{
+#' # this function is being deprecated
+#' # replace with the equivalent in the dcws package
+#' xt <- system.file("extdata/test_xtab2018.xlsx", package = "dcws")
+#' xtab <- dcws::read_xtabs(xt, year = 2018)
+#' dcws::xtab2df(xtab, year = 2018)
 #' }
 #' @export
-#' @rdname xtab2df
-#' @seealso [cwi::read_xtabs()]
+#' @seealso [dcws::read_xtabs()]
+#' @family dcws-migration
+#' @keywords internal
 xtab2df <- function(data, year, col = x1, code_pattern = NULL) {
-    year <- cws_check_yr(year, path = NULL)
+    deprecation_msg("xtab2df", "1.12.0", "dcws", id = "dcws-xtab2df")
+    year <- cws_check_yr(path = NULL, year, TRUE)
 
     if (is.null(code_pattern)) {
         if (year < 2024) {

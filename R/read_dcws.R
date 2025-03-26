@@ -1,6 +1,8 @@
 #' @title Read crosstab data and weights
 #' @description
-#' These two functions facilitate reading in Excel
+#' `r lifecycle::badge("deprecated")` **Deprecation notice:** Crosstab-related
+#' functions have been moved from cwi to the dcws package. The versions here will be
+#' removed soon. These two functions facilitate reading in Excel
 #' spreadsheets of crosstabs generated from SPSS. Note that they're likely
 #' only useful for working with the DataHaven Community Wellbeing Survey.
 #' @param path Path to an excel file
@@ -34,18 +36,21 @@
 #' For `read_weights`, only 2 columns, one for demographic groups and one for
 #' their associated weights.
 #' @examples
-#' if (interactive()) {
-#'     xt <- system.file("extdata/test_xtab2018.xlsx", package = "cwi")
-#'     read_weights(xt, year = 2018)
+#' \dontrun{
+#' # these functions are being deprecated
+#' # replace them with their equivalents in the dcws package
+#' xt <- system.file("extdata/test_xtab2018.xlsx", package = "dcws")
+#' dcws::read_weights(xt, year = 2018)
 #'
-#'     # returns a not-very-pretty data frame of the crosstabs to be processed
-#'     read_xtabs(xt, year = 2018)
-#'     # returns a pretty data frame ready for analysis
-#'     read_xtabs(xt, year = 2018, process = TRUE)
+#' # returns a not-very-pretty data frame of the crosstabs to be processed
+#' dcws::read_xtabs(xt, year = 2018)
+#' # returns a pretty data frame ready for analysis
+#' dcws::read_xtabs(xt, year = 2018, process = TRUE)
 #' }
 #' @export
-#' @rdname read_xtabs
-#' @seealso [cwi::xtab2df()]
+#' @keywords internal
+#' @family dcws-migration
+#' @seealso [dcws::read_xtabs()] [dcws::xtab2df()]
 read_xtabs <- function(path,
                        name_prefix = "x",
                        marker = "Nature of the [Ss]ample",
@@ -53,8 +58,9 @@ read_xtabs <- function(path,
                        process = FALSE,
                        verbose = TRUE,
                        ...) {
+    deprecation_msg("read_xtabs", "1.12.0", "dcws", id = "dcws-readxtabs")
     # return columns code, question, category, group, response, value
-    year <- cws_check_yr(year, path)
+    year <- cws_check_yr(path, year, verbose)
 
     data <- read_xtabs_(path, name_prefix, year)
 
@@ -79,12 +85,13 @@ read_xtabs <- function(path,
     }
 }
 
-
-#' @export
+#' @keywords internal
 #' @rdname read_xtabs
+#' @export
 read_weights <- function(path, year, marker = "Nature of the [Ss]ample") {
+    deprecation_msg("read_weights", "1.12.0", "dcws", id = "dcws-readwts")
     # return columns group & weight
-    year <- cws_check_yr(year, path)
+    year <- cws_check_yr(path, year, verbose = TRUE)
 
     if (year < 2024) {
         wts <- read_wts_spss_(path, marker, year)

@@ -10,7 +10,7 @@ A data frame with 100 rows and 7 variables:
 \item{code}{Question code}
 \item{question}{Question text}
 \item{category}{Category: gender, age, etc.}
-\item{group}{Group: male, female, ages 18–34, etc.}
+\item{group}{Group: male, female, ages 18-34, etc.}
 \item{response}{Survey response}
 \item{value}{Percentage value}
 \item{weight}{Survey weight}
@@ -20,7 +20,9 @@ A data frame with 100 rows and 7 variables:
 cws_demo
 }
 \description{
-This is a sample of 2015 DataHaven Community Wellbeing Survey data for Greater New Haven with weights attached, saved here for use in examples.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} \strong{Deprecation notice:} Crosstab-related
+functions and data have been moved from cwi to the dcws package. The versions here will be
+removed soon. This is a sample of 2015 DataHaven Community Wellbeing Survey data for Greater New Haven with weights attached, saved here for use in examples.
 }
 \seealso{
 Other example-datasets: 

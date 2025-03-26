@@ -38,6 +38,8 @@ A data frame with the following columns:
 }
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} \strong{Deprecation notice:} Crosstab-related
+functions have been moved from cwi to the dcws package. The versions here will be removed soon.
 Like \code{read_xtab} & \code{read_weights}, this is a bespoke function
 to make it easier to extract data from the DataHaven Community Wellbeing
 Survey. Applications to other crosstabs are probably limited unless their
@@ -51,12 +53,19 @@ don't have categories included in headings in excel, but this function will
 add them.
 }
 \examples{
-if (interactive()) {
-    xt <- system.file("extdata/test_xtab2018.xlsx", package = "cwi")
-    xtab <- read_xtabs(xt, year = 2018)
-    xtab2df(xtab, year = 2018)
+\dontrun{
+# this function is being deprecated
+# replace with the equivalent in the dcws package
+xt <- system.file("extdata/test_xtab2018.xlsx", package = "dcws")
+xtab <- dcws::read_xtabs(xt, year = 2018)
+dcws::xtab2df(xtab, year = 2018)
 }
 }
 \seealso{
-\code{\link[=read_xtabs]{read_xtabs()}}
+\code{\link[dcws:read_xtabs]{dcws::read_xtabs()}}
+
+Other dcws-migration: 
+\code{\link{read_xtabs}()}
 }
+\concept{dcws-migration}
+\keyword{internal}
