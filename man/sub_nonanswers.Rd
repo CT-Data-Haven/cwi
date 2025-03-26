@@ -35,7 +35,9 @@ A data frame with the same number of columns as the original, but
 fewer rows
 }
 \description{
-This is a convenience function for removing what might be
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} \strong{Deprecation notice:} Crosstab-related
+functions have been moved from cwi to the dcws package. The versions here will be
+removed soon. This is a convenience function for removing what might be
 considered non-answers ("don't know", "refused", etc.) and rescaling the
 remaining values to add to 1.0.
 }
@@ -47,3 +49,7 @@ if (interactive()) {
         sub_nonanswers()
 }
 }
+\seealso{
+\code{\link[dcws:sub_nonanswers]{dcws::sub_nonanswers()}}
+}
+\keyword{internal}

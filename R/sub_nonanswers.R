@@ -1,6 +1,8 @@
 #' @title Remove non-answers and rescale percentage values
 #' @description
-#' This is a convenience function for removing what might be
+#' `r lifecycle::badge("deprecated")` **Deprecation notice:** Crosstab-related
+#' functions have been moved from cwi to the dcws package. The versions here will be
+#' removed soon. This is a convenience function for removing what might be
 #' considered non-answers ("don't know", "refused", etc.) and rescaling the
 #' remaining values to add to 1.0.
 #' @param data A data frame
@@ -23,7 +25,8 @@
 #'         sub_nonanswers()
 #' }
 #' @export
-#' @rdname sub_nonanswers
+#' @keywords internal
+#' @seealso [dcws::sub_nonanswers()]
 
 sub_nonanswers <- function(data,
                            response = response,
@@ -31,6 +34,7 @@ sub_nonanswers <- function(data,
                            nons = c("Don't know", "Refused"),
                            factor_response = TRUE,
                            rescale = FALSE) {
+    deprecation_msg("sub_nonanswers", "1.12.1", "dcws", id = "dcws-nonanswers")
     # warn if any nons aren't actually in the data
     response_vals <- unique(dplyr::pull(data, {{ response }}))
     xtra_nons <- setdiff(nons, response_vals)

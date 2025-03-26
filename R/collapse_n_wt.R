@@ -1,10 +1,13 @@
 #' @title Collapse survey groups and get weighted means
 #' @description
+#' `r lifecycle::badge("deprecated")` **Deprecation notice:** Crosstab-related
+#' functions have been moved from cwi to the dcws package. The versions here will be
+#' removed soon.
 #' This is just a quick wrapper for a common, tedious task of
 #' collapsing several demographic groups, such as income brackets, into
 #' larger groups and taking a weighted mean based on a set of survey weights.
-#' @param data A data frame, such as returned by [cwi::xtab2df()] joined with
-#' survey weights as returned by [cwi::read_weights()]. The default
+#' @param data A data frame, such as returned by [dcws::xtab2df()] joined with
+#' survey weights as returned by [dcws::read_weights()]. The default
 #' column names here match those returned by `xtab2df` (`group`, `value`) and
 #' `read_weights` (`weight`).
 #' @param ... Bare column names to use for grouping, including the `.group` column,
@@ -38,8 +41,8 @@
 #'     dplyr::filter(category %in% c("Greater New Haven", "Income")) |>
 #'     collapse_n_wt(code:response, .lvls = income_lvls, .digits = 2)
 #' @export
-#' @rdname collapse_n_wt
-#' @seealso [cwi::xtab2df()], [cwi::read_weights()], [forcats::fct_collapse()]
+#' @keywords internal
+#' @seealso [dcws::collapse_n_wt()] [dcws::xtab2df()] [dcws::read_weights()] [forcats::fct_collapse()]
 collapse_n_wt <- function(data,
                           ...,
                           .lvls,
@@ -48,6 +51,7 @@ collapse_n_wt <- function(data,
                           .weight = weight,
                           .fill_wts = FALSE,
                           .digits = NULL) {
+    deprecation_msg("collapse_n_wt", "1.12.1", "dcws", id = "dcws-collapse")
     group_cols <- rlang::quos(...)
     to_wt <- dplyr::ungroup(data)
     to_wt <- dplyr::mutate(to_wt, dplyr::across({{ .group }}, \(x) forcats::fct_collapse(x, !!!.lvls)))

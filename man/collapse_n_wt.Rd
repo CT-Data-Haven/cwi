@@ -16,8 +16,8 @@ collapse_n_wt(
 )
 }
 \arguments{
-\item{data}{A data frame, such as returned by \code{\link[=xtab2df]{xtab2df()}} joined with
-survey weights as returned by \code{\link[=read_weights]{read_weights()}}. The default
+\item{data}{A data frame, such as returned by \code{\link[dcws:xtab2df]{dcws::xtab2df()}} joined with
+survey weights as returned by \code{\link[dcws:read_xtabs]{dcws::read_weights()}}. The default
 column names here match those returned by \code{xtab2df} (\code{group}, \code{value}) and
 \code{read_weights} (\code{weight}).}
 
@@ -51,6 +51,9 @@ A data frame with summarized values. The \code{.group} column will have
 the collapsed groups, and the \code{.value} column will have average values.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} \strong{Deprecation notice:} Crosstab-related
+functions have been moved from cwi to the dcws package. The versions here will be
+removed soon.
 This is just a quick wrapper for a common, tedious task of
 collapsing several demographic groups, such as income brackets, into
 larger groups and taking a weighted mean based on a set of survey weights.
@@ -67,5 +70,6 @@ cws_demo |>
     collapse_n_wt(code:response, .lvls = income_lvls, .digits = 2)
 }
 \seealso{
-\code{\link[=xtab2df]{xtab2df()}}, \code{\link[=read_weights]{read_weights()}}, \code{\link[forcats:fct_collapse]{forcats::fct_collapse()}}
+\code{\link[dcws:collapse_n_wt]{dcws::collapse_n_wt()}} \code{\link[dcws:xtab2df]{dcws::xtab2df()}} \code{\link[dcws:read_xtabs]{dcws::read_weights()}} \code{\link[forcats:fct_collapse]{forcats::fct_collapse()}}
 }
+\keyword{internal}

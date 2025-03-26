@@ -44,7 +44,8 @@ Imports:
     rvest,
     memoise,
     cachem,
-    rappdirs
+    rappdirs,
+    lifecycle
 Suggests: 
     knitr,
     sf,
