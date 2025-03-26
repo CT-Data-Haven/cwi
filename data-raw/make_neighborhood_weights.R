@@ -109,7 +109,6 @@ tract2nhood10 <- block2nhood10 |>
 
 out <- tract2nhood |>
     split(~city) |>
-    # purrr::map(janitor::remove_constant) |>
     purrr::map(function(df) {
         if (length(unique(df$town)) == 1) {
             df$town <- NULL
@@ -119,7 +118,6 @@ out <- tract2nhood |>
     rlang::set_names(\(x) paste(x, "tracts", sep = "_"))
 out10 <- tract2nhood10 |>
     split(~city) |>
-    # purrr::map(janitor::remove_constant) |>
     purrr::map(function(df) {
         if (length(unique(df$town)) == 1) {
             df$town <- NULL

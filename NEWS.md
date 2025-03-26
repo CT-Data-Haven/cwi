@@ -1,3 +1,9 @@
+# cwi v1.12.1 (2025-03-26)
+
+## Fix
+
+- clean up old dependencies & vignettes
+
 # cwi v1.12.0 (2025-03-26)
 
 ## Feat
