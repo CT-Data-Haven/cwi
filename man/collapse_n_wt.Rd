@@ -71,5 +71,12 @@ cws_demo |>
 }
 \seealso{
 \code{\link[dcws:collapse_n_wt]{dcws::collapse_n_wt()}} \code{\link[dcws:xtab2df]{dcws::xtab2df()}} \code{\link[dcws:read_xtabs]{dcws::read_weights()}} \code{\link[forcats:fct_collapse]{forcats::fct_collapse()}}
+
+Other dcws-migration: 
+\code{\link{cws_demo}},
+\code{\link{read_xtabs}()},
+\code{\link{sub_nonanswers}()},
+\code{\link{xtab2df}()}
 }
+\concept{dcws-migration}
 \keyword{internal}

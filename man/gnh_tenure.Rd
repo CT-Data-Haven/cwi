@@ -20,9 +20,5 @@ gnh_tenure
 \description{
 This is a table of housing tenure data for Greater New Haven obtained with \code{multi_geo_acs}, to be used in testing and examples.
 }
-\seealso{
-Other example-datasets: 
-\code{\link{cws_demo}}
-}
 \concept{example-datasets}
 \keyword{datasets}

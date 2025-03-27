@@ -12,12 +12,6 @@ reference:
     contents:
       - has_concept("fetching-functions")
 
-  - title: Functions - survey & crosstabs
-    desc: Functions to analyze DataHaven Community Wellbeing Survey crosstabs
-    contents:
-      - "collapse_n_wt"
-      - "sub_nonanswers"
-
   - title: Functions - analyzing and plotting
     desc: Functions to analyze or quickly plot data
     contents:

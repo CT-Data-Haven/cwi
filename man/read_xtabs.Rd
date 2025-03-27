@@ -81,6 +81,9 @@ dcws::read_xtabs(xt, year = 2018, process = TRUE)
 \code{\link[dcws:read_xtabs]{dcws::read_xtabs()}} \code{\link[dcws:xtab2df]{dcws::xtab2df()}}
 
 Other dcws-migration: 
+\code{\link{collapse_n_wt}()},
+\code{\link{cws_demo}},
+\code{\link{sub_nonanswers}()},
 \code{\link{xtab2df}()}
 }
 \concept{dcws-migration}

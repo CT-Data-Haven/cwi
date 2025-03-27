@@ -42,6 +42,7 @@
 #'     collapse_n_wt(code:response, .lvls = income_lvls, .digits = 2)
 #' @export
 #' @keywords internal
+#' @family dcws-migration
 #' @seealso [dcws::collapse_n_wt()] [dcws::xtab2df()] [dcws::read_weights()] [forcats::fct_collapse()]
 collapse_n_wt <- function(data,
                           ...,

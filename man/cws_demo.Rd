@@ -25,8 +25,11 @@ functions and data have been moved from cwi to the dcws package. The versions he
 removed soon. This is a sample of 2015 DataHaven Community Wellbeing Survey data for Greater New Haven with weights attached, saved here for use in examples.
 }
 \seealso{
-Other example-datasets: 
-\code{\link{gnh_tenure}}
+Other dcws-migration: 
+\code{\link{collapse_n_wt}()},
+\code{\link{read_xtabs}()},
+\code{\link{sub_nonanswers}()},
+\code{\link{xtab2df}()}
 }
-\concept{example-datasets}
+\concept{dcws-migration}
 \keyword{datasets}

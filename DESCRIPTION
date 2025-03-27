@@ -5,7 +5,8 @@ Authors@R:
     person(given = "Camille",
            family = "Seaberry",
            role = c("aut", "cre"),
-           email = "camille@ctdatahaven.org")
+           email = "camille@ctdatahaven.org",
+           comment = c(ORCID = "0000-0002-5102-995X"))
 Description: This is a collection of functions for collecting
     and analyzing Census data and other sources to write the 2019
     Community Wellbeing Index reports. It also contains reference tables

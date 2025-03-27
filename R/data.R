@@ -307,7 +307,7 @@ NULL
 #'   \item{value}{Percentage value}
 #'   \item{weight}{Survey weight}
 #' }
-#' @family example-datasets
+#' @family dcws-migration
 "cws_demo"
 
 

@@ -51,5 +51,12 @@ if (interactive()) {
 }
 \seealso{
 \code{\link[dcws:sub_nonanswers]{dcws::sub_nonanswers()}}
+
+Other dcws-migration: 
+\code{\link{collapse_n_wt}()},
+\code{\link{cws_demo}},
+\code{\link{read_xtabs}()},
+\code{\link{xtab2df}()}
 }
+\concept{dcws-migration}
 \keyword{internal}
