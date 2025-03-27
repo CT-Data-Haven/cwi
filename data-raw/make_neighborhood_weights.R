@@ -27,7 +27,7 @@ nhoods <- list(
 
 # 2020 shapefile includes pop & households
 hh20 <- tigris::blocks(state = "09", year = 2020, refresh = FALSE) |>
-    janitor::clean_names() |>
+    clean_names() |>
     dplyr::filter(aland20 > 0, housing20 > 0) |>
     dplyr::select(block = geoid20, hh = housing20) |>
     dplyr::left_join(dplyr::select(cwi::xwalk, block, tract, town), by = "block")
@@ -43,7 +43,7 @@ hh10 <- purrr::map(counties$county_code, function(cty) {
     tidycensus::get_decennial("block", variables = c(hh10 = "H003001"), year = 2010, sumfile = "sf1", state = "09", county = cty, geometry = TRUE, keep_geo_vars = TRUE, cache_table = TRUE)
 }) |>
     dplyr::bind_rows() |>
-    janitor::clean_names() |>
+    clean_names() |>
     dplyr::filter(aland10 > 0, value > 0) |>
     dplyr::select(block10 = geoid, hh = value) |>
     # use towns since don't have xwalk for old geos

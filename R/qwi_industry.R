@@ -63,7 +63,7 @@ qwi_industry <- function(years, industries = cwi::naics_codes[["industry"]],
         year, quarter, state, tidyselect::any_of("county"), industry,
         tidyselect::everything()
     )
-    fetch <- janitor::clean_names(fetch)
+    fetch <- clean_names(fetch)
 
     # if annual
     if (annual) {

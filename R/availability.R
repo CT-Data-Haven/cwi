@@ -82,7 +82,7 @@ check_qwi_avail <- function() {
     # get fips code instead of state abbrevs
     avail <- safe_read_avail("https://ledextract.ces.census.gov/loading_status.html", "html")
     avail <- rvest::html_table(avail)[[1]]
-    avail <- janitor::clean_names(avail)
+    avail <- clean_names(avail)
     avail <- dplyr::mutate(avail, dplyr::across(c(start_quarter, end_quarter), function(x) {
         x <- stringr::str_extract(x, "\\d{4}")
         as.numeric(x)

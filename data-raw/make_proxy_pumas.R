@@ -23,7 +23,7 @@ pops <- tidyr::expand_grid(
     tidyr::unnest(puma_type) |>
     dplyr::mutate(puma_type = forcats::as_factor(puma_type)) %>%
     dplyr::mutate(data = purrr::pmap(., function(puma_type, year, geo) tidycensus::get_acs(geo, variables = c(pop = "B01003_001", hh = "B25003_001"), state = "09", year = year))) |>
-    dplyr::mutate(data = purrr::map(data, janitor::clean_names)) |>
+    dplyr::mutate(data = purrr::map(data, clean_names)) |>
     dplyr::mutate(data = purrr::modify_at(data, geo == "county subdivision", cwi::town_names, name)) |>
     dplyr::mutate(data = purrr::modify_at(data, geo == "puma", \(x) dplyr::select(x, -name) |> dplyr::rename(name = geoid))) |>
     dplyr::mutate(data = purrr::map(data, tidyr::pivot_wider, id_cols = name, names_from = variable, values_from = estimate)) |>

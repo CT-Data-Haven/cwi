@@ -10,7 +10,7 @@ regional <- readr::read_delim("data-raw/files/regional_school_dists.tsv", delim 
 
 has_district <- dplyr::distinct(cwi::tract2town, town) |>
     dplyr::inner_join(readr::read_csv("https://query.data.world/s/236wagrhv3gvxpb75hhtc77hoxbwmo") |>
-        janitor::clean_names() |>
+        clean_names() |>
         dplyr::distinct(district_name) |>
         dplyr::mutate(town = stringr::str_remove(district_name, " School District$")), by = "town") |>
     dplyr::select(district = district_name, town)

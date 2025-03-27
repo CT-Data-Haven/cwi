@@ -10,7 +10,7 @@ naics_codes <- readr::read_csv("https://lehd.ces.census.gov/data/schema/latest/l
 qwi_avail <- rvest::read_html("https://ledextract.ces.census.gov/loading_status.html") |>
     rvest::html_table() |>
     base::`[[`(1) |>
-    janitor::clean_names() |>
+    clean_names() |>
     dplyr::mutate(dplyr::across(start_quarter:end_quarter, ~ as.numeric(stringr::str_extract(., "\\d{4}")))) |>
     dplyr::inner_join(dplyr::distinct(tidycensus::fips_codes, state, state_code), by = "state") |>
     dplyr::select(state_code, start_year = start_quarter, end_year = end_quarter)

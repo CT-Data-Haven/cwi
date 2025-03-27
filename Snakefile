@@ -99,6 +99,7 @@ def create_rule(script):
         name:
             f"make_{script}"
         input:
+            # "data-raw/make_{script}.R",
             inputs,
         output:
             outputs,
@@ -147,6 +148,7 @@ rule all_data:
 rule check:
     input:
         rules.all_data.output.flag,
+        'R/sysdata.rda',
         "DESCRIPTION",
         r_files,
         test_files,
@@ -178,6 +180,7 @@ rule test:
 rule document:
     input:
         rules.all_data.output.flag,
+        'R/sysdata.rda',
         r_files,
         doc_files,
         readme = 'README.qmd',

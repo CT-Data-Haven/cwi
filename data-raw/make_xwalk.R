@@ -18,7 +18,7 @@ cogs <- county_equiv |>
 
 # no 2020 CB pumas yet
 blocks <- tigris::blocks("09", year = 2020) |>
-    janitor::clean_names() |>
+    clean_names() |>
     dplyr::filter(aland20 > 0) |>
     dplyr::mutate(county_fips = paste0(statefp20, countyfp20)) |>
     dplyr::mutate(tract = paste0(county_fips, tractce20)) |>
@@ -29,7 +29,7 @@ blocks <- tigris::blocks("09", year = 2020) |>
 
 pumas_sf <- list(puma20 = 2020, puma22 = 2022) |>
     purrr::map(\(x) tigris::pumas("09", year = x)) |>
-    purrr::map(janitor::clean_names) |>
+    purrr::map(clean_names) |>
     purrr::map(dplyr::select, puma_fips = tidyselect::matches("geoid"), puma = tidyselect::matches("namelsad")) |>
     purrr::map(dplyr::mutate, puma = stringr::str_remove(puma, " Towns?")) |>
     purrr::map(dplyr::mutate, puma = stringr::str_remove(puma, " PUMA"))
@@ -45,7 +45,7 @@ town2pumas$puma22 <- dplyr::rename(town2pumas$puma22, puma_cog = puma, puma_fips
 
 
 msa_sf <- tigris::core_based_statistical_areas(cb = TRUE, year = 2020) |>
-    janitor::clean_names() |>
+    clean_names() |>
     dplyr::filter(grepl("CT", name)) |>
     dplyr::select(msa = name, msa_fips = geoid)
 
@@ -71,7 +71,7 @@ cog_fips <- list(
 ) |>
     purrr::map(\(x) x(state = "09", year = 2022)) |>
     purrr::map(sf::st_drop_geometry) |>
-    purrr::map(janitor::clean_names)
+    purrr::map(clean_names)
 town_cog <- cog_fips$town |>
     dplyr::select(town_fips_cog = geoid, town = name)
 tract_cog <- cog_fips$tract |>

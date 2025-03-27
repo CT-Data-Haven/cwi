@@ -4,7 +4,7 @@ ne <- c("CT", "MA", "ME", "NH", "RI", "VT")
 ne_re <- sprintf("(%s)", paste(ne, collapse = "|"))
 msa <- tigris::core_based_statistical_areas(year = 2020) |>
     sf::st_drop_geometry() |>
-    janitor::clean_names() |>
+    clean_names() |>
     dplyr::filter(lsad == "M1") |>
     dplyr::select(geoid, name) |>
     dplyr::mutate(region = ifelse(grepl(ne_re, name), "New England", "Outside New England")) |>

@@ -148,7 +148,7 @@ multi_geo_acs <- function(table, year = endyears[["acs"]],
     # take names of non-null items, reverse order
     fetch <- rev(fetch)
     fetch <- rlang::set_names(fetch, function(nm) paste(seq_along(fetch), nm, sep = "_"))
-    fetch <- purrr::map(fetch, janitor::clean_names)
+    fetch <- purrr::map(fetch, clean_names)
     fetch_df <- dplyr::bind_rows(fetch, .id = "level")
     fetch_df$year <- year
     fetch_df$level <- as.factor(fetch_df$level)
@@ -292,7 +292,7 @@ multi_geo_decennial <- function(table, year = endyears[["decennial"]],
     # take names of non-null items, reverse order
     fetch <- rev(fetch)
     fetch <- rlang::set_names(fetch, function(nm) paste(seq_along(fetch), nm, sep = "_"))
-    fetch <- purrr::map(fetch, janitor::clean_names)
+    fetch <- purrr::map(fetch, clean_names)
     fetch_df <- dplyr::bind_rows(fetch, .id = "level")
     fetch_df$year <- year
     fetch_df$level <- as.factor(fetch_df$level)
