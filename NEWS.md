@@ -1,3 +1,13 @@
+# cwi v1.12.2 (2025-03-27)
+
+## Fix
+
+- clean up old dependencies & vignettes
+
+## Refactor
+
+- **clean_names**: port and simplify janitor::clean_names to drop dependency
+
 # cwi v1.12.1 (2025-03-26)
 
 ## Fix
