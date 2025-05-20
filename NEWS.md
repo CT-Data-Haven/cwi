@@ -1,3 +1,13 @@
+# cwi v1.13.0 (2025-05-19)
+
+## Feat
+
+- copy over `calc_shares` function from camiller package
+
+## Fix
+
+- remove cws_demo dataset
+
 # cwi v1.12.2 (2025-03-27)
 
 ## Fix
