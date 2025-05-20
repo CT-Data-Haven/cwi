@@ -3,6 +3,7 @@
 ## Feat
 
 - copy over `calc_shares` function from camiller package
+- add Greater Bridgeport to `proxy_pumas`
 
 ## Fix
 
@@ -54,12 +55,12 @@ A small flurry of behind-the-scenes updates, including build tools and documenta
 
 # cwi 1.8.0
 
-* Fixed neighborhood shapefiles. These now come directly from cities' data portals in the [scratchpad repo](https://github.com/CT-Data-Haven/scratchpad), where they're published as a release, giving us a single source of truth for what those boundaries are. There were also errors where a few neighborhoods in Hartford / West Hartford and Stamford received tracts outside the city boundaries. As a result, weights tables have changed a fair amount. We'd also used our own combinations of Stamford neighborhoods but now have those from the city, with some shifts in what neighborhoods are lumped together and how they're labeled.
+- Fixed neighborhood shapefiles. These now come directly from cities' data portals in the [scratchpad repo](https://github.com/CT-Data-Haven/scratchpad), where they're published as a release, giving us a single source of truth for what those boundaries are. There were also errors where a few neighborhoods in Hartford / West Hartford and Stamford received tracts outside the city boundaries. As a result, weights tables have changed a fair amount. We'd also used our own combinations of Stamford neighborhoods but now have those from the city, with some shifts in what neighborhoods are lumped together and how they're labeled.
 
 # cwi 1.7.1
 
-* Updated and improved methods for making `zip2town` crosswalk, based on 2020 / 2022 geographies. The columns included in the data frame are slightly changed.
-* Fixed issues with `qwi_industry`: the API now uses COGs for Connecticut instead of counties.
+- Updated and improved methods for making `zip2town` crosswalk, based on 2020 / 2022 geographies. The columns included in the data frame are slightly changed.
+- Fixed issues with `qwi_industry`: the API now uses COGs for Connecticut instead of counties.
 
 # cwi 1.7.0
 
@@ -89,12 +90,12 @@ Bump ACS-related defaults to 2022
 
 # cwi 1.5.0
 
-- The 2020 decennial census added a few dozen new census designated places, which is what `village2town` is based on. They now overlap with towns even less well than they used to. The table has been recalculated, with towns and villages joined based on overlapping population from the 2020 decennial, and now includes populations and weights in the crosswalk. 
-That means things could break if you're expecting one set of CDPs and get another, or if you're not expecting new columns in that table. 
+- The 2020 decennial census added a few dozen new census designated places, which is what `village2town` is based on. They now overlap with towns even less well than they used to. The table has been recalculated, with towns and villages joined based on overlapping population from the 2020 decennial, and now includes populations and weights in the crosswalk.
+  That means things could break if you're expecting one set of CDPs and get another, or if you're not expecting new columns in that table.
 
 # cwi 1.4.0
 
-- **MINOR BREAKING CHANGE:** `multi_geo_decennial` now defaults to 2020. Because the 2020 decennial uses a different summary file code from previous years, the default `sumfile` argument, if used with 2010, *will lead to an error.*
+- **MINOR BREAKING CHANGE:** `multi_geo_decennial` now defaults to 2020. Because the 2020 decennial uses a different summary file code from previous years, the default `sumfile` argument, if used with 2010, _will lead to an error._
 - 2020 decennial variables are now available in `decennial_vars20`. The 2010 ones are still in `decennial_vars10`.
 - A new data frame, `cb_avail`, has the years, programs (ACS vs decennial), and dataset codes (SF1, ACS5, DHC, etc.) available from the Census Bureau's API.
 - The function `dh_scaffold` was poorly named and not a great fit for the aims of this project. It's been moved to {stylehaven}; find it there as `scaffold_project`.
@@ -102,7 +103,7 @@ That means things could break if you're expecting one set of CDPs and get anothe
 
 # cwi 1.3.0
 
-- Add COGs to xwalk along with function for reconciling names 
+- Add COGs to xwalk along with function for reconciling names
 
 # cwi 1.2.0
 

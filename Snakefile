@@ -204,6 +204,7 @@ rule site:
         "_pkgdown.yml",
         "DESCRIPTION",
         "LICENSE",
+        "NEWS.md",
         check=rules.check.output.flag,
     output:
         flag=touch("flags/.site"),
