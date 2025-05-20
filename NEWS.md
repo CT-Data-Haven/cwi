@@ -1,3 +1,9 @@
+# cwi v1.13.1 (2025-05-20)
+
+## Fix
+
+- **proxy_pumas**: rename Greater Bridgeport COG to Greater Bridgeport (same geo, more consistent name)
+
 # cwi v1.13.0 (2025-05-19)
 
 ## Feat
