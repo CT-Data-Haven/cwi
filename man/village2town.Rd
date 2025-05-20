@@ -30,21 +30,4 @@ associated town. This version also includes all places, not just ones that diffe
 Note that places don't span the full state. All populations are from the 2020 decennial census, and overlaps are based on
 fitting blocks within places.
 }
-\seealso{
-Other ref-datasets: 
-\code{\link{acs_vars}},
-\code{\link{ct5_clusters}},
-\code{\link{decennial_vars}},
-\code{\link{msa}},
-\code{\link{naics_codes}},
-\code{\link{neighborhood_tracts}},
-\code{\link{occ_codes}},
-\code{\link{proxy_pumas}},
-\code{\link{regions}},
-\code{\link{school_dists}},
-\code{\link{table_nums}},
-\code{\link{xwalk}},
-\code{\link{zip2town}}
-}
-\concept{ref-datasets}
-\keyword{datasets}
+\keyword{ref-datasets}

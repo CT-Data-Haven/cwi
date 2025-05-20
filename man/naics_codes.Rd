@@ -21,21 +21,4 @@ naics_codes
 \description{
 A dataset of industry names with their NAICS codes. These are only the main sectors, not detailed industry codes.
 }
-\seealso{
-Other ref-datasets: 
-\code{\link{acs_vars}},
-\code{\link{ct5_clusters}},
-\code{\link{decennial_vars}},
-\code{\link{msa}},
-\code{\link{neighborhood_tracts}},
-\code{\link{occ_codes}},
-\code{\link{proxy_pumas}},
-\code{\link{regions}},
-\code{\link{school_dists}},
-\code{\link{table_nums}},
-\code{\link{village2town}},
-\code{\link{xwalk}},
-\code{\link{zip2town}}
-}
-\concept{ref-datasets}
-\keyword{datasets}
+\keyword{ref-datasets}

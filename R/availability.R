@@ -30,7 +30,7 @@
 #' @export
 #' @seealso [US Census Bureau API Discovery Tool](https://www.census.gov/data/developers/updates/new-discovery-tool.html) [LED Extraction Tool](https://ledextract.ces.census.gov/)
 #' @rdname availability
-#' @family utils
+#' @keywords utils
 check_cb_avail <- function() {
     # ALL TABLES AVAILABLE: VINTAGE + PROGRAM + SURVEY CODE
     surveys <- list(

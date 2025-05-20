@@ -63,12 +63,6 @@ dcws::xtab2df(xtab, year = 2018)
 }
 \seealso{
 \code{\link[dcws:read_xtabs]{dcws::read_xtabs()}}
-
-Other dcws-migration: 
-\code{\link{collapse_n_wt}()},
-\code{\link{cws_demo}},
-\code{\link{read_xtabs}()},
-\code{\link{sub_nonanswers}()}
 }
-\concept{dcws-migration}
+\keyword{dcws-migration}
 \keyword{internal}

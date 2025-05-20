@@ -13,7 +13,7 @@
 #' @param ... Any additional parameters to pass to the underlying geom function.
 #' @seealso [ggplot2::geom_col()] [ggplot2::geom_point()] [ggplot2::geom_histogram()]
 #' @return A ggplot
-#' @family quick-plotting-functions
+#' @keywords quick-plotting-functions
 #' @export
 geo_level_plot <- function(data,
                            name = name,

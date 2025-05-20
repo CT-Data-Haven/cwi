@@ -17,21 +17,5 @@ ext_table_nums
 \description{
 Lists of ACS table numbers commonly used by DataHaven. \code{basic_table_nums} is used for making short profiles of towns, neighborhoods, and regions, while \code{ext_table_nums} is used for "extended" profiles, such as neighborhood profiles distributed as PDF on the DataHaven website.
 }
-\seealso{
-Other ref-datasets: 
-\code{\link{acs_vars}},
-\code{\link{ct5_clusters}},
-\code{\link{decennial_vars}},
-\code{\link{msa}},
-\code{\link{naics_codes}},
-\code{\link{neighborhood_tracts}},
-\code{\link{occ_codes}},
-\code{\link{proxy_pumas}},
-\code{\link{regions}},
-\code{\link{school_dists}},
-\code{\link{village2town}},
-\code{\link{xwalk}},
-\code{\link{zip2town}}
-}
-\concept{ref-datasets}
 \keyword{datasets}
+\keyword{ref-datasets}

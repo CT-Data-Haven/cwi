@@ -45,8 +45,7 @@
 #' }
 #' @export
 #' @seealso [dcws::read_xtabs()]
-#' @family dcws-migration
-#' @keywords internal
+#' @keywords dcws-migration internal
 xtab2df <- function(data, year, col = x1, code_pattern = NULL) {
     deprecation_msg("xtab2df", "1.12.0", "dcws", id = "dcws-xtab2df")
     year <- cws_check_yr(path = NULL, year, TRUE)

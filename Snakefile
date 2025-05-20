@@ -92,15 +92,16 @@ datasets = prep_datasets("data-raw/datasets.txt")
 
 
 def create_rule(script):
-    inputs = get_inputs(datasets, script)
+    inputs  = get_inputs(datasets, script)
     outputs = get_outputs(datasets, script)
 
     rule:
         name:
             f"make_{script}"
         input:
-            # "data-raw/make_{script}.R",
+            "data-raw/datasets.txt",
             inputs,
+            f"data-raw/make_{script}.R",
         output:
             outputs,
         # script:
@@ -125,17 +126,21 @@ envvars:
     "CENSUS_API_KEY",
     "BLS_KEY",
 
+rule nhoods:
+    output:
+        "data-raw/files/all_city_nhoods.rds"
+    shell:
+        "bash ./data-raw/get_nhood_geos.sh"
 
 rule setup:
     output:
         catalog = 'data-raw/datasets.txt',
-    # script:
-    #     'data-raw/data_catalog.sh'
     shell:
         "bash ./data-raw/data_catalog.sh"
 
 for script in datasets.index:
     create_rule(script)
+
 
 
 rule all_data:

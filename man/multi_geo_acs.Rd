@@ -135,10 +135,5 @@ multi_geo_acs("B01003", 2023,
 }
 \seealso{
 \code{\link[tidycensus:census_api_key]{tidycensus::census_api_key()}}, \code{\link[tidycensus:get_acs]{tidycensus::get_acs()}}
-
-Other fetching-functions: 
-\code{\link{laus_trend}()},
-\code{\link{multi_geo_decennial}()},
-\code{\link{qwi_industry}()}
 }
-\concept{fetching-functions}
+\keyword{fetching-functions}

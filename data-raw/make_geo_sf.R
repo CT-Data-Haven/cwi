@@ -1,3 +1,4 @@
+# READ: data-raw/files/all_city_nhoods.rds
 # WRITE: town_sf new_haven_sf stamford_sf bridgeport_sf hartford_sf tract_sf tract_sf19
 
 # make sf objects of towns, neighborhoods

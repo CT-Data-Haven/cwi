@@ -21,21 +21,4 @@ msa
 \description{
 A reference dataset of all the metropolitan statistical areas (MSAs) in the US, marked with whether they're in a New England state.
 }
-\seealso{
-Other ref-datasets: 
-\code{\link{acs_vars}},
-\code{\link{ct5_clusters}},
-\code{\link{decennial_vars}},
-\code{\link{naics_codes}},
-\code{\link{neighborhood_tracts}},
-\code{\link{occ_codes}},
-\code{\link{proxy_pumas}},
-\code{\link{regions}},
-\code{\link{school_dists}},
-\code{\link{table_nums}},
-\code{\link{village2town}},
-\code{\link{xwalk}},
-\code{\link{zip2town}}
-}
-\concept{ref-datasets}
-\keyword{datasets}
+\keyword{ref-datasets}

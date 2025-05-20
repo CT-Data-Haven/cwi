@@ -14,7 +14,7 @@
 #' \dontrun{
 #' laus_trend(c("Connecticut", "New Haven", "Hamden"), 2014, 2017, annual = TRUE)
 #' }
-#' @family fetching-functions
+#' @keywords fetching-functions
 #' @export
 laus_trend <- function(names = NULL, startyear, endyear, state = "09", measures = "all", annual = FALSE, verbose = TRUE, key = NULL) {
     # check measures

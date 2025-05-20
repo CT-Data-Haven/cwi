@@ -9,7 +9,7 @@
 #' @examples
 #' fix_cogs(names(regions[1:6]))
 #' @export
-#' @family utils
+#' @keywords utils
 #' @seealso xwalk regions
 fix_cogs <- function(x) {
     # should be either character or factor

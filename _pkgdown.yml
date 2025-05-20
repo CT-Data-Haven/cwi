@@ -10,35 +10,35 @@ reference:
   - title: Functions - fetching
     desc: Functions to fetch data from APIs
     contents:
-      - has_concept("fetching-functions")
+      - has_keyword("fetching-functions")
 
   - title: Functions - analyzing and plotting
     desc: Functions to analyze or quickly plot data
     contents:
-      - has_concept("augmenting-functions")
-      - has_concept("quick-plotting-functions")
+      - has_keyword("augmenting-functions")
+      - has_keyword("quick-plotting-functions")
 
   - title: Datasets - reference
     desc: Reference datasets, lookup tables, and crosswalks
     contents:
-      - has_concept("ref-datasets")
+      - has_keyword("ref-datasets")
 
   - title: Datasets - examples
     desc: Datasets used for examples in vignettes, package docs, & testing
     contents:
-      - has_concept("example-datasets")
+      - has_keyword("example-datasets")
 
   - title: Shapefiles
     desc: Shapefiles in `sf` format
     contents:
-      - has_concept("shapefiles")
+      - has_keyword("shapefiles")
 
   - title: Misc. / utilities
     desc: Miscellaneous functions
     contents:
-      - has_concept("utils")
+      - has_keyword("utils")
 
   - title: Deprecated functions
     desc: Functions that have moved to {dcws}
     contents:
-      - has_concept("dcws-migration")
+      - has_keyword("dcws-migration")

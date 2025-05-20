@@ -14,7 +14,7 @@
 #' @examples
 #' # get the year
 #' attr(acs_vars, "year")
-#' @family ref-datasets
+#' @keywords ref-datasets
 "acs_vars"
 
 
@@ -33,7 +33,7 @@
 #' # get the year
 #' attr(decennial_vars, "year")
 #'
-#' @family ref-datasets
+#' @keywords ref-datasets
 "decennial_vars"
 
 #' @rdname decennial_vars
@@ -46,7 +46,7 @@
 #'
 #' Lists of ACS table numbers commonly used by DataHaven. `basic_table_nums` is used for making short profiles of towns, neighborhoods, and regions, while `ext_table_nums` is used for "extended" profiles, such as neighborhood profiles distributed as PDF on the DataHaven website.
 #'
-#' @family ref-datasets
+#' @keywords ref-datasets
 #' @name table_nums
 NULL
 
@@ -70,7 +70,7 @@ NULL
 #'   \item{region}{String: whether MSA is inside or outside of New England}
 #' }
 #' @source US Census Bureau via `tidycensus`. Note that these are as of 2020.
-#' @family ref-datasets
+#' @keywords ref-datasets
 "msa"
 
 
@@ -91,7 +91,7 @@ NULL
 #'   \item{weight}{Share of tract's households in that neighborhood}
 #' }
 #' @name neighborhood_tracts
-#' @family ref-datasets
+#' @keywords ref-datasets
 NULL
 
 #' @format NULL
@@ -135,7 +135,7 @@ NULL
 #'
 #' @format A named list of vectors, where names give the names of regions and vectors give the names of towns making up each region, including regional councils of governments.
 #' @source DataHaven internal and CT OPM
-#' @family ref-datasets
+#' @keywords ref-datasets
 "regions"
 
 
@@ -155,7 +155,7 @@ NULL
 #'   \item{pct_of_zip_hh}{Percentage of the zip's households that are also in this town}
 #' }
 #' @source Cleaned-up version of the Census [2022 ZCTA to county subdivision relationship file](https://www2.census.gov/geo/docs/maps-data/data/rel2022/acs22_cousub22_zcta520_st09.txt), updated for Connecticut's 2022 revisions from counties to COGs.
-#' @family ref-datasets
+#' @keywords ref-datasets
 "zip2town"
 
 
@@ -179,7 +179,7 @@ NULL
 #'   \item{place_wt}{Share of CDP population included in the town-CDP overlapping area}
 #' }
 #' @source Spatial overlay of TIGER shapefiles and populations from the 2020 Decennial Census DHC table P1.
-#' @family ref-datasets
+#' @keywords ref-datasets
 "village2town"
 
 
@@ -195,7 +195,7 @@ NULL
 #'   \item{town}{Name of town included in district}
 #' }
 #' @source Distinct town-level district names come from the state's [data.world](https://data.world/state-of-connecticut/9k2y-kqxn). Regional districts and their towns come from combing through school district websites.
-#' @family ref-datasets
+#' @keywords ref-datasets
 "school_dists"
 
 
@@ -210,7 +210,7 @@ NULL
 #'   \item{ind_level}{Sector level: either "A" for all industries, or "2" for sectors}
 #' }
 #' @source This is just a filtered version of file downloaded from [LEHD](https://lehd.ces.census.gov/data/)
-#' @family ref-datasets
+#' @keywords ref-datasets
 "naics_codes"
 
 #' Census occupation codes
@@ -226,7 +226,7 @@ NULL
 #'   \item{description}{Full text of occupation name}
 #' }
 #' @source US Census Bureau's industry & occupation downloads
-#' @family ref-datasets
+#' @keywords ref-datasets
 "occ_codes"
 
 
@@ -256,7 +256,7 @@ NULL
 #'   \item{puma_fips_cog}{PUMA FIPS code, based on COG FIPS as of 2022 ACS}
 #' }
 #' @source 2020 and 2022 (for COGs & towns) TIGER shapefiles
-#' @family ref-datasets
+#' @keywords ref-datasets
 "xwalk"
 
 
@@ -272,7 +272,7 @@ NULL
 #'   \item{town}{Town name}
 #' }
 #' @rdname xwalk
-#' @family ref-datasets
+#' @keywords ref-datasets
 "tract2town"
 
 
@@ -287,28 +287,11 @@ NULL
 #' }
 #'
 #' @source Levy, Don: Five Connecticuts 2010 Update. (2015). Produced for Siena College Research Institute and DataHaven based on original 1990 and 2000 designations from "Levy, Don, Orlando Rodriguez, and Wayne Villemez. 2004. The Changing Demographics of Connecticut - 1990 to 2000. Part 2: The Five Connecticuts. Storrs, Connecticut: University of Connecticut, The Connecticut State Data Center, Series, no. OP 2004-01."
-#' @family ref-datasets
+#' @keywords ref-datasets
 "ct5_clusters"
 
 
-#' CWS demo data
-#'
-#' `r lifecycle::badge("deprecated")` **Deprecation notice:** Crosstab-related 
-#' functions and data have been moved from cwi to the dcws package. The versions here will be 
-#' removed soon. This is a sample of 2015 DataHaven Community Wellbeing Survey data for Greater New Haven with weights attached, saved here for use in examples.
-#'
-#' @format A data frame with `r nrow(cws_demo)` rows and 7 variables:
-#' \describe{
-#'   \item{code}{Question code}
-#'   \item{question}{Question text}
-#'   \item{category}{Category: gender, age, etc.}
-#'   \item{group}{Group: male, female, ages 18-34, etc.}
-#'   \item{response}{Survey response}
-#'   \item{value}{Percentage value}
-#'   \item{weight}{Survey weight}
-#' }
-#' @family dcws-migration
-"cws_demo"
+
 
 
 #' ACS demo data - tenure
@@ -323,7 +306,7 @@ NULL
 #'   \item{estimate}{Estimated count}
 #'   \item{share}{Calculated share of households, or `NA` for total}
 #' }
-#' @family example-datasets
+#' @keywords example-datasets
 "gnh_tenure"
 
 
@@ -351,5 +334,5 @@ NULL
 #' # proxies made from COG-based PUMAs
 #' proxy_pumas$cog
 #' @source 2021 & 2022 5-year ACS
-#' @family ref-datasets
+#' @keywords ref-datasets
 "proxy_pumas"

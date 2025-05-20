@@ -35,12 +35,5 @@ jenks(values, n = 4)
 }
 \seealso{
 \code{\link[classInt:classIntervals]{classInt::classIntervals()}}
-
-Other utils: 
-\code{\link{batch_csv_dump}()},
-\code{\link{check_cb_avail}()},
-\code{\link{fix_cogs}()},
-\code{\link{separate_acs}()},
-\code{\link{town_names}()}
 }
-\concept{utils}
+\keyword{utils}

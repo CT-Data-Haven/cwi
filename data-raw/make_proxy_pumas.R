@@ -11,7 +11,7 @@ town_puma <- list(
 town_county <- dplyr::distinct(cwi::xwalk, town, county) |>
     dplyr::rename(region = county)
 
-reg_df <- cwi::regions[c("Greater New Haven", "Greater Hartford", "Greater Waterbury", "Lower Naugatuck Valley")] |>
+reg_df <- cwi::regions[c("Greater New Haven", "Greater Hartford", "Greater Waterbury", "Lower Naugatuck Valley", "Greater Bridgeport COG")] |>
     tibble::enframe(name = "region", value = "town") |>
     tidyr::unnest(town) |>
     dplyr::bind_rows(town_county)
@@ -21,9 +21,9 @@ pops <- tidyr::expand_grid(
     geo = c("county subdivision", "puma")
 ) |>
     tidyr::unnest(puma_type) |>
-    dplyr::mutate(puma_type = forcats::as_factor(puma_type)) %>%
-    dplyr::mutate(data = purrr::pmap(., function(puma_type, year, geo) tidycensus::get_acs(geo, variables = c(pop = "B01003_001", hh = "B25003_001"), state = "09", year = year))) |>
-    dplyr::mutate(data = purrr::map(data, clean_names)) |>
+    dplyr::mutate(puma_type = forcats::as_factor(puma_type)) |>
+    dplyr::mutate(data = purrr::pmap(list(puma_type, year, geo), function(puma_type, year, geo) tidycensus::get_acs(geo, variables = c(pop = "B01003_001", hh = "B25003_001"), state = "09", year = year))) |>
+    dplyr::mutate(data = purrr::map(data, cwi:::clean_names)) |>
     dplyr::mutate(data = purrr::modify_at(data, geo == "county subdivision", cwi::town_names, name)) |>
     dplyr::mutate(data = purrr::modify_at(data, geo == "puma", \(x) dplyr::select(x, -name) |> dplyr::rename(name = geoid))) |>
     dplyr::mutate(data = purrr::map(data, tidyr::pivot_wider, id_cols = name, names_from = variable, values_from = estimate)) |>

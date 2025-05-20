@@ -23,21 +23,4 @@ A crosswalk of Connecticut towns and school districts, including regional distri
 \details{
 Note that for aggregating by region, the Hartford-area regional district CREC is not included here, because it spans so many other towns that also run their own schools.CREC is of significant enough size that it should generally be included in Greater Hartford aggregations or as its own district for comparisons alongside e.g. Hartford and West Hartford.
 }
-\seealso{
-Other ref-datasets: 
-\code{\link{acs_vars}},
-\code{\link{ct5_clusters}},
-\code{\link{decennial_vars}},
-\code{\link{msa}},
-\code{\link{naics_codes}},
-\code{\link{neighborhood_tracts}},
-\code{\link{occ_codes}},
-\code{\link{proxy_pumas}},
-\code{\link{regions}},
-\code{\link{table_nums}},
-\code{\link{village2town}},
-\code{\link{xwalk}},
-\code{\link{zip2town}}
-}
-\concept{ref-datasets}
-\keyword{datasets}
+\keyword{ref-datasets}

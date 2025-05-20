@@ -73,11 +73,4 @@ get_cpi(2018:2024, base = 2024, monthly = FALSE)
 get_cpi(2018:2024, base = "2024-12-01", monthly = TRUE)
 }
 }
-\seealso{
-Other augmenting-functions: 
-\code{\link{label_decennial}()}
-
-Other augmenting-functions: 
-\code{\link{label_decennial}()}
-}
-\concept{augmenting-functions}
+\keyword{augmenting-functions}

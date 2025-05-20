@@ -2,6 +2,7 @@
 
 export(adj_inflation)
 export(batch_csv_dump)
+export(calc_shares)
 export(check_cb_avail)
 export(check_qwi_avail)
 export(collapse_n_wt)
@@ -22,5 +23,4 @@ export(separate_acs)
 export(sub_nonanswers)
 export(town_names)
 export(xtab2df)
-importFrom(camiller,calc_shares)
 importFrom(lifecycle,deprecated)

@@ -14,7 +14,7 @@
 #'     "Branford town, New Haven County, Connecticut", 2802
 #' )
 #' town_names(pops, name_col = name)
-#' @family utils
+#' @keywords utils
 #' @export
 town_names <- function(data, name_col) {
     data <- dplyr::mutate(data, {{ name_col }} := stringr::str_extract({{ name_col }}, "^.+(?= town)"))

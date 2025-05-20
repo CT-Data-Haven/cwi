@@ -58,25 +58,8 @@ This is just a quick wrapper for a common, tedious task of
 collapsing several demographic groups, such as income brackets, into
 larger groups and taking a weighted mean based on a set of survey weights.
 }
-\examples{
-# collapse income groups, such that <$15K, $15K-$30K become <$30K, etc
-income_lvls <- list(
-    "<$30K" = c("<$15K", "$15K-$30K"),
-    "$30K-$100K" = c("$30K-$50K", "$50K-$75K", "$75K-$100K"),
-    "$100K+" = c("$100K-$200K", "$200K+")
-)
-cws_demo |>
-    dplyr::filter(category \%in\% c("Greater New Haven", "Income")) |>
-    collapse_n_wt(code:response, .lvls = income_lvls, .digits = 2)
-}
 \seealso{
 \code{\link[dcws:collapse_n_wt]{dcws::collapse_n_wt()}} \code{\link[dcws:xtab2df]{dcws::xtab2df()}} \code{\link[dcws:read_xtabs]{dcws::read_weights()}} \code{\link[forcats:fct_collapse]{forcats::fct_collapse()}}
-
-Other dcws-migration: 
-\code{\link{cws_demo}},
-\code{\link{read_xtabs}()},
-\code{\link{sub_nonanswers}()},
-\code{\link{xtab2df}()}
 }
-\concept{dcws-migration}
+\keyword{dcws-migration}
 \keyword{internal}

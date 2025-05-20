@@ -25,8 +25,7 @@
 #'         sub_nonanswers()
 #' }
 #' @export
-#' @keywords internal
-#' @family dcws-migration
+#' @keywords dcws-migration internal
 #' @seealso [dcws::sub_nonanswers()]
 
 sub_nonanswers <- function(data,

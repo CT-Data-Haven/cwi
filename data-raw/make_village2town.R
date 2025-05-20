@@ -16,7 +16,7 @@ pop_sf <- list(town = "county subdivision", place = "place", block = "block") |>
         variables = "P1_001N", year = 2020,
         state = "09", sumfile = "dhc", geometry = TRUE, cache_table = TRUE, cb = FALSE
     ) |>
-    purrr::map(clean_names) |>
+    purrr::map(cwi:::clean_names) |>
     purrr::map(sf::st_transform, 2234)
 pop_sf$town <- dplyr::select(pop_sf$town, town = name, town_pop = value) |>
     cwi::town_names(town)

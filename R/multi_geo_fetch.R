@@ -45,7 +45,7 @@
 #'     nhood_geoid = "geoid_cog"
 #' )
 #' }
-#' @family fetching-functions
+#' @keywords fetching-functions
 #' @export
 multi_geo_acs <- function(table, year = endyears[["acs"]],
                           towns = "all", regions = NULL,
@@ -199,7 +199,7 @@ multi_geo_acs <- function(table, year = endyears[["acs"]],
 #'     counties = "New Haven County"
 #' )
 #' }
-#' @family fetching-functions
+#' @keywords fetching-functions
 #' @export
 multi_geo_decennial <- function(table, year = endyears[["decennial"]],
                                 towns = "all", regions = NULL,

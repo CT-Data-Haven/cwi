@@ -5,7 +5,7 @@
 \alias{proxy_pumas}
 \title{Proxy PUMAs}
 \format{
-A list of 2 data frames, \code{county} and \code{cog}, with 19 and 54 rows, respectively, and 6 variables:
+A list of 2 data frames, \code{county} and \code{cog}, with 22 and 56 rows, respectively, and 6 variables:
 \describe{
 \item{puma}{7-digit PUMA FIPS code}
 \item{region}{Region name}
@@ -37,21 +37,4 @@ proxy_pumas$county
 # proxies made from COG-based PUMAs
 proxy_pumas$cog
 }
-\seealso{
-Other ref-datasets: 
-\code{\link{acs_vars}},
-\code{\link{ct5_clusters}},
-\code{\link{decennial_vars}},
-\code{\link{msa}},
-\code{\link{naics_codes}},
-\code{\link{neighborhood_tracts}},
-\code{\link{occ_codes}},
-\code{\link{regions}},
-\code{\link{school_dists}},
-\code{\link{table_nums}},
-\code{\link{village2town}},
-\code{\link{xwalk}},
-\code{\link{zip2town}}
-}
-\concept{ref-datasets}
-\keyword{datasets}
+\keyword{ref-datasets}

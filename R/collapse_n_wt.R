@@ -30,19 +30,8 @@
 #' number of digits. If `NULL` (the default), values are returned unrounded.
 #' @return A data frame with summarized values. The `.group` column will have
 #' the collapsed groups, and the `.value` column will have average values.
-#' @examples
-#' # collapse income groups, such that <$15K, $15K-$30K become <$30K, etc
-#' income_lvls <- list(
-#'     "<$30K" = c("<$15K", "$15K-$30K"),
-#'     "$30K-$100K" = c("$30K-$50K", "$50K-$75K", "$75K-$100K"),
-#'     "$100K+" = c("$100K-$200K", "$200K+")
-#' )
-#' cws_demo |>
-#'     dplyr::filter(category %in% c("Greater New Haven", "Income")) |>
-#'     collapse_n_wt(code:response, .lvls = income_lvls, .digits = 2)
 #' @export
-#' @keywords internal
-#' @family dcws-migration
+#' @keywords internal dcws-migration
 #' @seealso [dcws::collapse_n_wt()] [dcws::xtab2df()] [dcws::read_weights()] [forcats::fct_collapse()]
 collapse_n_wt <- function(data,
                           ...,

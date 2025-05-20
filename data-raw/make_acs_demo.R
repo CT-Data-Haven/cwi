@@ -1,5 +1,6 @@
 # WRITE: gnh_tenure
 
+devtools::load_all()
 gnh_tenure <- multi_geo_acs(basic_table_nums$tenure,
     towns = regions$`Greater New Haven`,
     counties = NULL, regions = regions["Greater New Haven"], year = 2020, verbose = FALSE

@@ -24,12 +24,5 @@ fix_cogs(names(regions[1:6]))
 }
 \seealso{
 xwalk regions
-
-Other utils: 
-\code{\link{batch_csv_dump}()},
-\code{\link{check_cb_avail}()},
-\code{\link{jenks}()},
-\code{\link{separate_acs}()},
-\code{\link{town_names}()}
 }
-\concept{utils}
+\keyword{utils}

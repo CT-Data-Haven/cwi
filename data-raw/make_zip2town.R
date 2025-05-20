@@ -25,7 +25,7 @@ block_pop <- tidycensus::get_decennial("block",
     state = "09", year = 2020, sumfile = "dhc",
     geometry = TRUE, output = "wide"
 ) |>
-    clean_names() |>
+    cwi:::clean_names() |>
     dplyr::select(-name) |>
     # dplyr::filter(pop > 0) |>
     sf::st_transform(2234)

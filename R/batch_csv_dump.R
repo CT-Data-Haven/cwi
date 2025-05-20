@@ -11,7 +11,7 @@
 #' @inheritDotParams utils::write.table -x -file -row.names -sep
 #' @return Either a list of data frames (in case of `bind = FALSE`) or a single data frame (in case of `bind = TRUE`).
 #'
-#' @family utils
+#' @keywords utils
 #' @export
 batch_csv_dump <- function(data, split_by, path = ".", base_name = NULL, bind = FALSE, verbose = TRUE, ...) {
     # if data is a data frame, split it. Otherwise treat as list

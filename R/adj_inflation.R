@@ -23,7 +23,7 @@
 #' }
 #' @source Bureau of Labor Statistics via their API \url{https://www.bls.gov/developers/home.htm}
 #' @rdname inflation
-#' @family augmenting-functions
+#' @keywords augmenting-functions
 #' @export
 adj_inflation <- function(data,
                           value,
@@ -64,7 +64,7 @@ adj_inflation <- function(data,
 #' get_cpi(2018:2024, base = 2024, monthly = FALSE)
 #' get_cpi(2018:2024, base = "2024-12-01", monthly = TRUE)
 #' }
-#' @family augmenting-functions
+#' @keywords augmenting-functions
 #' @export
 #' @rdname inflation
 get_cpi <- function(years,

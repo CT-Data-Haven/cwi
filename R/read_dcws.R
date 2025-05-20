@@ -48,8 +48,7 @@
 #' dcws::read_xtabs(xt, year = 2018, process = TRUE)
 #' }
 #' @export
-#' @keywords internal
-#' @family dcws-migration
+#' @keywords dcws-migration internal
 #' @seealso [dcws::read_xtabs()] [dcws::xtab2df()]
 read_xtabs <- function(path,
                        name_prefix = "x",

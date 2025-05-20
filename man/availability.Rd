@@ -48,12 +48,5 @@ if (interactive()) {
 }
 \seealso{
 \href{https://www.census.gov/data/developers/updates/new-discovery-tool.html}{US Census Bureau API Discovery Tool} \href{https://ledextract.ces.census.gov/}{LED Extraction Tool}
-
-Other utils: 
-\code{\link{batch_csv_dump}()},
-\code{\link{fix_cogs}()},
-\code{\link{jenks}()},
-\code{\link{separate_acs}()},
-\code{\link{town_names}()}
 }
-\concept{utils}
+\keyword{utils}

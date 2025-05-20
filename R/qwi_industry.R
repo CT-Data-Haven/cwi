@@ -15,7 +15,7 @@
 #' \dontrun{
 #' qwi_industry(2012:2017, industries = c("23", "62"), counties = "170")
 #' }
-#' @family fetching-functions
+#' @keywords fetching-functions
 #' @export
 qwi_industry <- function(years, industries = cwi::naics_codes[["industry"]],
                          state = "09", counties = NULL,
