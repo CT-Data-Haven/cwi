@@ -50,7 +50,7 @@
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>A list of 2 data frames, <code>county</code> and <code>cog</code>, with 19 and 54 rows, respectively, and 6 variables:</p><dl><dt>puma</dt>
+    <p>A list of 2 data frames, <code>county</code> and <code>cog</code>, with 22 and 56 rows, respectively, and 6 variables:</p><dl><dt>puma</dt>
 <dd><p>7-digit PUMA FIPS code</p></dd>
 
 <dt>region</dt>
@@ -80,67 +80,42 @@
 See maps of proxies and their weights here: <a href="https://ct-data-haven.github.io/cogs/proxy-geos.html" class="external-link">https://ct-data-haven.github.io/cogs/proxy-geos.html</a></p>
 <p><strong>NOTE:</strong> There are some PUMAs that are included in more than one region. When joining these tables with survey data, make sure you're allowing for duplicates of PUMAs.</p>
     </div>
-    <div class="section level2">
-    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>Other ref-datasets:
-<code><a href="acs_vars.html">acs_vars</a></code>,
-<code><a href="ct5_clusters.html">ct5_clusters</a></code>,
-<code><a href="decennial_vars.html">decennial_vars</a></code>,
-<code><a href="msa.html">msa</a></code>,
-<code><a href="naics_codes.html">naics_codes</a></code>,
-<code><a href="neighborhood_tracts.html">neighborhood_tracts</a></code>,
-<code><a href="occ_codes.html">occ_codes</a></code>,
-<code><a href="regions.html">regions</a></code>,
-<code><a href="school_dists.html">school_dists</a></code>,
-<code><a href="table_nums.html">table_nums</a></code>,
-<code><a href="village2town.html">village2town</a></code>,
-<code><a href="xwalk.html">xwalk</a></code>,
-<code><a href="zip2town.html">zip2town</a></code></p></div>
-    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># proxies made from county-based PUMAs, use for pre-2022 ACS or other datasets</span></span></span>
 <span class="r-in"><span><span class="va">proxy_pumas</span><span class="op">$</span><span class="va">county</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 19 × 6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 22 × 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    puma    region                    pop    hh pop_weight hh_weight</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 0900300 Greater Hartford       <span style="text-decoration: underline;">154</span>355 <span style="text-decoration: underline;">59</span>417      0.987     0.986</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 0900301 Greater Hartford       <span style="text-decoration: underline;">110</span>423 <span style="text-decoration: underline;">44</span>599      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 0900302 Greater Hartford       <span style="text-decoration: underline;">121</span>562 <span style="text-decoration: underline;">46</span>879      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 0900303 Greater Hartford       <span style="text-decoration: underline;">165</span>411 <span style="text-decoration: underline;">66</span>333      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 0900304 Greater Hartford        <span style="text-decoration: underline;">43</span>474 <span style="text-decoration: underline;">17</span>149      0.382     0.381</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 0900305 Greater Hartford       <span style="text-decoration: underline;">111</span>643 <span style="text-decoration: underline;">44</span>350      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 0900306 Greater Hartford       <span style="text-decoration: underline;">119</span>553 <span style="text-decoration: underline;">49</span>100      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 0901300 Greater Hartford       <span style="text-decoration: underline;">149</span>188 <span style="text-decoration: underline;">56</span>576      0.994     0.993</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 0900902 Greater New Haven       <span style="text-decoration: underline;">24</span>217  <span style="text-decoration: underline;">9</span>503      0.187     0.179</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 0900903 Greater New Haven       <span style="text-decoration: underline;">75</span>564 <span style="text-decoration: underline;">27</span>228      0.611     0.576</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> 0900904 Greater New Haven      <span style="text-decoration: underline;">122</span>051 <span style="text-decoration: underline;">46</span>820      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> 0900905 Greater New Haven      <span style="text-decoration: underline;">133</span>874 <span style="text-decoration: underline;">50</span>264      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> 0900906 Greater New Haven      <span style="text-decoration: underline;">109</span>782 <span style="text-decoration: underline;">44</span>014      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> 0900500 Greater Waterbury       <span style="text-decoration: underline;">93</span>230 <span style="text-decoration: underline;">37</span>275      0.503     0.498</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> 0900900 Greater Waterbury      <span style="text-decoration: underline;">132</span>199 <span style="text-decoration: underline;">49</span>909      1.00      0.999</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> 0900901 Greater Waterbury      <span style="text-decoration: underline;">113</span>783 <span style="text-decoration: underline;">45</span>114      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span> 0900105 Lower Naugatuck Valley  <span style="text-decoration: underline;">40</span>944 <span style="text-decoration: underline;">16</span>204      0.232     0.251</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">18</span> 0900900 Lower Naugatuck Valley  <span style="text-decoration: underline;">50</span>357 <span style="text-decoration: underline;">19</span>577      0.381     0.392</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">19</span> 0900903 Lower Naugatuck Valley  <span style="text-decoration: underline;">48</span>063 <span style="text-decoration: underline;">20</span>077      0.389     0.424</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 0900101 Greater Bridgeport COG  <span style="text-decoration: underline;">69</span>339 <span style="text-decoration: underline;">23</span>805      0.584     0.589</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 0900104 Greater Bridgeport COG <span style="text-decoration: underline;">148</span>529 <span style="text-decoration: underline;">52</span>914      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 0900105 Greater Bridgeport COG <span style="text-decoration: underline;">108</span>117 <span style="text-decoration: underline;">38</span>743      0.613     0.600</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 0900300 Greater Hartford       <span style="text-decoration: underline;">154</span>355 <span style="text-decoration: underline;">59</span>417      0.987     0.986</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 0900301 Greater Hartford       <span style="text-decoration: underline;">110</span>423 <span style="text-decoration: underline;">44</span>599      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 0900302 Greater Hartford       <span style="text-decoration: underline;">121</span>562 <span style="text-decoration: underline;">46</span>879      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 0900303 Greater Hartford       <span style="text-decoration: underline;">165</span>411 <span style="text-decoration: underline;">66</span>333      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 0900304 Greater Hartford        <span style="text-decoration: underline;">43</span>474 <span style="text-decoration: underline;">17</span>149      0.382     0.381</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 0900305 Greater Hartford       <span style="text-decoration: underline;">111</span>643 <span style="text-decoration: underline;">44</span>350      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 0900306 Greater Hartford       <span style="text-decoration: underline;">119</span>553 <span style="text-decoration: underline;">49</span>100      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 12 more rows</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># proxies made from COG-based PUMAs</span></span></span>
 <span class="r-in"><span><span class="va">proxy_pumas</span><span class="op">$</span><span class="va">cog</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 54 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    puma    region              pop    hh pop_weight hh_weight</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 0920703 Fairfield County  <span style="text-decoration: underline;">41</span>206 <span style="text-decoration: underline;">15</span>774      0.258     0.248</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 0920801 Fairfield County <span style="text-decoration: underline;">148</span>470 <span style="text-decoration: underline;">55</span>550      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 0920802 Fairfield County <span style="text-decoration: underline;">177</span>911 <span style="text-decoration: underline;">61</span>947      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 0920901 Fairfield County <span style="text-decoration: underline;">198</span>911 <span style="text-decoration: underline;">76</span>182      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 0920902 Fairfield County <span style="text-decoration: underline;">104</span>825 <span style="text-decoration: underline;">36</span>465      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 0920903 Fairfield County <span style="text-decoration: underline;">118</span>282 <span style="text-decoration: underline;">44</span>997      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 0920904 Fairfield County <span style="text-decoration: underline;">168</span>766 <span style="text-decoration: underline;">61</span>392      0.850     0.843</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 0920201 Greater Hartford <span style="text-decoration: underline;">121</span>057 <span style="text-decoration: underline;">48</span>277      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 0920202 Greater Hartford <span style="text-decoration: underline;">158</span>475 <span style="text-decoration: underline;">62</span>259      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 0920203 Greater Hartford <span style="text-decoration: underline;">116</span>015 <span style="text-decoration: underline;">40</span>349      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 44 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 56 × 6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    puma    region                    pop    hh pop_weight hh_weight</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 0920703 Fairfield County        <span style="text-decoration: underline;">41</span>206 <span style="text-decoration: underline;">15</span>774      0.258     0.248</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 0920801 Fairfield County       <span style="text-decoration: underline;">148</span>470 <span style="text-decoration: underline;">55</span>550      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 0920802 Fairfield County       <span style="text-decoration: underline;">177</span>911 <span style="text-decoration: underline;">61</span>947      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 0920901 Fairfield County       <span style="text-decoration: underline;">198</span>911 <span style="text-decoration: underline;">76</span>182      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 0920902 Fairfield County       <span style="text-decoration: underline;">104</span>825 <span style="text-decoration: underline;">36</span>465      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 0920903 Fairfield County       <span style="text-decoration: underline;">118</span>282 <span style="text-decoration: underline;">44</span>997      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 0920904 Fairfield County       <span style="text-decoration: underline;">168</span>766 <span style="text-decoration: underline;">61</span>392      0.850     0.843</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 0920801 Greater Bridgeport COG <span style="text-decoration: underline;">148</span>470 <span style="text-decoration: underline;">55</span>550      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 0920802 Greater Bridgeport COG <span style="text-decoration: underline;">177</span>911 <span style="text-decoration: underline;">61</span>947      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 0920201 Greater Hartford       <span style="text-decoration: underline;">121</span>057 <span style="text-decoration: underline;">48</span>277      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 46 more rows</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -152,7 +127,7 @@ See maps of proxies and their weights here: <a href="https://ct-data-haven.githu
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
     </footer></div>

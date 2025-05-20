@@ -160,21 +160,21 @@
 <span>    <span class="fu"><a href="../reference/label_census.html">label_acs</a></span><span class="op">(</span>year <span class="op">=</span> <span class="va">yr</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">name</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://camille-s.github.io/camiller/reference/add_grps.html" class="external-link">add_grps</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>total <span class="op">=</span> <span class="fl">1</span>, white <span class="op">=</span> <span class="fl">3</span>, black <span class="op">=</span> <span class="fl">4</span>, latino <span class="op">=</span> <span class="fl">12</span>, other <span class="op">=</span> <span class="fl">5</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span>, group <span class="op">=</span> <span class="va">label</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="https://camille-s.github.io/camiller/reference/calc_shares.html" class="external-link">calc_shares</a></span><span class="op">(</span>group <span class="op">=</span> <span class="va">label</span>, denom <span class="op">=</span> <span class="st">"total"</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="../reference/calc_shares.html">calc_shares</a></span><span class="op">(</span>group <span class="op">=</span> <span class="va">label</span>, denom <span class="op">=</span> <span class="st">"total"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 130 × 5</span></span>
 <span><span class="co">#&gt; # Groups:   level, name [26]</span></span>
-<span><span class="co">#&gt;    level    name        label  estimate  share</span></span>
-<span><span class="co">#&gt;    &lt;fct&gt;    &lt;chr&gt;       &lt;fct&gt;     &lt;dbl&gt;  &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 1_state  Connecticut total   3598348 NA    </span></span>
-<span><span class="co">#&gt;  2 1_state  Connecticut white   2265780  0.63 </span></span>
-<span><span class="co">#&gt;  3 1_state  Connecticut black    355413  0.099</span></span>
-<span><span class="co">#&gt;  4 1_state  Connecticut latino   640668  0.178</span></span>
-<span><span class="co">#&gt;  5 1_state  Connecticut other    336487  0.094</span></span>
-<span><span class="co">#&gt;  6 2_county Capitol COG total    969029 NA    </span></span>
-<span><span class="co">#&gt;  7 2_county Capitol COG white    590481  0.609</span></span>
-<span><span class="co">#&gt;  8 2_county Capitol COG black    111597  0.115</span></span>
-<span><span class="co">#&gt;  9 2_county Capitol COG latino   168439  0.174</span></span>
-<span><span class="co">#&gt; 10 2_county Capitol COG other     98512  0.102</span></span>
+<span><span class="co">#&gt;    level    name        label  estimate share</span></span>
+<span><span class="co">#&gt;    &lt;fct&gt;    &lt;chr&gt;       &lt;fct&gt;     &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 1_state  Connecticut total   3598348 NA   </span></span>
+<span><span class="co">#&gt;  2 1_state  Connecticut white   2265780  0.63</span></span>
+<span><span class="co">#&gt;  3 1_state  Connecticut black    355413  0.1 </span></span>
+<span><span class="co">#&gt;  4 1_state  Connecticut latino   640668  0.18</span></span>
+<span><span class="co">#&gt;  5 1_state  Connecticut other    336487  0.09</span></span>
+<span><span class="co">#&gt;  6 2_county Capitol COG total    969029 NA   </span></span>
+<span><span class="co">#&gt;  7 2_county Capitol COG white    590481  0.61</span></span>
+<span><span class="co">#&gt;  8 2_county Capitol COG black    111597  0.12</span></span>
+<span><span class="co">#&gt;  9 2_county Capitol COG latino   168439  0.17</span></span>
+<span><span class="co">#&gt; 10 2_county Capitol COG other     98512  0.1 </span></span>
 <span><span class="co">#&gt; # ℹ 120 more rows</span></span></code></pre></div>
 </div>
 <p>With the tenure table, it’s easiest to separate the labels by <code>"!!"</code>. Here the table can be wrangled into shares of households that are owner-occupied.</p>
@@ -185,7 +185,7 @@
 <span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html" class="external-link">separate</a></span><span class="op">(</span><span class="va">label</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"total"</span>, <span class="st">"tenure"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"!!"</span>, fill <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">name</span>, <span class="va">tenure</span>, <span class="va">estimate</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">name</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="https://camille-s.github.io/camiller/reference/calc_shares.html" class="external-link">calc_shares</a></span><span class="op">(</span>group <span class="op">=</span> <span class="va">tenure</span>, denom <span class="op">=</span> <span class="st">"Total"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="../reference/calc_shares.html">calc_shares</a></span><span class="op">(</span>group <span class="op">=</span> <span class="va">tenure</span>, denom <span class="op">=</span> <span class="st">"Total"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">tenure</span> <span class="op">==</span> <span class="st">"Owner occupied"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">homeownership</span></span>
@@ -193,16 +193,16 @@
 <span><span class="co">#&gt; # Groups:   level, name [26]</span></span>
 <span><span class="co">#&gt;    level    name                               tenure         estimate share</span></span>
 <span><span class="co">#&gt;    &lt;fct&gt;    &lt;chr&gt;                              &lt;fct&gt;             &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 1_state  Connecticut                        Owner occupied   939912 0.662</span></span>
-<span><span class="co">#&gt;  2 2_county Capitol COG                        Owner occupied   254424 0.654</span></span>
-<span><span class="co">#&gt;  3 2_county Greater Bridgeport COG             Owner occupied    77362 0.654</span></span>
-<span><span class="co">#&gt;  4 2_county Lower Connecticut River Valley COG Owner occupied    55387 0.752</span></span>
-<span><span class="co">#&gt;  5 2_county Naugatuck Valley COG               Owner occupied   120630 0.676</span></span>
-<span><span class="co">#&gt;  6 2_county Northeastern Connecticut COG       Owner occupied    29835 0.762</span></span>
-<span><span class="co">#&gt;  7 2_county Northwest Hills COG                Owner occupied    35683 0.759</span></span>
-<span><span class="co">#&gt;  8 2_county South Central Connecticut COG      Owner occupied   137908 0.606</span></span>
-<span><span class="co">#&gt;  9 2_county Southeastern Connecticut COG       Owner occupied    74923 0.654</span></span>
-<span><span class="co">#&gt; 10 2_county Western Connecticut COG            Owner occupied   153760 0.662</span></span>
+<span><span class="co">#&gt;  1 1_state  Connecticut                        Owner occupied   939912  0.66</span></span>
+<span><span class="co">#&gt;  2 2_county Capitol COG                        Owner occupied   254424  0.65</span></span>
+<span><span class="co">#&gt;  3 2_county Greater Bridgeport COG             Owner occupied    77362  0.65</span></span>
+<span><span class="co">#&gt;  4 2_county Lower Connecticut River Valley COG Owner occupied    55387  0.75</span></span>
+<span><span class="co">#&gt;  5 2_county Naugatuck Valley COG               Owner occupied   120630  0.68</span></span>
+<span><span class="co">#&gt;  6 2_county Northeastern Connecticut COG       Owner occupied    29835  0.76</span></span>
+<span><span class="co">#&gt;  7 2_county Northwest Hills COG                Owner occupied    35683  0.76</span></span>
+<span><span class="co">#&gt;  8 2_county South Central Connecticut COG      Owner occupied   137908  0.61</span></span>
+<span><span class="co">#&gt;  9 2_county Southeastern Connecticut COG       Owner occupied    74923  0.65</span></span>
+<span><span class="co">#&gt; 10 2_county Western Connecticut COG            Owner occupied   153760  0.66</span></span>
 <span><span class="co">#&gt; # ℹ 16 more rows</span></span></code></pre></div>
 </div>
 </section><section class="section level2"><h2 id="visual-sketches">Visual sketches<a class="anchor" aria-label="anchor" href="#visual-sketches"></a>
@@ -304,16 +304,16 @@
 <span><span class="co">#&gt; # A tibble: 680 × 8</span></span>
 <span><span class="co">#&gt;     year state county industry     emp payroll location          label          </span></span>
 <span><span class="co">#&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;             &lt;chr&gt;          </span></span>
-<span><span class="co">#&gt;  1  2002 09    170    11         377        NA South Central COG Agriculture, F…</span></span>
+<span><span class="co">#&gt;  1  2002 09    170    11         385.       NA South Central COG Agriculture, F…</span></span>
 <span><span class="co">#&gt;  2  2002 09    170    21          31.2      NA South Central COG Mining, Quarry…</span></span>
-<span><span class="co">#&gt;  3  2002 09    170    22        1102.       NA South Central COG Utilities      </span></span>
-<span><span class="co">#&gt;  4  2002 09    170    23       11178.       NA South Central COG Construction   </span></span>
-<span><span class="co">#&gt;  5  2002 09    170    31-33    33462.       NA South Central COG Manufacturing  </span></span>
-<span><span class="co">#&gt;  6  2002 09    170    42       11274.       NA South Central COG Wholesale Trade</span></span>
-<span><span class="co">#&gt;  7  2002 09    170    44-45    33074.       NA South Central COG Retail Trade   </span></span>
-<span><span class="co">#&gt;  8  2002 09    170    48-49     5722        NA South Central COG Transportation…</span></span>
-<span><span class="co">#&gt;  9  2002 09    170    51       11881.       NA South Central COG Information    </span></span>
-<span><span class="co">#&gt; 10  2002 09    170    52       10859.       NA South Central COG Finance and In…</span></span>
+<span><span class="co">#&gt;  3  2002 09    170    22        1093.       NA South Central COG Utilities      </span></span>
+<span><span class="co">#&gt;  4  2002 09    170    23       11146.       NA South Central COG Construction   </span></span>
+<span><span class="co">#&gt;  5  2002 09    170    31-33    33445.       NA South Central COG Manufacturing  </span></span>
+<span><span class="co">#&gt;  6  2002 09    170    42       11496.       NA South Central COG Wholesale Trade</span></span>
+<span><span class="co">#&gt;  7  2002 09    170    44-45    32976.       NA South Central COG Retail Trade   </span></span>
+<span><span class="co">#&gt;  8  2002 09    170    48-49     5738        NA South Central COG Transportation…</span></span>
+<span><span class="co">#&gt;  9  2002 09    170    51       11863.       NA South Central COG Information    </span></span>
+<span><span class="co">#&gt; 10  2002 09    170    52       10686.       NA South Central COG Finance and In…</span></span>
 <span><span class="co">#&gt; # ℹ 670 more rows</span></span></code></pre></div>
 </div>
 <p>Next, say I want to look at the industries that were largest in the South Central COG in 2018, and see how those have changed both for the COG and statewide over this time period. I’ll filter <code>employment</code>, get the industries with the largest numbers of employees, then filter <code>employment</code> for just those industries and plot it.</p>
@@ -384,107 +384,89 @@
 </div>
 </div>
 </section></section><script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
         }
       }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'light-border',
-      placement: 'bottom-start',
-    };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config);
-  }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'light-border',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
       }
-    } else {
-      return undefined;
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config);
     }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
         });
-        return popup.innerHTML;
-      });
+      }
     }
-  }
-});
-</script></main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+  });
+  </script></main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
 
@@ -494,7 +476,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
     </footer>

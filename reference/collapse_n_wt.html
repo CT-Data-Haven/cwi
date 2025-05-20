@@ -129,48 +129,9 @@ the collapsed groups, and the <code>.value</code> column will have average value
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code>dcws::collapse_n_wt()</code> <code>dcws::xtab2df()</code> <code>dcws::read_weights()</code> <code><a href="https://forcats.tidyverse.org/reference/fct_collapse.html" class="external-link">forcats::fct_collapse()</a></code></p>
-<p>Other dcws-migration:
-<code><a href="cws_demo.html">cws_demo</a></code>,
-<code><a href="read_xtabs.html">read_xtabs</a>()</code>,
-<code><a href="sub_nonanswers.html">sub_nonanswers</a>()</code>,
-<code><a href="xtab2df.html">xtab2df</a>()</code></p></div>
+    <div class="dont-index"><p><code>dcws::collapse_n_wt()</code> <code>dcws::xtab2df()</code> <code>dcws::read_weights()</code> <code><a href="https://forcats.tidyverse.org/reference/fct_collapse.html" class="external-link">forcats::fct_collapse()</a></code></p></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># collapse income groups, such that &lt;$15K, $15K-$30K become &lt;$30K, etc</span></span></span>
-<span class="r-in"><span><span class="va">income_lvls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="st">"&lt;$30K"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"&lt;$15K"</span>, <span class="st">"$15K-$30K"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    <span class="st">"$30K-$100K"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"$30K-$50K"</span>, <span class="st">"$50K-$75K"</span>, <span class="st">"$75K-$100K"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    <span class="st">"$100K+"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"$100K-$200K"</span>, <span class="st">"$200K+"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">cws_demo</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">category</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Greater New Haven"</span>, <span class="st">"Income"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>    <span class="fu">collapse_n_wt</span><span class="op">(</span><span class="va">code</span><span class="op">:</span><span class="va">response</span>, .lvls <span class="op">=</span> <span class="va">income_lvls</span>, .digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`collapse_n_wt()` was deprecated in cwi 1.12.1.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please use `dcws::collapse_n_wt()` instead.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 16 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    code  question                                  category group response value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                     <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Q1    Are you satisfied with the city or area … Greater… Grea… Yes       0.82</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Q1    Are you satisfied with the city or area … Greater… Grea… No        0.17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Q1    Are you satisfied with the city or area … Greater… Grea… Don't k…  0.01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Q1    Are you satisfied with the city or area … Greater… Grea… Refused   0   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Q1    Are you satisfied with the city or area … Income   &lt;$30K Yes       0.77</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Q1    Are you satisfied with the city or area … Income   &lt;$30K No        0.22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Q1    Are you satisfied with the city or area … Income   &lt;$30K Don't k…  0.01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Q1    Are you satisfied with the city or area … Income   &lt;$30K Refused   0   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Q1    Are you satisfied with the city or area … Income   $30K… Yes       0.83</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Q1    Are you satisfied with the city or area … Income   $30K… No        0.15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> Q1    Are you satisfied with the city or area … Income   $30K… Don't k…  0.01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> Q1    Are you satisfied with the city or area … Income   $30K… Refused   0   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> Q1    Are you satisfied with the city or area … Income   $100… Yes       0.85</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> Q1    Are you satisfied with the city or area … Income   $100… No        0.14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> Q1    Are you satisfied with the city or area … Income   $100… Don't k…  0.01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> Q1    Are you satisfied with the city or area … Income   $100… Refused   0   </span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
@@ -180,7 +141,7 @@ the collapsed groups, and the <code>.value</code> column will have average value
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
     </footer></div>
