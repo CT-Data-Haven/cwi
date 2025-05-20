@@ -11,7 +11,7 @@ town_puma <- list(
 town_county <- dplyr::distinct(cwi::xwalk, town, county) |>
     dplyr::rename(region = county)
 
-reg_df <- cwi::regions[c("Greater New Haven", "Greater Hartford", "Greater Waterbury", "Lower Naugatuck Valley", "Greater Bridgeport COG")] |>
+reg_df <- cwi::regions[c("Greater New Haven", "Greater Hartford", "Greater Waterbury", "Lower Naugatuck Valley", "Greater Bridgeport")] |>
     tibble::enframe(name = "region", value = "town") |>
     tidyr::unnest(town) |>
     dplyr::bind_rows(town_county)
