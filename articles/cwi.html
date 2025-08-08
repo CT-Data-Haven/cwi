@@ -23,7 +23,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cwi</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.13.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,7 +77,6 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/" class="external-link">purrr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://camille-s.github.io/camiller" class="external-link">camiller</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/CT-Data-Haven/cwi" class="external-link">cwi</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <p>The tables I’m working with are <code>B01003</code>, total population; <code>B03002</code>, race and Latino ethnicity; and <code>B25003</code>, housing tenure. It’s easiest to save these in a named list, then map over the list calling <code><a href="../reference/multi_geo_acs.html">multi_geo_acs()</a></code> for each table number.</p>
@@ -146,20 +145,20 @@
 </section><section class="section level2"><h2 id="aggregating-and-analyzing-data">Aggregating and analyzing data<a class="anchor" aria-label="anchor" href="#aggregating-and-analyzing-data"></a>
 </h2>
 <p>The total population data is very straightforward, as it only has one variable, <code>B01003_001</code>. The tibble returned has the GEOID, except for custom geographies like regions; the name of each geography, including the names of each region; the variable codes; estimates; margins of error at the default 90% confidence level; the geographic level, numbered in order of decreasing size; and the counties of the towns.</p>
-<p>The race and ethnicity table will require some calculations, using the brilliantly-titled <a href="https://github.com/camille-s/camiller" class="external-link"><code>camiller</code> package</a>:</p>
+<p>The race and ethnicity table will require some calculations:</p>
 <ul>
 <li>Using <code><a href="../reference/label_census.html">label_acs()</a></code>, join the <code>race</code> tibble with the <code><a href="../reference/acs_vars.html">cwi::acs_vars</a></code> dataset to get variable labels. Oftentimes, these labels need to be separated by their <code>"!!"</code> delimeter.</li>
 <li>Group by the geographic level, county, and name.</li>
-<li>Call <code><a href="https://camille-s.github.io/camiller/reference/add_grps.html" class="external-link">camiller::add_grps()</a></code> with a list of racial groups and their labels’ positions in the <code>label</code> column. This gives estimates and, optionally, margins of error for aggregates</li>
+<li>Call <code><a href="../reference/add_grps.html">add_grps()</a></code> with a list of racial groups and their labels’ positions in the <code>label</code> column. This gives estimates and, optionally, margins of error for aggregates</li>
 <li>
-<code><a href="https://camille-s.github.io/camiller/reference/calc_shares.html" class="external-link">camiller::calc_shares()</a></code> then gives shares of each group’s estimate over the <code>"total"</code> denominator.</li>
+<code><a href="../reference/calc_shares.html">calc_shares()</a></code> then gives shares of each group’s estimate over the <code>"total"</code> denominator.</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gnh_data</span><span class="op">$</span><span class="va">race</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="../reference/label_census.html">label_acs</a></span><span class="op">(</span>year <span class="op">=</span> <span class="va">yr</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">name</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="https://camille-s.github.io/camiller/reference/add_grps.html" class="external-link">add_grps</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>total <span class="op">=</span> <span class="fl">1</span>, white <span class="op">=</span> <span class="fl">3</span>, black <span class="op">=</span> <span class="fl">4</span>, latino <span class="op">=</span> <span class="fl">12</span>, other <span class="op">=</span> <span class="fl">5</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span>, group <span class="op">=</span> <span class="va">label</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="../reference/add_grps.html">add_grps</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>total <span class="op">=</span> <span class="fl">1</span>, white <span class="op">=</span> <span class="fl">3</span>, black <span class="op">=</span> <span class="fl">4</span>, latino <span class="op">=</span> <span class="fl">12</span>, other <span class="op">=</span> <span class="fl">5</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span>, group <span class="op">=</span> <span class="va">label</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="../reference/calc_shares.html">calc_shares</a></span><span class="op">(</span>group <span class="op">=</span> <span class="va">label</span>, denom <span class="op">=</span> <span class="st">"total"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 130 × 5</span></span>
 <span><span class="co">#&gt; # Groups:   level, name [26]</span></span>
@@ -280,7 +279,7 @@
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="op">~</span><span class="va">name</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="../reference/batch_csv_dump.html">batch_csv_dump</a></span><span class="op">(</span>base_name <span class="op">=</span> <span class="st">"pop_by_age"</span>, bind <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">name</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">camiller</span><span class="fu">::</span><span class="fu"><a href="https://camille-s.github.io/camiller/reference/add_grps.html" class="external-link">add_grps</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ages00_04 <span class="op">=</span> <span class="fl">1</span>, ages05_17 <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, ages00_17 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="../reference/add_grps.html">add_grps</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ages00_04 <span class="op">=</span> <span class="fl">1</span>, ages05_17 <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, ages00_17 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span>,</span>
 <span>        group <span class="op">=</span> <span class="va">age</span>, value <span class="op">=</span> <span class="va">estimate</span></span>
 <span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">level</span>, <span class="va">name</span>, <span class="va">age</span><span class="op">)</span></span></code></pre></div>
@@ -304,16 +303,16 @@
 <span><span class="co">#&gt; # A tibble: 680 × 8</span></span>
 <span><span class="co">#&gt;     year state county industry     emp payroll location          label          </span></span>
 <span><span class="co">#&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;             &lt;chr&gt;          </span></span>
-<span><span class="co">#&gt;  1  2002 09    170    11         385.       NA South Central COG Agriculture, F…</span></span>
+<span><span class="co">#&gt;  1  2002 09    170    11         377        NA South Central COG Agriculture, F…</span></span>
 <span><span class="co">#&gt;  2  2002 09    170    21          31.2      NA South Central COG Mining, Quarry…</span></span>
-<span><span class="co">#&gt;  3  2002 09    170    22        1093.       NA South Central COG Utilities      </span></span>
-<span><span class="co">#&gt;  4  2002 09    170    23       11146.       NA South Central COG Construction   </span></span>
-<span><span class="co">#&gt;  5  2002 09    170    31-33    33445.       NA South Central COG Manufacturing  </span></span>
-<span><span class="co">#&gt;  6  2002 09    170    42       11496.       NA South Central COG Wholesale Trade</span></span>
-<span><span class="co">#&gt;  7  2002 09    170    44-45    32976.       NA South Central COG Retail Trade   </span></span>
-<span><span class="co">#&gt;  8  2002 09    170    48-49     5738        NA South Central COG Transportation…</span></span>
-<span><span class="co">#&gt;  9  2002 09    170    51       11863.       NA South Central COG Information    </span></span>
-<span><span class="co">#&gt; 10  2002 09    170    52       10686.       NA South Central COG Finance and In…</span></span>
+<span><span class="co">#&gt;  3  2002 09    170    22        1091.       NA South Central COG Utilities      </span></span>
+<span><span class="co">#&gt;  4  2002 09    170    23       11219        NA South Central COG Construction   </span></span>
+<span><span class="co">#&gt;  5  2002 09    170    31-33    33464.       NA South Central COG Manufacturing  </span></span>
+<span><span class="co">#&gt;  6  2002 09    170    42       11315.       NA South Central COG Wholesale Trade</span></span>
+<span><span class="co">#&gt;  7  2002 09    170    44-45    32888.       NA South Central COG Retail Trade   </span></span>
+<span><span class="co">#&gt;  8  2002 09    170    48-49     5740        NA South Central COG Transportation…</span></span>
+<span><span class="co">#&gt;  9  2002 09    170    51       11904.       NA South Central COG Information    </span></span>
+<span><span class="co">#&gt; 10  2002 09    170    52       10662.       NA South Central COG Finance and In…</span></span>
 <span><span class="co">#&gt; # ℹ 670 more rows</span></span></code></pre></div>
 </div>
 <p>Next, say I want to look at the industries that were largest in the South Central COG in 2018, and see how those have changed both for the COG and statewide over this time period. I’ll filter <code>employment</code>, get the industries with the largest numbers of employees, then filter <code>employment</code> for just those industries and plot it.</p>
@@ -347,7 +346,7 @@
 </div>
 </section><section class="level2"><h3 id="local-area-unemployment-statistics">Local Area Unemployment Statistics<a class="anchor" aria-label="anchor" href="#local-area-unemployment-statistics"></a>
 </h3>
-<p>To look at unemployment rates over time, I can use <code><a href="../reference/laus_trend.html">laus_trend()</a></code>. The LAUS covers smaller geographies than the QWI, so <code><a href="../reference/laus_trend.html">laus_trend()</a></code> is set up to find data by a combination of state, counties, or towns. The LAUS API returns monthly data on labor force counts, employment counts, unemployed counts, and unemployment rate; <code><a href="../reference/laus_trend.html">laus_trend()</a></code> lets you specify which of these measures to fetch.</p>
+<p>To look at unemployment rates over time, I can use <code><a href="../reference/laus_trend.html">laus_trend()</a></code>. The LAUS covers smaller geographies than the QWI, so <code><a href="../reference/laus_trend.html">laus_trend()</a></code> is set up to find data by a combination of state, counties, or towns. The LAUS API returns monthly data on labor force counts, employment counts, unemployed counts, and unemployment rate; <code><a href="../reference/laus_trend.html">laus_trend()</a></code> lets you specify which of these measures to fetch. This chunk is turned off for now because the API is very finicky.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">unemployment</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/laus_trend.html">laus_trend</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"New Haven"</span>, <span class="st">"New Haven County"</span>, <span class="st">"Connecticut"</span><span class="op">)</span>,</span>
@@ -357,31 +356,11 @@
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">area</span>, <span class="va">date</span>, value <span class="op">=</span> <span class="va">unemployment_rate</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">unemployment</span></span>
-<span><span class="co">#&gt; # A tibble: 456 × 3</span></span>
-<span><span class="co">#&gt;    area        date       value</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;       &lt;date&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 Connecticut 2000-01-01 0.028</span></span>
-<span><span class="co">#&gt;  2 New Haven   2000-01-01 0.038</span></span>
-<span><span class="co">#&gt;  3 Connecticut 2000-02-01 0.029</span></span>
-<span><span class="co">#&gt;  4 New Haven   2000-02-01 0.037</span></span>
-<span><span class="co">#&gt;  5 Connecticut 2000-03-01 0.024</span></span>
-<span><span class="co">#&gt;  6 New Haven   2000-03-01 0.033</span></span>
-<span><span class="co">#&gt;  7 Connecticut 2000-04-01 0.019</span></span>
-<span><span class="co">#&gt;  8 New Haven   2000-04-01 0.029</span></span>
-<span><span class="co">#&gt;  9 Connecticut 2000-05-01 0.021</span></span>
-<span><span class="co">#&gt; 10 New Haven   2000-05-01 0.032</span></span>
-<span><span class="co">#&gt; # ℹ 446 more rows</span></span>
 <span></span>
 <span><span class="va">unemp_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">unemployment</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">value</span>, group <span class="op">=</span> <span class="va">area</span>, color <span class="op">=</span> <span class="va">area</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html" class="external-link">geom_smooth</a></span><span class="op">(</span>se <span class="op">=</span> <span class="cn">FALSE</span>, method <span class="op">=</span> <span class="st">"loess"</span>, linewidth <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span>
 <span><span class="va">unemp_plot</span></span></code></pre></div>
-<div class="cell-output-display">
-<div>
-<figure><p><img src="cwi_files/figure-html/laus-1.png" style="width:100.0%"></p>
-</figure>
-</div>
-</div>
 </div>
 </section></section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -476,7 +455,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>
