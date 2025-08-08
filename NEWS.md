@@ -1,3 +1,9 @@
+# cwi v2.0.1 (2025-08-07)
+
+## Fix
+
+- remove extra dcws utility function
+
 # cwi v2.0.0 (2025-08-07)
 
 ## Feat
