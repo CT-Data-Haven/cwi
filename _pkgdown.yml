@@ -38,7 +38,3 @@ reference:
     contents:
       - has_keyword("utils")
 
-  - title: Deprecated functions
-    desc: Functions that have moved to {dcws}
-    contents:
-      - has_keyword("dcws-migration")

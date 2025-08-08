@@ -133,6 +133,8 @@ rule nhoods:
         "bash ./data-raw/get_nhood_geos.sh"
 
 rule setup:
+    # input:
+    #     Path('data-raw/').glob('make_*.R'),
     output:
         catalog = 'data-raw/datasets.txt',
     shell:

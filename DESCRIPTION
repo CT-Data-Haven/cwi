@@ -28,25 +28,20 @@ Imports:
     forcats,
     ggplot2,
     httr,
-    janitor,
     jsonlite,
     purrr,
-    readxl,
     rlang,
     stats,
     stringr,
     tidyr,
     tibble,
-    camiller (>= 0.2.0),
-    readr,
     tidycensus,
     tidyselect,
     cli,
     rvest,
     memoise,
     cachem,
-    rappdirs,
-    lifecycle
+    rappdirs
 Suggests: 
     knitr,
     sf,
@@ -56,9 +51,8 @@ Suggests:
     covr,
     units,
     withr,
-    quarto
-Remotes: 
-    camille-s/camiller
+    quarto,
+    crayon
 VignetteBuilder:
     quarto
 Config/testthat/edition: 3

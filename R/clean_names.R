@@ -6,7 +6,7 @@ clean_names <- function(x, allow_dupes = FALSE) {
         ))
     }
     new_names <- make_clean_names(names(x), allow_dupes)
-    setNames(x, new_names)
+    stats::setNames(x, new_names)
 }
 
 count_dupes <- function(x) {
