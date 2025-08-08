@@ -79,19 +79,3 @@ cws_check_yr <- function(path, year, verbose) {
     }
     year
 }
-
-deprecation_msg <- function(fn_name, version, new_pkg, env = rlang::caller_env(n = 2), id = NULL) {
-    fn_call <- stringr::str_glue("{fn_name}()")
-    fn_new <- stringr::str_glue("{new_pkg}::{fn_call}")
-    lifecycle::deprecate_warn(
-        when = version,
-        what = fn_call,
-        with = fn_new,
-        id = id,
-        # env = rlang::caller_env(n = 2)
-        user_env = env
-    )
-    # lifecycle::deprecate_warn("1.12.0", "read_xtabs()", "dcws::read_xtabs()",
-    #                             details = "This function has been moved to the dcws package. Please use `dcws::read_xtabs` moving forward.",
-    #                             id = "dcws-read")
-}
