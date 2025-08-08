@@ -309,6 +309,20 @@ NULL
 #' @keywords example-datasets
 "gnh_tenure"
 
+#' ACS demo data - educational attainment
+#'
+#' This is a table of educational attainment data for adults ages 25 and up in a few New Haven-area towns obtained with `tidycensus::get_acs`, to be used in testing and examples.
+#'
+#' @format A data frame with `r nrow(education)` rows and `r ncol(education)` variables:
+#' \describe{
+#'   \item{name}{Town name}
+#'   \item{edu_level}{Educational attainment}
+#'   \item{estimate}{Estimated count}
+#'   \item{moe}{Margin of error}
+#' }
+#' @keywords example-datasets
+"education"
+
 
 #' Proxy PUMAs
 #'

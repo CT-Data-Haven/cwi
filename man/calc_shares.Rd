@@ -37,13 +37,13 @@ A tibble/data frame with shares (and optionally MOE of shares) of subgroup value
 }
 \examples{
 edu <- tibble::tribble(
-    ~name,       ~edu, ~estimate,
-    "Hamden", "ages25plus",     41017,
-    "Hamden",  "bachelors",      8511,
-    "Hamden",   "graduate",     10621,
-    "New Haven", "ages25plus",     84441,
-    "New Haven",  "bachelors",     14643,
-    "New Haven",   "graduate",     17223
+    ~name, ~edu, ~estimate,
+    "Hamden", "ages25plus", 41017,
+    "Hamden", "bachelors", 8511,
+    "Hamden", "graduate", 10621,
+    "New Haven", "ages25plus", 84441,
+    "New Haven", "bachelors", 14643,
+    "New Haven", "graduate", 17223
 )
 edu |>
     dplyr::group_by(name) |>

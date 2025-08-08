@@ -1,5 +1,5 @@
 script;input;output
-acs_demo;;gnh_tenure
+acs_demo;;gnh_tenure education
 census_vars;;acs_vars decennial_vars10 decennial_vars
 ct5_clusters;data-raw/files/5CT_groups_2010.csv;ct5_clusters
 geo_sf;data-raw/files/all_city_nhoods.rds;town_sf new_haven_sf stamford_sf bridgeport_sf hartford_sf tract_sf tract_sf19

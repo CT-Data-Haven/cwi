@@ -1,14 +1,3 @@
-demo_xt <- function(f) {
-    system.file("extdata", sprintf("test_xtab%s.xlsx", f), package = "cwi")
-}
-
-all_xt <- function(.fun, args = NULL) {
-    c(2015, 2018, 2020, 2021) |>
-        rlang::set_names() |>
-        purrr::map(demo_xt) |>
-        purrr::imap(~ R.utils::doCall(.fcn = .fun, path = .x, year = .y, args = args))
-}
-
 multi_test <- function(src = "acs",
                        table = "B01003",
                        year = 2021,
@@ -52,3 +41,10 @@ dummy_df <- function(seed = 123, n = 20) {
     )
     df
 }
+
+edu_brk <- education |>
+    dplyr::mutate(region = forcats::fct_collapse(name, "Outer Ring" = "Bethany", "Inner Ring" = c("Hamden", "East Haven", "West Haven"))) |>
+    dplyr::group_by(region, name) |>
+    add_grps(list(ages25plus = 1, high_school_plus = 17:25, bachelors_plus = 22:25),
+             group = edu_level, moe = moe) |>
+    dplyr::ungroup()

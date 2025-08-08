@@ -12,13 +12,13 @@
 #' @return A tibble/data frame with shares (and optionally MOE of shares) of subgroup values within a denominator group. Shares given for denominator group will be blank.
 #' @examples
 #' edu <- tibble::tribble(
-#'     ~name,       ~edu, ~estimate,
-#'     "Hamden", "ages25plus",     41017,
-#'     "Hamden",  "bachelors",      8511,
-#'     "Hamden",   "graduate",     10621,
-#'     "New Haven", "ages25plus",     84441,
-#'     "New Haven",  "bachelors",     14643,
-#'     "New Haven",   "graduate",     17223
+#'     ~name, ~edu, ~estimate,
+#'     "Hamden", "ages25plus", 41017,
+#'     "Hamden", "bachelors", 8511,
+#'     "Hamden", "graduate", 10621,
+#'     "New Haven", "ages25plus", 84441,
+#'     "New Haven", "bachelors", 14643,
+#'     "New Haven", "graduate", 17223
 #' )
 #' edu |>
 #'     dplyr::group_by(name) |>
@@ -58,7 +58,7 @@ calc_shares <- function(data,
 
     val_name <- rlang::quo_name(val_var)
 
-    df2 <- dplyr::mutate(df_grp, {{group}} := as.character({{ group }}))
+    df2 <- dplyr::mutate(df_grp, {{ group }} := as.character({{ group }}))
 
     df_left <- dplyr::filter(df2, {{ group }} == denom)
     df_left <- dplyr::select(df_left, -{{ group }})
