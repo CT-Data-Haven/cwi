@@ -26,7 +26,7 @@ fig-dpi: 150
 
 The original goal of `cwi` was to get data, primarily the Census ACS, fetched, aggregated, and analyzed for [DataHaven's 2019 Community Index reports](http://ctdatahaven.org/reports/greater-new-haven-community-index). It's now evolved to support more of our day-to-day work and several major reports. This includes functions to speed up and standardize analysis for multiple staff people, preview trends and patterns we'll need to write about, and get data in more layperson-friendly formats.
 
-It pairs well with many functions from Camille's brilliantly-named [`camiller`](https://github.com/camille-s/camiller) package.
+It pairs well with many functions from Camille's brilliantly-named [`camiller`](https://github.com/camille-s/camiller) package, though no longer depends on it.
 
 ## Installation
 
@@ -95,7 +95,7 @@ tenure
 homeownership <- tenure |>
     label_acs(year = 2020) |>
     dplyr::group_by(level, name) |>
-    camiller::calc_shares(group = label, denom = "Total") |>
+    calc_shares(group = label, denom = "Total") |>
     dplyr::filter(stringr::str_detect(label, "Owner")) |>
     dplyr::select(level, name, share)
 

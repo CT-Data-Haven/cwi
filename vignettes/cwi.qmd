@@ -25,7 +25,6 @@ library(dplyr)
 library(tidyr)
 library(purrr)
 library(ggplot2)
-library(camiller)
 library(cwi)
 ```
 
@@ -75,12 +74,12 @@ multi_geo_acs("B01003",
 
 The total population data is very straightforward, as it only has one variable, `B01003_001`. The tibble returned has the GEOID, except for custom geographies like regions; the name of each geography, including the names of each region; the variable codes; estimates; margins of error at the default 90\% confidence level; the geographic level, numbered in order of decreasing size; and the counties of the towns.
 
-The race and ethnicity table will require some calculations, using the brilliantly-titled [`camiller` package](https://github.com/camille-s/camiller): 
+The race and ethnicity table will require some calculations:
 
 * Using `label_acs()`, join the `race` tibble with the `cwi::acs_vars` dataset to get variable labels. Oftentimes, these labels need to be separated by their `"!!"` delimeter. 
 * Group by the geographic level, county, and name.
-* Call `camiller::add_grps()` with a list of racial groups and their labels' positions in the `label` column. This gives estimates and, optionally, margins of error for aggregates
-* `camiller::calc_shares()` then gives shares of each group's estimate over the `"total"` denominator.
+* Call `add_grps()` with a list of racial groups and their labels' positions in the `label` column. This gives estimates and, optionally, margins of error for aggregates
+* `calc_shares()` then gives shares of each group's estimate over the `"total"` denominator.
 
 ```{r }
 #| label: calc
@@ -180,7 +179,7 @@ age |>
     split(~name) |>
     batch_csv_dump(base_name = "pop_by_age", bind = TRUE, verbose = TRUE) |>
     group_by(level, name) |>
-    camiller::add_grps(list(ages00_04 = 1, ages05_17 = 2:4, ages00_17 = 1:4),
+    add_grps(list(ages00_04 = 1, ages05_17 = 2:4, ages00_17 = 1:4),
         group = age, value = estimate
     ) |>
     arrange(level, name, age)
@@ -234,11 +233,12 @@ employment |>
 
 ## Local Area Unemployment Statistics
 
-To look at unemployment rates over time, I can use `laus_trend()`. The LAUS covers smaller geographies than the QWI, so `laus_trend()` is set up to find data by a combination of state, counties, or towns. The LAUS API returns monthly data on labor force counts, employment counts, unemployed counts, and unemployment rate; `laus_trend()` lets you specify which of these measures to fetch.
+To look at unemployment rates over time, I can use `laus_trend()`. The LAUS covers smaller geographies than the QWI, so `laus_trend()` is set up to find data by a combination of state, counties, or towns. The LAUS API returns monthly data on labor force counts, employment counts, unemployed counts, and unemployment rate; `laus_trend()` lets you specify which of these measures to fetch. This chunk is turned off for now because the API is very finicky.
 
 ```{r }
 #| label: laus
 #| out-width: 100%
+#| eval: false
 unemployment <- laus_trend(c("New Haven", "New Haven County", "Connecticut"),
     startyear = 2000, endyear = 2018, measures = "unemployment rate"
 ) |>

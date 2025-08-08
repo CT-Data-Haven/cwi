@@ -22,7 +22,8 @@ analysis for multiple staff people, preview trends and patterns we’ll
 need to write about, and get data in more layperson-friendly formats.
 
 It pairs well with many functions from Camille’s brilliantly-named
-[`camiller`](https://github.com/camille-s/camiller) package.
+[`camiller`](https://github.com/camille-s/camiller) package, though no
+longer depends on it.
 
 ## Installation
 
@@ -115,7 +116,7 @@ tenure
 homeownership <- tenure |>
     label_acs(year = 2020) |>
     dplyr::group_by(level, name) |>
-    camiller::calc_shares(group = label, denom = "Total") |>
+    calc_shares(group = label, denom = "Total") |>
     dplyr::filter(stringr::str_detect(label, "Owner")) |>
     dplyr::select(level, name, share)
 
@@ -124,25 +125,25 @@ homeownership
 #> # Groups:   level, name [19]
 #>    level    name                 share
 #>    <fct>    <chr>                <dbl>
-#>  1 1_us     United States        0.644
-#>  2 2_state  Connecticut          0.661
-#>  3 3_county New Haven County     0.621
-#>  4 4_region Greater New Haven    0.596
-#>  5 4_region New Haven Inner Ring 0.612
-#>  6 4_region New Haven Outer Ring 0.793
-#>  7 5_town   Bethany              0.917
-#>  8 5_town   Branford             0.655
-#>  9 5_town   East Haven           0.742
-#> 10 5_town   Guilford             0.86 
-#> 11 5_town   Hamden               0.637
-#> 12 5_town   Madison              0.862
-#> 13 5_town   Milford              0.745
-#> 14 5_town   New Haven            0.28 
-#> 15 5_town   North Branford       0.86 
-#> 16 5_town   North Haven          0.826
-#> 17 5_town   Orange               0.905
-#> 18 5_town   West Haven           0.514
-#> 19 5_town   Woodbridge           0.893
+#>  1 1_us     United States         0.64
+#>  2 2_state  Connecticut           0.66
+#>  3 3_county New Haven County      0.62
+#>  4 4_region Greater New Haven     0.6 
+#>  5 4_region New Haven Inner Ring  0.61
+#>  6 4_region New Haven Outer Ring  0.79
+#>  7 5_town   Bethany               0.92
+#>  8 5_town   Branford              0.65
+#>  9 5_town   East Haven            0.74
+#> 10 5_town   Guilford              0.86
+#> 11 5_town   Hamden                0.64
+#> 12 5_town   Madison               0.86
+#> 13 5_town   Milford               0.75
+#> 14 5_town   New Haven             0.28
+#> 15 5_town   North Branford        0.86
+#> 16 5_town   North Haven           0.83
+#> 17 5_town   Orange                0.91
+#> 18 5_town   West Haven            0.51
+#> 19 5_town   Woodbridge            0.89
 ```
 
 ``` r
