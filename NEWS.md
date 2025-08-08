@@ -1,3 +1,11 @@
+# cwi v2.0.0 (2025-08-07)
+
+## Feat
+
+- move functions from camiller into cwi
+- **deprecation**: remove dcws-related functions that were deprecated
+- **data**: add educational attainment dataset for examples and testing
+
 # cwi v1.13.1 (2025-05-20)
 
 ## Fix
