@@ -1,3 +1,9 @@
+# cwi v2.0.2 (2025-12-03)
+
+## Fix
+
+- **data**: add COGs as regions in proxy_pumas
+
 # cwi v2.0.1 (2025-08-07)
 
 ## Fix
