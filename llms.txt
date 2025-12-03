@@ -1,0 +1,295 @@
+# cwi
+
+The original goal of `cwi` was to get data, primarily the Census ACS,
+fetched, aggregated, and analyzed for [DataHaven’s 2019 Community Index
+reports](http://ctdatahaven.org/reports/greater-new-haven-community-index).
+It’s now evolved to support more of our day-to-day work and several
+major reports. This includes functions to speed up and standardize
+analysis for multiple staff people, preview trends and patterns we’ll
+need to write about, and get data in more layperson-friendly formats.
+
+It pairs well with many functions from Camille’s brilliantly-named
+[`camiller`](https://github.com/camille-s/camiller) package, though no
+longer depends on it.
+
+## Installation
+
+You can install this package from
+[GitHub](https://github.com/CT-Data-Haven/cwi) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("CT-Data-Haven/cwi")
+```
+
+## Dependencies
+
+This package relies heavily on:
+
+- The [`tidyverse`](http://tidyverse.org/) packages, namely `dplyr`,
+  `tidyr`, `purrr`, `stringr`, `forcats`, and `ggplot2` (version \>=
+  3.0.0) (so a lot the tidyverse)
+- `rlang` and `tidyselect` for non-standard evaluation in many functions
+- `tidycensus` for actually getting all the Census data
+- `sf` isn’t required but it’s encouraged
+
+## Data
+
+`cwi` ships with several datasets and shapefiles. These include:
+
+- Shapes (as `sf` objects) of towns, tracts, and city neighborhoods for
+  New Haven, Hartford, Bridgeport, and Stamford
+- Common ACS table numbers—hopefully decreases time spent prowling
+  around [the Census Bureau site](https://data.census.gov)
+- Definitions of neighborhoods by tract or block group, and of regions
+  by town
+
+## Sources
+
+This package contains functions to make it easier and more reproducible
+to fetch and analyze data from:
+
+- [American Community
+  Survey](https://www.census.gov/programs-surveys/acs/) (US Census
+  Bureau)
+- [Decennial
+  Census](https://www.census.gov/programs-surveys/decennial-census.html)
+  (US Census Bureau)
+- [Quarterly Workforce Indicators](https://lehd.ces.census.gov/) (US
+  Census Bureau Center for Economic Studies)
+- [Local Area Unemployment Statistics](https://www.bls.gov/lau/) (Bureau
+  of Labor Statistics)
+- ~~[DataHaven’s Community Wellbeing
+  Survey](https://ctdatahaven.org/reports/datahaven-community-wellbeing-survey)~~
+  This has been moved to the dcws package
+
+## Example
+
+Here’s an example of getting a big table to calculate homeownership
+rates across many geographies at once:
+
+``` r
+library(dplyr)
+library(cwi)
+```
+
+``` r
+tenure <- multi_geo_acs(
+    table = basic_table_nums$tenure,
+    year = 2020,
+    regions = regions[c("Greater New Haven", "New Haven Inner Ring", "New Haven Outer Ring")],
+    counties = "New Haven",
+    towns = regions[["Greater New Haven"]],
+    us = TRUE
+)
+tenure
+#> # A tibble: 57 × 9
+#>     year level    state       county geoid name         variable estimate    moe
+#>    <dbl> <fct>    <chr>       <chr>  <chr> <chr>        <chr>       <dbl>  <dbl>
+#>  1  2020 1_us     <NA>        <NA>   1     United Stat… B25003_…   1.22e8 211970
+#>  2  2020 1_us     <NA>        <NA>   1     United Stat… B25003_…   7.88e7 342600
+#>  3  2020 1_us     <NA>        <NA>   1     United Stat… B25003_…   4.36e7 134985
+#>  4  2020 2_state  <NA>        <NA>   09    Connecticut  B25003_…   1.39e6   3268
+#>  5  2020 2_state  <NA>        <NA>   09    Connecticut  B25003_…   9.15e5   5015
+#>  6  2020 2_state  <NA>        <NA>   09    Connecticut  B25003_…   4.70e5   4548
+#>  7  2020 3_county Connecticut <NA>   09009 New Haven C… B25003_…   3.33e5   1647
+#>  8  2020 3_county Connecticut <NA>   09009 New Haven C… B25003_…   2.07e5   2123
+#>  9  2020 3_county Connecticut <NA>   09009 New Haven C… B25003_…   1.26e5   2225
+#> 10  2020 4_region Connecticut <NA>   <NA>  Greater New… B25003_…   1.76e5   1834
+#> # ℹ 47 more rows
+```
+
+``` r
+homeownership <- tenure |>
+    label_acs(year = 2020) |>
+    dplyr::group_by(level, name) |>
+    calc_shares(group = label, denom = "Total") |>
+    dplyr::filter(stringr::str_detect(label, "Owner")) |>
+    dplyr::select(level, name, share)
+
+homeownership
+#> # A tibble: 19 × 3
+#> # Groups:   level, name [19]
+#>    level    name                 share
+#>    <fct>    <chr>                <dbl>
+#>  1 1_us     United States         0.64
+#>  2 2_state  Connecticut           0.66
+#>  3 3_county New Haven County      0.62
+#>  4 4_region Greater New Haven     0.6 
+#>  5 4_region New Haven Inner Ring  0.61
+#>  6 4_region New Haven Outer Ring  0.79
+#>  7 5_town   Bethany               0.92
+#>  8 5_town   Branford              0.65
+#>  9 5_town   East Haven            0.74
+#> 10 5_town   Guilford              0.86
+#> 11 5_town   Hamden                0.64
+#> 12 5_town   Madison               0.86
+#> 13 5_town   Milford               0.75
+#> 14 5_town   New Haven             0.28
+#> 15 5_town   North Branford        0.86
+#> 16 5_town   North Haven           0.83
+#> 17 5_town   Orange                0.91
+#> 18 5_town   West Haven            0.51
+#> 19 5_town   Woodbridge            0.89
+```
+
+``` r
+geo_level_plot(homeownership,
+    value = share, hilite = "#EA7FA2",
+    title = "Homeownership in Greater New Haven, 2020"
+)
+```
+
+![](reference/figures/README-tenure-plot-1.png)
+
+See more detail in the vignette:
+[`vignette("cwi")`](https://CT-Data-Haven.github.io/cwi/articles/cwi.md).
+
+# Package index
+
+## Functions - fetching
+
+Functions to fetch data from APIs
+
+- [`laus_trend()`](https://CT-Data-Haven.github.io/cwi/reference/laus_trend.md)
+  : Fetch local area unemployment statistics (LAUS) data over time
+- [`multi_geo_acs()`](https://CT-Data-Haven.github.io/cwi/reference/multi_geo_acs.md)
+  : Fetch an ACS table with multiple geography levels
+- [`multi_geo_decennial()`](https://CT-Data-Haven.github.io/cwi/reference/multi_geo_decennial.md)
+  : Fetch a decennial census table with multiple geography levels
+- [`qwi_industry()`](https://CT-Data-Haven.github.io/cwi/reference/qwi_industry.md)
+  : Get employment counts and total payroll over time
+
+## Functions - analyzing and plotting
+
+Functions to analyze or quickly plot data
+
+- [`add_grps()`](https://CT-Data-Haven.github.io/cwi/reference/add_grps.md)
+  : Collapse variable into groups and sum
+
+- [`calc_shares()`](https://CT-Data-Haven.github.io/cwi/reference/calc_shares.md)
+  : Make table of rates given a denominator
+
+- [`adj_inflation()`](https://CT-Data-Haven.github.io/cwi/reference/inflation.md)
+  [`get_cpi()`](https://CT-Data-Haven.github.io/cwi/reference/inflation.md)
+  : Calculate inflation adjustments
+
+- [`label_decennial()`](https://CT-Data-Haven.github.io/cwi/reference/label_census.md)
+  [`label_acs()`](https://CT-Data-Haven.github.io/cwi/reference/label_census.md)
+  : Quickly add the labels of census variables
+
+- [`geo_level_plot()`](https://CT-Data-Haven.github.io/cwi/reference/geo_level_plot.md)
+  :
+
+  Quickly make a `ggplot` to view data by geographic level
+
+- [`quick_map()`](https://CT-Data-Haven.github.io/cwi/reference/quick_map.md)
+  : Quickly create a choropleth sketch
+
+## Datasets - reference
+
+Reference datasets, lookup tables, and crosswalks
+
+- [`acs_vars`](https://CT-Data-Haven.github.io/cwi/reference/acs_vars.md)
+  : Variable labels from the 2023 ACS
+- [`ct5_clusters`](https://CT-Data-Haven.github.io/cwi/reference/ct5_clusters.md)
+  : Five Connecticuts clusters
+- [`decennial_vars`](https://CT-Data-Haven.github.io/cwi/reference/decennial_vars.md)
+  [`decennial_vars10`](https://CT-Data-Haven.github.io/cwi/reference/decennial_vars.md)
+  : Variable labels from the Decennial Census
+- [`msa`](https://CT-Data-Haven.github.io/cwi/reference/msa.md) : Names
+  and GEOIDs of regional MSAs
+- [`naics_codes`](https://CT-Data-Haven.github.io/cwi/reference/naics_codes.md)
+  : NAICS industry codes
+- [`new_haven_tracts`](https://CT-Data-Haven.github.io/cwi/reference/neighborhood_tracts.md)
+  [`bridgeport_tracts`](https://CT-Data-Haven.github.io/cwi/reference/neighborhood_tracts.md)
+  [`stamford_tracts`](https://CT-Data-Haven.github.io/cwi/reference/neighborhood_tracts.md)
+  [`hartford_tracts`](https://CT-Data-Haven.github.io/cwi/reference/neighborhood_tracts.md)
+  [`new_haven_tracts19`](https://CT-Data-Haven.github.io/cwi/reference/neighborhood_tracts.md)
+  [`bridgeport_tracts19`](https://CT-Data-Haven.github.io/cwi/reference/neighborhood_tracts.md)
+  [`stamford_tracts19`](https://CT-Data-Haven.github.io/cwi/reference/neighborhood_tracts.md)
+  [`hartford_tracts19`](https://CT-Data-Haven.github.io/cwi/reference/neighborhood_tracts.md)
+  : City neighborhoods by tract
+- [`occ_codes`](https://CT-Data-Haven.github.io/cwi/reference/occ_codes.md)
+  : Census occupation codes
+- [`proxy_pumas`](https://CT-Data-Haven.github.io/cwi/reference/proxy_pumas.md)
+  : Proxy PUMAs
+- [`regions`](https://CT-Data-Haven.github.io/cwi/reference/regions.md)
+  : Regions of Connecticut
+- [`school_dists`](https://CT-Data-Haven.github.io/cwi/reference/school_dists.md)
+  : School districts by town
+- [`basic_table_nums`](https://CT-Data-Haven.github.io/cwi/reference/table_nums.md)
+  [`ext_table_nums`](https://CT-Data-Haven.github.io/cwi/reference/table_nums.md)
+  : Common ACS table numbers
+- [`village2town`](https://CT-Data-Haven.github.io/cwi/reference/village2town.md)
+  : Village to town lookup
+- [`xwalk`](https://CT-Data-Haven.github.io/cwi/reference/xwalk.md)
+  [`tract2town`](https://CT-Data-Haven.github.io/cwi/reference/xwalk.md)
+  : CT crosswalk
+- [`zip2town`](https://CT-Data-Haven.github.io/cwi/reference/zip2town.md)
+  : Zip to town lookup
+
+## Datasets - examples
+
+Datasets used for examples in vignettes, package docs, & testing
+
+- [`education`](https://CT-Data-Haven.github.io/cwi/reference/education.md)
+  : ACS demo data - educational attainment
+- [`gnh_tenure`](https://CT-Data-Haven.github.io/cwi/reference/gnh_tenure.md)
+  : ACS demo data - tenure
+
+## Shapefiles
+
+Shapefiles in `sf` format
+
+- [`bridgeport_sf`](https://CT-Data-Haven.github.io/cwi/reference/neighborhood_shapes.md)
+  [`hartford_sf`](https://CT-Data-Haven.github.io/cwi/reference/neighborhood_shapes.md)
+  [`new_haven_sf`](https://CT-Data-Haven.github.io/cwi/reference/neighborhood_shapes.md)
+  [`stamford_sf`](https://CT-Data-Haven.github.io/cwi/reference/neighborhood_shapes.md)
+  : Neighborhood shapefiles of Connecticut cities
+- [`town_sf`](https://CT-Data-Haven.github.io/cwi/reference/town_sf.md)
+  : Connecticut town shapefile
+- [`tract_sf`](https://CT-Data-Haven.github.io/cwi/reference/tract_sf.md)
+  [`tract_sf19`](https://CT-Data-Haven.github.io/cwi/reference/tract_sf.md)
+  : Connecticut tract shapefile
+
+## Misc. / utilities
+
+Miscellaneous functions
+
+- [`check_cb_avail()`](https://CT-Data-Haven.github.io/cwi/reference/availability.md)
+  [`check_qwi_avail()`](https://CT-Data-Haven.github.io/cwi/reference/availability.md)
+  : Check availability of datasets
+- [`batch_csv_dump()`](https://CT-Data-Haven.github.io/cwi/reference/batch_csv_dump.md)
+  : Write a list of data frames to CSV and keep it movin'
+- [`fix_cogs()`](https://CT-Data-Haven.github.io/cwi/reference/fix_cogs.md)
+  : Fix names of COGs
+- [`jenks()`](https://CT-Data-Haven.github.io/cwi/reference/jenks.md) :
+  Quickly cut a vector with the Jenks/Fisher algorithms
+- [`separate_acs()`](https://CT-Data-Haven.github.io/cwi/reference/separate_acs.md)
+  : Separate labels given to ACS data
+- [`show_uniq()`](https://CT-Data-Haven.github.io/cwi/reference/show_uniq.md)
+  : Print unique values from a data frame column, then keep it moving
+- [`town_names()`](https://CT-Data-Haven.github.io/cwi/reference/town_names.md)
+  : Clean up town names as returned from ACS
+
+# Articles
+
+### All vignettes
+
+- [ACS
+  updates](https://CT-Data-Haven.github.io/cwi/articles/acs-updates.md):
+
+  New or changed ACS tables by year
+
+- [Basic workflow](https://CT-Data-Haven.github.io/cwi/articles/cwi.md):
+
+  Getting started with a basic cwi workflow
+
+- [Regions](https://CT-Data-Haven.github.io/cwi/articles/regions.md):
+
+  Region definitions
+
+- [Shapefiles](https://CT-Data-Haven.github.io/cwi/articles/shapefiles.md):
+
+  Shapefiles shipped with the package

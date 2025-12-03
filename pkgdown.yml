@@ -1,12 +1,12 @@
 pandoc: 3.1.11
-pkgdown: 2.1.3
+pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   acs-updates: acs-updates.html
   cwi: cwi.html
   regions: regions.html
   shapefiles: shapefiles.html
-last_built: 2025-08-08T01:43Z
+last_built: 2025-12-03T23:05Z
 urls:
   reference: https://CT-Data-Haven.github.io/cwi/reference
   article: https://CT-Data-Haven.github.io/cwi/articles

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cwi</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,7 +50,7 @@
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>A list of 2 data frames, <code>county</code> and <code>cog</code>, with 22 and 56 rows, respectively, and 6 variables:</p><dl><dt>puma</dt>
+    <p>A list of 2 data frames, <code>county</code> and <code>cog</code>, with 61 and 82 rows, respectively, and 6 variables:</p><dl><dt>puma</dt>
 <dd><p>7-digit PUMA FIPS code</p></dd>
 
 <dt>region</dt>
@@ -85,37 +85,37 @@ See maps of proxies and their weights here: <a href="https://ct-data-haven.githu
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># proxies made from county-based PUMAs, use for pre-2022 ACS or other datasets</span></span></span>
 <span class="r-in"><span><span class="va">proxy_pumas</span><span class="op">$</span><span class="va">county</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 22 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    puma    region                pop    hh pop_weight hh_weight</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 0900101 Greater Bridgeport  <span style="text-decoration: underline;">69</span>339 <span style="text-decoration: underline;">23</span>805      0.584     0.589</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 0900104 Greater Bridgeport <span style="text-decoration: underline;">148</span>529 <span style="text-decoration: underline;">52</span>914      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 0900105 Greater Bridgeport <span style="text-decoration: underline;">108</span>117 <span style="text-decoration: underline;">38</span>743      0.613     0.600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 0900300 Greater Hartford   <span style="text-decoration: underline;">154</span>355 <span style="text-decoration: underline;">59</span>417      0.987     0.986</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 0900301 Greater Hartford   <span style="text-decoration: underline;">110</span>423 <span style="text-decoration: underline;">44</span>599      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 0900302 Greater Hartford   <span style="text-decoration: underline;">121</span>562 <span style="text-decoration: underline;">46</span>879      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 0900303 Greater Hartford   <span style="text-decoration: underline;">165</span>411 <span style="text-decoration: underline;">66</span>333      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 0900304 Greater Hartford    <span style="text-decoration: underline;">43</span>474 <span style="text-decoration: underline;">17</span>149      0.382     0.381</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 0900305 Greater Hartford   <span style="text-decoration: underline;">111</span>643 <span style="text-decoration: underline;">44</span>350      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 0900306 Greater Hartford   <span style="text-decoration: underline;">119</span>553 <span style="text-decoration: underline;">49</span>100      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 12 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 61 × 6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    puma    region                   pop    hh pop_weight hh_weight</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 0900300 Capitol Region COG    <span style="text-decoration: underline;">154</span>355 <span style="text-decoration: underline;">59</span>417      0.987     0.986</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 0900301 Capitol Region COG    <span style="text-decoration: underline;">110</span>423 <span style="text-decoration: underline;">44</span>599      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 0900302 Capitol Region COG    <span style="text-decoration: underline;">121</span>562 <span style="text-decoration: underline;">46</span>879      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 0900303 Capitol Region COG    <span style="text-decoration: underline;">165</span>411 <span style="text-decoration: underline;">66</span>333      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 0900304 Capitol Region COG     <span style="text-decoration: underline;">43</span>474 <span style="text-decoration: underline;">17</span>149      0.382     0.381</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 0900305 Capitol Region COG    <span style="text-decoration: underline;">111</span>643 <span style="text-decoration: underline;">44</span>350      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 0900306 Capitol Region COG    <span style="text-decoration: underline;">119</span>553 <span style="text-decoration: underline;">49</span>100      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 0901300 Capitol Region COG    <span style="text-decoration: underline;">149</span>188 <span style="text-decoration: underline;">56</span>576      0.994     0.993</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 0900101 Connecticut Metro COG  <span style="text-decoration: underline;">69</span>339 <span style="text-decoration: underline;">23</span>805      0.584     0.589</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 0900104 Connecticut Metro COG <span style="text-decoration: underline;">148</span>529 <span style="text-decoration: underline;">52</span>914      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 51 more rows</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># proxies made from COG-based PUMAs</span></span></span>
 <span class="r-in"><span><span class="va">proxy_pumas</span><span class="op">$</span><span class="va">cog</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 56 × 6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 82 × 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    puma    region                pop    hh pop_weight hh_weight</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 0920703 Fairfield County    <span style="text-decoration: underline;">41</span>206 <span style="text-decoration: underline;">15</span>774      0.258     0.248</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 0920801 Fairfield County   <span style="text-decoration: underline;">148</span>470 <span style="text-decoration: underline;">55</span>550      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 0920802 Fairfield County   <span style="text-decoration: underline;">177</span>911 <span style="text-decoration: underline;">61</span>947      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 0920901 Fairfield County   <span style="text-decoration: underline;">198</span>911 <span style="text-decoration: underline;">76</span>182      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 0920902 Fairfield County   <span style="text-decoration: underline;">104</span>825 <span style="text-decoration: underline;">36</span>465      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 0920903 Fairfield County   <span style="text-decoration: underline;">118</span>282 <span style="text-decoration: underline;">44</span>997      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 0920904 Fairfield County   <span style="text-decoration: underline;">168</span>766 <span style="text-decoration: underline;">61</span>392      0.850     0.843</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 0920801 Greater Bridgeport <span style="text-decoration: underline;">148</span>470 <span style="text-decoration: underline;">55</span>550      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 0920802 Greater Bridgeport <span style="text-decoration: underline;">177</span>911 <span style="text-decoration: underline;">61</span>947      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 0920201 Greater Hartford   <span style="text-decoration: underline;">121</span>057 <span style="text-decoration: underline;">48</span>277      1         1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 46 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 0920201 Capitol Region COG <span style="text-decoration: underline;">121</span>057 <span style="text-decoration: underline;">48</span>277      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 0920202 Capitol Region COG <span style="text-decoration: underline;">158</span>475 <span style="text-decoration: underline;">62</span>259      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 0920203 Capitol Region COG <span style="text-decoration: underline;">116</span>015 <span style="text-decoration: underline;">40</span>349      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 0920204 Capitol Region COG <span style="text-decoration: underline;">140</span>741 <span style="text-decoration: underline;">57</span>966      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 0920205 Capitol Region COG <span style="text-decoration: underline;">113</span>460 <span style="text-decoration: underline;">46</span>805      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 0920206 Capitol Region COG <span style="text-decoration: underline;">155</span>435 <span style="text-decoration: underline;">61</span>862      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 0920207 Capitol Region COG <span style="text-decoration: underline;">160</span>475 <span style="text-decoration: underline;">64</span>338      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 0920301 Capitol Region COG  <span style="text-decoration: underline;">11</span>507  <span style="text-decoration: underline;">4</span>693      0.107     0.108</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 0920703 Fairfield County    <span style="text-decoration: underline;">41</span>206 <span style="text-decoration: underline;">15</span>774      0.258     0.248</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 0920801 Fairfield County   <span style="text-decoration: underline;">148</span>470 <span style="text-decoration: underline;">55</span>550      1         1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 72 more rows</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -127,7 +127,7 @@ See maps of proxies and their weights here: <a href="https://ct-data-haven.githu
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>
