@@ -5,7 +5,7 @@
 \alias{proxy_pumas}
 \title{Proxy PUMAs}
 \format{
-A list of 2 data frames, \code{county} and \code{cog}, with 22 and 56 rows, respectively, and 6 variables:
+A list of 2 data frames, \code{county} and \code{cog}, with 61 and 82 rows, respectively, and 6 variables:
 \describe{
 \item{puma}{7-digit PUMA FIPS code}
 \item{region}{Region name}

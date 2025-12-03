@@ -11,7 +11,7 @@ town_puma <- list(
 town_county <- dplyr::distinct(cwi::xwalk, town, county) |>
     dplyr::rename(region = county)
 
-reg_df <- cwi::regions[c("Greater New Haven", "Greater Hartford", "Greater Waterbury", "Lower Naugatuck Valley", "Greater Bridgeport")] |>
+reg_df <- cwi::regions[c("Greater New Haven", "Greater Hartford", "Greater Waterbury", "Lower Naugatuck Valley", "Greater Bridgeport", names(cwi::regions)[grep("COG$", names(cwi::regions))])] |>
     tibble::enframe(name = "region", value = "town") |>
     tidyr::unnest(town) |>
     dplyr::bind_rows(town_county)
@@ -46,6 +46,7 @@ proxy_pumas <- reg_df |>
     dplyr::filter(!(grepl(" County", region) & puma_type == "county")) |>
     dplyr::ungroup() |>
     dplyr::select(puma_type, puma, region, pop = pop_town, hh = hh_town, pop_weight, hh_weight) |>
+    dplyr::mutate(region = cwi::fix_cogs(region)) |>
     split(~puma_type) |>
     purrr::map(dplyr::select, -puma_type)
 
