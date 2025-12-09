@@ -13,12 +13,24 @@
 #'
 #' @keywords utils
 #' @export
-batch_csv_dump <- function(data, split_by, path = ".", base_name = NULL, bind = FALSE, verbose = TRUE, ...) {
+batch_csv_dump <- function(
+    data,
+    split_by,
+    path = ".",
+    base_name = NULL,
+    bind = FALSE,
+    verbose = TRUE,
+    ...
+) {
     # if data is a data frame, split it. Otherwise treat as list
     if (is.data.frame(data) & missing(split_by)) {
-        cli::cli_abort("Please supply either a list of data frames, or a column to split data by.")
+        cli::cli_abort(
+            "Please supply either a list of data frames, or a column to split data by."
+        )
     }
-    if (!dir.exists(path)) cli::cli_abort("Path {.file {path}} does not exist.")
+    if (!dir.exists(path)) {
+        cli::cli_abort("Path {.file {path}} does not exist.")
+    }
     if (is.data.frame(data)) {
         data_list <- split(data, dplyr::select(data, {{ split_by }}))
     } else {

@@ -20,7 +20,12 @@ test_that("make_clean_names makes everything lowercase", {
 })
 
 test_that("make_clean_names converts space, punctuation to underscores", {
-    x <- c("Greater New Haven", "Greater  New   Haven", "greater-new-haven", "greater.new.haven")
+    x <- c(
+        "Greater New Haven",
+        "Greater  New   Haven",
+        "greater-new-haven",
+        "greater.new.haven"
+    )
     expect_equal(
         make_clean_names(x, TRUE),
         rep(c("greater_new_haven"), length(x))

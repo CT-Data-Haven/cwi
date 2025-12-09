@@ -47,15 +47,29 @@
 #' }
 #' @keywords fetching-functions
 #' @export
-multi_geo_acs <- function(table, year = endyears[["acs"]],
-                          towns = "all", regions = NULL,
-                          counties = "all", state = "09", neighborhoods = NULL,
-                          tracts = NULL, blockgroups = NULL,
-                          pumas = NULL, msa = FALSE,
-                          us = FALSE, new_england = TRUE,
-                          nhood_name = "name", nhood_geoid = NULL, nhood_weight = "weight",
-                          survey = c("acs5", "acs1"),
-                          verbose = TRUE, key = NULL, sleep = 0, ...) {
+multi_geo_acs <- function(
+    table,
+    year = endyears[["acs"]],
+    towns = "all",
+    regions = NULL,
+    counties = "all",
+    state = "09",
+    neighborhoods = NULL,
+    tracts = NULL,
+    blockgroups = NULL,
+    pumas = NULL,
+    msa = FALSE,
+    us = FALSE,
+    new_england = TRUE,
+    nhood_name = "name",
+    nhood_geoid = NULL,
+    nhood_weight = "weight",
+    survey = c("acs5", "acs1"),
+    verbose = TRUE,
+    key = NULL,
+    sleep = 0,
+    ...
+) {
     survey <- rlang::arg_match(survey)
     # because of switch to COGs, removed default geoid---check for null
 
@@ -94,49 +108,143 @@ multi_geo_acs <- function(table, year = endyears[["acs"]],
 
     # block groups: bg fips, county
     if (!is.null(blockgroups)) {
-        fetch[["blockgroup"]] <- census_blockgroups("acs", table, year, blockgroups, counties_fips, state_fips, survey, key, sleep, ...)
+        fetch[["blockgroup"]] <- census_blockgroups(
+            "acs",
+            table,
+            year,
+            blockgroups,
+            counties_fips,
+            state_fips,
+            survey,
+            key,
+            sleep,
+            ...
+        )
     }
 
     # tracts: tract fips, county
     if (!is.null(tracts)) {
-        fetch[["tract"]] <- census_tracts("acs", table, year, tracts, counties_fips, state_fips, survey, key, sleep, ...)
+        fetch[["tract"]] <- census_tracts(
+            "acs",
+            table,
+            year,
+            tracts,
+            counties_fips,
+            state_fips,
+            survey,
+            key,
+            sleep,
+            ...
+        )
     }
 
     # neighborhoods: nhood data frame, nhood columns
     if (!is.null(neighborhoods)) {
         fetch[["neighborhood"]] <- census_nhood(
-            "acs", table, year, neighborhoods, state_fips,
-            nhood_name, nhood_geoid, nhood_weight,
-            nhood_is_tract, estimate, survey, key, sleep, ...
+            "acs",
+            table,
+            year,
+            neighborhoods,
+            state_fips,
+            nhood_name,
+            nhood_geoid,
+            nhood_weight,
+            nhood_is_tract,
+            estimate,
+            survey,
+            key,
+            sleep,
+            ...
         )
     }
 
     # towns: towns, county
     if (!is.null(towns)) {
-        fetch[["town"]] <- census_towns("acs", table, year, towns, counties_fips, state_fips, survey, key, sleep, ...)
+        fetch[["town"]] <- census_towns(
+            "acs",
+            table,
+            year,
+            towns,
+            counties_fips,
+            state_fips,
+            survey,
+            key,
+            sleep,
+            ...
+        )
     }
 
     # pumas
     if (!is.null(pumas)) {
-        fetch[["puma"]] <- census_pumas("acs", table, year, pumas, counties_fips, state_fips, survey, key, sleep, ...)
+        fetch[["puma"]] <- census_pumas(
+            "acs",
+            table,
+            year,
+            pumas,
+            counties_fips,
+            state_fips,
+            survey,
+            key,
+            sleep,
+            ...
+        )
     }
 
     # regions: region-town list
     if (!is.null(regions)) {
-        fetch[["region"]] <- census_regions("acs", table, year, regions, state_fips, estimate, survey, key, sleep, ...)
+        fetch[["region"]] <- census_regions(
+            "acs",
+            table,
+            year,
+            regions,
+            state_fips,
+            estimate,
+            survey,
+            key,
+            sleep,
+            ...
+        )
     }
 
     # counties
     if (!is.null(counties)) {
-        fetch[["county"]] <- census_counties("acs", table, year, counties_fips, state_fips, survey, key, sleep, ...)
+        fetch[["county"]] <- census_counties(
+            "acs",
+            table,
+            year,
+            counties_fips,
+            state_fips,
+            survey,
+            key,
+            sleep,
+            ...
+        )
     }
 
     # state
-    fetch[["state"]] <- census_state("acs", table, year, state_fips, survey, key, sleep, ...)
+    fetch[["state"]] <- census_state(
+        "acs",
+        table,
+        year,
+        state_fips,
+        survey,
+        key,
+        sleep,
+        ...
+    )
 
     # msa: new england
     if (msa) {
-        fetch[["msa"]] <- census_msa("acs", table, year, new_england, survey, key, sleep, ...)
+        fetch[["msa"]] <- census_msa(
+            "acs",
+            table,
+            year,
+            new_england,
+            survey,
+            key,
+            sleep,
+            ...
+        )
     }
 
     # us
@@ -147,13 +255,16 @@ multi_geo_acs <- function(table, year = endyears[["acs"]],
     ## BIND + RETURN ----
     # take names of non-null items, reverse order
     fetch <- rev(fetch)
-    fetch <- rlang::set_names(fetch, function(nm) paste(seq_along(fetch), nm, sep = "_"))
+    fetch <- rlang::set_names(fetch, function(nm) {
+        paste(seq_along(fetch), nm, sep = "_")
+    })
     fetch <- purrr::map(fetch, clean_names)
     fetch_df <- dplyr::bind_rows(fetch, .id = "level")
     fetch_df$year <- year
     fetch_df$level <- as.factor(fetch_df$level)
     fetch_df <- dplyr::select(
-        fetch_df, tidyselect::any_of(c("year", "level", "state", "county", "geoid")),
+        fetch_df,
+        tidyselect::any_of(c("year", "level", "state", "county", "geoid")),
         tidyselect::everything()
     )
     fetch_df
@@ -201,14 +312,28 @@ multi_geo_acs <- function(table, year = endyears[["acs"]],
 #' }
 #' @keywords fetching-functions
 #' @export
-multi_geo_decennial <- function(table, year = endyears[["decennial"]],
-                                towns = "all", regions = NULL,
-                                counties = "all", state = "09", neighborhoods = NULL,
-                                tracts = NULL, blockgroups = NULL, msa = FALSE,
-                                us = FALSE, new_england = TRUE,
-                                nhood_name = "name", nhood_geoid = NULL, nhood_weight = "weight",
-                                sumfile = c("dhc", "sf1", "sf3", "pl"),
-                                verbose = TRUE, key = NULL, sleep = 0, ...) {
+multi_geo_decennial <- function(
+    table,
+    year = endyears[["decennial"]],
+    towns = "all",
+    regions = NULL,
+    counties = "all",
+    state = "09",
+    neighborhoods = NULL,
+    tracts = NULL,
+    blockgroups = NULL,
+    msa = FALSE,
+    us = FALSE,
+    new_england = TRUE,
+    nhood_name = "name",
+    nhood_geoid = NULL,
+    nhood_weight = "weight",
+    sumfile = c("dhc", "sf1", "sf3", "pl"),
+    verbose = TRUE,
+    key = NULL,
+    sleep = 0,
+    ...
+) {
     sumfile <- rlang::arg_match(sumfile)
 
     ## PARAMS & ERROR HANDLING ----
@@ -227,7 +352,8 @@ multi_geo_decennial <- function(table, year = endyears[["decennial"]],
         msa = msa,
         us = us,
         new_england = new_england,
-        nhood_name = nhood_name, nhood_geoid = nhood_geoid,
+        nhood_name = nhood_name,
+        nhood_geoid = nhood_geoid,
         dataset = sumfile,
         verbose = verbose,
         key = key
@@ -243,61 +369,155 @@ multi_geo_decennial <- function(table, year = endyears[["decennial"]],
 
     # block groups: bg fips, county
     if (!is.null(blockgroups)) {
-        fetch[["blockgroup"]] <- census_blockgroups("decennial", table, year, blockgroups, counties_fips, state_fips, sumfile, key, sleep, ...)
+        fetch[["blockgroup"]] <- census_blockgroups(
+            "decennial",
+            table,
+            year,
+            blockgroups,
+            counties_fips,
+            state_fips,
+            sumfile,
+            key,
+            sleep,
+            ...
+        )
     }
 
     # tracts: tract fips, county
     if (!is.null(tracts)) {
-        fetch[["tract"]] <- census_tracts("decennial", table, year, tracts, counties_fips, state_fips, sumfile, key, sleep, ...)
+        fetch[["tract"]] <- census_tracts(
+            "decennial",
+            table,
+            year,
+            tracts,
+            counties_fips,
+            state_fips,
+            sumfile,
+            key,
+            sleep,
+            ...
+        )
     }
 
     # neighborhoods: nhood data frame, nhood columns
     if (!is.null(neighborhoods)) {
         fetch[["neighborhood"]] <- census_nhood(
-            "decennial", table, year, neighborhoods, state_fips,
-            nhood_name, nhood_geoid, nhood_weight,
-            nhood_is_tract, value, sumfile, key, sleep, ...
+            "decennial",
+            table,
+            year,
+            neighborhoods,
+            state_fips,
+            nhood_name,
+            nhood_geoid,
+            nhood_weight,
+            nhood_is_tract,
+            value,
+            sumfile,
+            key,
+            sleep,
+            ...
         )
     }
 
     # towns: towns, county
     if (!is.null(towns)) {
-        fetch[["town"]] <- census_towns("decennial", table, year, towns, counties_fips, state_fips, sumfile, key, sleep, ...)
+        fetch[["town"]] <- census_towns(
+            "decennial",
+            table,
+            year,
+            towns,
+            counties_fips,
+            state_fips,
+            sumfile,
+            key,
+            sleep,
+            ...
+        )
     }
 
     # regions: region-town list
     if (!is.null(regions)) {
-        fetch[["region"]] <- census_regions("decennial", table, year, regions, state_fips, value, sumfile, key, sleep, ...)
+        fetch[["region"]] <- census_regions(
+            "decennial",
+            table,
+            year,
+            regions,
+            state_fips,
+            value,
+            sumfile,
+            key,
+            sleep,
+            ...
+        )
     }
 
     # counties
     if (!is.null(counties)) {
-        fetch[["county"]] <- census_counties("decennial", table, year, counties_fips, state_fips, sumfile, key, sleep, ...)
+        fetch[["county"]] <- census_counties(
+            "decennial",
+            table,
+            year,
+            counties_fips,
+            state_fips,
+            sumfile,
+            key,
+            sleep,
+            ...
+        )
     }
 
     # state
-    fetch[["state"]] <- census_state("decennial", table, year, state_fips, sumfile, key, sleep, ...)
+    fetch[["state"]] <- census_state(
+        "decennial",
+        table,
+        year,
+        state_fips,
+        sumfile,
+        key,
+        sleep,
+        ...
+    )
 
     # msa: new england
     if (msa) {
-        fetch[["msa"]] <- census_msa("decennial", table, year, new_england, sumfile, key, sleep, ...)
+        fetch[["msa"]] <- census_msa(
+            "decennial",
+            table,
+            year,
+            new_england,
+            sumfile,
+            key,
+            sleep,
+            ...
+        )
     }
 
     # us
     if (us) {
-        fetch[["us"]] <- census_us("decennial", table, year, sumfile, key, sleep, ...)
+        fetch[["us"]] <- census_us(
+            "decennial",
+            table,
+            year,
+            sumfile,
+            key,
+            sleep,
+            ...
+        )
     }
 
     ## BIND + RETURN ----
     # take names of non-null items, reverse order
     fetch <- rev(fetch)
-    fetch <- rlang::set_names(fetch, function(nm) paste(seq_along(fetch), nm, sep = "_"))
+    fetch <- rlang::set_names(fetch, function(nm) {
+        paste(seq_along(fetch), nm, sep = "_")
+    })
     fetch <- purrr::map(fetch, clean_names)
     fetch_df <- dplyr::bind_rows(fetch, .id = "level")
     fetch_df$year <- year
     fetch_df$level <- as.factor(fetch_df$level)
     fetch_df <- dplyr::select(
-        fetch_df, tidyselect::all_of(c("year", "level", "state", "county", "geoid")),
+        fetch_df,
+        tidyselect::all_of(c("year", "level", "state", "county", "geoid")),
         tidyselect::everything()
     )
     fetch_df
@@ -305,14 +525,27 @@ multi_geo_decennial <- function(table, year = endyears[["decennial"]],
 
 ############ PREP ----
 
-multi_geo_prep <- function(src,
-                           table, year, towns, regions,
-                           counties, state, neighborhoods,
-                           tracts, blockgroups,
-                           pumas, msa,
-                           us, new_england,
-                           nhood_name, nhood_geoid,
-                           dataset, verbose, key) {
+multi_geo_prep <- function(
+    src,
+    table,
+    year,
+    towns,
+    regions,
+    counties,
+    state,
+    neighborhoods,
+    tracts,
+    blockgroups,
+    pumas,
+    msa,
+    us,
+    new_england,
+    nhood_name,
+    nhood_geoid,
+    dataset,
+    verbose,
+    key
+) {
     ## ERROR & META HANDLING ----
     # check dataset
     NCHAR_TRACT <- 11
@@ -323,13 +556,15 @@ multi_geo_prep <- function(src,
     # check whether to use COGs--true if src == acs & year >= 2022
     # check state, convert / copy to fips
     if (is.null(state) | length(state) > 1) {
-        cli::cli_abort("Must supply a single state by name, abbreviation, or FIPS code.",
+        cli::cli_abort(
+            "Must supply a single state by name, abbreviation, or FIPS code.",
             call = parent.frame()
         )
     }
     state_fips <- get_state_fips(state)
     if (is.null(state_fips)) {
-        cli::cli_abort("{state} is not a valid state name, abbreviation, or FIPS code.",
+        cli::cli_abort(
+            "{state} is not a valid state name, abbreviation, or FIPS code.",
             call = parent.frame()
         )
     }
@@ -338,7 +573,8 @@ multi_geo_prep <- function(src,
     # check key
     key <- check_census_key(key)
     if (is.logical(key) && !key) {
-        cli::cli_abort("Must supply an API key. See the docs on where to store it.",
+        cli::cli_abort(
+            "Must supply an API key. See the docs on where to store it.",
             call = parent.frame()
         )
     }
@@ -349,7 +585,8 @@ multi_geo_prep <- function(src,
 
     if (is.logical(dataset_title) && !dataset_title) {
         cli::cli_abort(
-            c("Dataset {dataset} for year {year} is not available in the API.",
+            c(
+                "Dataset {dataset} for year {year} is not available in the API.",
                 "i" = "Check {.var cb_avail} to see what combinations of years and datasets are available."
             ),
             call = parent.frame()
@@ -365,7 +602,8 @@ multi_geo_prep <- function(src,
         }
         # msg <- rlang::set_names(c(sprintf("Try looking through the corresponding {.var %s_vars} dataset", src), digits_msg), "i")
         cli::cli_abort(
-            c("Table {table} for {year} {dataset} is not available in the API.",
+            c(
+                "Table {table} for {year} {dataset} is not available in the API.",
                 "i" = "Try calling {.fn tidycensus::load_variables} to see what variables are available."
             ),
             call = parent.frame()
@@ -374,7 +612,8 @@ multi_geo_prep <- function(src,
 
     # check for nhood_geoid---needs to be explicitly provided now
     if (!is.null(neighborhoods) & !is.character(nhood_geoid)) {
-        cli::cli_abort(c("The default value of {.arg nhood_geoid} has been removed. To get neighborhood aggregations, please supply {.arg nhood_geoid} explicitly.",
+        cli::cli_abort(c(
+            "The default value of {.arg nhood_geoid} has been removed. To get neighborhood aggregations, please supply {.arg nhood_geoid} explicitly.",
             "i" = "Note that these columns should now be given as strings, not bare names."
         ))
     }
@@ -387,15 +626,21 @@ multi_geo_prep <- function(src,
 
     # check number of characters in fips codes
     if (!check_fips_nchar(tracts, NCHAR_TRACT)) {
-        cli::cli_warn("FIPS codes for tracts should have {NCHAR_TRACT} digits, not {nchar(tracts)[1]}; tracts will be dropped.")
+        cli::cli_warn(
+            "FIPS codes for tracts should have {NCHAR_TRACT} digits, not {nchar(tracts)[1]}; tracts will be dropped."
+        )
         tracts <- NULL
     }
     if (!check_fips_nchar(blockgroups, NCHAR_BG)) {
-        cli::cli_warn("FIPS codes for block groups should have {NCHAR_BG} digits, not {nchar(blockgroups)[1]}; block groups will be dropped.")
+        cli::cli_warn(
+            "FIPS codes for block groups should have {NCHAR_BG} digits, not {nchar(blockgroups)[1]}; block groups will be dropped."
+        )
         blockgroups <- NULL
     }
     if (!check_fips_nchar(pumas, NCHAR_PUMA)) {
-        cli::cli_warn("FIPS codes for PUMAs should have {NCHAR_PUMA} digits, not {nchar(pumas)[1]}; PUMAs will be dropped.")
+        cli::cli_warn(
+            "FIPS codes for PUMAs should have {NCHAR_PUMA} digits, not {nchar(pumas)[1]}; PUMAs will be dropped."
+        )
         pumas <- NULL
     }
 
@@ -409,7 +654,9 @@ multi_geo_prep <- function(src,
 
         valid <- any(unlist(nhood_valid_fips))
         if (!valid) {
-            cli::cli_alert_warning("FIPS codes for neighborhoods didn't match either tracts or block groups; neighborhoods will be dropped.")
+            cli::cli_alert_warning(
+                "FIPS codes for neighborhoods didn't match either tracts or block groups; neighborhoods will be dropped."
+            )
             neighborhoods <- NULL
             nhood_valid_fips <- NULL
             nhood_is_tract <- NULL
@@ -418,7 +665,6 @@ multi_geo_prep <- function(src,
         nhood_valid_fips <- NULL
         nhood_is_tract <- NULL
     }
-
 
     ## PRINTOUTS ----
     if (verbose) {

@@ -11,21 +11,29 @@ test_that("calc_shares retains grouping", {
 })
 
 test_that("calc_shares handles null moe", {
-    edu_est <- edu_brk |>
+    edu <- edu_brk()
+    edu_est <- edu |>
         dplyr::select(-moe) |>
         calc_shares(name, group = edu_level, denom = "ages25plus")
-    edu_moe <- edu_brk |>
+    edu_moe <- edu |>
         calc_shares(name, group = edu_level, denom = "ages25plus", moe = moe)
     expect_equal(edu_est$share, edu_moe$share)
 })
 
 test_that("calc_shares handles ... and group_by", {
-    edu1 <- edu_brk |>
+    edu <- edu_brk()
+    edu1 <- edu |>
         dplyr::group_by(region, name) |>
         calc_shares(group = edu_level, denom = "ages25plus", moe = moe)
-    edu2 <- edu_brk |>
-        calc_shares(region, name, group = edu_level, denom = "ages25plus", moe = moe)
-    edu3 <- edu_brk |>
+    edu2 <- edu |>
+        calc_shares(
+            region,
+            name,
+            group = edu_level,
+            denom = "ages25plus",
+            moe = moe
+        )
+    edu3 <- edu |>
         dplyr::group_by(region) |>
         calc_shares(name, group = edu_level, denom = "ages25plus", moe = moe)
 
@@ -34,7 +42,7 @@ test_that("calc_shares handles ... and group_by", {
 })
 
 test_that("calc_shares returns 1 NA share per name", {
-    edu <- edu_brk |>
+    edu <- edu_brk() |>
         dplyr::group_by(region, name) |>
         calc_shares(group = edu_level, denom = "ages25plus", moe = moe)
     n_names <- length(unique(edu$name))
@@ -42,7 +50,13 @@ test_that("calc_shares returns 1 NA share per name", {
 })
 
 test_that("calc_shares checks for denominator in grouping variable", {
-    expect_silent(calc_shares(edu_brk, name, group = edu_level, denom = "ages25plus"))
-    expect_error(calc_shares(edu_brk, name, group = edu_level, denom = "adults"))
-    expect_error(calc_shares(edu_brk, name, group = edu_level))
+    edu <- edu_brk()
+    expect_silent(calc_shares(
+        edu,
+        name,
+        group = edu_level,
+        denom = "ages25plus"
+    ))
+    expect_error(calc_shares(edu, name, group = edu_level, denom = "adults"))
+    expect_error(calc_shares(edu, name, group = edu_level))
 })

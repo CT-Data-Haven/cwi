@@ -4,7 +4,10 @@ county_x_state <- function(st, counties) {
         counties <- "all"
     }
     # take state code, name, or abbrev
-    out <- dplyr::filter(tidycensus::fips_codes, state_code == st | state_name == st | state == st)
+    out <- dplyr::filter(
+        tidycensus::fips_codes,
+        state_code == st | state_name == st | state == st
+    )
     out$county_geoid <- paste0(out$state_code, out$county_code)
     if (!identical(counties, "all")) {
         out <- dplyr::filter(out, county_geoid %in% counties)
@@ -12,7 +15,11 @@ county_x_state <- function(st, counties) {
     out <- dplyr::select(out, state = state_name, county_geoid, county)
     # TODO: hopefully calling fix_cogs works with census api
     if (st == "09") {
-        out$county <- ifelse(grepl("^091", out$county_geoid), paste(out$county, "COG"), out$county) # if cog, paste COG on name
+        out$county <- ifelse(
+            grepl("^091", out$county_geoid),
+            paste(out$county, "COG"),
+            out$county
+        ) # if cog, paste COG on name
     }
     # out$county <- fix_cogs(out$county)
     out
@@ -58,7 +65,9 @@ get_county_fips <- function(state, counties, use_cogs) {
         }
         counties <- dplyr::case_when(
             grepl("^\\d{3}$", counties) ~ paste0(state, counties),
-            !grepl("\\d", counties) & !grepl(" County$", counties) & !use_cogs ~ paste(counties, "County"),
+            !grepl("\\d", counties) &
+                !grepl(" County$", counties) &
+                !use_cogs ~ paste(counties, "County"),
             TRUE ~ counties
         )
         # counties <- fix_cogs(counties)
@@ -70,7 +79,9 @@ get_county_fips <- function(state, counties, use_cogs) {
         matches <- unique(rbind(cty_from_name, cty_from_fips))
         mismatch <- setdiff(counties, c(matches$county, matches$county_geoid))
         if (length(mismatch) > 0) {
-            cli::cli_warn("Some counties you requested didn't match for the state {state}: {mismatch}")
+            cli::cli_warn(
+                "Some counties you requested didn't match for the state {state}: {mismatch}"
+            )
         }
 
         counties <- matches$county_geoid
@@ -83,8 +94,12 @@ get_county_fips <- function(state, counties, use_cogs) {
         }
     }
     if (use_cogs) {
-        cli::cli_inform(c("i" = "Note that starting with the 2022 release, ACS data uses COGs instead of counties."),
-            .frequency = "once", .frequency_id = "cog"
+        cli::cli_inform(
+            c(
+                "i" = "Note that starting with the 2022 release, ACS data uses COGs instead of counties."
+            ),
+            .frequency = "once",
+            .frequency_id = "cog"
         )
     }
     counties

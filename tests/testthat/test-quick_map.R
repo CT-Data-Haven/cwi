@@ -15,7 +15,10 @@ test_that("quick_map successful calls return ggplots", {
 
     # each successfully return ggplot
     expect_s3_class(quick_map(town_df), "gg")
-    expect_s3_class(quick_map(hood_df, level = "neighborhood", city = "New Haven"), "gg")
+    expect_s3_class(
+        quick_map(hood_df, level = "neighborhood", city = "New Haven"),
+        "gg"
+    )
     expect_s3_class(quick_map(tract_df, name = geoid, level = "tract"), "gg")
 })
 
@@ -41,11 +44,24 @@ test_that("quick_map matches neighborhoods and city names", {
     expect_error(quick_map(hood_df, level = "neighborhood", city = NULL))
 
     # using a city name that doesn't have shapefile associated
-    expect_error(quick_map(hood_df, level = "neighborhood", city = "Hamden"), "hamden_sf")
+    expect_error(
+        quick_map(hood_df, level = "neighborhood", city = "Hamden"),
+        "hamden_sf"
+    )
 
     # using a shapefile that doesn't match data—only match is Downtown
-    expect_error(quick_map(hood_df, level = "neighborhood", city = "Bridgeport"), "is nearly empty")
+    expect_error(
+        quick_map(hood_df, level = "neighborhood", city = "Bridgeport"),
+        "is nearly empty"
+    )
     # using a shapefile with no matches—filter out Downtown
-    expect_error(quick_map(hood_df |>
-        dplyr::filter(name != "Downtown"), level = "neighborhood", city = "Bridgeport"), "is empty")
+    expect_error(
+        quick_map(
+            hood_df |>
+                dplyr::filter(name != "Downtown"),
+            level = "neighborhood",
+            city = "Bridgeport"
+        ),
+        "is empty"
+    )
 })

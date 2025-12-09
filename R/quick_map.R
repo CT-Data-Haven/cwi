@@ -26,28 +26,36 @@
 #' @seealso [ggplot2::geom_sf()]
 #' @keywords quick-plotting-functions
 #' @export
-quick_map <- function(data,
-                      name = name,
-                      value = value,
-                      level = c("town", "neighborhood", "tract"),
-                      city = NULL,
-                      n = 5,
-                      palette = "GnBu",
-                      title = NULL,
-                      ...) {
+quick_map <- function(
+    data,
+    name = name,
+    value = value,
+    level = c("town", "neighborhood", "tract"),
+    city = NULL,
+    n = 5,
+    palette = "GnBu",
+    title = NULL,
+    ...
+) {
     # supply city if it's neighborhoods
     level <- rlang::arg_match(level)
 
-    if (level == "neighborhood" & is.null(city)) cli::cli_abort("If using neighborhoods, please supply a city name.")
+    if (level == "neighborhood" & is.null(city)) {
+        cli::cli_abort("If using neighborhoods, please supply a city name.")
+    }
 
     name_lbl <- rlang::as_label(rlang::enquo(name))
     value_lbl <- rlang::as_label(rlang::enquo(value))
 
     if (level == "neighborhood") {
-        shape_name <- sprintf("%s_sf", tolower(stringr::str_replace_all(city, "\\s", "_")))
+        shape_name <- sprintf(
+            "%s_sf",
+            tolower(stringr::str_replace_all(city, "\\s", "_"))
+        )
 
         if (!exists(shape_name)) {
-            cli::cli_abort(c("{.var {shape_name}} wasn't found",
+            cli::cli_abort(c(
+                "{.var {shape_name}} wasn't found",
                 "i" = "Your shapefile should either be part of this package or available in your working environment."
             ))
         }
@@ -63,25 +71,37 @@ quick_map <- function(data,
     data <- dplyr::ungroup(data)
     data <- dplyr::mutate(data, dplyr::across({{ name }}, as.character))
     shape <- dplyr::mutate(shape, name = as.character(name))
-    shape <- dplyr::inner_join(shape, data, by = stats::setNames(name_lbl, "name"))
+    shape <- dplyr::inner_join(
+        shape,
+        data,
+        by = stats::setNames(name_lbl, "name")
+    )
 
     requested_locs <- dplyr::pull(data, {{ name }})
     matched_locs <- unique(shape[["name"]])
     unmatched_locs <- setdiff(requested_locs, matched_locs)
     if (length(matched_locs) < 2) {
         if (length(matched_locs) == 0) {
-            cli::cli_abort("After merging with your data, this sf object is empty. Are city and level set properly?")
+            cli::cli_abort(
+                "After merging with your data, this sf object is empty. Are city and level set properly?"
+            )
         } else {
-            cli::cli_abort("After merging with your data, this sf object is nearly empty. Are city and level set properly?")
+            cli::cli_abort(
+                "After merging with your data, this sf object is nearly empty. Are city and level set properly?"
+            )
         }
     }
     # check for unmatched locations
     if (length(unmatched_locs) > 0) {
-        cli::cli_alert_warning("Some locations in your data weren't found in the shapefile {.var {shape_name}}: {.val {unmatched_locs}}")
+        cli::cli_alert_warning(
+            "Some locations in your data weren't found in the shapefile {.var {shape_name}}: {.val {unmatched_locs}}"
+        )
     }
     if (length(matched_locs) < n) {
         n <- ceiling(sqrt(length(matched_locs)))
-        cli::cli_alert_info("`n` is too large compared to the number of locations; setting `n` to {n} instead.")
+        cli::cli_alert_info(
+            "`n` is too large compared to the number of locations; setting `n` to {n} instead."
+        )
     }
 
     # make shape$name, data$name_var characters if not already
@@ -93,6 +113,8 @@ quick_map <- function(data,
     p <- p + ggplot2::theme_minimal()
     # p <- p + ggplot2::coord_sf(ndiscr = FALSE)
     p <- p + ggplot2::labs(fill = value_lbl)
-    if (!is.null(title)) p <- p + ggplot2::labs(title = title)
+    if (!is.null(title)) {
+        p <- p + ggplot2::labs(title = title)
+    }
     p
 }

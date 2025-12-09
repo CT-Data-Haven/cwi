@@ -8,7 +8,14 @@ test_that("fix_cogs checks data types", {
 })
 
 test_that("fix_cogs correctly makes replacements", {
-    x1 <- c("Capitol COG", "Capitol Region", "New Haven", "Greater Bridgeport", "Greater Bridgeport COG", "Northwest Hills COG")
+    x1 <- c(
+        "Capitol COG",
+        "Capitol Region",
+        "New Haven",
+        "Greater Bridgeport",
+        "Greater Bridgeport COG",
+        "Northwest Hills COG"
+    )
     cogs <- fix_cogs(x1)
     expect_true("Capitol Region COG" %in% cogs)
     expect_true("New Haven" %in% cogs)

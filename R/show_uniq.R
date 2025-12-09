@@ -24,7 +24,9 @@
 #' @export
 show_uniq <- function(data, col) {
     values <- unique(dplyr::pull(data, {{ col }}))
-    lbls <- purrr::imap_chr(values, function(lbl, id) sprintf("% 3d: %s", id, lbl))
+    lbls <- purrr::imap_chr(values, function(lbl, id) {
+        sprintf("% 3d: %s", id, lbl)
+    })
     cat("\n")
     cat(prettycols(lbls), fill = TRUE)
     cat("\n")

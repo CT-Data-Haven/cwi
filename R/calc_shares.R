@@ -26,26 +26,32 @@
 #'
 #' @keywords augmenting-functions
 #' @export
-calc_shares <- function(data,
-                        ...,
-                        group = group,
-                        denom = "total_pop",
-                        value = estimate,
-                        moe = NULL,
-                        digits = 2) {
+calc_shares <- function(
+    data,
+    ...,
+    group = group,
+    denom = "total_pop",
+    value = estimate,
+    moe = NULL,
+    digits = 2
+) {
     val_var <- rlang::enquo(value)
     grp_var <- rlang::enquo(group)
 
     # check for denom in grp_var
     if (!denom %in% data[[rlang::quo_name(grp_var)]]) {
-        cli::cli_abort("The denominator {.val denom} doesn\'t seem to be in {.arg denom}.")
+        cli::cli_abort(
+            "The denominator {.val denom} doesn\'t seem to be in {.arg denom}."
+        )
     }
 
     # should be grouped and/or have id
     if (dplyr::is_grouped_df(data)) {
         group_cols <- c(dplyr::groups(data), rlang::quos(...))
     } else if (length(rlang::quos(...)) == 0) {
-        cli::cli_abort("Must supply a grouped data frame and/or give column names in {.arg ...}")
+        cli::cli_abort(
+            "Must supply a grouped data frame and/or give column names in {.arg ...}"
+        )
     } else {
         group_cols <- rlang::quos(...)
     }
@@ -73,8 +79,22 @@ calc_shares <- function(data,
         df_left <- dplyr::rename(df_left, ZZZ__moe = {{ moe }})
 
         calcs <- dplyr::inner_join(df_left, df_right, by = join_names)
-        calcs <- dplyr::mutate(calcs, share = round({{ value }} / ZZZ__val, digits = digits))
-        calcs <- dplyr::mutate(calcs, sharemoe = round(tidycensus::moe_prop({{ value }}, ZZZ__val, {{ moe }}, ZZZ__moe), digits = digits + 1))
+        calcs <- dplyr::mutate(
+            calcs,
+            share = round({{ value }} / ZZZ__val, digits = digits)
+        )
+        calcs <- dplyr::mutate(
+            calcs,
+            sharemoe = round(
+                tidycensus::moe_prop(
+                    {{ value }},
+                    ZZZ__val,
+                    {{ moe }},
+                    ZZZ__moe
+                ),
+                digits = digits + 1
+            )
+        )
 
         denom_rows <- dplyr::select(
             calcs,
@@ -84,7 +104,10 @@ calc_shares <- function(data,
         )
     } else {
         calcs <- dplyr::inner_join(df_left, df_right, by = join_names)
-        calcs <- dplyr::mutate(calcs, share = round({{ value }} / ZZZ__val, digits = digits))
+        calcs <- dplyr::mutate(
+            calcs,
+            share = round({{ value }} / ZZZ__val, digits = digits)
+        )
         denom_rows <- dplyr::select(
             calcs,
             !!!join_cols,
@@ -97,7 +120,10 @@ calc_shares <- function(data,
     numer_rows <- dplyr::select(calcs, -dplyr::starts_with("ZZZ__"))
     out <- dplyr::bind_rows(denom_rows, numer_rows)
     out <- dplyr::mutate(out, {{ group }} := forcats::as_factor({{ group }}))
-    out <- dplyr::mutate(out, {{ group }} := forcats::fct_relevel({{ group }}, denom))
+    out <- dplyr::mutate(
+        out,
+        {{ group }} := forcats::fct_relevel({{ group }}, denom)
+    )
     out <- dplyr::arrange(out, !!!join_cols, {{ group }})
     out <- dplyr::relocate(out, !!!join_cols, {{ group }})
 

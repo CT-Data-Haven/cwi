@@ -36,8 +36,14 @@ check_cb_avail <- function() {
     surveys <- list(
         acs = c("acs1", "acs3", "acs5"),
         dec = c(
-            "ddhca", "ddhcb", "dhc", "pl",
-            "sf1", "sf2", "sf3", "sf4"
+            "ddhca",
+            "ddhcb",
+            "dhc",
+            "pl",
+            "sf1",
+            "sf2",
+            "sf3",
+            "sf4"
         )
     )
     surveys <- tibble::enframe(surveys, name = "program", value = "survey")
@@ -48,10 +54,21 @@ check_cb_avail <- function() {
     avail <- purrr::map(avail, cb_meta_list)
     avail <- purrr::compact(avail)
     avail <- dplyr::bind_rows(avail)
-    avail <- tidyr::unnest_wider(avail, dataset, names_sep = "", names_repair = "unique")
+    avail <- tidyr::unnest_wider(
+        avail,
+        dataset,
+        names_sep = "",
+        names_repair = "unique"
+    )
     # drop survey subsets
     avail <- avail[is.na(avail$dataset3), ]
-    avail <- dplyr::select(avail, vintage, program = dataset1, survey = dataset2, title)
+    avail <- dplyr::select(
+        avail,
+        vintage,
+        program = dataset1,
+        survey = dataset2,
+        title
+    )
     avail <- dplyr::semi_join(avail, surveys, by = c("program", "survey"))
     avail <- dplyr::arrange(avail, vintage, program, survey)
     avail
@@ -80,16 +97,27 @@ cb_meta_list <- function(x) {
 check_qwi_avail <- function() {
     # scrape start & end years per state from html table
     # get fips code instead of state abbrevs
-    avail <- safe_read_avail("https://ledextract.ces.census.gov/loading_status.html", "html")
+    avail <- safe_read_avail(
+        "https://ledextract.ces.census.gov/loading_status.html",
+        "html"
+    )
     avail <- rvest::html_table(avail)[[1]]
     avail <- clean_names(avail)
-    avail <- dplyr::mutate(avail, dplyr::across(c(start_quarter, end_quarter), function(x) {
-        x <- stringr::str_extract(x, "\\d{4}")
-        as.numeric(x)
-    }))
+    avail <- dplyr::mutate(
+        avail,
+        dplyr::across(c(start_quarter, end_quarter), function(x) {
+            x <- stringr::str_extract(x, "\\d{4}")
+            as.numeric(x)
+        })
+    )
     states <- dplyr::distinct(tidycensus::fips_codes, state, state_code)
     avail <- dplyr::inner_join(avail, states, by = "state")
-    avail <- dplyr::select(avail, state_code, start_year = start_quarter, end_year = end_quarter)
+    avail <- dplyr::select(
+        avail,
+        state_code,
+        start_year = start_quarter,
+        end_year = end_quarter
+    )
     avail <- dplyr::arrange(avail, state_code)
     avail
 }
@@ -107,6 +135,8 @@ safe_read_avail <- function(url, type) {
     if (is.null(res$error)) {
         res$result
     } else {
-        cli::cli_abort("Unable to get available data from {.url {url}}. Check the Census API.")
+        cli::cli_abort(
+            "Unable to get available data from {.url {url}}. Check the Census API."
+        )
     }
 }

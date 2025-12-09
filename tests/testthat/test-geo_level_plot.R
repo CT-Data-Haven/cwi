@@ -15,5 +15,8 @@ test_that("geo_level_plot handles tidyeval", {
         pop = stats::rnorm(10),
         geo_lvl = sample(LETTERS[1:3], 10, replace = TRUE)
     )
-    expect_s3_class(geo_level_plot(df, name = location, value = pop, level = geo_lvl), "gg")
+    expect_s3_class(
+        geo_level_plot(df, name = location, value = pop, level = geo_lvl),
+        "gg"
+    )
 })

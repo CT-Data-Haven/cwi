@@ -36,15 +36,26 @@ fetch <- purrr::map(paths, get_bls, headers) |>
     purrr::map(readr::read_tsv)
 
 # laus measures: employed, unemployed, etc
-laus_measures <- dplyr::filter(fetch[["laus_measures"]], measure_code %in% c("03", "04", "05", "06"))
+laus_measures <- dplyr::filter(
+    fetch[["laus_measures"]],
+    measure_code %in% c("03", "04", "05", "06")
+)
 
 # laus codes: area names & codes
 laus_codes <- fetch[["laus_codes"]] |>
     dplyr::mutate(state_code = substr(area_code, 3, 4)) |>
-    dplyr::left_join(dplyr::distinct(tidycensus::fips_codes, state_code, state), by = "state_code") |>
+    dplyr::left_join(
+        dplyr::distinct(tidycensus::fips_codes, state_code, state),
+        by = "state_code"
+    ) |>
     dplyr::filter(area_type_code %in% c("A", "F", "G", "H")) |>
     # dplyr::select(area_type_code, area_code, area_text, state_code) |>
-    dplyr::mutate(area = trimws(stringr::str_extract(area_text, "(([A-Z][a-z\\-\\.]+\\s?)|of\\s?)+"))) |>
+    dplyr::mutate(
+        area = trimws(stringr::str_extract(
+            area_text,
+            "(([A-Z][a-z\\-\\.]+\\s?)|of\\s?)+"
+        ))
+    ) |>
     dplyr::select(type = area_type_code, state_code, area, area_code)
 
 # cpi series: seasonal, unseasonal, urban, etc

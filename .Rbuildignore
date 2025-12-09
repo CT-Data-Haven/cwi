@@ -26,3 +26,5 @@ migrate
 ^report$
 ^flags$
 vignettes/.quarto
+^\.vscode$
+^[.]?air[.]toml$

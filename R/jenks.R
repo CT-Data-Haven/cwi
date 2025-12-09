@@ -16,14 +16,31 @@
 #' @keywords utils
 #' @export
 jenks <- function(x, n = 5, true_jenks = FALSE, labels = NULL, ...) {
-    if (!is.numeric(x)) cli::cli_abort("{.var x} must be numeric.")
-    if (n < 2) cli::cli_abort("{.var n} must be 2 or more.")
-    if (n >= length(x)) cli::cli_abort("{.var n} must be less than the number of values to cut.")
-    if (n >= length(unique(x))) cli::cli_warn(c("{.var n} should be less than the number of unique values to cut.", "Breaks might not be meaningful."))
+    if (!is.numeric(x)) {
+        cli::cli_abort("{.var x} must be numeric.")
+    }
+    if (n < 2) {
+        cli::cli_abort("{.var n} must be 2 or more.")
+    }
+    if (n >= length(x)) {
+        cli::cli_abort(
+            "{.var n} must be less than the number of values to cut."
+        )
+    }
+    if (n >= length(unique(x))) {
+        cli::cli_warn(c(
+            "{.var n} should be less than the number of unique values to cut.",
+            "Breaks might not be meaningful."
+        ))
+    }
     if (true_jenks) {
-        brks <- unique(suppressWarnings(classInt::classIntervals(x, n = n, style = "jenks")$brk))
+        brks <- unique(suppressWarnings(
+            classInt::classIntervals(x, n = n, style = "jenks")$brk
+        ))
     } else {
-        brks <- unique(suppressWarnings(classInt::classIntervals(x, n = n, style = "fisher")$brk))
+        brks <- unique(suppressWarnings(
+            classInt::classIntervals(x, n = n, style = "fisher")$brk
+        ))
     }
     cut(x, include.lowest = TRUE, breaks = brks, labels = labels, ...)
 }

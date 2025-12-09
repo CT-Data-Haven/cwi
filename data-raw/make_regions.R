@@ -4,7 +4,9 @@
 town2cog <- tigris::county_subdivisions(state = "09", year = 2022, cb = TRUE) |>
     sf::st_drop_geometry() |>
     dplyr::select(name = NAMELSADCO, town = NAME) |>
-    dplyr::mutate(name = stringr::str_replace(name, "Planning Region", "COG")) |>
+    dplyr::mutate(
+        name = stringr::str_replace(name, "Planning Region", "COG")
+    ) |>
     dplyr::mutate(town = stringr::str_remove(town, " town$")) |>
     dplyr::filter(!grepl("not defined", town))
 

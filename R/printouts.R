@@ -4,8 +4,33 @@ bold_hdr <- function(place_name, place_type) {
 }
 
 ######## CENSUS: ACS + DECENNIAL ----
-geo_printout <- function(neighborhoods, tracts, blockgroups, towns, regions, pumas, counties, all_counties, drop_counties, state, msa, us, new_england, nhood_type, use_cogs) {
-    geos <- tibble::lst(neighborhoods, tracts, blockgroups, towns, regions, pumas, counties, state)
+geo_printout <- function(
+    neighborhoods,
+    tracts,
+    blockgroups,
+    towns,
+    regions,
+    pumas,
+    counties,
+    all_counties,
+    drop_counties,
+    state,
+    msa,
+    us,
+    new_england,
+    nhood_type,
+    use_cogs
+) {
+    geos <- tibble::lst(
+        neighborhoods,
+        tracts,
+        blockgroups,
+        towns,
+        regions,
+        pumas,
+        counties,
+        state
+    )
     if (drop_counties) {
         geos[["counties"]] <- NULL
     }
@@ -58,7 +83,12 @@ geo_printout <- function(neighborhoods, tracts, blockgroups, towns, regions, pum
     }
     geos <- purrr::compact(geos)
     geos <- purrr::imap(geos, bold_hdr)
-    geos <- purrr::map(geos, stringr::str_replace_all, "(?<!\\{)(P|p)uma", "PUMA")
+    geos <- purrr::map(
+        geos,
+        stringr::str_replace_all,
+        "(?<!\\{)(P|p)uma",
+        "PUMA"
+    )
     cli::cli_ul(items = geos, .close = TRUE)
 
     # alert about using tracts for nhoods
@@ -66,7 +96,9 @@ geo_printout <- function(neighborhoods, tracts, blockgroups, towns, regions, pum
         # should only eval true for one item in list, although i guess theoretically that might be wrong...
         nhood_type <- purrr::keep(nhood_type, isTRUE)
         # message(cli::format_message(c("i" = "Assuming that neighborhood GEOIDs are for {names(nhood_type)}.")))
-        cli::cli_alert_info("Assuming that neighborhood GEOIDs are for {names(nhood_type)}.")
+        cli::cli_alert_info(
+            "Assuming that neighborhood GEOIDs are for {names(nhood_type)}."
+        )
     }
 }
 

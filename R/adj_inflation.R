@@ -25,12 +25,14 @@
 #' @rdname inflation
 #' @keywords augmenting-functions
 #' @export
-adj_inflation <- function(data,
-                          value,
-                          year,
-                          base_year = endyears[["acs"]],
-                          verbose = TRUE,
-                          key = NULL) {
+adj_inflation <- function(
+    data,
+    value,
+    year,
+    base_year = endyears[["acs"]],
+    verbose = TRUE,
+    key = NULL
+) {
     if (missing(value) || missing(year)) {
         cli::cli_abort("Must supply column names for both value and year.")
     }
@@ -46,11 +48,19 @@ adj_inflation <- function(data,
     cpi <- dplyr::select(cpi, year = date, adj_factor)
 
     adjusted <- dplyr::mutate(data, dplyr::across({{ year }}, as.numeric))
-    adjusted <- dplyr::left_join(adjusted, cpi, by = stats::setNames("year", yr_lbl))
-    adjusted <- dplyr::mutate(adjusted, dplyr::across({{ value }},
-        list(adj = \(x) x / adj_factor),
-        .names = "{.fn}_{.col}"
-    ))
+    adjusted <- dplyr::left_join(
+        adjusted,
+        cpi,
+        by = stats::setNames("year", yr_lbl)
+    )
+    adjusted <- dplyr::mutate(
+        adjusted,
+        dplyr::across(
+            {{ value }},
+            list(adj = \(x) x / adj_factor),
+            .names = "{.fn}_{.col}"
+        )
+    )
     adjusted
 }
 
@@ -67,12 +77,14 @@ adj_inflation <- function(data,
 #' @keywords augmenting-functions
 #' @export
 #' @rdname inflation
-get_cpi <- function(years,
-                    base = endyears[["acs"]],
-                    seasonal = FALSE,
-                    monthly = FALSE,
-                    verbose = TRUE,
-                    key = NULL) {
+get_cpi <- function(
+    years,
+    base = endyears[["acs"]],
+    seasonal = FALSE,
+    monthly = FALSE,
+    verbose = TRUE,
+    key = NULL
+) {
     # either use monthly with base that can be coerced to date, or use annual
     if (monthly) {
         if (!inherits(base, "Date")) {
@@ -88,15 +100,23 @@ get_cpi <- function(years,
         base <- paste(base, "01", sep = "-")
         base <- as.Date(base, optional = TRUE)
         if (any(is.na(base))) {
-            cli::cli_abort("If getting monthly values, {.arg base} should be a date or easily coerced to one.")
+            cli::cli_abort(
+                "If getting monthly values, {.arg base} should be a date or easily coerced to one."
+            )
         }
     } else {
         base <- suppressWarnings(as.numeric(base))
         if (any(is.na(base))) {
-            cli::cli_abort("If getting annual values, {.arg base} should be a number or easily coerced to one.")
+            cli::cli_abort(
+                "If getting annual values, {.arg base} should be a number or easily coerced to one."
+            )
         }
     }
-    series <- get_cpi_series(seasonal = seasonal, monthly_period = TRUE, current = TRUE)
+    series <- get_cpi_series(
+        seasonal = seasonal,
+        monthly_period = TRUE,
+        current = TRUE
+    )
     if (monthly) {
         base_year <- as.numeric(format(base, "%Y"))
     } else {
@@ -109,14 +129,20 @@ get_cpi <- function(years,
     cpi$value <- as.numeric(cpi$value)
 
     if (monthly) {
-        cpi$date <- as.Date(paste(cpi$year, cpi$periodName, "01"), format = "%Y %B %d")
+        cpi$date <- as.Date(
+            paste(cpi$year, cpi$periodName, "01"),
+            format = "%Y %B %d"
+        )
     } else {
         cpi$date <- as.numeric(cpi$year)
         cpi <- dplyr::group_by(cpi, date)
         cpi <- dplyr::summarise(cpi, value = mean(value))
         cpi <- dplyr::ungroup(cpi)
     }
-    cpi <- dplyr::mutate(cpi, adj_factor = round(value / value[date == base], digits = 3))
+    cpi <- dplyr::mutate(
+        cpi,
+        adj_factor = round(value / value[date == base], digits = 3)
+    )
     cpi <- dplyr::select(cpi, date, cpi = value, adj_factor)
     cpi <- dplyr::arrange(cpi, date)
     cpi
@@ -157,7 +183,9 @@ cpi_yrs <- function(year, base_year) {
     max_yrs <- 10
     years <- seq(startyear, endyear, by = 1)
     if (length(years) > max_yrs) {
-        cli::cli_alert_info("The API can only get {max_yrs} years of data at once; making multiple calls, but this might take a little longer.")
+        cli::cli_alert_info(
+            "The API can only get {max_yrs} years of data at once; making multiple calls, but this might take a little longer."
+        )
     }
     years <- split_n(years, max_yrs)
     return(years)
@@ -166,7 +194,8 @@ cpi_yrs <- function(year, base_year) {
 cpi_prep <- function(series, years, catalog, key) {
     key <- check_bls_key(key)
     if (is.logical(key) && !key) {
-        cli::cli_abort("Must supply an API key. See the docs on where to store it.",
+        cli::cli_abort(
+            "Must supply an API key. See the docs on where to store it.",
             call = parent.frame()
         )
     }

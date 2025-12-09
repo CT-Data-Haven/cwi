@@ -1,6 +1,6 @@
 script;input;output
 acs_demo;;gnh_tenure education
-census_vars;;acs_vars decennial_vars10 decennial_vars
+census_vars;R/sysdata.rda;acs_vars decennial_vars10 decennial_vars
 ct5_clusters;data-raw/files/5CT_groups_2010.csv;ct5_clusters
 geo_sf;data-raw/files/all_city_nhoods.rds;town_sf new_haven_sf stamford_sf bridgeport_sf hartford_sf tract_sf tract_sf19
 internal_data;data-raw/make_bls_codes.R data-raw/make_endyears.R;R/sysdata
@@ -9,7 +9,7 @@ msas;;msa
 neighborhood_weights;;bridgeport_tracts hartford_tracts new_haven_tracts stamford_tracts
 proxy_pumas;;proxy_pumas
 regions;data-raw/files/town_region_lookup.csv;regions
-school_dists;data-raw/files/regional_school_dists.tsv;school_dists
+school_dists;;school_dists
 table_nums;;basic_table_nums ext_table_nums
 village2town;;village2town
 xwalk;;xwalk tract2town

@@ -36,18 +36,22 @@
 #' @keywords augmenting-functions
 #' @export
 #' @seealso [show_uniq()]
-add_grps <- function(data,
-                     grp_list,
-                     group = group,
-                     value = estimate,
-                     moe = NULL) {
+add_grps <- function(
+    data,
+    grp_list,
+    group = group,
+    value = estimate,
+    moe = NULL
+) {
     # grp_list should be named list of either character or numeric vectors
     if (length(names(grp_list)) == 0) {
         cli::cli_abort("{.arg grp_list} should be a named list of vectors.")
     }
     grp_types <- purrr::map_chr(grp_list, class)
     if (!all(grp_types %in% c("integer", "numeric", "character"))) {
-        cli::cli_abort("{.arg grp_list} should be a named list of character or numeric vectors.")
+        cli::cli_abort(
+            "{.arg grp_list} should be a named list of character or numeric vectors."
+        )
     }
 
     group_cols <- dplyr::groups(data)
@@ -57,17 +61,37 @@ add_grps <- function(data,
     # convert list of numeric positions to list of character labels
     grp_list_chars <- make_grps(dplyr::pull(data, {{ group }}), grp_list)
     # previously mapped over groups to filter data, but try switching to joining data frames
-    lbls_df <- tibble::enframe(grp_list_chars, name = "XX_GROUP_LABELS", value = grp_var)
+    lbls_df <- tibble::enframe(
+        grp_list_chars,
+        name = "XX_GROUP_LABELS",
+        value = grp_var
+    )
     lbls_df <- tidyr::unnest(lbls_df, cols = {{ group }})
-    lbls_df[["XX_GROUP_LABELS"]] <- forcats::as_factor(lbls_df[["XX_GROUP_LABELS"]])
+    lbls_df[["XX_GROUP_LABELS"]] <- forcats::as_factor(lbls_df[[
+        "XX_GROUP_LABELS"
+    ]])
 
-    grouped_data <- dplyr::inner_join(data, lbls_df, by = grp_var, relationship = "many-to-many")
-    grouped_data <- dplyr::group_by(grouped_data, !!!group_cols, XX_GROUP_LABELS)
+    grouped_data <- dplyr::inner_join(
+        data,
+        lbls_df,
+        by = grp_var,
+        relationship = "many-to-many"
+    )
+    grouped_data <- dplyr::group_by(
+        grouped_data,
+        !!!group_cols,
+        XX_GROUP_LABELS
+    )
 
     if (!rlang::quo_is_null(rlang::enquo(moe))) {
-        out <- dplyr::summarise(grouped_data,
-                                {{ value }} := sum({{ value }}),
-                                {{ moe }} := round(tidycensus::moe_sum(moe = {{ moe }}, estimate = {{ value }})))
+        out <- dplyr::summarise(
+            grouped_data,
+            {{ value }} := sum({{ value }}),
+            {{ moe }} := round(tidycensus::moe_sum(
+                moe = {{ moe }},
+                estimate = {{ value }}
+            ))
+        )
     } else {
         out <- dplyr::summarise(grouped_data, {{ value }} := sum({{ value }}))
     }
@@ -78,4 +102,3 @@ add_grps <- function(data,
     out <- dplyr::group_by(out, !!!group_cols)
     out
 }
-

@@ -41,7 +41,6 @@
 "decennial_vars10"
 
 
-
 #' Common ACS table numbers
 #'
 #' Lists of ACS table numbers commonly used by DataHaven. `basic_table_nums` is used for making short profiles of towns, neighborhoods, and regions, while `ext_table_nums` is used for "extended" profiles, such as neighborhood profiles distributed as PDF on the DataHaven website.
@@ -125,8 +124,6 @@ NULL
 #' @format NULL
 #' @rdname neighborhood_tracts
 "hartford_tracts19"
-
-
 
 
 #' Regions of Connecticut
@@ -289,9 +286,6 @@ NULL
 #' @source Levy, Don: Five Connecticuts 2010 Update. (2015). Produced for Siena College Research Institute and DataHaven based on original 1990 and 2000 designations from "Levy, Don, Orlando Rodriguez, and Wayne Villemez. 2004. The Changing Demographics of Connecticut - 1990 to 2000. Part 2: The Five Connecticuts. Storrs, Connecticut: University of Connecticut, The Connecticut State Data Center, Series, no. OP 2004-01."
 #' @keywords ref-datasets
 "ct5_clusters"
-
-
-
 
 
 #' ACS demo data - tenure

@@ -11,5 +11,6 @@ usethis::use_data(
     laus_codes,
     cpi_series,
     endyears,
-    internal = TRUE, overwrite = TRUE
+    internal = TRUE,
+    overwrite = TRUE
 )

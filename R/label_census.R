@@ -10,14 +10,24 @@
 #' @keywords augmenting-functions
 #' @export
 #' @rdname label_census
-label_decennial <- function(data, year = 2020, sumfile = "dhc", variable = variable) {
+label_decennial <- function(
+    data,
+    year = 2020,
+    sumfile = "dhc",
+    variable = variable
+) {
     variable_lbl <- rlang::as_label(rlang::enquo(variable))
     dec_vars <- clean_decennial_vars(year = year, sumfile = sumfile)
     dec_vars <- dplyr::select(dec_vars, name, label)
-    vars_out <- dplyr::left_join(data, dec_vars, by = stats::setNames("name", variable_lbl))
+    vars_out <- dplyr::left_join(
+        data,
+        dec_vars,
+        by = stats::setNames("name", variable_lbl)
+    )
 
     if (any(is.na(vars_out[["label"]]))) {
-        cli::cli_warn(c("Not all variables matched with decennial census labels.",
+        cli::cli_warn(c(
+            "Not all variables matched with decennial census labels.",
             i = "Check that you have the correct year and sumfile, and that this is proper decennial data."
         ))
     }
@@ -37,10 +47,15 @@ label_acs <- function(data, year = 2023, survey = "acs5", variable = variable) {
     variable_lbl <- rlang::as_label(rlang::enquo(variable))
     acs_vars <- clean_acs_vars(year = year, survey = survey)
     acs_vars <- dplyr::select(acs_vars, name, label)
-    vars_out <- dplyr::left_join(data, acs_vars, by = stats::setNames("name", variable_lbl))
+    vars_out <- dplyr::left_join(
+        data,
+        acs_vars,
+        by = stats::setNames("name", variable_lbl)
+    )
 
     if (any(is.na(vars_out[["label"]]))) {
-        cli::cli_warn(c("Not all variables matched with ACS labels.",
+        cli::cli_warn(c(
+            "Not all variables matched with ACS labels.",
             i = "Check that you have the correct year and survey, and that this is proper ACS data."
         ))
     }
@@ -83,7 +98,11 @@ dataset_available <- function(src, year, dataset) {
     # cache results of checking cb availability
     # mem_check_cb <- memoise::memoise(check_cb_avail, cache = prep_cache())
     cb_avail <- check_cb_avail()
-    avail <- cb_avail[cb_avail$vintage == year & cb_avail$program == src & cb_avail$survey == dataset, ]
+    avail <- cb_avail[
+        cb_avail$vintage == year &
+            cb_avail$program == src &
+            cb_avail$survey == dataset,
+    ]
     if (nrow(avail) == 0) {
         return(FALSE)
     } else {
@@ -102,7 +121,11 @@ pad_table <- function(table) {
 ############# GET CLEAN VARIABLE NAMES ----
 # get decennial vars by year, cached
 clean_decennial_vars <- function(year, sumfile) {
-    dec_vars <- tidycensus::load_variables(year = year, dataset = sumfile, cache = TRUE)
+    dec_vars <- tidycensus::load_variables(
+        year = year,
+        dataset = sumfile,
+        cache = TRUE
+    )
     dec_vars <- dplyr::filter(dec_vars, grepl("^(H|P|HCT|PCO|PCT)\\d+", name))
     dec_vars$label <- stringr::str_remove(dec_vars$label, "^ !!")
     dec_vars$label <- stringr::str_remove_all(dec_vars$label, ":")
@@ -111,7 +134,11 @@ clean_decennial_vars <- function(year, sumfile) {
 
 # get acs variables by year, cached
 clean_acs_vars <- function(year, survey) {
-    acs_vars <- tidycensus::load_variables(year = year, dataset = survey, cache = TRUE)
+    acs_vars <- tidycensus::load_variables(
+        year = year,
+        dataset = survey,
+        cache = TRUE
+    )
     acs_vars <- dplyr::filter(acs_vars, grepl("_\\d{3}E?$", name))
     acs_vars$label <- stringr::str_remove(acs_vars$label, "Estimate!!")
     acs_vars$label <- stringr::str_remove_all(acs_vars$label, ":")

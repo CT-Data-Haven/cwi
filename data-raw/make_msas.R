@@ -7,7 +7,13 @@ msa <- tigris::core_based_statistical_areas(year = 2020) |>
     cwi:::clean_names() |>
     dplyr::filter(lsad == "M1") |>
     dplyr::select(geoid, name) |>
-    dplyr::mutate(region = ifelse(grepl(ne_re, name), "New England", "Outside New England")) |>
+    dplyr::mutate(
+        region = ifelse(
+            grepl(ne_re, name),
+            "New England",
+            "Outside New England"
+        )
+    ) |>
     dplyr::as_tibble()
 
 usethis::use_data(msa, overwrite = TRUE)

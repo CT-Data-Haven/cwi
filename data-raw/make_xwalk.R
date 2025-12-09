@@ -25,23 +25,42 @@ blocks <- tigris::blocks("09", year = 2020) |>
     dplyr::mutate(block_grp = substr(geoid20, 1, 12)) |>
     dplyr::mutate(bgrp_ce = substring(block_grp, 6)) |> # drop later but use to join cog-based bgrps
     sf::st_drop_geometry() |>
-    dplyr::select(block = geoid20, block_grp, tract, county_fips, tractce = tractce20, bgrp_ce)
+    dplyr::select(
+        block = geoid20,
+        block_grp,
+        tract,
+        county_fips,
+        tractce = tractce20,
+        bgrp_ce
+    )
 
 pumas_sf <- list(puma20 = 2020, puma22 = 2022) |>
     purrr::map(\(x) tigris::pumas("09", year = x)) |>
     purrr::map(cwi:::clean_names) |>
-    purrr::map(dplyr::select, puma_fips = tidyselect::matches("geoid"), puma = tidyselect::matches("namelsad")) |>
+    purrr::map(
+        dplyr::select,
+        puma_fips = tidyselect::matches("geoid"),
+        puma = tidyselect::matches("namelsad")
+    ) |>
     purrr::map(dplyr::mutate, puma = stringr::str_remove(puma, " Towns?")) |>
     purrr::map(dplyr::mutate, puma = stringr::str_remove(puma, " PUMA"))
 
-town2pumas <- purrr::map(pumas_sf, \(x) sf::st_join(cwi::town_sf, x,
-    join = sf::st_intersects,
-    left = TRUE, largest = TRUE
-)) |>
+town2pumas <- purrr::map(pumas_sf, \(x) {
+    sf::st_join(
+        cwi::town_sf,
+        x,
+        join = sf::st_intersects,
+        left = TRUE,
+        largest = TRUE
+    )
+}) |>
     purrr::map(sf::st_drop_geometry) |>
     purrr::map(dplyr::select, town = name, town_fips = GEOID, puma, puma_fips)
-town2pumas$puma22 <- dplyr::rename(town2pumas$puma22, puma_cog = puma, puma_fips_cog = puma_fips)
-
+town2pumas$puma22 <- dplyr::rename(
+    town2pumas$puma22,
+    puma_cog = puma,
+    puma_fips_cog = puma_fips
+)
 
 
 msa_sf <- tigris::core_based_statistical_areas(cb = TRUE, year = 2020) |>
@@ -50,9 +69,12 @@ msa_sf <- tigris::core_based_statistical_areas(cb = TRUE, year = 2020) |>
     dplyr::select(msa = name, msa_fips = geoid)
 
 
-town2msa <- sf::st_join(cwi::town_sf, msa_sf,
+town2msa <- sf::st_join(
+    cwi::town_sf,
+    msa_sf,
     join = sf::st_intersects,
-    left = TRUE, largest = TRUE
+    left = TRUE,
+    largest = TRUE
 ) |>
     sf::st_drop_geometry() |>
     dplyr::select(town = name, msa, msa_fips)
@@ -81,9 +103,12 @@ block_grp_cog <- cog_fips$block_grp |>
     dplyr::mutate(bgrp_ce = substring(block_grp_cog, 6))
 
 
-tract2town <- sf::st_join(cwi::tract_sf, cwi::town_sf,
+tract2town <- sf::st_join(
+    cwi::tract_sf,
+    cwi::town_sf,
     join = sf::st_intersects,
-    left = TRUE, largest = TRUE,
+    left = TRUE,
+    largest = TRUE,
     suffix = c("_tract", "_town")
 ) |>
     sf::st_drop_geometry() |>
@@ -103,13 +128,22 @@ xwalk <- blocks |>
     dplyr::left_join(block_grp_cog, by = "bgrp_ce") |>
     dplyr::select(
         block,
-        block_grp, block_grp_cog,
-        tract, tract_cog,
-        town, town_fips, town_fips_cog,
-        county, county_fips,
-        cog, cog_fips,
-        msa, msa_fips,
-        puma, puma_fips, puma_fips_cog
+        block_grp,
+        block_grp_cog,
+        tract,
+        tract_cog,
+        town,
+        town_fips,
+        town_fips_cog,
+        county,
+        county_fips,
+        cog,
+        cog_fips,
+        msa,
+        msa_fips,
+        puma,
+        puma_fips,
+        puma_fips_cog
     ) |>
     dplyr::as_tibble()
 

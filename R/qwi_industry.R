@@ -17,9 +17,15 @@
 #' }
 #' @keywords fetching-functions
 #' @export
-qwi_industry <- function(years, industries = cwi::naics_codes[["industry"]],
-                         state = "09", counties = NULL,
-                         annual = FALSE, key = NULL, retry = 5) {
+qwi_industry <- function(
+    years,
+    industries = cwi::naics_codes[["industry"]],
+    state = "09",
+    counties = NULL,
+    annual = FALSE,
+    key = NULL,
+    retry = 5
+) {
     urls <- qwi_prep(
         years = years,
         industries = industries,
@@ -31,7 +37,10 @@ qwi_industry <- function(years, industries = cwi::naics_codes[["industry"]],
         # add hint if looking for CT counties
         msg <- "An error occurred in preparing your API calls."
         if (state %in% c("09", "CT") & !is.null(counties)) {
-            msg <- c(msg, "i" = "This API retroactively replaced counties with COGs--double check your arguments.")
+            msg <- c(
+                msg,
+                "i" = "This API retroactively replaced counties with COGs--double check your arguments."
+            )
         }
         cli::cli_abort(msg, call = parent.frame(n = 3))
     }
@@ -43,37 +52,69 @@ qwi_industry <- function(years, industries = cwi::naics_codes[["industry"]],
         fails <- purrr::keep(response, \(x) !x[["success"]])
         status <- purrr::map_chr(fails, \(x) x[["result"]])
         if ("No Content" %in% status) {
-            cli::cli_abort(c(
-                "One or more of your API calls came back empty.",
-                "i" = "Double check your arguments, especially the industry codes."
-            ), call = parent.frame(n = 2))
+            cli::cli_abort(
+                c(
+                    "One or more of your API calls came back empty.",
+                    "i" = "Double check your arguments, especially the industry codes."
+                ),
+                call = parent.frame(n = 2)
+            )
         } else {
-            cli::cli_abort(c(
-                "An error occurred in making one or more API calls.",
-                "x" = unique(status)
-            ), call = parent.frame(n = 3))
+            cli::cli_abort(
+                c(
+                    "An error occurred in making one or more API calls.",
+                    "x" = unique(status)
+                ),
+                call = parent.frame(n = 3)
+            )
         }
     }
 
     fetch <- dplyr::bind_rows(result)
-    fetch <- dplyr::mutate(fetch, dplyr::across(c(quarter, Emp, Payroll, year), as.numeric))
+    fetch <- dplyr::mutate(
+        fetch,
+        dplyr::across(c(quarter, Emp, Payroll, year), as.numeric)
+    )
     fetch <- dplyr::as_tibble(fetch)
     fetch <- dplyr::select(
         fetch,
-        year, quarter, state, tidyselect::any_of("county"), industry,
+        year,
+        quarter,
+        state,
+        tidyselect::any_of("county"),
+        industry,
         tidyselect::everything()
     )
     fetch <- clean_names(fetch)
 
     # if annual
     if (annual) {
-        fetch <- dplyr::group_by(fetch, year, state, dplyr::across(tidyselect::any_of("county")), industry)
-        fetch <- dplyr::summarise(fetch, emp = mean(emp), payroll = sum(payroll))
+        fetch <- dplyr::group_by(
+            fetch,
+            year,
+            state,
+            dplyr::across(tidyselect::any_of("county")),
+            industry
+        )
+        fetch <- dplyr::summarise(
+            fetch,
+            emp = mean(emp),
+            payroll = sum(payroll)
+        )
         fetch <- dplyr::ungroup(fetch)
     } else {
         # make dates from quarters
-        fetch$date <- as.Date(paste(fetch$year, (fetch$quarter - 1) * 3 + 1, "01"), format = "%Y %m %d")
-        fetch <- dplyr::select(fetch, year, quarter, date, tidyselect::everything())
+        fetch$date <- as.Date(
+            paste(fetch$year, (fetch$quarter - 1) * 3 + 1, "01"),
+            format = "%Y %m %d"
+        )
+        fetch <- dplyr::select(
+            fetch,
+            year,
+            quarter,
+            date,
+            tidyselect::everything()
+        )
     }
     fetch
 }
@@ -85,26 +126,33 @@ qwi_prep <- function(years, industries, state, counties, key) {
     # so if getting counties, do one at a time
     key <- check_census_key(key)
     if (is.logical(key) && !key) {
-        cli::cli_abort("Must supply an API key. See the docs on where to store it.",
+        cli::cli_abort(
+            "Must supply an API key. See the docs on where to store it.",
             call = parent.frame()
         )
     }
     # check state, convert / copy to fips
     if (is.null(state) | length(state) > 1) {
-        cli::cli_abort("Must supply a single state by name, abbreviation, or FIPS code.",
+        cli::cli_abort(
+            "Must supply a single state by name, abbreviation, or FIPS code.",
             call = parent.frame()
         )
     }
     state_fips <- get_state_fips(state)
     if (is.null(state_fips)) {
-        cli::cli_abort("{state} is not a valid state name, abbreviation, or FIPS code.",
+        cli::cli_abort(
+            "{state} is not a valid state name, abbreviation, or FIPS code.",
             call = parent.frame()
         )
     }
     # check counties--if null, don't include
     # update 5/2024--uses cogs now
     if (!is.null(counties)) {
-        counties <- substr(get_county_fips(state_fips, counties, use_cogs = TRUE), 3, 5)
+        counties <- substr(
+            get_county_fips(state_fips, counties, use_cogs = TRUE),
+            3,
+            5
+        )
     }
     # get available years for state
     # will throw error--not the best place for that
@@ -132,20 +180,25 @@ prep_qwi_yrs <- function(yrs_asked, state_fips, api_len) {
     unavail <- setdiff(yrs_asked, avail_range)
     if (!any(yrs_asked %in% avail_range)) {
         cli::cli_abort(
-            c("Data for {state_fips} are only available from {yrs_avail$start_year} to {yrs_avail$end_year}.",
+            c(
+                "Data for {state_fips} are only available from {yrs_avail$start_year} to {yrs_avail$end_year}.",
                 "i" = "You requested data between {asked_range[1]} and {asked_range[2]}."
             ),
             call = parent.frame()
         )
     }
     if (length(unavail) > 0) {
-        cli::cli_warn("Data for state {state_fips} are only available from {yrs_avail$start_year} to {yrs_avail$end_year}. Additional years will be dropped.")
+        cli::cli_warn(
+            "Data for state {state_fips} are only available from {yrs_avail$start_year} to {yrs_avail$end_year}. Additional years will be dropped."
+        )
         yrs_asked <- yrs_asked[yrs_asked %in% avail_range]
     }
 
     # api only takes 10 yrs at a time--split if needed
     if (length(yrs_asked) > api_len) {
-        cli::cli_alert_info("The API can only get {api_len} years of data at once; making multiple calls, but this might take a little longer.")
+        cli::cli_alert_info(
+            "The API can only get {api_len} years of data at once; making multiple calls, but this might take a little longer."
+        )
     }
     split_n(yrs_asked, api_len)
 }

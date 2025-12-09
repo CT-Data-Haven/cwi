@@ -17,7 +17,13 @@
 #' @keywords utils
 #' @export
 town_names <- function(data, name_col) {
-    data <- dplyr::mutate(data, {{ name_col }} := stringr::str_extract({{ name_col }}, "^.+(?= town)"))
-    data <- dplyr::filter(data, !grepl("not defined", {{ name_col }}) & !is.na({{ name_col }}))
+    data <- dplyr::mutate(
+        data,
+        {{ name_col }} := stringr::str_extract({{ name_col }}, "^.+(?= town)")
+    )
+    data <- dplyr::filter(
+        data,
+        !grepl("not defined", {{ name_col }}) & !is.na({{ name_col }})
+    )
     data
 }

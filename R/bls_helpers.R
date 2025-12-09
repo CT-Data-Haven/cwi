@@ -8,10 +8,18 @@ fetch_bls <- function(query, verbose) {
     agent <- httr::user_agent("cwi")
 
     fetch <- purrr::map(query, function(q) {
-        resp <- httr::RETRY("POST", q$url, body = q$body, encode = "json", agent, retry = 3)
+        resp <- httr::RETRY(
+            "POST",
+            q$url,
+            body = q$body,
+            encode = "json",
+            agent,
+            retry = 3
+        )
         if (httr::http_error(resp)) {
             cli::cli_abort(
-                c("An error occurred in making one or more API calls.",
+                c(
+                    "An error occurred in making one or more API calls.",
                     "x" = httr::http_status(resp)[["message"]]
                 ),
                 call = parent.frame(n = 3)

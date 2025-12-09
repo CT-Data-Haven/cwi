@@ -1,7 +1,8 @@
 # simplified port of janitor::clean_names so I can cull dependencies
 clean_names <- function(x, allow_dupes = FALSE) {
     if (!inherits(x, "data.frame")) {
-        cli::cli_abort(c("{.fun clean_names} is intended for use on data frames (or things that inherit properties of data frames)",
+        cli::cli_abort(c(
+            "{.fun clean_names} is intended for use on data frames (or things that inherit properties of data frames)",
             "i" = "Try the function's underlying {.fun make_clean_names}."
         ))
     }

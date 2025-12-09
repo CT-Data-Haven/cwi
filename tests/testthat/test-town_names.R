@@ -1,15 +1,19 @@
 test_that("town_names removes 'town, * County'", {
     skip_on_ci()
     pops21 <- tidycensus::get_acs(
-        geography = "county subdivision", variables = "B01003_001",
-        state = "09", year = 2021,
+        geography = "county subdivision",
+        variables = "B01003_001",
+        state = "09",
+        year = 2021,
         key = Sys.getenv("CENSUS_API_KEY")
     )
     clean21 <- town_names(pops21, NAME)
 
     pops22 <- tidycensus::get_acs(
-        geography = "county subdivision", variables = "B01003_001",
-        state = "09", year = 2022,
+        geography = "county subdivision",
+        variables = "B01003_001",
+        state = "09",
+        year = 2022,
         key = Sys.getenv("CENSUS_API_KEY")
     )
     clean22 <- town_names(pops22, NAME)
@@ -21,8 +25,11 @@ test_that("town_names removes 'town, * County'", {
 test_that("town_names filters undefined", {
     skip_on_ci()
     pops21 <- tidycensus::get_acs(
-        geography = "county subdivision", variables = "B01003_001",
-        state = "09", county = "009", year = 2021,
+        geography = "county subdivision",
+        variables = "B01003_001",
+        state = "09",
+        county = "009",
+        year = 2021,
         key = Sys.getenv("CENSUS_API_KEY")
     )
     clean21 <- town_names(pops21, NAME)
@@ -31,8 +38,11 @@ test_that("town_names filters undefined", {
     # not all COGs have undefined but SCROG does, 170
 
     pops22 <- tidycensus::get_acs(
-        geography = "county subdivision", variables = "B01003_001",
-        state = "09", county = "170", year = 2022,
+        geography = "county subdivision",
+        variables = "B01003_001",
+        state = "09",
+        county = "170",
+        year = 2022,
         key = Sys.getenv("CENSUS_API_KEY")
     )
     clean22 <- town_names(pops22, NAME)

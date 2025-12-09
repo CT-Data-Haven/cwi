@@ -33,10 +33,20 @@
 #' @keywords utils
 #' @export
 #' @seealso [tidyr::separate()]
-separate_acs <- function(data, col = label, into = NULL, sep = "!!", drop_total = FALSE, ...) {
+separate_acs <- function(
+    data,
+    col = label,
+    into = NULL,
+    sep = "!!",
+    drop_total = FALSE,
+    ...
+) {
     # if into is null, create names x1, x2, etc
     if (is.null(into)) {
-        ncol <- max(lengths(strsplit(data[[rlang::as_label(rlang::enquo(col))]], split = sep)))
+        ncol <- max(lengths(strsplit(
+            data[[rlang::as_label(rlang::enquo(col))]],
+            split = sep
+        )))
         if (drop_total) {
             into <- c(NA, paste0("x", 1:(ncol - 1)))
         } else {
