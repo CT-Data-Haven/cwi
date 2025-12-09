@@ -14,7 +14,7 @@ school_dists
 
 ## Format
 
-A data frame with 196 rows and 2 variables:
+A data frame with 197 rows and 2 variables:
 
 - district:
 
@@ -28,8 +28,7 @@ A data frame with 196 rows and 2 variables:
 
 Distinct town-level district names come from the state's
 [data.world](https://data.world/state-of-connecticut/9k2y-kqxn).
-Regional districts and their towns come from combing through school
-district websites.
+Regional districts and their towns come from EdSight.
 
 ## Details
 
