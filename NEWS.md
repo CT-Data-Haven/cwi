@@ -1,3 +1,9 @@
+# cwi v2.0.3 (2025-12-09)
+
+## Fix
+
+- **data**: update school districts
+
 # cwi v2.0.2 (2025-12-03)
 
 ## Fix
