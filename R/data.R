@@ -194,7 +194,7 @@ NULL
 #'   \item{district}{School district name}
 #'   \item{town}{Name of town included in district}
 #' }
-#' @source Distinct town-level district names come from the state's [data.world](https://data.world/state-of-connecticut/9k2y-kqxn). Regional districts and their towns come from combing through school district websites.
+#' @source Distinct town-level district names come from the state's [data.world](https://data.world/state-of-connecticut/9k2y-kqxn). Regional districts and their towns come from EdSight.
 #' @keywords ref-datasets
 "school_dists"
 
