@@ -262,3 +262,13 @@ rule all:
         check=rules.check.output.flag,
         site=rules.site.output.flag,
         # coverage=rules.coverage.output.report,
+
+rule clean:
+    shell:
+        """
+        rm flags/* \
+            {rules.setup.output.catalog} \
+            {rules.document.output.readme} \
+            data/*.rda \
+            R/sysdata.rda
+        """

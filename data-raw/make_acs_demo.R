@@ -1,6 +1,17 @@
 # WRITE: gnh_tenure education
 
-devtools::load_all()
+# avoid circular dependencies
+source("R/utils-keys.R")
+source("R/availability.R")
+source("R/census_helpers.R")
+source("R/clean_names.R")
+source("R/multi_geo_fetch.R")
+source("R/label_census.R")
+source("R/calc_shares.R")
+source("R/separate_acs.R")
+source("R/town_names.R")
+source("R/validate_geos.R")
+# devtools::load_all()
 
 # copy to avoid loading data
 gnh_towns <- list(

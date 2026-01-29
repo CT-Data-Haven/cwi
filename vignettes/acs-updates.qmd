@@ -30,19 +30,55 @@ library(purrr)
 #| label: compare-yrs
 compare_yrs <- function(yr, ret = FALSE) {
     yrs <- rlang::set_names(c(yr - 1, yr))
-    short_yrs <- rlang::set_names(as.character(yrs), sprintf("_%s$", letters[seq_along(yrs)]))
+    short_yrs <- rlang::set_names(
+        as.character(yrs),
+        sprintf("_%s$", letters[seq_along(yrs)])
+    )
     tbls <- purrr::map(yrs, cwi:::clean_acs_vars, "acs5")
-    tbls <- purrr::map(tbls, mutate, table_num = stringr::str_remove(name, "_.+$"))
+    tbls <- purrr::map(
+        tbls,
+        mutate,
+        table_num = stringr::str_remove(name, "_.+$")
+    )
     tbls <- purrr::map(tbls, distinct, concept, table_num)
-    tbls <- purrr::map(tbls, mutate, concept = stringr::str_squish(tolower(stringr::str_replace_all(concept, "20\\d{2}", "20xx"))))
+    tbls <- purrr::map(
+        tbls,
+        mutate,
+        concept = stringr::str_squish(tolower(stringr::str_replace_all(
+            concept,
+            "20\\d{2}",
+            "20xx"
+        )))
+    )
 
     purrr::map(tbls, ~ paste("Number of rows:", nrow(.)))
 
-    out <- purrr::reduce(tbls, dplyr::full_join, by = "table_num", suffix = sprintf("_%s", letters[1:2]))
-    out <- dplyr::filter(out, concept_a != concept_b | is.na(concept_a) | is.na(concept_b))
-    out <- dplyr::rename_with(out, \(x) stringr::str_replace_all(x, short_yrs), .cols = dplyr::matches("concept_[a-z]$"))
+    out <- purrr::reduce(
+        tbls,
+        dplyr::full_join,
+        by = "table_num",
+        suffix = sprintf("_%s", letters[1:2])
+    )
+    out <- dplyr::filter(
+        out,
+        concept_a != concept_b | is.na(concept_a) | is.na(concept_b)
+    )
+    out <- dplyr::rename_with(
+        out,
+        \(x) stringr::str_replace_all(x, short_yrs),
+        .cols = dplyr::matches("concept_[a-z]$")
+    )
     # fix misspelling in 2022
-    out <- dplyr::mutate(out, dplyr::across(dplyr::matches("^concept"), \(x) stringr::str_replace(x, "major the population", "major for the population")))
+    out <- dplyr::mutate(
+        out,
+        dplyr::across(dplyr::matches("^concept"), \(x) {
+            stringr::str_replace(
+                x,
+                "major the population",
+                "major for the population"
+            )
+        })
+    )
 
     print(knitr::kable(out))
 
@@ -50,6 +86,14 @@ compare_yrs <- function(yr, ret = FALSE) {
         return(out)
     }
 }
+```
+
+# 2024 ACS
+
+```{r}
+#| label: c2024
+#| results: asis
+compare_yrs(2024)
 ```
 
 # 2023 ACS

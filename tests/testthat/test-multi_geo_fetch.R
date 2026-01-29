@@ -218,3 +218,30 @@ test_that("multi_geo_* deduplicates regions", {
     )
     expect_identical(p1, p2)
 })
+
+# test endyears
+test_that("multi_geo_* passes with updated endyears", {
+    skip_on_ci()
+    df1 <- multi_geo_acs(
+        "B01003",
+        year = endyears[["acs"]],
+        tracts = "all",
+        blockgroups = "all",
+        pumas = "all",
+        msa = TRUE,
+        us = TRUE,
+        survey = "acs5",
+        verbose = FALSE
+    )
+    df2 <- multi_geo_decennial(
+        "P1",
+        year = endyears[["decennial"]],
+        tracts = "all",
+        blockgroups = "all",
+        msa = TRUE,
+        us = TRUE,
+        sumfile = "dhc"
+    )
+    expect_type(df1, "list")
+    expect_type(df2, "list")
+})

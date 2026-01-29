@@ -12,7 +12,7 @@
 #' @rdname label_census
 label_decennial <- function(
     data,
-    year = 2020,
+    year = endyears[["decennial"]],
     sumfile = "dhc",
     variable = variable
 ) {
@@ -43,7 +43,12 @@ label_decennial <- function(
 #' @keywords augmenting-functions
 #' @export
 #' @rdname label_census
-label_acs <- function(data, year = 2023, survey = "acs5", variable = variable) {
+label_acs <- function(
+    data,
+    year = endyears[["acs"]],
+    survey = "acs5",
+    variable = variable
+) {
     variable_lbl <- rlang::as_label(rlang::enquo(variable))
     acs_vars <- clean_acs_vars(year = year, survey = survey)
     acs_vars <- dplyr::select(acs_vars, name, label)

@@ -32,7 +32,7 @@ The tables I'm working with are `B01003`, total population; `B03002`, race and L
 
 ```{r}
 #| label: tbls
-yr <- 2023
+yr <- 2024
 table_nums <- list(
     total_pop = "B01003",
     race = "B03002",
@@ -46,11 +46,20 @@ I'm pulling out the entries in the `cwi` dataset `cwi::regions` (a list) to only
 
 ```{r}
 #| label: acs1
-gnh_regions <- regions[c("Greater New Haven", "New Haven Inner Ring", "New Haven Outer Ring")]
+gnh_regions <- regions[c(
+    "Greater New Haven",
+    "New Haven Inner Ring",
+    "New Haven Outer Ring"
+)]
 
-gnh_data <- map(table_nums, multi_geo_acs,
-    year = yr, towns = regions$`Greater New Haven`,
-    regions = gnh_regions, state = "09", sleep = 1,
+gnh_data <- map(
+    table_nums,
+    multi_geo_acs,
+    year = yr,
+    towns = regions$`Greater New Haven`,
+    regions = gnh_regions,
+    state = "09",
+    sleep = 1,
     verbose = FALSE
 )
 
@@ -61,8 +70,10 @@ Neighborhoods with corresponding tracts or block groups are included for 4 citie
 
 ```{r }
 #| label: acs2
-multi_geo_acs("B01003",
+multi_geo_acs(
+    "B01003",
     towns = "New Haven",
+    counties = NULL,
     neighborhoods = new_haven_tracts,
     nhood_geoid = "geoid",
     year = yr
@@ -86,7 +97,10 @@ The race and ethnicity table will require some calculations:
 gnh_data$race |>
     label_acs(year = yr) |>
     group_by(level, name) |>
-    add_grps(list(total = 1, white = 3, black = 4, latino = 12, other = 5:9), group = label) |>
+    add_grps(
+        list(total = 1, white = 3, black = 4, latino = 12, other = 5:9),
+        group = label
+    ) |>
     calc_shares(group = label, denom = "total")
 ```
 
@@ -125,8 +139,12 @@ homeownership |>
 tenure_map <- homeownership |>
     filter(level == "4_town") |>
     quick_map(
-        value = share, level = "town", color = "black", linewidth = 0.4,
-        title = "Homeownership, Greater New Haven", palette = "BuPu"
+        value = share,
+        level = "town",
+        color = "black",
+        linewidth = 0.4,
+        title = "Homeownership, Greater New Haven",
+        palette = "BuPu"
     )
 
 tenure_map
@@ -141,7 +159,12 @@ Since this returns a `ggplot` object with `sf` data, we can add additional `ggpl
 #| out-width: 100%
 tenure_map +
     labs(subtitle = stringr::str_glue("By town, {yr}")) +
-    geom_sf(data = ~ filter(., name == "New Haven"), fill = NA, color = "black", linewidth = 1.5)
+    geom_sf(
+        data = ~ filter(., name == "New Haven"),
+        fill = NA,
+        color = "black",
+        linewidth = 1.5
+    )
 ```
 
 # Batch output
@@ -156,13 +179,17 @@ For example, I need to pull a table of populations by age group for several regi
 #| message: true
 #| warning: true
 new_haven_regions <- regions[c(
-    "Greater New Haven", "New Haven Inner Ring",
-    "New Haven Outer Ring", "Lower Naugatuck Valley",
+    "Greater New Haven",
+    "New Haven Inner Ring",
+    "New Haven Outer Ring",
+    "Lower Naugatuck Valley",
     "Greater Waterbury"
 )]
 
 age <- multi_geo_acs(
-    table = "B01001", year = yr, towns = NULL,
+    table = "B01001",
+    year = yr,
+    towns = NULL,
     regions = new_haven_regions,
     counties = c("New Haven County", "Fairfield County")
 ) |>
@@ -179,8 +206,10 @@ age |>
     split(~name) |>
     batch_csv_dump(base_name = "pop_by_age", bind = TRUE, verbose = TRUE) |>
     group_by(level, name) |>
-    add_grps(list(ages00_04 = 1, ages05_17 = 2:4, ages00_17 = 1:4),
-        group = age, value = estimate
+    add_grps(
+        list(ages00_04 = 1, ages05_17 = 2:4, ages00_17 = 1:4),
+        group = age,
+        value = estimate
     ) |>
     arrange(level, name, age)
 ```
@@ -223,8 +252,11 @@ employment |>
     ggplot(aes(x = year, y = Emp_1k, color = label)) +
     geom_line() +
     labs(
-        x = "Year", y = "Employees (thousands)", title = "Employment by industry",
-        subtitle = "Connecticut and South Central COG, 2002-2018", color = "Industry"
+        x = "Year",
+        y = "Employees (thousands)",
+        title = "Employment by industry",
+        subtitle = "Connecticut and South Central COG, 2002-2018",
+        color = "Industry"
     ) +
     theme_minimal() +
     facet_wrap(vars(location), scales = "free_y")
@@ -239,15 +271,21 @@ To look at unemployment rates over time, I can use `laus_trend()`. The LAUS cove
 #| label: laus
 #| out-width: 100%
 #| eval: false
-unemployment <- laus_trend(c("New Haven", "New Haven County", "Connecticut"),
-    startyear = 2000, endyear = 2018, measures = "unemployment rate"
+unemployment <- laus_trend(
+    c("New Haven", "New Haven County", "Connecticut"),
+    startyear = 2000,
+    endyear = 2018,
+    measures = "unemployment rate"
 ) |>
     mutate(unemployment_rate = unemployment_rate / 100) |>
     select(area, date, value = unemployment_rate)
 
 unemployment
 
-unemp_plot <- ggplot(unemployment, aes(x = date, y = value, group = area, color = area)) +
+unemp_plot <- ggplot(
+    unemployment,
+    aes(x = date, y = value, group = area, color = area)
+) +
     geom_line() +
     geom_smooth(se = FALSE, method = "loess", linewidth = 0.8)
 unemp_plot

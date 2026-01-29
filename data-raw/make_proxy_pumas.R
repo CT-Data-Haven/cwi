@@ -1,6 +1,7 @@
 # WRITE: proxy_pumas
 # need to do this a little awkwardly to make sure PUMAs can be included in multiple regions, e.g. for county-based, Ansonia PUMA is both GNH & Valley
 # include regions for county-based, regions and counties for COG-based
+source("data-raw/make_endyears.R")
 town_puma <- list(
     county = cwi::xwalk |>
         dplyr::distinct(town, puma_fips) |>
@@ -29,7 +30,7 @@ reg_df <- cwi::regions[c(
 
 pops <- tidyr::expand_grid(
     puma_type = tibble::enframe(
-        list(county = 2021, cog = 2022),
+        list(county = 2021, cog = endyears[["acs"]]),
         name = "puma_type",
         value = "year"
     ) |>

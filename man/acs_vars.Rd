@@ -3,9 +3,9 @@
 \docType{data}
 \name{acs_vars}
 \alias{acs_vars}
-\title{Variable labels from the 2023 ACS}
+\title{Variable labels from the 2024 ACS}
 \format{
-A data frame with 28261 rows and 3 variables:
+A data frame with 28437 rows and 3 variables:
 \describe{
 \item{name}{Variable code, where first 6 characters are the table number and last 3 digits are the variable number}
 \item{label}{Readable label of each variable}
@@ -19,7 +19,7 @@ US Census Bureau via \code{tidycensus}
 acs_vars
 }
 \description{
-Dataset of ACS variable labels, loaded from \code{tidycensus::load_variables()} for 2023 and cleaned up slightly.
+Dataset of ACS variable labels, loaded from \code{tidycensus::load_variables()} for 2024 and cleaned up slightly.
 }
 \details{
 This dataset is updated with each annual ACS release, with an attribute \code{year} giving the ACS endyear of the dataset.
@@ -27,5 +27,12 @@ This dataset is updated with each annual ACS release, with an attribute \code{ye
 \examples{
 # get the year
 attr(acs_vars, "year")
+
+# filter for tenure table
+acs_vars[acs_vars$concept == "Tenure", ]
+
+# filter to see variables in vehicle table
+acs_vars[grepl(ext_table_nums$vehicle, acs_vars$name), ]
+# or dplyr::filter(acs_vars, grepl(ext_table_nums$vehicle, name))
 }
 \keyword{ref-datasets}

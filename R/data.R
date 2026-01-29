@@ -14,6 +14,13 @@
 #' @examples
 #' # get the year
 #' attr(acs_vars, "year")
+#'
+#' # filter for tenure table
+#' acs_vars[acs_vars$concept == "Tenure", ]
+#'
+#' # filter to see variables in vehicle table
+#' acs_vars[grepl(ext_table_nums$vehicle, acs_vars$name), ]
+#' # or dplyr::filter(acs_vars, grepl(ext_table_nums$vehicle, name))
 #' @keywords ref-datasets
 "acs_vars"
 
