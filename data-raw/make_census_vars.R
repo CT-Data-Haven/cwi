@@ -31,7 +31,11 @@ exclude_str <- c(
 include_patt <- sprintf("(%s)", paste(include_str, collapse = "|"))
 exclude_patt <- sprintf("(%s)", paste(exclude_str, collapse = "|"))
 
-cb_avail <- jsonlite::read_json("https://api.census.gov/data.json")[["dataset"]]
+cb_url <- httr::modify_url(
+    "https://api.census.gov/data.json",
+    query = list(key = Sys.getenv("CENSUS_API_KEY"))
+)
+cb_avail <- jsonlite::read_json(cb_url)[["dataset"]]
 cb_avail <- purrr::map(cb_avail, \(x) x[c("c_vintage", "c_dataset", "title")])
 cb_avail <- purrr::map(cb_avail, purrr::compact)
 cb_avail <- purrr::keep(cb_avail, \(x) {

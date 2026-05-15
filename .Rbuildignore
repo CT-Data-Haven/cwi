@@ -28,3 +28,4 @@ migrate
 vignettes/.quarto
 ^\.vscode$
 ^[.]?air[.]toml$
+^\.pixi$

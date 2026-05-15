@@ -5,9 +5,12 @@
 \alias{check_qwi_avail}
 \title{Check availability of datasets}
 \usage{
-check_cb_avail()
+check_cb_avail(key = NULL)
 
 check_qwi_avail()
+}
+\arguments{
+\item{key}{String: Census API key. If \code{NULL} (default), takes the value from \code{Sys.getenv("CENSUS_API_KEY")}.}
 }
 \value{
 \strong{For \code{check_cb_avail}}: A data frame with columns for vintage, program (e.g. "acs"), survey (e.g. "acs5"),
@@ -47,6 +50,6 @@ if (interactive()) {
 }
 }
 \seealso{
-\href{https://www.census.gov/data/developers/updates/new-discovery-tool.html}{US Census Bureau API Discovery Tool} \href{https://ledextract.ces.census.gov/}{LED Extraction Tool}
+\href{https://www.census.gov/data/developers/updates/new-discovery-tool.html}{US Census Bureau API Discovery Tool} \href{https://ledextract.ces.census.gov/}{LED Extraction Tool} \code{\link[tidycensus:census_api_key]{tidycensus::census_api_key()}}
 }
 \keyword{utils}

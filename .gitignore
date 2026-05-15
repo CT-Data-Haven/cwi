@@ -23,3 +23,6 @@ lib/
 docs/
 coverage.html
 CHANGELOG.md.j2
+# pixi environments
+.pixi/*
+!.pixi/config.toml
