@@ -17,6 +17,7 @@
 #' being outdated and therefore missing the availability of new data. These functions
 #' need to read data from the internet, but are memoized so that the results are
 #' reasonably up-to-date without having to make API calls repeatedly.
+#' @param key String: Census API key. If `NULL` (default), takes the value from `Sys.getenv("CENSUS_API_KEY")`.
 #' @return **For `check_cb_avail`**: A data frame with columns for vintage, program (e.g. "acs"), survey (e.g. "acs5"),
 #' and title, as returned from the Census Bureau API.
 #' @examples
@@ -28,10 +29,10 @@
 #' }
 #' }
 #' @export
-#' @seealso [US Census Bureau API Discovery Tool](https://www.census.gov/data/developers/updates/new-discovery-tool.html) [LED Extraction Tool](https://ledextract.ces.census.gov/)
+#' @seealso [US Census Bureau API Discovery Tool](https://www.census.gov/data/developers/updates/new-discovery-tool.html) [LED Extraction Tool](https://ledextract.ces.census.gov/) [tidycensus::census_api_key()]
 #' @rdname availability
 #' @keywords utils
-check_cb_avail <- function() {
+check_cb_avail <- function(key = NULL) {
     # ALL TABLES AVAILABLE: VINTAGE + PROGRAM + SURVEY CODE
     surveys <- list(
         acs = c("acs1", "acs3", "acs5"),
@@ -49,7 +50,19 @@ check_cb_avail <- function() {
     surveys <- tibble::enframe(surveys, name = "program", value = "survey")
     surveys <- tidyr::unnest(surveys, survey)
 
-    avail <- safe_read_avail("https://api.census.gov/data.json", "json")
+    # check key
+    key <- check_census_key(key)
+    if (is.logical(key) && !key) {
+        cli::cli_abort(
+            "Must supply an API key. See the docs on where to store it.",
+            call = parent.frame()
+        )
+    }
+    avail <- safe_read_avail(
+        url = "https://api.census.gov/data.json",
+        type = "json",
+        query = list(key = key)
+    )
     avail <- avail[["dataset"]]
     avail <- purrr::map(avail, cb_meta_list)
     avail <- purrr::compact(avail)
@@ -122,13 +135,22 @@ check_qwi_avail <- function() {
     avail
 }
 
-safe_read_avail <- function(url, type) {
+## API AGNOSTIC ----
+# take additional args e.g. key as a lit
+#' Check availability of different APIs with error catching
+#' @param url URL for API call
+#' @param type File type, currently json or html
+#' @param query Optional query args as a list, added in order to pass a key to census api
+safe_read_avail <- function(url, type, query = NULL) {
     if (type == "json") {
         func <- jsonlite::read_json
     } else if (type == "html") {
         func <- rvest::read_html
     } else {
         cli::cli_abort("Incorrect file type")
+    }
+    if (!is.null(query)) {
+        url <- httr::modify_url(url, query = query)
     }
     safe_func <- purrr::safely(func)
     res <- safe_func(url)
