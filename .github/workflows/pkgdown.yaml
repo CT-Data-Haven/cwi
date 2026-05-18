@@ -11,6 +11,8 @@ on:
 
 name: pkgdown
 
+permissions: read-all
+
 jobs:
   pkgdown:
     runs-on: ubuntu-24.04
@@ -22,8 +24,10 @@ jobs:
       BLS_KEY: ${{ secrets.BLS_KEY }}
       CENSUS_API_KEY: ${{ secrets.CENSUS_API_KEY }}
       CRAN: "https://packagemanager.rstudio.com/all/__linux__/focal/latest"
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - uses: r-lib/actions/setup-pandoc@v2
 
@@ -34,7 +38,6 @@ jobs:
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::pkgdown, local::.
-          needs: website
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)

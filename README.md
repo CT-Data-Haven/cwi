@@ -76,6 +76,16 @@ to fetch and analyze data from:
   Survey](https://ctdatahaven.org/reports/datahaven-community-wellbeing-survey)~~
   This has been moved to the dcws package
 
+> \[!IMPORTANT\] Note that as of May 2026, the Census Bureau requires a
+> key for all API requests. This includes, foolishly, their own
+> documentation and references of variables. The `cwi` package caches
+> some of these tables in order to build and verify requests before
+> sending them, which means an API key is now required up front. The
+> easiest way to do this is to save your key to the default environment
+> variable, `CENSUS_API_KEY`. See
+> [`tidycensus::census_api_key()`](https://walker-data.com/tidycensus/reference/census_api_key.html)
+> for help.
+
 ## Example
 
 Here’s an example of getting a big table to calculate homeownership
