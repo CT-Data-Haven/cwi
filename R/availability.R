@@ -141,6 +141,7 @@ check_qwi_avail <- function() {
 #' @param url URL for API call
 #' @param type File type, currently json or html
 #' @param query Optional query args as a list, added in order to pass a key to census api
+#' @keywords internal
 safe_read_avail <- function(url, type, query = NULL) {
     if (type == "json") {
         func <- jsonlite::read_json

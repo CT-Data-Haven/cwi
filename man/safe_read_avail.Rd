@@ -16,3 +16,4 @@ safe_read_avail(url, type, query = NULL)
 \description{
 Check availability of different APIs with error catching
 }
+\keyword{internal}
