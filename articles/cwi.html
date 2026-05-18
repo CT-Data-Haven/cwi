@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Basic workflow • cwi</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="cwi_files/libs/quarto-html/popper.min.js"></script><script src="cwi_files/libs/quarto-html/tippy.umd.min.js"></script><link href="cwi_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="cwi_files/libs/quarto-html/light-border.css" rel="stylesheet">
@@ -23,7 +23,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cwi</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.0.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -305,14 +305,14 @@
 <span><span class="co">#&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;             &lt;chr&gt;          </span></span>
 <span><span class="co">#&gt;  1  2002 09    170    11         377        NA South Central COG Agriculture, F…</span></span>
 <span><span class="co">#&gt;  2  2002 09    170    21          31.2      NA South Central COG Mining, Quarry…</span></span>
-<span><span class="co">#&gt;  3  2002 09    170    22        1120.       NA South Central COG Utilities      </span></span>
-<span><span class="co">#&gt;  4  2002 09    170    23       11130.       NA South Central COG Construction   </span></span>
-<span><span class="co">#&gt;  5  2002 09    170    31-33    33498.       NA South Central COG Manufacturing  </span></span>
-<span><span class="co">#&gt;  6  2002 09    170    42       11068.       NA South Central COG Wholesale Trade</span></span>
-<span><span class="co">#&gt;  7  2002 09    170    44-45    32878        NA South Central COG Retail Trade   </span></span>
-<span><span class="co">#&gt;  8  2002 09    170    48-49     5737.       NA South Central COG Transportation…</span></span>
-<span><span class="co">#&gt;  9  2002 09    170    51       11860        NA South Central COG Information    </span></span>
-<span><span class="co">#&gt; 10  2002 09    170    52       10664.       NA South Central COG Finance and In…</span></span>
+<span><span class="co">#&gt;  3  2002 09    170    22        1117.       NA South Central COG Utilities      </span></span>
+<span><span class="co">#&gt;  4  2002 09    170    23       11132.       NA South Central COG Construction   </span></span>
+<span><span class="co">#&gt;  5  2002 09    170    31-33    33506        NA South Central COG Manufacturing  </span></span>
+<span><span class="co">#&gt;  6  2002 09    170    42       11177.       NA South Central COG Wholesale Trade</span></span>
+<span><span class="co">#&gt;  7  2002 09    170    44-45    32880        NA South Central COG Retail Trade   </span></span>
+<span><span class="co">#&gt;  8  2002 09    170    48-49     5733.       NA South Central COG Transportation…</span></span>
+<span><span class="co">#&gt;  9  2002 09    170    51       11844        NA South Central COG Information    </span></span>
+<span><span class="co">#&gt; 10  2002 09    170    52       10728.       NA South Central COG Finance and In…</span></span>
 <span><span class="co">#&gt; # ℹ 670 more rows</span></span></code></pre></div>
 </div>
 <p>Next, say I want to look at the industries that were largest in the South Central COG in 2018, and see how those have changed both for the COG and statewide over this time period. I’ll filter <code>employment</code>, get the industries with the largest numbers of employees, then filter <code>employment</code> for just those industries and plot it.</p>

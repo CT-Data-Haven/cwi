@@ -18,6 +18,7 @@ You can install this package from
 [GitHub](https://github.com/CT-Data-Haven/cwi) with:
 
 ``` r
+
 # install.packages("devtools")
 devtools::install_github("CT-Data-Haven/cwi")
 ```
@@ -63,17 +64,29 @@ to fetch and analyze data from:
   Survey](https://ctdatahaven.org/reports/datahaven-community-wellbeing-survey)~~
   This has been moved to the dcws package
 
+> \[!IMPORTANT\] Note that as of May 2026, the Census Bureau requires a
+> key for all API requests. This includes, foolishly, their own
+> documentation and references of variables. The `cwi` package caches
+> some of these tables in order to build and verify requests before
+> sending them, which means an API key is now required up front. The
+> easiest way to do this is to save your key to the default environment
+> variable, `CENSUS_API_KEY`. See
+> [`tidycensus::census_api_key()`](https://walker-data.com/tidycensus/reference/census_api_key.html)
+> for help.
+
 ## Example
 
 Here’s an example of getting a big table to calculate homeownership
 rates across many geographies at once:
 
 ``` r
+
 library(dplyr)
 library(cwi)
 ```
 
 ``` r
+
 tenure <- multi_geo_acs(
     table = basic_table_nums$tenure,
     year = 2020,
@@ -100,6 +113,7 @@ tenure
 ```
 
 ``` r
+
 homeownership <- tenure |>
     label_acs(year = 2020) |>
     dplyr::group_by(level, name) |>
@@ -134,6 +148,7 @@ homeownership
 ```
 
 ``` r
+
 geo_level_plot(homeownership,
     value = share, hilite = "#EA7FA2",
     title = "Homeownership in Greater New Haven, 2020"

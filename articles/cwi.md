@@ -1,6 +1,7 @@
 # Basic workflow
 
 ``` r
+
 library(dplyr)
 library(tidyr)
 library(purrr)
@@ -15,6 +16,7 @@ save these in a named list, then map over the list calling
 for each table number.
 
 ``` r
+
 yr <- 2023
 table_nums <- list(
     total_pop = "B01003",
@@ -31,6 +33,7 @@ I’m pulling out the entries in the `cwi` dataset
 the ACS tables for those regions, their towns, and New Haven County.
 
 ``` r
+
 gnh_regions <- regions[c("Greater New Haven", "New Haven Inner Ring", "New Haven Outer Ring")]
 
 gnh_data <- map(table_nums, multi_geo_acs,
@@ -61,6 +64,7 @@ Neighborhoods with corresponding tracts or block groups are included for
 neighborhood-level aggregates.
 
 ``` r
+
 multi_geo_acs("B01003",
     towns = "New Haven",
     neighborhoods = new_haven_tracts,
@@ -111,6 +115,7 @@ The race and ethnicity table will require some calculations:
   denominator.
 
 ``` r
+
 gnh_data$race |>
     label_acs(year = yr) |>
     group_by(level, name) |>
@@ -138,6 +143,7 @@ Here the table can be wrangled into shares of households that are
 owner-occupied.
 
 ``` r
+
 homeownership <- gnh_data$tenure |>
     label_acs(year = yr) |>
     separate(label, into = c("total", "tenure"), sep = "!!", fill = "left") |>
@@ -171,6 +177,7 @@ gives a quick visual overview of the homeownership rates, highlighting
 town-level values.
 
 ``` r
+
 homeownership |>
     geo_level_plot(value = share, hilite = "darkslateblue", type = "point")
 ```
@@ -186,6 +193,7 @@ the number of breaks returned.This function lets us see whether there’s
 a geographic distribution of this data with minimal work.
 
 ``` r
+
 tenure_map <- homeownership |>
     filter(level == "4_town") |>
     quick_map(
@@ -203,6 +211,7 @@ additional `ggplot` functions, such as labeling, themes, or additional
 scales or geoms.
 
 ``` r
+
 tenure_map +
     labs(subtitle = stringr::str_glue("By town, {yr}")) +
     geom_sf(data = ~ filter(., name == "New Haven"), fill = NA, color = "black", linewidth = 1.5)
@@ -229,6 +238,7 @@ them in files for later, so I’ll aggregate, write a bunch of files, and
 then aggregate into broader age groups that I need for my current work.
 
 ``` r
+
 new_haven_regions <- regions[c(
     "Greater New Haven", "New Haven Inner Ring",
     "New Haven Outer Ring", "Lower Naugatuck Valley",
@@ -272,6 +282,7 @@ Central COG and Connecticut over the past 16 years. I’m filtering out
 the industry code “00”, which is the counts for all industries.
 
 ``` r
+
 scc_employment <- qwi_industry(2002:2018, counties = "170", annual = TRUE) |>
     mutate(location = "South Central COG")
 ct_employment <- qwi_industry(2002:2018, annual = TRUE) |>
@@ -286,14 +297,14 @@ employment
 #>    <dbl> <chr> <chr>  <chr>      <dbl>   <dbl> <chr>             <chr>          
 #>  1  2002 09    170    11         377        NA South Central COG Agriculture, F…
 #>  2  2002 09    170    21          31.2      NA South Central COG Mining, Quarry…
-#>  3  2002 09    170    22        1120.       NA South Central COG Utilities      
-#>  4  2002 09    170    23       11130.       NA South Central COG Construction   
-#>  5  2002 09    170    31-33    33498.       NA South Central COG Manufacturing  
-#>  6  2002 09    170    42       11068.       NA South Central COG Wholesale Trade
-#>  7  2002 09    170    44-45    32878        NA South Central COG Retail Trade   
-#>  8  2002 09    170    48-49     5737.       NA South Central COG Transportation…
-#>  9  2002 09    170    51       11860        NA South Central COG Information    
-#> 10  2002 09    170    52       10664.       NA South Central COG Finance and In…
+#>  3  2002 09    170    22        1117.       NA South Central COG Utilities      
+#>  4  2002 09    170    23       11132.       NA South Central COG Construction   
+#>  5  2002 09    170    31-33    33506        NA South Central COG Manufacturing  
+#>  6  2002 09    170    42       11177.       NA South Central COG Wholesale Trade
+#>  7  2002 09    170    44-45    32880        NA South Central COG Retail Trade   
+#>  8  2002 09    170    48-49     5733.       NA South Central COG Transportation…
+#>  9  2002 09    170    51       11844        NA South Central COG Information    
+#> 10  2002 09    170    52       10728.       NA South Central COG Finance and In…
 #> # ℹ 670 more rows
 ```
 
@@ -304,6 +315,7 @@ the industries with the largest numbers of employees, then filter
 `employment` for just those industries and plot it.
 
 ``` r
+
 top2018 <- employment |>
     filter(year == 2018, county == "170") |>
     top_n(8, emp) |>
@@ -341,6 +353,7 @@ lets you specify which of these measures to fetch. This chunk is turned
 off for now because the API is very finicky.
 
 ``` r
+
 unemployment <- laus_trend(c("New Haven", "New Haven County", "Connecticut"),
     startyear = 2000, endyear = 2018, measures = "unemployment rate"
 ) |>

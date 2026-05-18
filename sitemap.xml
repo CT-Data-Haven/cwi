@@ -1,5 +1,6 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://CT-Data-Haven.github.io/cwi/404.html</loc></url>
+<url><loc>https://CT-Data-Haven.github.io/cwi/CHANGELOG.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/LICENSE-text.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/LICENSE.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/articles/acs-updates.html</loc></url>
@@ -39,6 +40,7 @@
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/quick_map.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/qwi_industry.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/regions.html</loc></url>
+<url><loc>https://CT-Data-Haven.github.io/cwi/reference/safe_read_avail.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/school_dists.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/separate_acs.html</loc></url>
 <url><loc>https://CT-Data-Haven.github.io/cwi/reference/show_uniq.html</loc></url>

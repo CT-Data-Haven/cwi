@@ -17,10 +17,17 @@ make API calls repeatedly.
 ## Usage
 
 ``` r
-check_cb_avail()
+check_cb_avail(key = NULL)
 
 check_qwi_avail()
 ```
+
+## Arguments
+
+- key:
+
+  String: Census API key. If `NULL` (default), takes the value from
+  `Sys.getenv("CENSUS_API_KEY")`.
 
 ## Value
 
@@ -36,6 +43,7 @@ code, earliest year available, and most recent year available.
 [US Census Bureau API Discovery
 Tool](https://www.census.gov/data/developers/updates/new-discovery-tool.html)
 [LED Extraction Tool](https://ledextract.ces.census.gov/)
+[`tidycensus::census_api_key()`](https://walker-data.com/tidycensus/reference/census_api_key.html)
 
 ## Examples
 

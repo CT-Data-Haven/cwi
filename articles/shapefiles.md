@@ -1,6 +1,7 @@
 # Shapefiles
 
 ``` r
+
 library(dplyr)
 library(ggplot2)
 library(cwi)
@@ -54,6 +55,7 @@ with some `ggplot` aesthetics set, graticule lines turned off with
 `coord_sf(ndiscr = F)`, and a blank theme.
 
 ``` r
+
 ggplot(town_sf) +
     geom_sf(fill = "gray70", color = "white", linewidth = 0.5) +
     ggtitle("Connecticut towns")
@@ -70,6 +72,7 @@ conducts a union on each group’s geometries, using
 in its back-end.
 
 ``` r
+
 town_sf |>
     filter(name %in% regions[["Greater New Haven"]]) |>
     group_by(area = ifelse(name == "New Haven", "New Haven", "New Haven suburbs")) |>
@@ -88,6 +91,7 @@ a fairly large shape containing all tracts in the state, as of 2020
 redistricting.
 
 ``` r
+
 ggplot(tract_sf) +
     geom_sf(fill = "gray70", color = "white", linewidth = 0.1) +
     ggtitle("Connecticut tracts")
@@ -107,6 +111,7 @@ and crosswalk of tracts to neighborhoods at
 [`cwi::neighborhood_tracts`](https://CT-Data-Haven.github.io/cwi/reference/neighborhood_tracts.md).
 
 ``` r
+
 list(
     "New Haven" = new_haven_sf, Stamford = stamford_sf,
     "Hartford/West Hartford" = hartford_sf, Bridgeport = bridgeport_sf
