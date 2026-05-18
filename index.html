@@ -115,7 +115,9 @@
 <del><a href="https://ctdatahaven.org/reports/datahaven-community-wellbeing-survey" class="external-link">DataHaven’s Community Wellbeing Survey</a></del> This has been moved to the dcws package</li>
 </ul>
 <blockquote>
-<p>[!IMPORTANT] Note that as of May 2026, the Census Bureau requires a key for all API requests. This includes, foolishly, their own documentation and references of variables. The <code>cwi</code> package caches some of these tables in order to build and verify requests before sending them, which means an API key is now required up front. The easiest way to do this is to save your key to the default environment variable, <code>CENSUS_API_KEY</code>. See <a href="https://walker-data.com/tidycensus/reference/census_api_key.html" class="external-link"><code>tidycensus::census_api_key()</code></a> for help.</p>
+<p>[!IMPORTANT]</p>
+<p><strong>Note that as of May 2026, the Census Bureau requires a key for all API requests.</strong> This includes, foolishly, their own documentation and references of variables. The <code>cwi</code> package caches some of these tables in order to build and verify requests before sending them, which means an API key is now required up front. The easiest way to do this is to save your key to the default environment variable, <code>CENSUS_API_KEY</code>. See <a href="https://walker-data.com/tidycensus/reference/census_api_key.html" class="external-link"><code>tidycensus::census_api_key()</code></a> for help.</p>
+<p>As a result, this requires <code>tidycensus</code> v1.8.0 which, at the time of writing, is only on GitHub but will likely be on CRAN soon.</p>
 </blockquote>
 </div>
 <div class="section level2">
