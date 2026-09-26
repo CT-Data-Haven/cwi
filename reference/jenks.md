@@ -37,7 +37,30 @@ jenks(x, n = 5, true_jenks = FALSE, labels = NULL, ...)
 
   Arguments passed on to [`base::cut`](https://rdrr.io/r/base/cut.html)
 
-  :   
+  `breaks`
+
+  :   either a numeric vector of two or more unique cut points or a
+      single number (greater than or equal to 2) giving the number of
+      intervals into which `x` is to be cut.
+
+  `include.lowest`
+
+  :   logical, indicating if an ‘x\[i\]’ equal to the lowest (or
+      highest, for `right = FALSE`) ‘breaks’ value should be included.
+
+  `right`
+
+  :   logical, indicating if the intervals should be closed on the right
+      (and open on the left) or vice versa.
+
+  `dig.lab`
+
+  :   integer which is used when labels are not given. It determines the
+      number of digits used in formatting the break numbers.
+
+  `ordered_result`
+
+  :   logical: should the result be an ordered factor?
 
 ## Value
 

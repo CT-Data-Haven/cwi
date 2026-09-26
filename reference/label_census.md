@@ -23,7 +23,7 @@ label_acs(data, year = 2023, survey = "acs5", variable = variable)
 
 - year:
 
-  The year of data; defaults to 2023 for ACS, or 2020 for decennial.
+  The year of data; defaults to 2024 for ACS, or 2020 for decennial.
 
 - sumfile:
 

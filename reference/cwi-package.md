@@ -20,3 +20,8 @@ Useful links:
 
 **Maintainer**: Camille Seaberry <camille@ctdatahaven.org>
 ([ORCID](https://orcid.org/0000-0002-5102-995X))
+
+Authors:
+
+- Camille Seaberry <camille@ctdatahaven.org>
+  ([ORCID](https://orcid.org/0000-0002-5102-995X))

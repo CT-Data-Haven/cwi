@@ -42,7 +42,7 @@ multi_geo_acs(
 
 - year:
 
-  The year of the ACS table; currently defaults 2023 (most recent
+  The year of the ACS table; currently defaults 2024 (most recent
   available).
 
 - towns:

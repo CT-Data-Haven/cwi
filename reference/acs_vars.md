@@ -1,8 +1,8 @@
-# Variable labels from the 2023 ACS
+# Variable labels from the 2024 ACS
 
 Dataset of ACS variable labels, loaded from
 [`tidycensus::load_variables()`](https://walker-data.com/tidycensus/reference/load_variables.html)
-for 2023 and cleaned up slightly.
+for 2024 and cleaned up slightly.
 
 ## Usage
 
@@ -12,7 +12,7 @@ acs_vars
 
 ## Format
 
-A data frame with 28261 rows and 3 variables:
+A data frame with 28437 rows and 3 variables:
 
 - name:
 
@@ -41,5 +41,5 @@ This dataset is updated with each annual ACS release, with an attribute
 ``` r
 # get the year
 attr(acs_vars, "year")
-#> [1] 2023
+#> [1] 2024
 ```

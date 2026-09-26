@@ -8,10 +8,6 @@ major reports. This includes functions to speed up and standardize
 analysis for multiple staff people, preview trends and patterns we’ll
 need to write about, and get data in more layperson-friendly formats.
 
-It pairs well with many functions from Camille’s brilliantly-named
-[`camiller`](https://github.com/camille-s/camiller) package, though no
-longer depends on it.
-
 ## Installation
 
 You can install this package from
@@ -211,7 +207,7 @@ Functions to analyze or quickly plot data
 Reference datasets, lookup tables, and crosswalks
 
 - [`acs_vars`](https://CT-Data-Haven.github.io/cwi/reference/acs_vars.md)
-  : Variable labels from the 2023 ACS
+  : Variable labels from the 2024 ACS
 - [`ct5_clusters`](https://CT-Data-Haven.github.io/cwi/reference/ct5_clusters.md)
   : Five Connecticuts clusters
 - [`decennial_vars`](https://CT-Data-Haven.github.io/cwi/reference/decennial_vars.md)

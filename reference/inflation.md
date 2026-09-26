@@ -57,8 +57,8 @@ Bureau of Labor Statistics via their API
 
 - base_year:
 
-  Year on which to base inflation amounts. Defaults to 2023, which
-  corresponds to saying "... adjusted to 2023 dollars."
+  Year on which to base inflation amounts. Defaults to 2024, which
+  corresponds to saying "... adjusted to 2024 dollars."
 
 - verbose:
 
@@ -78,7 +78,7 @@ Bureau of Labor Statistics via their API
 
   Base reference point, either a year or a date, or something that can
   be easily coerced to a date. If just a year, will default to January 1
-  of that year. Default: 2023
+  of that year. Default: 2024
 
 - seasonal:
 

@@ -44,7 +44,7 @@ Functions to analyze or quickly plot data
 Reference datasets, lookup tables, and crosswalks
 
 - [`acs_vars`](https://CT-Data-Haven.github.io/cwi/reference/acs_vars.md)
-  : Variable labels from the 2023 ACS
+  : Variable labels from the 2024 ACS
 - [`ct5_clusters`](https://CT-Data-Haven.github.io/cwi/reference/ct5_clusters.md)
   : Five Connecticuts clusters
 - [`decennial_vars`](https://CT-Data-Haven.github.io/cwi/reference/decennial_vars.md)

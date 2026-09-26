@@ -11,12 +11,12 @@ Source:
 [`DESCRIPTION`](https://github.com/CT-Data-Haven/cwi/blob/main/DESCRIPTION)
 
 Seaberry C (2026). *cwi: Prep for DataHaven's Community Wellbeing
-Index*. R package version 2.0.4, <https://github.com/CT-Data-Haven/cwi>.
+Index*. R package version 2.1.0, <https://github.com/CT-Data-Haven/cwi>.
 
     @Manual{,
       title = {cwi: Prep for DataHaven's Community Wellbeing Index},
       author = {Camille Seaberry},
       year = {2026},
-      note = {R package version 2.0.4},
+      note = {R package version 2.1.0},
       url = {https://github.com/CT-Data-Haven/cwi},
     }

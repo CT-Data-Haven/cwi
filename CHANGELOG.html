@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">cwi</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,9 +40,21 @@
 
 
 <div class="section level2">
-<h2 id="v204-2026-05-15">v2.0.4 (2026-05-15)<a class="anchor" aria-label="anchor" href="#v204-2026-05-15"></a></h2>
+<h2 id="v210-2026-09-25">v2.1.0 (2026-09-25)<a class="anchor" aria-label="anchor" href="#v210-2026-09-25"></a></h2>
+<div class="section level3">
+<h3 id="feat">Feat<a class="anchor" aria-label="anchor" href="#feat"></a></h3>
+<ul><li>update ACS endyear and move from hard-coded list to dynamic API call</li>
+</ul></div>
 <div class="section level3">
 <h3 id="fix">Fix<a class="anchor" aria-label="anchor" href="#fix"></a></h3>
+<ul><li>
+<strong>cache</strong>: remove references to tidycensus’s caching now that it’s deprecated</li>
+</ul></div>
+</div>
+<div class="section level2">
+<h2 id="v204-2026-05-15">v2.0.4 (2026-05-15)<a class="anchor" aria-label="anchor" href="#v204-2026-05-15"></a></h2>
+<div class="section level3">
+<h3 id="fix-1">Fix<a class="anchor" aria-label="anchor" href="#fix-1"></a></h3>
 <ul><li>
 <strong>census</strong>: more fixes of census api key requirements</li>
 <li>
@@ -52,7 +64,7 @@
 <div class="section level2">
 <h2 id="v203-2025-12-09">v2.0.3 (2025-12-09)<a class="anchor" aria-label="anchor" href="#v203-2025-12-09"></a></h2>
 <div class="section level3">
-<h3 id="fix-1">Fix<a class="anchor" aria-label="anchor" href="#fix-1"></a></h3>
+<h3 id="fix-2">Fix<a class="anchor" aria-label="anchor" href="#fix-2"></a></h3>
 <ul><li>
 <strong>data</strong>: update school districts</li>
 </ul></div>
@@ -60,7 +72,7 @@
 <div class="section level2">
 <h2 id="v202-2025-12-03">v2.0.2 (2025-12-03)<a class="anchor" aria-label="anchor" href="#v202-2025-12-03"></a></h2>
 <div class="section level3">
-<h3 id="fix-2">Fix<a class="anchor" aria-label="anchor" href="#fix-2"></a></h3>
+<h3 id="fix-3">Fix<a class="anchor" aria-label="anchor" href="#fix-3"></a></h3>
 <ul><li>
 <strong>data</strong>: add COGs as regions in proxy_pumas</li>
 </ul></div>
@@ -68,14 +80,14 @@
 <div class="section level2">
 <h2 id="v201-2025-08-07">v2.0.1 (2025-08-07)<a class="anchor" aria-label="anchor" href="#v201-2025-08-07"></a></h2>
 <div class="section level3">
-<h3 id="fix-3">Fix<a class="anchor" aria-label="anchor" href="#fix-3"></a></h3>
+<h3 id="fix-4">Fix<a class="anchor" aria-label="anchor" href="#fix-4"></a></h3>
 <ul><li>remove extra dcws utility function</li>
 </ul></div>
 </div>
 <div class="section level2">
 <h2 id="v200-2025-08-07">v2.0.0 (2025-08-07)<a class="anchor" aria-label="anchor" href="#v200-2025-08-07"></a></h2>
 <div class="section level3">
-<h3 id="feat">Feat<a class="anchor" aria-label="anchor" href="#feat"></a></h3>
+<h3 id="feat-1">Feat<a class="anchor" aria-label="anchor" href="#feat-1"></a></h3>
 <ul><li>move functions from camiller into cwi</li>
 <li>
 <strong>deprecation</strong>: remove dcws-related functions that were deprecated</li>
@@ -86,7 +98,7 @@
 <div class="section level2">
 <h2 id="v1131-2025-05-20">v1.13.1 (2025-05-20)<a class="anchor" aria-label="anchor" href="#v1131-2025-05-20"></a></h2>
 <div class="section level3">
-<h3 id="fix-4">Fix<a class="anchor" aria-label="anchor" href="#fix-4"></a></h3>
+<h3 id="fix-5">Fix<a class="anchor" aria-label="anchor" href="#fix-5"></a></h3>
 <ul><li>
 <strong>proxy_pumas</strong>: rename Greater Bridgeport COG to Greater Bridgeport (same geo, more consistent name)</li>
 </ul></div>
@@ -94,18 +106,18 @@
 <div class="section level2">
 <h2 id="v1130-2025-05-19">v1.13.0 (2025-05-19)<a class="anchor" aria-label="anchor" href="#v1130-2025-05-19"></a></h2>
 <div class="section level3">
-<h3 id="feat-1">Feat<a class="anchor" aria-label="anchor" href="#feat-1"></a></h3>
+<h3 id="feat-2">Feat<a class="anchor" aria-label="anchor" href="#feat-2"></a></h3>
 <ul><li>copy over <code>calc_shares</code> function from camiller package</li>
 </ul></div>
 <div class="section level3">
-<h3 id="fix-5">Fix<a class="anchor" aria-label="anchor" href="#fix-5"></a></h3>
+<h3 id="fix-6">Fix<a class="anchor" aria-label="anchor" href="#fix-6"></a></h3>
 <ul><li>remove cws_demo dataset</li>
 </ul></div>
 </div>
 <div class="section level2">
 <h2 id="v1122-2025-03-27">v1.12.2 (2025-03-27)<a class="anchor" aria-label="anchor" href="#v1122-2025-03-27"></a></h2>
 <div class="section level3">
-<h3 id="fix-6">Fix<a class="anchor" aria-label="anchor" href="#fix-6"></a></h3>
+<h3 id="fix-7">Fix<a class="anchor" aria-label="anchor" href="#fix-7"></a></h3>
 <ul><li>clean up old dependencies &amp; vignettes</li>
 </ul></div>
 <div class="section level3">
@@ -117,12 +129,12 @@
 <div class="section level2">
 <h2 id="v1120-2025-03-26">v1.12.0 (2025-03-26)<a class="anchor" aria-label="anchor" href="#v1120-2025-03-26"></a></h2>
 <div class="section level3">
-<h3 id="feat-2">Feat<a class="anchor" aria-label="anchor" href="#feat-2"></a></h3>
+<h3 id="feat-3">Feat<a class="anchor" aria-label="anchor" href="#feat-3"></a></h3>
 <ul><li>first set of deprecating functions moving to dcws: <code>read_xtabs</code>, <code>read_weights</code>, <code>xtab2df</code>
 </li>
 </ul></div>
 <div class="section level3">
-<h3 id="fix-7">Fix<a class="anchor" aria-label="anchor" href="#fix-7"></a></h3>
+<h3 id="fix-8">Fix<a class="anchor" aria-label="anchor" href="#fix-8"></a></h3>
 <ul><li>second round of deprecations: <code>sub_nonanswers</code> and <code>collapse_n_wt</code>
 </li>
 </ul></div>
@@ -130,11 +142,11 @@
 <div class="section level2">
 <h2 id="v1111-2025-02-26">v1.11.1 (2025-02-26)<a class="anchor" aria-label="anchor" href="#v1111-2025-02-26"></a></h2>
 <div class="section level3">
-<h3 id="feat-3">Feat<a class="anchor" aria-label="anchor" href="#feat-3"></a></h3>
+<h3 id="feat-4">Feat<a class="anchor" aria-label="anchor" href="#feat-4"></a></h3>
 <ul><li>Add get_cpi function, better BLS handling</li>
 </ul></div>
 <div class="section level3">
-<h3 id="fix-8">Fix<a class="anchor" aria-label="anchor" href="#fix-8"></a></h3>
+<h3 id="fix-9">Fix<a class="anchor" aria-label="anchor" href="#fix-9"></a></h3>
 <ul><li>
 <strong>qwi_industry</strong>: fix handling of QWI queries that return empty results</li>
 </ul></div>
@@ -145,7 +157,7 @@
 <div class="section level2">
 <h2 id="v190-2025-01-29">v1.9.0 (2025-01-29)<a class="anchor" aria-label="anchor" href="#v190-2025-01-29"></a></h2>
 <div class="section level3">
-<h3 id="feat-4">Feat<a class="anchor" aria-label="anchor" href="#feat-4"></a></h3>
+<h3 id="feat-5">Feat<a class="anchor" aria-label="anchor" href="#feat-5"></a></h3>
 <ul><li>add memoized functions to keep availability lookups up to date, close #33 and #36</li>
 </ul></div>
 </div>
@@ -184,7 +196,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

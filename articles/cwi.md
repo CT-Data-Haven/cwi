@@ -297,14 +297,14 @@ employment
 #>    <dbl> <chr> <chr>  <chr>      <dbl>   <dbl> <chr>             <chr>          
 #>  1  2002 09    170    11         377        NA South Central COG Agriculture, F…
 #>  2  2002 09    170    21          31.2      NA South Central COG Mining, Quarry…
-#>  3  2002 09    170    22        1117.       NA South Central COG Utilities      
-#>  4  2002 09    170    23       11132.       NA South Central COG Construction   
-#>  5  2002 09    170    31-33    33506        NA South Central COG Manufacturing  
-#>  6  2002 09    170    42       11177.       NA South Central COG Wholesale Trade
-#>  7  2002 09    170    44-45    32880        NA South Central COG Retail Trade   
-#>  8  2002 09    170    48-49     5733.       NA South Central COG Transportation…
-#>  9  2002 09    170    51       11844        NA South Central COG Information    
-#> 10  2002 09    170    52       10728.       NA South Central COG Finance and In…
+#>  3  2002 09    170    22        1108.       NA South Central COG Utilities      
+#>  4  2002 09    170    23       11091        NA South Central COG Construction   
+#>  5  2002 09    170    31-33    33483.       NA South Central COG Manufacturing  
+#>  6  2002 09    170    42       11200.       NA South Central COG Wholesale Trade
+#>  7  2002 09    170    44-45    32899.       NA South Central COG Retail Trade   
+#>  8  2002 09    170    48-49     5748.       NA South Central COG Transportation…
+#>  9  2002 09    170    51       11869.       NA South Central COG Information    
+#> 10  2002 09    170    52       10746.       NA South Central COG Finance and In…
 #> # ℹ 670 more rows
 ```
 

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cwi</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,17 +95,124 @@
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Arguments passed on to <code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">ggplot2::geom_sf</a></code></p><dl><dt><code>mapping</code></dt>
-<dd><p>Set of aesthetic mappings created by <code><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes()</a></code>. If specified and
-<code>inherit.aes = TRUE</code> (the default), it is combined with the default mapping
-at the top level of the plot. You must supply <code>mapping</code> if there is no plot
-mapping.</p></dd>
+<dd><p>Arguments passed on to <code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">ggplot2::geom_sf</a></code></p><dl><dt><code>xlim,ylim</code></dt>
+<dd><p>Limits for the x and y axes. These limits are specified
+in the units of the default CRS. By default, this means projected coordinates
+(<code>default_crs = NULL</code>). How limit specifications translate into the exact
+region shown on the plot can be confusing when non-linear or rotated coordinate
+systems are used as the default crs. First, different methods can be preferable
+under different conditions. See parameter <code>lims_method</code> for details. Second,
+specifying limits along only one direction can affect the automatically generated
+limits along the other direction. Therefore, it is best to always specify limits
+for both x and y. Third, specifying limits via position scales or <code>xlim()</code>/<code>ylim()</code>
+is strongly discouraged, as it can result in data points being dropped from the plot even
+though they would be visible in the final plot region.</p></dd>
+
+    <dt><code>expand</code></dt>
+<dd><p>If <code>TRUE</code>, the default, adds a small expansion factor to
+the limits to ensure that data and axes don't overlap. If <code>FALSE</code>,
+limits are taken exactly from the data or <code>xlim</code>/<code>ylim</code>.
+Giving a logical vector will separately control the expansion for the four
+directions (top, left, bottom and right). The <code>expand</code> argument will be
+recycled to length 4 if necessary. Alternatively, can be a named logical
+vector to control a single direction, e.g. <code>expand = c(bottom = FALSE)</code>.</p></dd>
+
+    <dt><code>crs</code></dt>
+<dd><p>The coordinate reference system (CRS) into which all data should
+be projected before plotting. If not specified, will use the CRS defined
+in the first sf layer of the plot.</p></dd>
+
+    <dt><code>default_crs</code></dt>
+<dd><p>The default CRS to be used for non-sf layers (which
+don't carry any CRS information) and scale limits. The default value of
+<code>NULL</code> means that the setting for <code>crs</code> is used. This implies that all
+non-sf layers and scale limits are assumed to be specified in projected
+coordinates. A useful alternative setting is <code>default_crs = sf::st_crs(4326)</code>,
+which means x and y positions are interpreted as longitude and latitude,
+respectively, in the World Geodetic System 1984 (WGS84).</p></dd>
+
+    <dt><code>datum</code></dt>
+<dd><p>CRS that provides datum to use when generating graticules.</p></dd>
+
+    <dt><code>label_graticule</code></dt>
+<dd><p>Character vector indicating which graticule lines should be labeled
+where. Meridians run north-south, and the letters <code>"N"</code> and <code>"S"</code> indicate that
+they should be labeled on their north or south end points, respectively.
+Parallels run east-west, and the letters <code>"E"</code> and <code>"W"</code> indicate that they
+should be labeled on their east or west end points, respectively. Thus,
+<code>label_graticule = "SW"</code> would label meridians at their south end and parallels at
+their west end, whereas <code>label_graticule = "EW"</code> would label parallels at both
+ends and meridians not at all. Because meridians and parallels can in general
+intersect with any side of the plot panel, for any choice of <code>label_graticule</code> labels
+are not guaranteed to reside on only one particular side of the plot panel. Also,
+<code>label_graticule</code> can cause labeling artifacts, in particular if a graticule line
+coincides with the edge of the plot panel. In such circumstances, <code>label_axes</code> will
+generally yield better results and should be used instead.</p>
+<p>This parameter can be used alone or in combination with <code>label_axes</code>.</p></dd>
+
+    <dt><code>label_axes</code></dt>
+<dd><p>Character vector or named list of character values
+specifying which graticule lines (meridians or parallels) should be labeled on
+which side of the plot. Meridians are indicated by <code>"E"</code> (for East) and
+parallels by <code>"N"</code> (for North). Default is <code>"--EN"</code>, which specifies
+(clockwise from the top) no labels on the top, none on the right, meridians
+on the bottom, and parallels on the left. Alternatively, this setting could have been
+specified with <code>list(bottom = "E", left = "N")</code>.</p>
+<p>This parameter can be used alone or in combination with <code>label_graticule</code>.</p></dd>
+
+    <dt><code>lims_method</code></dt>
+<dd><p>Method specifying how scale limits are converted into
+limits on the plot region. Has no effect when <code>default_crs = NULL</code>.
+For a very non-linear CRS (e.g., a perspective centered
+around the North pole), the available methods yield widely differing results, and
+you may want to try various options. Methods currently implemented include <code>"cross"</code>
+(the default), <code>"box"</code>, <code>"orthogonal"</code>, and <code>"geometry_bbox"</code>. For method <code>"cross"</code>,
+limits along one direction (e.g., longitude) are applied at the midpoint of the
+other direction (e.g., latitude). This method avoids excessively large limits for
+rotated coordinate systems but means that sometimes limits need to be expanded a
+little further if extreme data points are to be included in the final plot region.
+By contrast, for method <code>"box"</code>, a box is generated out of the limits along both directions,
+and then limits in projected coordinates are chosen such that the entire box is
+visible. This method can yield plot regions that are too large. Finally, method
+<code>"orthogonal"</code> applies limits separately along each axis, and method
+<code>"geometry_bbox"</code> ignores all limit information except the bounding boxes of any
+objects in the <code>geometry</code> aesthetic.</p></dd>
+
+    <dt><code>ndiscr</code></dt>
+<dd><p>Number of segments to use for discretising graticule lines;
+try increasing this number when graticules look incorrect.</p></dd>
+
+    <dt><code>default</code></dt>
+<dd><p>Is this the default coordinate system? If <code>FALSE</code> (the default),
+then replacing this coordinate system with another one creates a message alerting
+the user that the coordinate system is being replaced. If <code>TRUE</code>, that warning
+is suppressed.</p></dd>
+
+    <dt><code>clip</code></dt>
+<dd><p>Should drawing be clipped to the extent of the plot panel? A
+setting of <code>"on"</code> (the default) means yes, and a setting of <code>"off"</code>
+means no. In most cases, the default of <code>"on"</code> should not be changed,
+as setting <code>clip = "off"</code> can cause unexpected results. It allows
+drawing of data points anywhere on the plot, including in the plot margins. If
+limits are set via <code>xlim</code> and <code>ylim</code> and some data points fall outside those
+limits, then those data points may show up in places such as the axes, the
+legend, the plot title, or the plot margins.</p></dd>
+
+    <dt><code>reverse</code></dt>
+<dd><p>A string giving which directions to reverse. <code>"none"</code>
+(default) keeps directions as is. <code>"x"</code> and <code>"y"</code> can be used to reverse
+their respective directions. <code>"xy"</code> can be used to reverse both
+directions.</p></dd>
+
+    <dt><code>mapping</code></dt>
+<dd><p>Set of aesthetic mappings created by <code><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes()</a></code>. If specified and <code>inherit.aes = TRUE</code> (the default), it is combined with the default mapping at the top level
+of the plot. You must supply <code>mapping</code> if there is no plot mapping.</p></dd>
 
     <dt><code>stat</code></dt>
-<dd><p>The statistical transformation to use on the data for this layer.
-When using a <code>geom_*()</code> function to construct a layer, the <code>stat</code>
-argument can be used to override the default coupling between geoms and
-stats. The <code>stat</code> argument accepts the following:</p><ul><li><p>A <code>Stat</code> ggproto subclass, for example <code>StatCount</code>.</p></li>
+<dd><p>The statistical transformation to use on the data for this layer. When using
+a <code>geom_*()</code> function to construct a layer, the <code>stat</code> argument can be used
+to override the default coupling between geoms and stats. The <code>stat</code> argument
+accepts the following:</p><ul><li><p>A <code>Stat</code> ggproto subclass, for example <code>StatCount</code>.</p></li>
 <li><p>A string naming the stat. To give the stat as a string, strip the
 function name of the <code>stat_</code> prefix. For example, to use <code>stat_count()</code>,
 give the stat as <code>"count"</code>.</p></li>
@@ -114,20 +221,20 @@ give the stat as <code>"count"</code>.</p></li>
 </ul></dd>
 
     <dt><code>position</code></dt>
-<dd><p>A position adjustment to use on the data for this layer. This
-can be used in various ways, including to prevent overplotting and
-improving the display. The <code>position</code> argument accepts the following:</p><ul><li><p>The result of calling a position function, such as <code>position_jitter()</code>.
+<dd><p>A position adjustment to use on the data for this layer. This can be used in
+various ways, including to prevent overplotting and improving the display.
+The <code>position</code> argument accepts the following:</p><ul><li><p>The result of calling a position function, such as <code>position_jitter()</code>.
 This method allows for passing extra arguments to the position.</p></li>
 <li><p>A string naming the position adjustment. To give the position as a
-string, strip the function name of the <code>position_</code> prefix. For example,
-to use <code>position_jitter()</code>, give the position as <code>"jitter"</code>.</p></li>
+string, strip the function name of the <code>position_</code> prefix. For example, to
+use <code>position_jitter()</code>, give the position as <code>"jitter"</code>.</p></li>
 <li><p>For more information and other ways to specify the position, see the
 <a href="https://ggplot2.tidyverse.org/reference/layer_positions.html" class="external-link">layer position</a> documentation.</p></li>
 </ul></dd>
 
     <dt><code>na.rm</code></dt>
-<dd><p>If <code>FALSE</code>, the default, missing values are removed with
-a warning. If <code>TRUE</code>, missing values are silently removed.</p></dd>
+<dd><p>If <code>FALSE</code>, the default, missing values are removed with a warning. If
+<code>TRUE</code>, missing values are silently removed.</p></dd>
 
     <dt><code>show.legend</code></dt>
 <dd><p>logical. Should this layer be included in the legends?
@@ -137,10 +244,60 @@ a warning. If <code>TRUE</code>, missing values are silently removed.</p></dd>
 override the default legend.</p></dd>
 
     <dt><code>inherit.aes</code></dt>
-<dd><p>If <code>FALSE</code>, overrides the default aesthetics,
-rather than combining with them. This is most useful for helper functions
-that define both data and aesthetics and shouldn't inherit behaviour from
-the default plot specification, e.g. <code><a href="https://ggplot2.tidyverse.org/reference/annotation_borders.html" class="external-link">annotation_borders()</a></code>.</p></dd>
+<dd><p>If <code>FALSE</code>, overrides the default aesthetics, rather than combining with
+them. This is most useful for helper functions that define both data and
+aesthetics and shouldn't inherit behaviour from the default plot
+specification, e.g. <code><a href="https://ggplot2.tidyverse.org/reference/annotation_borders.html" class="external-link">annotation_borders()</a></code>.</p></dd>
+
+    <dt><code>parse</code></dt>
+<dd><p>If <code>TRUE</code>, the labels will be parsed into expressions and
+displayed as described in <code><a href="https://rdrr.io/r/grDevices/plotmath.html" class="external-link">?plotmath</a></code>.</p></dd>
+
+    <dt><code>label.padding</code></dt>
+<dd><p>Amount of padding around label. Defaults to 0.25 lines.</p></dd>
+
+    <dt><code>label.r</code></dt>
+<dd><p>Radius of rounded corners. Defaults to 0.15 lines.</p></dd>
+
+    <dt><code>label.size</code></dt>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> Replaced by the
+<code>linewidth</code> aesthetic. Size of label border, in mm.</p></dd>
+
+    <dt><code>border.colour,border.color</code></dt>
+<dd><p>Colour of label border. When <code>NULL</code>
+(default), the <code>colour</code> aesthetic determines the colour of the label border.
+<code>border.color</code> is an alias for <code>border.colour</code>.</p></dd>
+
+    <dt><code>text.colour,text.color</code></dt>
+<dd><p>Colour of the text. When <code>NULL</code> (default), the
+<code>colour</code> aesthetic determines the colour of the text. <code>text.color</code> is an
+alias for <code>text.colour</code>.</p></dd>
+
+    <dt><code>fun.geometry</code></dt>
+<dd><p>A function that takes a <code>sfc</code> object and returns a <code>sfc_POINT</code> with the
+same length as the input. If <code>NULL</code>, <code>function(x) sf::st_point_on_surface(sf::st_zm(x))</code>
+will be used. Note that the function may warn about the incorrectness of
+the result if the data is not projected, but you can ignore this except
+when you really care about the exact locations.</p></dd>
+
+    <dt><code>check_overlap</code></dt>
+<dd><p>If <code>TRUE</code>, text that overlaps previous text in the
+same layer will not be plotted. <code>check_overlap</code> happens at draw time and in
+the order of the data. Therefore data should be arranged by the label
+column before calling <code>geom_text()</code>. Note that this argument is not
+supported by <code>geom_label()</code>.</p></dd>
+
+    <dt><code>geom</code></dt>
+<dd><p>The geometric object to use to display the data for this layer. When using a
+<code>stat_*()</code> function to construct a layer, the <code>geom</code> argument can be used to
+override the default coupling between stats and geoms. The <code>geom</code> argument
+accepts the following:</p><ul><li><p>A <code>Geom</code> ggproto subclass, for example <code>GeomPoint</code>.</p></li>
+<li><p>A string naming the geom. To give the geom as a string, strip the
+function name of the <code>geom_</code> prefix. For example, to use <code>geom_point()</code>,
+give the geom as <code>"point"</code>.</p></li>
+<li><p>For more information and other ways to specify the geom, see the
+<a href="https://ggplot2.tidyverse.org/reference/layer_geoms.html" class="external-link">layer geom</a> documentation.</p></li>
+</ul></dd>
 
 
 </dl></dd>
@@ -177,7 +334,7 @@ the default plot specification, e.g. <code><a href="https://ggplot2.tidyverse.or
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

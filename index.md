@@ -8,10 +8,6 @@ major reports. This includes functions to speed up and standardize
 analysis for multiple staff people, preview trends and patterns we’ll
 need to write about, and get data in more layperson-friendly formats.
 
-It pairs well with many functions from Camille’s brilliantly-named
-[`camiller`](https://github.com/camille-s/camiller) package, though no
-longer depends on it.
-
 ## Installation
 
 You can install this package from
