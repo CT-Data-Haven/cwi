@@ -1,3 +1,13 @@
+## v2.1.0 (2026-09-25)
+
+### Feat
+
+- update ACS endyear and move from hard-coded list to dynamic API call
+
+### Fix
+
+- **cache**: remove references to tidycensus's caching now that it's deprecated
+
 ## v2.0.4 (2026-05-15)
 
 ### Fix
