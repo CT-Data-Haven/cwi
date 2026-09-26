@@ -18,7 +18,17 @@ jenks(x, n = 5, true_jenks = FALSE, labels = NULL, ...)
 \item{...}{
   Arguments passed on to \code{\link[base:cut]{base::cut}}
   \describe{
-    \item{\code{}}{}
+    \item{\code{breaks}}{either a numeric vector of two or more unique cut points or a
+    single number (greater than or equal to 2) giving the number of
+    intervals into which \code{x} is to be cut.}
+    \item{\code{include.lowest}}{logical, indicating if an \sQuote{x[i]} equal to
+    the lowest (or highest, for \code{right = FALSE}) \sQuote{breaks}
+    value should be included.}
+    \item{\code{right}}{logical, indicating if the intervals should be closed on
+    the right (and open on the left) or vice versa.}
+    \item{\code{dig.lab}}{integer which is used when labels are not given.  It
+    determines the number of digits used in formatting the break numbers.}
+    \item{\code{ordered_result}}{logical: should the result be an ordered factor?}
   }}
 }
 \value{

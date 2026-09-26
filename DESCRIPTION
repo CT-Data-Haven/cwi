@@ -19,7 +19,6 @@ BugReports: https://github.com/CT-Data-Haven/cwi/issues
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3
 Depends:
     R (>= 4.2.0)
 Imports: 
@@ -57,5 +56,6 @@ VignetteBuilder:
     quarto
 Config/testthat/edition: 3
 Config/check/ignore-inconsequential-notes: true
-Remotes:  
+Remotes: 
     github::walkerke/tidycensus
+Config/roxygen2/version: 8.1.0

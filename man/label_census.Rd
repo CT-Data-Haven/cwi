@@ -12,7 +12,7 @@ label_acs(data, year = 2023, survey = "acs5", variable = variable)
 \arguments{
 \item{data}{A data frame/tibble.}
 
-\item{year}{The year of data; defaults to 2023 for ACS, or 2020 for decennial.}
+\item{year}{The year of data; defaults to 2024 for ACS, or 2020 for decennial.}
 
 \item{sumfile}{For \code{label_decennial}, a string: which summary file to use. Defaults to \code{"dhc"}, the code used for 2020. 2010 used summary files labeled \code{"sf1"} or \code{"sf3"}.}
 

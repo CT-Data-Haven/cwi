@@ -33,7 +33,7 @@ get_cpi(
 
 \item{year}{Bare column name of years; for safety, has no default.}
 
-\item{base_year}{Year on which to base inflation amounts. Defaults to 2023, which corresponds to saying "... adjusted to 2023 dollars."}
+\item{base_year}{Year on which to base inflation amounts. Defaults to 2024, which corresponds to saying "... adjusted to 2024 dollars."}
 
 \item{verbose}{Logical: if \code{TRUE} (default), this will print overview information about the series being used, as returned by the API.}
 
@@ -41,7 +41,7 @@ get_cpi(
 
 \item{years}{Numeric vector: years of CPI values to get}
 
-\item{base}{Base reference point, either a year or a date, or something that can be easily coerced to a date. If just a year, will default to January 1 of that year. Default: 2023}
+\item{base}{Base reference point, either a year or a date, or something that can be easily coerced to a date. If just a year, will default to January 1 of that year. Default: 2024}
 
 \item{seasonal}{Logical, whether to get seasonally-adjusted or unadjusted values. Default: FALSE}
 

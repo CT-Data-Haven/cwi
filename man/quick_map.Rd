@@ -29,21 +29,106 @@ quick_map(
 
 \item{n}{Number of breaks into which to bin values; defaults (approximately) 5.}
 
-\item{palette}{String of a ColorBrewer palette; see \code{\link[RColorBrewer:ColorBrewer]{RColorBrewer::RColorBrewer()}} for possible values. Defaults \code{"GnBu"}.}
+\item{palette}{String of a ColorBrewer palette; see \code{\link[RColorBrewer:RColorBrewer]{RColorBrewer::RColorBrewer()}} for possible values. Defaults \code{"GnBu"}.}
 
 \item{title}{String giving the title, if desired, for the plot.}
 
 \item{...}{
-  Arguments passed on to \code{\link[ggplot2:ggsf]{ggplot2::geom_sf}}
+  Arguments passed on to \code{\link[ggplot2:geom_sf]{ggplot2::geom_sf}}
   \describe{
-    \item{\code{mapping}}{Set of aesthetic mappings created by \code{\link[ggplot2:aes]{aes()}}. If specified and
-\code{inherit.aes = TRUE} (the default), it is combined with the default mapping
-at the top level of the plot. You must supply \code{mapping} if there is no plot
-mapping.}
-    \item{\code{stat}}{The statistical transformation to use on the data for this layer.
-When using a \verb{geom_*()} function to construct a layer, the \code{stat}
-argument can be used to override the default coupling between geoms and
-stats. The \code{stat} argument accepts the following:
+    \item{\code{xlim,ylim}}{Limits for the x and y axes. These limits are specified
+in the units of the default CRS. By default, this means projected coordinates
+(\code{default_crs = NULL}). How limit specifications translate into the exact
+region shown on the plot can be confusing when non-linear or rotated coordinate
+systems are used as the default crs. First, different methods can be preferable
+under different conditions. See parameter \code{lims_method} for details. Second,
+specifying limits along only one direction can affect the automatically generated
+limits along the other direction. Therefore, it is best to always specify limits
+for both x and y. Third, specifying limits via position scales or \code{xlim()}/\code{ylim()}
+is strongly discouraged, as it can result in data points being dropped from the plot even
+though they would be visible in the final plot region.}
+    \item{\code{expand}}{If \code{TRUE}, the default, adds a small expansion factor to
+the limits to ensure that data and axes don't overlap. If \code{FALSE},
+limits are taken exactly from the data or \code{xlim}/\code{ylim}.
+Giving a logical vector will separately control the expansion for the four
+directions (top, left, bottom and right). The \code{expand} argument will be
+recycled to length 4 if necessary. Alternatively, can be a named logical
+vector to control a single direction, e.g. \code{expand = c(bottom = FALSE)}.}
+    \item{\code{crs}}{The coordinate reference system (CRS) into which all data should
+be projected before plotting. If not specified, will use the CRS defined
+in the first sf layer of the plot.}
+    \item{\code{default_crs}}{The default CRS to be used for non-sf layers (which
+don't carry any CRS information) and scale limits. The default value of
+\code{NULL} means that the setting for \code{crs} is used. This implies that all
+non-sf layers and scale limits are assumed to be specified in projected
+coordinates. A useful alternative setting is \code{default_crs = sf::st_crs(4326)},
+which means x and y positions are interpreted as longitude and latitude,
+respectively, in the World Geodetic System 1984 (WGS84).}
+    \item{\code{datum}}{CRS that provides datum to use when generating graticules.}
+    \item{\code{label_graticule}}{Character vector indicating which graticule lines should be labeled
+where. Meridians run north-south, and the letters \code{"N"} and \code{"S"} indicate that
+they should be labeled on their north or south end points, respectively.
+Parallels run east-west, and the letters \code{"E"} and \code{"W"} indicate that they
+should be labeled on their east or west end points, respectively. Thus,
+\code{label_graticule = "SW"} would label meridians at their south end and parallels at
+their west end, whereas \code{label_graticule = "EW"} would label parallels at both
+ends and meridians not at all. Because meridians and parallels can in general
+intersect with any side of the plot panel, for any choice of \code{label_graticule} labels
+are not guaranteed to reside on only one particular side of the plot panel. Also,
+\code{label_graticule} can cause labeling artifacts, in particular if a graticule line
+coincides with the edge of the plot panel. In such circumstances, \code{label_axes} will
+generally yield better results and should be used instead.
+
+This parameter can be used alone or in combination with \code{label_axes}.}
+    \item{\code{label_axes}}{Character vector or named list of character values
+specifying which graticule lines (meridians or parallels) should be labeled on
+which side of the plot. Meridians are indicated by \code{"E"} (for East) and
+parallels by \code{"N"} (for North). Default is \code{"--EN"}, which specifies
+(clockwise from the top) no labels on the top, none on the right, meridians
+on the bottom, and parallels on the left. Alternatively, this setting could have been
+specified with \code{list(bottom = "E", left = "N")}.
+
+This parameter can be used alone or in combination with \code{label_graticule}.}
+    \item{\code{lims_method}}{Method specifying how scale limits are converted into
+limits on the plot region. Has no effect when \code{default_crs = NULL}.
+For a very non-linear CRS (e.g., a perspective centered
+around the North pole), the available methods yield widely differing results, and
+you may want to try various options. Methods currently implemented include \code{"cross"}
+(the default), \code{"box"}, \code{"orthogonal"}, and \code{"geometry_bbox"}. For method \code{"cross"},
+limits along one direction (e.g., longitude) are applied at the midpoint of the
+other direction (e.g., latitude). This method avoids excessively large limits for
+rotated coordinate systems but means that sometimes limits need to be expanded a
+little further if extreme data points are to be included in the final plot region.
+By contrast, for method \code{"box"}, a box is generated out of the limits along both directions,
+and then limits in projected coordinates are chosen such that the entire box is
+visible. This method can yield plot regions that are too large. Finally, method
+\code{"orthogonal"} applies limits separately along each axis, and method
+\code{"geometry_bbox"} ignores all limit information except the bounding boxes of any
+objects in the \code{geometry} aesthetic.}
+    \item{\code{ndiscr}}{Number of segments to use for discretising graticule lines;
+try increasing this number when graticules look incorrect.}
+    \item{\code{default}}{Is this the default coordinate system? If \code{FALSE} (the default),
+then replacing this coordinate system with another one creates a message alerting
+the user that the coordinate system is being replaced. If \code{TRUE}, that warning
+is suppressed.}
+    \item{\code{clip}}{Should drawing be clipped to the extent of the plot panel? A
+setting of \code{"on"} (the default) means yes, and a setting of \code{"off"}
+means no. In most cases, the default of \code{"on"} should not be changed,
+as setting \code{clip = "off"} can cause unexpected results. It allows
+drawing of data points anywhere on the plot, including in the plot margins. If
+limits are set via \code{xlim} and \code{ylim} and some data points fall outside those
+limits, then those data points may show up in places such as the axes, the
+legend, the plot title, or the plot margins.}
+    \item{\code{reverse}}{A string giving which directions to reverse. \code{"none"}
+(default) keeps directions as is. \code{"x"} and \code{"y"} can be used to reverse
+their respective directions. \code{"xy"} can be used to reverse both
+directions.}
+    \item{\code{mapping}}{Set of aesthetic mappings created by \code{\link[ggplot2:aes]{aes()}}. If specified and \code{inherit.aes = TRUE} (the default), it is combined with the default mapping at the top level
+of the plot. You must supply \code{mapping} if there is no plot mapping.}
+    \item{\code{stat}}{The statistical transformation to use on the data for this layer. When using
+a \verb{geom_*()} function to construct a layer, the \code{stat} argument can be used
+to override the default coupling between geoms and stats. The \code{stat} argument
+accepts the following:
 \itemize{
 \item A \code{Stat} ggproto subclass, for example \code{StatCount}.
 \item A string naming the stat. To give the stat as a string, strip the
@@ -52,30 +137,64 @@ give the stat as \code{"count"}.
 \item For more information and other ways to specify the stat, see the
 \link[ggplot2:layer_stats]{layer stat} documentation.
 }}
-    \item{\code{position}}{A position adjustment to use on the data for this layer. This
-can be used in various ways, including to prevent overplotting and
-improving the display. The \code{position} argument accepts the following:
+    \item{\code{position}}{A position adjustment to use on the data for this layer. This can be used in
+various ways, including to prevent overplotting and improving the display.
+The \code{position} argument accepts the following:
 \itemize{
 \item The result of calling a position function, such as \code{position_jitter()}.
 This method allows for passing extra arguments to the position.
 \item A string naming the position adjustment. To give the position as a
-string, strip the function name of the \code{position_} prefix. For example,
-to use \code{position_jitter()}, give the position as \code{"jitter"}.
+string, strip the function name of the \code{position_} prefix. For example, to
+use \code{position_jitter()}, give the position as \code{"jitter"}.
 \item For more information and other ways to specify the position, see the
 \link[ggplot2:layer_positions]{layer position} documentation.
 }}
-    \item{\code{na.rm}}{If \code{FALSE}, the default, missing values are removed with
-a warning. If \code{TRUE}, missing values are silently removed.}
+    \item{\code{na.rm}}{If \code{FALSE}, the default, missing values are removed with a warning. If
+\code{TRUE}, missing values are silently removed.}
     \item{\code{show.legend}}{logical. Should this layer be included in the legends?
 \code{NA}, the default, includes if any aesthetics are mapped.
 \code{FALSE} never includes, and \code{TRUE} always includes.
 
 You can also set this to one of "polygon", "line", and "point" to
 override the default legend.}
-    \item{\code{inherit.aes}}{If \code{FALSE}, overrides the default aesthetics,
-rather than combining with them. This is most useful for helper functions
-that define both data and aesthetics and shouldn't inherit behaviour from
-the default plot specification, e.g. \code{\link[ggplot2:annotation_borders]{annotation_borders()}}.}
+    \item{\code{inherit.aes}}{If \code{FALSE}, overrides the default aesthetics, rather than combining with
+them. This is most useful for helper functions that define both data and
+aesthetics and shouldn't inherit behaviour from the default plot
+specification, e.g. \code{\link[ggplot2:annotation_borders]{annotation_borders()}}.}
+    \item{\code{parse}}{If \code{TRUE}, the labels will be parsed into expressions and
+displayed as described in \code{?plotmath}.}
+    \item{\code{label.padding}}{Amount of padding around label. Defaults to 0.25 lines.}
+    \item{\code{label.r}}{Radius of rounded corners. Defaults to 0.15 lines.}
+    \item{\code{label.size}}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Replaced by the
+\code{linewidth} aesthetic. Size of label border, in mm.}
+    \item{\code{border.colour,border.color}}{Colour of label border. When \code{NULL}
+(default), the \code{colour} aesthetic determines the colour of the label border.
+\code{border.color} is an alias for \code{border.colour}.}
+    \item{\code{text.colour,text.color}}{Colour of the text. When \code{NULL} (default), the
+\code{colour} aesthetic determines the colour of the text. \code{text.color} is an
+alias for \code{text.colour}.}
+    \item{\code{fun.geometry}}{A function that takes a \code{sfc} object and returns a \code{sfc_POINT} with the
+same length as the input. If \code{NULL}, \code{function(x) sf::st_point_on_surface(sf::st_zm(x))}
+will be used. Note that the function may warn about the incorrectness of
+the result if the data is not projected, but you can ignore this except
+when you really care about the exact locations.}
+    \item{\code{check_overlap}}{If \code{TRUE}, text that overlaps previous text in the
+same layer will not be plotted. \code{check_overlap} happens at draw time and in
+the order of the data. Therefore data should be arranged by the label
+column before calling \code{geom_text()}. Note that this argument is not
+supported by \code{geom_label()}.}
+    \item{\code{geom}}{The geometric object to use to display the data for this layer. When using a
+\verb{stat_*()} function to construct a layer, the \code{geom} argument can be used to
+override the default coupling between stats and geoms. The \code{geom} argument
+accepts the following:
+\itemize{
+\item A \code{Geom} ggproto subclass, for example \code{GeomPoint}.
+\item A string naming the geom. To give the geom as a string, strip the
+function name of the \code{geom_} prefix. For example, to use \code{geom_point()},
+give the geom as \code{"point"}.
+\item For more information and other ways to specify the geom, see the
+\link[ggplot2:layer_geoms]{layer geom} documentation.
+}}
   }}
 }
 \value{
@@ -96,6 +215,6 @@ tidycensus::get_acs(
 }
 }
 \seealso{
-\code{\link[ggplot2:ggsf]{ggplot2::geom_sf()}}
+\code{\link[ggplot2:geom_sf]{ggplot2::geom_sf()}}
 }
 \keyword{quick-plotting-functions}

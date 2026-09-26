@@ -22,5 +22,10 @@ Useful links:
 \author{
 \strong{Maintainer}: Camille Seaberry \email{camille@ctdatahaven.org} (\href{https://orcid.org/0000-0002-5102-995X}{ORCID})
 
+Authors:
+\itemize{
+  \item Camille Seaberry \email{camille@ctdatahaven.org} (\href{https://orcid.org/0000-0002-5102-995X}{ORCID})
+}
+
 }
 \keyword{internal}
