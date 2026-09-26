@@ -1,5 +1,16 @@
 # ACS updates
 
+## 2024 ACS
+
+| concept2023 | table_num | concept2024 |
+|:---|:---|:---|
+| NA | B02022 | white alone by selected groups |
+| NA | B02023 | black or african american alone by selected groups |
+| NA | B02024 | white alone or in any combination by selected groups |
+| NA | B02025 | black or african american alone or in any combination by selected groups |
+| NA | C02022 | white alone by selected groups |
+| NA | C02023 | black or african american alone by selected groups |
+
 ## 2023 ACS
 
 | concept2022 | table_num | concept2023 |
