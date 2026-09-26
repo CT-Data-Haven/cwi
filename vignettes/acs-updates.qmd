@@ -7,7 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 knitr:
   opts_chunk:
-    comment: '#>'
+    comment: "#>"
     collapse: true
 execute:
   warning: false
@@ -17,10 +17,10 @@ fig-dpi: 150
 fig-width: 6
 ---
 
-
 ```{r}
 #| label: libs
 #| message: false
+
 library(cwi)
 library(dplyr)
 library(purrr)
@@ -28,6 +28,7 @@ library(purrr)
 
 ```{r}
 #| label: compare-yrs
+
 compare_yrs <- function(yr, ret = FALSE) {
     yrs <- rlang::set_names(c(yr - 1, yr))
     short_yrs <- rlang::set_names(as.character(yrs), sprintf("_%s$", letters[seq_along(yrs)]))
@@ -52,57 +53,48 @@ compare_yrs <- function(yr, ret = FALSE) {
 }
 ```
 
-# 2023 ACS
-
 ```{r}
-#| label: c2023
+#| label: batch-update-tbls
 #| results: asis
-compare_yrs(2023)
+
+purrr::walk(cwi:::endyears[["acs"]]:2021, function(yr) {
+  cat(sprintf("\n# %s ACS\n\n", yr))
+  compare_yrs(yr)
+})
 ```
-
-# 2022 ACS
-
-```{r}
-#| label: c2022
-#| results: asis
-compare_yrs(2022)
-```
-
-
-
-# 2021 ACS
-
-```{r}
-#| label: c2021
-#| results: asis
-compare_yrs(2021)
-```
-
 
 # 2020 ACS
 
 ```{r}
 #| label: c2020
 #| results: asis
+
 compare_yrs(2020)
 ```
 
-
 Not a lot new in the 2020 ACS.
 
-----
+--------------------------------------------------------------------------------
 
 # 2019 ACS
 
 ## New tables
 
-The 2019 ACS included [reengineering of a few tables](https://www.census.gov/programs-surveys/acs/technical-documentation/table-and-geography-changes/2019/5-year.html), and a few new additions. Some are clarifications of phrasing to both questions and tables, such as time leaving home for work. More substantial are the changes in how family structure has been phrased to be more inclusive of same-sex and unmarried couples--see the most recent [working paper](https://www.census.gov/content/census/en/library/working-papers/2017/demo/SEHSD-WP2017-28.html) on this.
+The 2019 ACS included [reengineering of a few
+tables](https://www.census.gov/programs-surveys/acs/technical-documentation/table-and-geography-changes/2019/5-year.html),
+and a few new additions. Some are clarifications of phrasing to both questions
+and tables, such as time leaving home for work. More substantial are the changes
+in how family structure has been phrased to be more inclusive of same-sex and
+unmarried couples--see the most recent [working
+paper](https://www.census.gov/content/census/en/library/working-papers/2017/demo/SEHSD-WP2017-28.html)
+on this.
 
 This is just a quick check of what's new or changed.
 
 ```{r}
 #| label: c2019
 #| results: asis
+
 change19 <- compare_yrs(2019, ret = TRUE)
 ```
 
@@ -111,6 +103,7 @@ change19 <- compare_yrs(2019, ret = TRUE)
 ```{r}
 #| label: c2019-gender
 #| results: asis
+
 acs19 <- cwi:::clean_acs_vars(2019, "acs5") |>
     mutate(table_num = stringr::str_remove(name, "_.+$"))
 change19 |>
@@ -122,8 +115,3 @@ change19 |>
     purrr::map_depth(2, select, variable = name, matches("^x\\d+")) |>
     purrr::map_depth(2, knitr::kable)
 ```
-
-
-
-
-
