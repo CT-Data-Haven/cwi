@@ -19,7 +19,6 @@ pop_sf <- list(town = "county subdivision", place = "place", block = "block") |>
         state = "09",
         sumfile = "dhc",
         geometry = TRUE,
-        cache_table = TRUE,
         cb = FALSE
     ) |>
     purrr::map(cwi:::clean_names) |>

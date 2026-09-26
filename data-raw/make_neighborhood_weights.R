@@ -53,8 +53,7 @@ hh10 <- purrr::map(counties$county_code, function(cty) {
         state = "09",
         county = cty,
         geometry = TRUE,
-        keep_geo_vars = TRUE,
-        cache_table = TRUE
+        keep_geo_vars = TRUE
     )
 }) |>
     dplyr::bind_rows() |>

@@ -11,7 +11,6 @@ wrap_census <- function(src, geography, table, year, state, dataset, key, ...) {
                     state = state,
                     survey = dataset,
                     key = key,
-                    cache_table = TRUE,
                     ...
                 )
             )
@@ -27,7 +26,6 @@ wrap_census <- function(src, geography, table, year, state, dataset, key, ...) {
                     state = state,
                     sumfile = dataset,
                     key = key,
-                    cache_table = TRUE,
                     ...
                 )
             )

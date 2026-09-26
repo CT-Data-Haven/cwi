@@ -119,12 +119,11 @@ pad_table <- function(table) {
 
 
 ############# GET CLEAN VARIABLE NAMES ----
-# get decennial vars by year, cached
+# get decennial vars by year
 clean_decennial_vars <- function(year, sumfile) {
     dec_vars <- tidycensus::load_variables(
         year = year,
-        dataset = sumfile,
-        cache = TRUE
+        dataset = sumfile
     )
     dec_vars <- dplyr::filter(dec_vars, grepl("^(H|P|HCT|PCO|PCT)\\d+", name))
     dec_vars$label <- stringr::str_remove(dec_vars$label, "^ !!")
@@ -132,12 +131,11 @@ clean_decennial_vars <- function(year, sumfile) {
     dec_vars
 }
 
-# get acs variables by year, cached
+# get acs variables by year
 clean_acs_vars <- function(year, survey) {
     acs_vars <- tidycensus::load_variables(
         year = year,
-        dataset = survey,
-        cache = TRUE
+        dataset = survey
     )
     acs_vars <- dplyr::filter(acs_vars, grepl("_\\d{3}E?$", name))
     acs_vars$label <- stringr::str_remove(acs_vars$label, "Estimate!!")
